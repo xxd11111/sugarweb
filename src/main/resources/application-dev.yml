@@ -1,0 +1,49 @@
+server:
+  port: 8889
+  servlet:
+    context-path: /sugarcoat
+spring:
+  application:
+    name: sugarcoat
+  # 连接数据库
+  datasource:
+#    mysql数据库
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+#    username: root
+#    password: 123456
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: root
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+    # 连接池设置
+    hikari:
+      maximum-pool-size: 30
+      minimum-idle: 5
+  jpa:
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    open-in-view: false
+    properties:
+      "hibernate.format_sql": true
+    hibernate:
+      ddl-auto: update
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+springdoc:
+  #这里定义了两个分组，可定义多个，也可以不定义
+  group-configs:
+    - group: 1.演示模块
+      packages-to-scan: com.xxd.sugarcoat
+  swagger-ui:
+    # 禁止默认路径
+    disable-swagger-default-url: true
+
+# 日志配置
+logging:
+  level:
+    "ROOT": info
+    "org.hibernate.type.descriptor.sql.BasicBinder": TRACE

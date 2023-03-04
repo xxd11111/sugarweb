@@ -1,9 +1,38 @@
 # sugarcoat
 
 #### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+框架选型:
+springboot
+undertow
+lombok
+hutool
+权限框架：springSecurity
+文档框架：knife4j spring-doc
+持久化：mybatis-plus
+日志框架:logback
+定时任务：quartz
+
+功能组件
+"account	用户"
+"api		项目接口组件"
+"cache	    缓存"
+"common	    web通用"
+"data		数据功能"
+"dict		字典"
+"doc		接口文档"
+"email	    邮箱功能"
+"enums	    枚举类封装"
+"exception	异常处理"
+"log		日志组件"
+"monitor	监控组件"
+"orm		持久化封装"
+"oss		文件存储"
+"param	    参数配置"
+"protection	系统保护组件"
+"sms		短信封装"
+"status	    启停状态封装"
+"tenant	    动态多租户组件"
+"validate	校验组件"
 
 #### 软件架构
 软件架构说明

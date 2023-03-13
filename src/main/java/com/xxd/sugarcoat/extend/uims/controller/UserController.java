@@ -4,10 +4,9 @@ import com.xxd.sugarcoat.extend.uims.application.dto.StatusDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.UserDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.UserPageDTO;
 import com.xxd.sugarcoat.extend.uims.application.service.UserService;
-import com.xxd.sugarcoat.support.common.R;
+import com.xxd.sugarcoat.support.common.Result;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -22,27 +21,27 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("{id}")
-    public R findOne(@NotBlank @PathVariable String id) {
+    public Result findOne(@NotBlank @PathVariable String id) {
         return null;
     }
 
     @GetMapping("page")
-    public R page(@RequestParam UserPageDTO pageDTO) {
+    public Result page(@RequestParam UserPageDTO pageDTO) {
         return null;
     }
 
     @PostMapping("save")
-    public R save(@RequestBody UserDTO userDTO) {
+    public Result save(@RequestBody UserDTO userDTO) {
         return null;
     }
 
     @PostMapping("update")
-    public R update(@RequestBody UserDTO userDTO) {
+    public Result update(@RequestBody UserDTO userDTO) {
         return null;
     }
 
     @PostMapping("status")
-    public R status(@RequestBody StatusDTO statusDTO) {
+    public Result status(@RequestBody StatusDTO statusDTO) {
         return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.extend.uims.infrastructure.entity;
+package com.xxd.sugarcoat.support.server;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,8 +14,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@TableName(Common.TABLE_PREFIX + "api")
-public class ApiPO {
+@TableName(Common.TABLE_PREFIX + "server_api")
+public class ServerApiPO {
     @TableId(type = IdType.ASSIGN_ID)
     private String id;
 

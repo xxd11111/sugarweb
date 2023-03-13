@@ -1,9 +1,7 @@
 package com.xxd.sugarcoat.support.dict;
 
-import com.xxd.sugarcoat.support.exception.FrameworkException;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 /**
@@ -13,18 +11,9 @@ import javax.annotation.Resource;
  */
 @Component
 public class AutoDictRegister {
-    private DictCache dictCache;
 
     @Resource
-    public void setDictCache(DictCache dictCache) {
-        this.dictCache = dictCache;
-    }
-
-    @PostConstruct
-    public void init(){
-        if (null == dictCache){
-            throw new FrameworkException("字典帮助工具初始化异常");
-        }
+    public void init(DictCache dictCache){
         DictHelper.init(dictCache);
     }
 

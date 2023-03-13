@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.orm.jpa;
+package com.xxd.sugarcoat.support.orm;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

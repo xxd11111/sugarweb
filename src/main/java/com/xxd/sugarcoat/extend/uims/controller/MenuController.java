@@ -4,10 +4,9 @@ import com.xxd.sugarcoat.extend.uims.application.dto.MenuDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.MenuPageDTO;
 import com.xxd.sugarcoat.extend.uims.application.service.MenuService;
 import com.xxd.sugarcoat.extend.uims.application.dto.StatusDTO;
-import com.xxd.sugarcoat.support.common.R;
+import com.xxd.sugarcoat.support.common.Result;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -22,27 +21,27 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping("{id}")
-    public R findOne(@NotBlank @PathVariable String id) {
+    public Result findOne(@NotBlank @PathVariable String id) {
         return null;
     }
 
     @GetMapping("page")
-    public R page(@RequestParam MenuPageDTO pageDTO) {
+    public Result page(@RequestParam MenuPageDTO pageDTO) {
         return null;
     }
 
     @PostMapping("save")
-    public R save(@RequestBody MenuDTO menuDTO) {
+    public Result save(@RequestBody MenuDTO menuDTO) {
         return null;
     }
 
     @PostMapping("update")
-    public R update(@RequestBody MenuDTO menuDTO) {
+    public Result update(@RequestBody MenuDTO menuDTO) {
         return null;
     }
 
     @PostMapping("status")
-    public R status(@RequestBody StatusDTO statusDTO) {
+    public Result status(@RequestBody StatusDTO statusDTO) {
         return null;
     }
 

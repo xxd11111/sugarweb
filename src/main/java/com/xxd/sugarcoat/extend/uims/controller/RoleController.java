@@ -4,10 +4,9 @@ import com.xxd.sugarcoat.extend.uims.application.dto.RoleDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.RolePageDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.StatusDTO;
 import com.xxd.sugarcoat.extend.uims.application.service.RoleService;
-import com.xxd.sugarcoat.support.common.R;
+import com.xxd.sugarcoat.support.common.Result;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -21,27 +20,27 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping("{id}")
-    public R findOne(@NotBlank @PathVariable String id) {
+    public Result findOne(@NotBlank @PathVariable String id) {
         return null;
     }
 
     @GetMapping("page")
-    public R page(@RequestParam RolePageDTO pageDTO) {
+    public Result page(@RequestParam RolePageDTO pageDTO) {
         return null;
     }
 
     @PostMapping("save")
-    public R save(@RequestBody RoleDTO menuDTO) {
+    public Result save(@RequestBody RoleDTO menuDTO) {
         return null;
     }
 
     @PostMapping("update")
-    public R update(@RequestBody RoleDTO menuDTO) {
+    public Result update(@RequestBody RoleDTO menuDTO) {
         return null;
     }
 
     @PostMapping("status")
-    public R status(@RequestBody StatusDTO statusDTO) {
+    public Result status(@RequestBody StatusDTO statusDTO) {
         return null;
     }
 }

@@ -2,6 +2,8 @@ package com.xxd.sugarcoat.support.param;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.xxd.sugarcoat.support.param.api.Param;
+import com.xxd.sugarcoat.support.param.api.ParamCache;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;

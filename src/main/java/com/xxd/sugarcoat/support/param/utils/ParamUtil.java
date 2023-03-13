@@ -1,6 +1,8 @@
-package com.xxd.sugarcoat.support.param;
+package com.xxd.sugarcoat.support.param.utils;
 
 import com.xxd.sugarcoat.support.exception.FrameworkException;
+import com.xxd.sugarcoat.support.param.api.Param;
+import com.xxd.sugarcoat.support.param.api.ParamCache;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -13,15 +15,15 @@ import java.util.Map;
  */
 
 @Slf4j
-public class ParamHelper {
+public class ParamUtil {
 
     private static ParamCache paramCache;
 
     protected static void init(ParamCache paramCache) {
-        if (null != ParamHelper.paramCache) {
+        if (null != ParamUtil.paramCache) {
             throw new FrameworkException("=====> paramHelper初始化异常:该对象只能初始化一次");
         }
-        ParamHelper.paramCache = paramCache;
+        ParamUtil.paramCache = paramCache;
         log.info("=====> paramHelper初始化成功");
     }
 

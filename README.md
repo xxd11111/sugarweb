@@ -13,8 +13,8 @@ hutool
 定时任务：quartz
 
 功能组件
-"account	用户"
-"api		项目接口组件"
+"user	用户"
+"serverApi		项目接口组件"
 "cache	    缓存"
 "common	    web通用"
 "data		数据功能"

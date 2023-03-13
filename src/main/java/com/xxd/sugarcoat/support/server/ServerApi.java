@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.extend.uims.domain.model.api;
+package com.xxd.sugarcoat.support.server;
 
 import com.xxd.sugarcoat.support.status.AccessibleEnum;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2022-10-25
  */
 @Data
-public class Api {
+public class ServerApi {
 
     private String id;
 

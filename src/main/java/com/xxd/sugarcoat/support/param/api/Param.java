@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.param;
+package com.xxd.sugarcoat.support.param.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

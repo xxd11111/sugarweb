@@ -5,7 +5,7 @@ import com.xxd.sugarcoat.support.exception.SecurityException;
 import com.xxd.sugarcoat.support.log.exception.ExceptionLogService;
 import com.xxd.sugarcoat.support.log.exception.NoneExceptionLogService;
 import com.xxd.sugarcoat.support.common.HttpCode;
-import com.xxd.sugarcoat.support.common.R;
+import com.xxd.sugarcoat.support.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,51 +33,51 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(FrameworkException.class)
-    public R<?> baseException(HttpServletRequest req, Throwable ex){
+    public Result<?> baseException(HttpServletRequest req, Throwable ex){
         log.error("[BaseException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(SecurityException.class)
-    public R<?> securityException(HttpServletRequest req, Throwable ex){
+    public Result<?> securityException(HttpServletRequest req, Throwable ex){
         log.error("[SecurityException]", ex);
         //日志插入
         logClient.sendSecurityLog(req, ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ServerException.class)
-    public R<?> serverException(HttpServletRequest req, Throwable ex){
+    public Result<?> serverException(HttpServletRequest req, Throwable ex){
         log.error("[ServerException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ServiceException.class)
-    public R<?> serviceException(HttpServletRequest req, Throwable ex){
+    public Result<?> serviceException(HttpServletRequest req, Throwable ex){
         log.error("[ServiceException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ValidateException.class)
-    public R<?> validateException(HttpServletRequest req, Throwable ex){
+    public Result<?> validateException(HttpServletRequest req, Throwable ex){
         log.error("[ValidateException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
-    public R<?> exceptionHandler(HttpServletRequest req, Throwable ex){
+    public Result<?> exceptionHandler(HttpServletRequest req, Throwable ex){
         log.error("[Exception]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
 }

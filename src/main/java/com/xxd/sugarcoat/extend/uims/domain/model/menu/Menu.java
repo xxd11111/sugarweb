@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.menu;
 
-import com.xxd.sugarcoat.extend.uims.domain.model.api.Api;
+import com.xxd.sugarcoat.support.server.ServerApi;
 import com.xxd.sugarcoat.support.status.AccessibleEnum;
 import lombok.Data;
 
@@ -48,7 +48,7 @@ public class Menu {
     /**
      * 菜单接口
      */
-    private Collection<Api> apis;
+    private Collection<ServerApi> serverApis;
     /**
      * 状态
      */

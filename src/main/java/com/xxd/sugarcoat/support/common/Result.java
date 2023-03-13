@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class R<T> {
+public class Result<T> {
 
     private Integer code;
 
@@ -18,51 +18,51 @@ public class R<T> {
 
     private T data;
 
-    public static <T> R<T> ok() {
+    public static <T> Result<T> ok() {
         return build(HttpCode.OK);
     }
 
-    public static <T> R<T> ok(String msg) {
+    public static <T> Result<T> ok(String msg) {
         return build(null, HttpCode.OK.getCode(), msg);
     }
 
-    public static <T> R<T> ok(String msg, T data) {
+    public static <T> Result<T> ok(String msg, T data) {
         return build(data, HttpCode.OK.getCode(), msg);
     }
 
-    public static <T> R<T> data(T data) {
+    public static <T> Result<T> data(T data) {
         return build(data, HttpCode.OK);
     }
 
-    public static <T> R<T> data(T data, String msg) {
+    public static <T> Result<T> data(T data, String msg) {
         return build(data, HttpCode.OK.getCode(), msg);
     }
 
-    public static <T> R<T> error() {
+    public static <T> Result<T> error() {
         return build(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
-    public static <T> R<T> error(String msg) {
+    public static <T> Result<T> error(String msg) {
         return build(null, HttpCode.INTERNAL_SERVER_ERROR.getCode(), msg);
     }
 
-    public static <T> R<T> error(ErrorCode errorCode) {
+    public static <T> Result<T> error(ErrorCode errorCode) {
         return build(errorCode);
     }
 
-    private static <T> R<T> build(T data, Integer code, String msg) {
-        R<T> r = new R<>();
-        r.setCode(code);
-        r.setMsg(msg);
-        r.setData(data);
-        return r;
+    private static <T> Result<T> build(T data, Integer code, String msg) {
+        Result<T> result = new Result<>();
+        result.setCode(code);
+        result.setMsg(msg);
+        result.setData(data);
+        return result;
     }
 
-    private static <T> R<T> build(T data, ErrorCode errorCode) {
+    private static <T> Result<T> build(T data, ErrorCode errorCode) {
         return build(data, errorCode.getCode(), errorCode.getMsg());
     }
 
-    private static <T> R<T> build(ErrorCode errorCode) {
+    private static <T> Result<T> build(ErrorCode errorCode) {
         return build(null, errorCode);
     }
 }

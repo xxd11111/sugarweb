@@ -1,7 +1,7 @@
 package com.xxd.sugarcoat.demo;
 
 import com.xxd.sugarcoat.extend.uims.domain.model.user.UserRepository;
-import com.xxd.sugarcoat.support.common.R;
+import com.xxd.sugarcoat.support.common.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,25 +19,25 @@ public class XxxController {
     HttpServletRequest httpServletRequest;
 
     @PostMapping("test1")
-    public R<Object> test1(){
-        return R.ok();
+    public Result<Object> test1(){
+        return Result.ok();
     }
 
     @DeleteMapping("test2")
-    public R<Object> test2(){
-        return R.ok();
+    public Result<Object> test2(){
+        return Result.ok();
     }
 
 @Resource
     UserRepository userRepository;
     @GetMapping("test3")
-    public R<Object> test3(){
+    public Result<Object> test3(){
         httpServletRequest.getRequestURI();
-        return R.ok();
+        return Result.ok();
     }
 
     @PostMapping("test3")
-    public R<Object> test4(){
-        return R.ok();
+    public Result<Object> test4(){
+        return Result.ok();
     }
 }

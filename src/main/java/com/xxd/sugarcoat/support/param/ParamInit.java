@@ -1,9 +1,9 @@
 package com.xxd.sugarcoat.support.param;
 
-import com.xxd.sugarcoat.support.exception.FrameworkException;
+import com.xxd.sugarcoat.support.param.api.ParamCache;
+import com.xxd.sugarcoat.support.param.utils.ParamUtil;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 /**
@@ -13,18 +13,9 @@ import javax.annotation.Resource;
  */
 @Component
 public class ParamInit {
-    private ParamCache paramCache;
 
     @Resource
     public void setParamCache(ParamCache paramCache) {
-        this.paramCache = paramCache;
-    }
-
-    @PostConstruct
-    public void init(){
-        if(null == paramCache){
-            throw new FrameworkException("参数帮助工具初始化异常");
-        }
-        ParamHelper.init(paramCache);
+        ParamUtil.init(paramCache);
     }
 }

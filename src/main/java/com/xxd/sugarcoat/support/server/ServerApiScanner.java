@@ -1,6 +1,5 @@
 package com.xxd.sugarcoat.support.server;
 
-import com.xxd.sugarcoat.extend.uims.domain.model.api.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,32 +21,32 @@ import java.util.Set;
  */
 @Slf4j
 @Component
-public class ApiScanner {
+public class ServerApiScanner {
 
     @Resource
     private RequestMappingHandlerMapping mappingHandlerMapping;
 
-    public Set<Api> scanApi() {
-        Set<Api> urlList = new HashSet<>();
+    public Set<ServerApi> scanApi() {
+        Set<ServerApi> urlList = new HashSet<>();
         Map<RequestMappingInfo, HandlerMethod> map = mappingHandlerMapping.getHandlerMethods();
         Set<RequestMappingInfo> requestMappingInfos = map.keySet();
         for (RequestMappingInfo info : requestMappingInfos) {
-            Api api = new Api();
+            ServerApi serverApi = new ServerApi();
             PatternsRequestCondition patternsRequestCondition = info.getPatternsCondition();
             Set<String> patterns = patternsRequestCondition.getPatterns();
-            if (patterns.size() > 1) log.error("有两个url,{}", info);
+            log.info("url:{}", patterns);
             for (String url : patterns) {
-                api.setUrl(url);
+                serverApi.setUrl(url);
             }
             RequestMethodsRequestCondition methodsRequestCondition = info.getMethodsCondition();
             Set<RequestMethod> methods = methodsRequestCondition.getMethods();
-            if (methods.size() > 1) log.error("有两个method,{}", info);
+            log.info("method:{}", methods);
             for (RequestMethod method : methods) {
                 String type = method.name();
-                api.setMethodType(type);
+                serverApi.setMethodType(type);
             }
-            api.setRemark(info.toString());
-            urlList.add(api);
+            serverApi.setRemark(info.toString());
+            urlList.add(serverApi);
         }
         log.info(String.valueOf(urlList));
         return urlList;

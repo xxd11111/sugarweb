@@ -18,7 +18,7 @@ hutool
 "cache	    缓存"
 "common	    web通用"
 "data		数据功能"
-"dict		字典"
+"baseDict		字典"
 "doc		接口文档"
 "email	    邮箱功能"
 "enums	    枚举类封装"

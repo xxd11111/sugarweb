@@ -2,6 +2,7 @@ package com.xxd.sugarcoat.support.user;
 
 import com.xxd.sugarcoat.support.user.api.UserInfo;
 import com.xxd.sugarcoat.support.user.api.UserHandler;
+import org.springframework.stereotype.Component;
 
 /**
  * @author xxd
@@ -9,6 +10,7 @@ import com.xxd.sugarcoat.support.user.api.UserHandler;
  * @description: TODO
  * @date 2023/3/9
  */
+@Component
 public class DefaultUserHandler implements UserHandler {
 
     private final ThreadLocal<UserInfo> CURRENT_ACCOUNT = new ThreadLocal<>();

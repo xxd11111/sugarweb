@@ -1,7 +1,7 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.role;
 
 import com.xxd.sugarcoat.extend.uims.infrastructure.entity.RolePO;
-import com.xxd.sugarcoat.support.orm.BaseRepository;
+import com.xxd.sugarcoat.support.orm.api.BaseRepository;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dict;
+package com.xxd.sugarcoat.support.dict.api;
 
 import cn.hutool.core.collection.CollUtil;
 
@@ -10,14 +10,14 @@ import java.util.Map;
  * @description TODO
  * @date 2022-11-21
  */
-public interface DictCache {
-    default void saveDict(Collection<Dict> dicts){
-        if (CollUtil.isNotEmpty(dicts)) {
-            dicts.forEach(this::saveDict);
+public interface DictService {
+    default void saveDict(Collection<BaseDict> baseDicts){
+        if (CollUtil.isNotEmpty(baseDicts)) {
+            baseDicts.forEach(this::saveDict);
         }
     }
 
-    void saveDict(Dict dict);
+    void saveDict(BaseDict baseDict);
 
     void removeDict(String type);
 
@@ -27,8 +27,8 @@ public interface DictCache {
 
     Map<String, String> getDict(String type);
 
-    default void reload(Collection<Dict> dicts){
-        saveDict(dicts);
+    default void reload(Collection<BaseDict> baseDicts){
+        saveDict(baseDicts);
         clear();
     }
 

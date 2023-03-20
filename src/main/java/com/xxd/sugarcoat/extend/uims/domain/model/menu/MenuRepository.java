@@ -1,7 +1,7 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.menu;
 
 import com.xxd.sugarcoat.extend.uims.infrastructure.entity.MenuPO;
-import com.xxd.sugarcoat.support.orm.BaseRepository;
+import com.xxd.sugarcoat.support.orm.api.BaseRepository;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

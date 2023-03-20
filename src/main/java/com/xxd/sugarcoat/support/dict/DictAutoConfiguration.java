@@ -1,5 +1,6 @@
 package com.xxd.sugarcoat.support.dict;
 
+import com.xxd.sugarcoat.support.dict.api.DictService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -10,11 +11,11 @@ import javax.annotation.Resource;
  * @date 2022-11-21
  */
 @Component
-public class AutoDictRegister {
+public class DictAutoConfiguration {
 
     @Resource
-    public void init(DictCache dictCache){
-        DictHelper.init(dictCache);
+    public void init(DictService dictService){
+        DictHelper.init(dictService);
     }
 
 }

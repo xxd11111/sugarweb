@@ -1,11 +1,14 @@
 package com.xxd.sugarcoat.demo;
 
+import cn.hutool.core.lang.UUID;
 import com.xxd.sugarcoat.extend.uims.domain.model.user.UserRepository;
 import com.xxd.sugarcoat.support.common.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author xxd
@@ -28,16 +31,11 @@ public class XxxController {
         return Result.ok();
     }
 
-@Resource
-    UserRepository userRepository;
     @GetMapping("test3")
-    public Result<Object> test3(){
-        httpServletRequest.getRequestURI();
-        return Result.ok();
-    }
-
-    @PostMapping("test3")
-    public Result<Object> test4(){
+    public Result<Object> test4() throws IOException {
+        File file = new File("D:\\临时测试\\aaaabbbb.txt");
+        file.createNewFile();
+        file.delete();
         return Result.ok();
     }
 }

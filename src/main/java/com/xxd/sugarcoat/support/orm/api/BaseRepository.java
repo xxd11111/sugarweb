@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.orm;
+package com.xxd.sugarcoat.support.orm.api;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 

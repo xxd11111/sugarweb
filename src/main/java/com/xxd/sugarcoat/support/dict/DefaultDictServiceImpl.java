@@ -2,6 +2,8 @@ package com.xxd.sugarcoat.support.dict;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.xxd.sugarcoat.support.dict.api.BaseDict;
+import com.xxd.sugarcoat.support.dict.api.DictService;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -14,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2022-11-18
  */
 @Component
-public class DefaultDictCache implements DictCache {
+public class DefaultDictServiceImpl implements DictService {
 
     private final Map<String, ConcurrentHashMap<String, String>> dictMap = new ConcurrentHashMap<>();
 
@@ -24,23 +26,23 @@ public class DefaultDictCache implements DictCache {
     private static final Object INIT_LOCK = new Object();
 
     @Override
-    public void saveDict(Dict dict) {
-        if (StrUtil.isAllNotEmpty(dict.getType(), dict.getName())) {
-            ConcurrentHashMap<String, String> codeMap = dictMap.get(dict.getType());
+    public void saveDict(BaseDict baseDict) {
+        if (StrUtil.isAllNotEmpty(baseDict.getType(), baseDict.getName())) {
+            ConcurrentHashMap<String, String> codeMap = dictMap.get(baseDict.getType());
             //防止值丢失
             if (null == codeMap) {
                 synchronized (INIT_LOCK) {
-                    codeMap = dictMap.get(dict.getType());
+                    codeMap = dictMap.get(baseDict.getType());
                     if (null == codeMap) {
                         codeMap = new ConcurrentHashMap<>();
-                        codeMap.put(dict.getCode(), dict.getName());
-                        dictMap.put(dict.getType(), codeMap);
+                        codeMap.put(baseDict.getCode(), baseDict.getName());
+                        dictMap.put(baseDict.getType(), codeMap);
                     } else {
-                        codeMap.put(dict.getCode(), dict.getName());
+                        codeMap.put(baseDict.getCode(), baseDict.getName());
                     }
                 }
             } else {
-                codeMap.put(dict.getCode(), dict.getName());
+                codeMap.put(baseDict.getCode(), baseDict.getName());
             }
         }
     }

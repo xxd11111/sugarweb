@@ -26,7 +26,7 @@ public class DefaultDictServiceImpl implements DictService {
     private static final Object INIT_LOCK = new Object();
 
     @Override
-    public void saveDict(BaseDict baseDict) {
+    public void save(BaseDict baseDict) {
         if (StrUtil.isAllNotEmpty(baseDict.getType(), baseDict.getName())) {
             ConcurrentHashMap<String, String> codeMap = dictMap.get(baseDict.getType());
             //防止值丢失
@@ -48,12 +48,12 @@ public class DefaultDictServiceImpl implements DictService {
     }
 
     @Override
-    public void removeDict(String type) {
+    public void remove(String type) {
         dictMap.remove(type);
     }
 
     @Override
-    public void removeDict(String type, String code) {
+    public void remove(String type, String code) {
         if (StrUtil.isAllNotEmpty(type, code)) {
             ConcurrentHashMap<String, String> codeMap = dictMap.get(type);
             codeMap.remove(code);
@@ -61,13 +61,13 @@ public class DefaultDictServiceImpl implements DictService {
     }
 
     @Override
-    public String getDict(String type, String code) {
+    public String get(String type, String code) {
         ConcurrentHashMap<String, String> codeMap = dictMap.get(type);
         return null == codeMap ? null : codeMap.get(code);
     }
 
     @Override
-    public Map<String, String> getDict(String type) {
+    public Map<String, String> get(String type) {
         Map<String, String> copyMap = new HashMap<>();
         BeanUtil.copyProperties(dictMap.get(type), copyMap);
         return copyMap;

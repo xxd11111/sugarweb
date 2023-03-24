@@ -11,25 +11,25 @@ import java.util.Map;
  * @date 2022-11-21
  */
 public interface DictService {
-    default void saveDict(Collection<BaseDict> baseDicts){
+    default void save(Collection<BaseDict> baseDicts){
         if (CollUtil.isNotEmpty(baseDicts)) {
-            baseDicts.forEach(this::saveDict);
+            baseDicts.forEach(this::save);
         }
     }
 
-    void saveDict(BaseDict baseDict);
+    void save(BaseDict baseDict);
 
-    void removeDict(String type);
+    void remove(String type);
 
-    void removeDict(String type, String code);
+    void remove(String type, String code);
 
-    String getDict(String type, String code);
+    String get(String type, String code);
 
-    Map<String, String> getDict(String type);
+    Map<String, String> get(String type);
 
     default void reload(Collection<BaseDict> baseDicts){
-        saveDict(baseDicts);
         clear();
+        save(baseDicts);
     }
 
     void clear();

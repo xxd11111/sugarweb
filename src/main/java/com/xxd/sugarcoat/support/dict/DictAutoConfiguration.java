@@ -1,21 +1,38 @@
 package com.xxd.sugarcoat.support.dict;
 
 import com.xxd.sugarcoat.support.dict.api.DictService;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import javax.annotation.Resource;
 
 /**
  * @author xxd
  * @description 字典工具类初始化
  * @date 2022-11-21
  */
-@Component
-public class DictAutoConfiguration {
+@Configuration(proxyBeanMethods = false)
+public class DictAutoConfiguration implements InitializingBean {
 
-    @Resource
-    public void init(DictService dictService){
-        DictHelper.init(dictService);
+    private final ApplicationContext applicationContext;
+
+    public DictAutoConfiguration(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
+
+    @Override
+    public void afterPropertiesSet() {
+        DictHelper.dictService = applicationContext.getBean(DictService.class);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DictService dictService() {
+        return new DefaultDictServiceImpl();
+    }
+
+
 
 }

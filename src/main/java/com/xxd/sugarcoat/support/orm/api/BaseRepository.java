@@ -1,21 +1,18 @@
 package com.xxd.sugarcoat.support.orm.api;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-
-import java.util.Collection;
+import java.io.Serializable;
 
 /**
  * @author xxd
- * @description 基础持久化仓库
- * @date 2022-12-16
+ * @description TODO
+ * @date 2023/3/27 20:42
  */
-public interface BaseRepository<T> extends BaseMapper<T> {
+public interface BaseRepository<T> {
+    boolean save(T DO);
 
-    default int insert(Collection<T> entities){
-        int count = 0;
-        for (T entity : entities) {
-            count += insert(entity);
-        }
-        return count;
-    }
+    boolean update(T DO);
+
+    boolean remove(Serializable id);
+
+    T find(Serializable id);
 }

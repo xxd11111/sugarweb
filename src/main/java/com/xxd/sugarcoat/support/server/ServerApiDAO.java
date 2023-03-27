@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.support.server;
 
-import com.xxd.sugarcoat.support.orm.api.BaseRepository;
+import com.xxd.sugarcoat.support.orm.api.BaseDAO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2023-01-03
  */
 @Mapper
-public interface ServerApiRepository extends BaseRepository<ServerApiPO> {
+public interface ServerApiDAO extends BaseDAO<ServerApiPO> {
 }

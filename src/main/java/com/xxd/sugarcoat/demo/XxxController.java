@@ -1,7 +1,5 @@
 package com.xxd.sugarcoat.demo;
 
-import cn.hutool.core.lang.UUID;
-import com.xxd.sugarcoat.extend.uims.domain.model.user.UserRepository;
 import com.xxd.sugarcoat.support.common.Result;
 import org.springframework.web.bind.annotation.*;
 

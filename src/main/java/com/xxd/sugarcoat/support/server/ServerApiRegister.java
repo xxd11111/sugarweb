@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Component
 public class ServerApiRegister {
     @Resource
-    private ServerApiRepository serverApiRepository;
+    private ServerApiDAO serverApiRepository;
 
     public void registry(Set<ServerApi> serverApis) {
         Set<ServerApiPO> apiEntities = serverApis.stream().map(api -> new ServerApiPO()).collect(Collectors.toSet());

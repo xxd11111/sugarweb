@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.user;
 
-import com.xxd.sugarcoat.support.enums.EnumValue;
+import com.xxd.sugarcoat.support.dev.enums.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

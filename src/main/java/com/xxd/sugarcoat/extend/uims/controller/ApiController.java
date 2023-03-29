@@ -3,7 +3,7 @@ package com.xxd.sugarcoat.extend.uims.controller;
 import com.xxd.sugarcoat.extend.uims.application.dto.ApiPageDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.StatusDTO;
 import com.xxd.sugarcoat.extend.uims.application.service.ApiService;
-import com.xxd.sugarcoat.support.common.Result;
+import com.xxd.sugarcoat.support.prod.common.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;

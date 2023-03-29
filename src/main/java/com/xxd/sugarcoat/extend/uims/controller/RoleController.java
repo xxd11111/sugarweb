@@ -4,7 +4,7 @@ import com.xxd.sugarcoat.extend.uims.application.dto.RoleDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.RolePageDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.StatusDTO;
 import com.xxd.sugarcoat.extend.uims.application.service.RoleService;
-import com.xxd.sugarcoat.support.common.Result;
+import com.xxd.sugarcoat.support.prod.common.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;

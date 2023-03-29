@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.menu;
 
-import com.xxd.sugarcoat.support.orm.api.BaseRepository;
+import com.xxd.sugarcoat.support.dev.orm.api.BaseRepository;
 
 /**
  * @author xxd

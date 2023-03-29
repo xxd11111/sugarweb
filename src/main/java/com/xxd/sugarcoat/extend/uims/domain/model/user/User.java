@@ -2,10 +2,10 @@ package com.xxd.sugarcoat.extend.uims.domain.model.user;
 
 import cn.hutool.core.collection.CollUtil;
 import com.xxd.sugarcoat.extend.uims.domain.model.role.Role;
-import com.xxd.sugarcoat.support.server.ServerApi;
-import com.xxd.sugarcoat.support.status.AccessUtil;
-import com.xxd.sugarcoat.support.status.AccessibleEnum;
-import com.xxd.sugarcoat.support.user.api.UserInfo;
+import com.xxd.sugarcoat.support.dev.server.ServerApi;
+import com.xxd.sugarcoat.support.undo.status.AccessUtil;
+import com.xxd.sugarcoat.support.undo.status.AccessibleEnum;
+import com.xxd.sugarcoat.support.dev.user.api.UserInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

@@ -16,11 +16,10 @@ import java.util.stream.Collectors;
 @Component
 public class ServerApiRegister {
     @Resource
-    private ServerApiDAO serverApiRepository;
+    private ServerApiRepository serverApiRepository;
 
     public void registry(Set<ServerApi> serverApis) {
-        Set<ServerApiPO> apiEntities = serverApis.stream().map(api -> new ServerApiPO()).collect(Collectors.toSet());
-        serverApiRepository.insert(apiEntities);
+        serverApiRepository.saveAll(serverApis);
     }
 
 }

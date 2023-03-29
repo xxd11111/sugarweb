@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.support.dict.api;
 
-import com.xxd.sugarcoat.support.orm.api.BaseDAO;
+import com.xxd.sugarcoat.support.orm.api.BaseRepository;
 
 /**
  * @author xxd
@@ -8,6 +8,6 @@ import com.xxd.sugarcoat.support.orm.api.BaseDAO;
  * @description: 字典仓库
  * @date 2023/3/20
  */
-public interface DictDAO extends BaseDAO<BaseDict> {
+public interface DictRepository extends BaseRepository<BaseDict> {
 
 }

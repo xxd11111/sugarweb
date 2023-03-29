@@ -1,18 +1,14 @@
 package com.xxd.sugarcoat.support.orm.api;
 
-import java.io.Serializable;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import org.springframework.data.repository.CrudRepository;
+
 
 /**
  * @author xxd
  * @description TODO
  * @date 2023/3/27 20:42
  */
-public interface BaseRepository<T> {
-    boolean save(T DO);
+public interface BaseRepository<T> extends CrudRepository<T, Long> {
 
-    boolean update(T DO);
-
-    boolean remove(Serializable id);
-
-    T find(Serializable id);
 }

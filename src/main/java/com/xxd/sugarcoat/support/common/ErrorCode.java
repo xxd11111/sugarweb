@@ -6,7 +6,7 @@ package com.xxd.sugarcoat.support.common;
  * @date 2022-11-15
  */
 public interface ErrorCode {
-    Integer getCode();
+    int getCode();
 
     String getMsg();
 }

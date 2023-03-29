@@ -8,6 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @description TODO
  * @date 2023-01-03
  */
-@Mapper
 public interface ServerApiRepository extends BaseRepository<ServerApi> {
 }

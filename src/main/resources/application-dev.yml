@@ -15,7 +15,8 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
     username: root
-    password: 123456
+#    password: 123456
+    password: xxd123456
     type: com.zaxxer.hikari.HikariDataSource
     # 连接池设置
     hikari:

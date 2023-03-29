@@ -23,6 +23,6 @@ public enum HttpCode implements ErrorCode{
     INTERNAL_SERVER_ERROR(500, "系统异常"),
     NOT_IMPLEMENTED(501, "功能未实现");
 
-    private final Integer code;
+    private final int code;
     private final String msg;
 }

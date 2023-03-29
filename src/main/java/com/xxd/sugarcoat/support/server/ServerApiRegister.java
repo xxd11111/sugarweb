@@ -1,6 +1,7 @@
 package com.xxd.sugarcoat.support.server;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class ServerApiRegister {
-    @Resource
+//    @Resource
     private ServerApiRepository serverApiRepository;
 
     public void registry(Set<ServerApi> serverApis) {

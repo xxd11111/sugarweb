@@ -2,6 +2,9 @@ package com.xxd.sugarcoat.support.dict.api;
 
 import lombok.Data;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  * @author xxd
  * @version 1.0
@@ -9,7 +12,9 @@ import lombok.Data;
  * @date 2023/3/20
  */
 @Data
+@Entity
 public class BaseDict {
+    @Id
     private String id;
     private String type;
     private String code;

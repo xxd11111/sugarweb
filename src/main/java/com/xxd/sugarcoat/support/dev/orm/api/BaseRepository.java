@@ -1,5 +1,6 @@
 package com.xxd.sugarcoat.support.dev.orm.api;
 
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -10,6 +11,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @date 2023/3/27 20:42
  */
 @NoRepositoryBean
-public interface BaseRepository<T> extends CrudRepository<T, Long> {
+public interface BaseRepository<T> extends CrudRepository<T, String>, QuerydslPredicateExecutor<T> {
 
 }

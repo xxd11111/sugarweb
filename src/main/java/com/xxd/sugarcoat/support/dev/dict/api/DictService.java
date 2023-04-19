@@ -11,13 +11,13 @@ import java.util.Map;
  * @date 2022-11-21
  */
 public interface DictService {
-    default void save(Collection<BaseDict> baseDicts){
-        if (CollUtil.isNotEmpty(baseDicts)) {
-            baseDicts.forEach(this::save);
+    default void save(Collection<DictDTO> dictDTOS) {
+        if (CollUtil.isNotEmpty(dictDTOS)) {
+            dictDTOS.forEach(this::save);
         }
     }
 
-    void save(BaseDict baseDict);
+    void save(DictDTO dictItem);
 
     void remove(String type);
 
@@ -27,9 +27,9 @@ public interface DictService {
 
     Map<String, String> get(String type);
 
-    default void reload(Collection<BaseDict> baseDicts){
+    default void reload(Collection<DictDTO> dictDTOS) {
         clear();
-        save(baseDicts);
+        save(dictDTOS);
     }
 
     void clear();

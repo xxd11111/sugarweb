@@ -2,7 +2,8 @@ package com.xxd.sugarcoat.support.dev.dict;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.xxd.sugarcoat.support.dev.dict.api.BaseDict;
+import com.xxd.sugarcoat.support.dev.dict.api.DictDTO;
+import com.xxd.sugarcoat.support.dev.dict.api.DictItem;
 import com.xxd.sugarcoat.support.dev.dict.api.DictService;
 import org.springframework.stereotype.Component;
 
@@ -24,25 +25,24 @@ public class DefaultDictServiceImpl implements DictService {
      * 初始化锁
      */
     private static final Object INIT_LOCK = new Object();
-
     @Override
-    public void save(BaseDict baseDict) {
-        if (StrUtil.isAllNotEmpty(baseDict.getType(), baseDict.getName())) {
-            ConcurrentHashMap<String, String> codeMap = dictMap.get(baseDict.getType());
+    public void save(DictDTO dictDTO) {
+        if (StrUtil.isAllNotEmpty(dictDTO.getGroupCode(), dictDTO.getName())) {
+            ConcurrentHashMap<String, String> codeMap = dictMap.get(dictDTO.getGroupCode());
             //防止值丢失
             if (null == codeMap) {
                 synchronized (INIT_LOCK) {
-                    codeMap = dictMap.get(baseDict.getType());
+                    codeMap = dictMap.get(dictDTO.getGroupCode());
                     if (null == codeMap) {
                         codeMap = new ConcurrentHashMap<>();
-                        codeMap.put(baseDict.getCode(), baseDict.getName());
-                        dictMap.put(baseDict.getType(), codeMap);
+                        codeMap.put(dictDTO.getCode(), dictDTO.getName());
+                        dictMap.put(dictDTO.getGroupCode(), codeMap);
                     } else {
-                        codeMap.put(baseDict.getCode(), baseDict.getName());
+                        codeMap.put(dictDTO.getCode(), dictDTO.getName());
                     }
                 }
             } else {
-                codeMap.put(baseDict.getCode(), baseDict.getName());
+                codeMap.put(dictDTO.getCode(), dictDTO.getName());
             }
         }
     }

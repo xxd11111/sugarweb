@@ -19,13 +19,14 @@ public class XxxController {
     @Resource
     HttpServletRequest httpServletRequest;
 
-    @PostMapping("test1")
-    public Result<Object> test1(){
+    @GetMapping("test1")
+    public Result<Object> test1() {
+        httpServletRequest.setAttribute("a", "b");
         return Result.ok();
     }
 
     @DeleteMapping("test2")
-    public Result<Object> test2(){
+    public Result<Object> test2() {
         return Result.ok();
     }
 

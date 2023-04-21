@@ -30,7 +30,7 @@ public class DictAutoConfiguration implements InitializingBean {
     @Bean
     @ConditionalOnMissingBean
     public DictService dictService() {
-        return new DefaultDictServiceImpl();
+        return new InnerDictCacheServiceImpl();
     }
 
 

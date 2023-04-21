@@ -3,7 +3,6 @@ package com.xxd.sugarcoat.support.dev.dict;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.xxd.sugarcoat.support.dev.dict.api.DictDTO;
-import com.xxd.sugarcoat.support.dev.dict.api.DictItem;
 import com.xxd.sugarcoat.support.dev.dict.api.DictService;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2022-11-18
  */
 @Component
-public class DefaultDictServiceImpl implements DictService {
+public class InnerDictCacheServiceImpl implements DictService {
 
     private final Map<String, ConcurrentHashMap<String, String>> dictMap = new ConcurrentHashMap<>();
 

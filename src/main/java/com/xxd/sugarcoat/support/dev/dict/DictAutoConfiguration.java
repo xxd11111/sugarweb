@@ -1,5 +1,6 @@
 package com.xxd.sugarcoat.support.dev.dict;
 
+import com.xxd.sugarcoat.support.dev.dict.api.DefaultDictServiceImpl;
 import com.xxd.sugarcoat.support.dev.dict.api.DictService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,7 +31,7 @@ public class DictAutoConfiguration implements InitializingBean {
     @Bean
     @ConditionalOnMissingBean
     public DictService dictService() {
-        return new InnerDictCacheServiceImpl();
+        return new DefaultDictServiceImpl();
     }
 
 

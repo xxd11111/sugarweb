@@ -26,6 +26,6 @@ public class DictGroup extends BaseEntity {
     private String groupName;
     @OneToMany
     @ToString.Exclude
-    private List<Dict> dictList;
+    private List<DictItem> dictList;
 
 }

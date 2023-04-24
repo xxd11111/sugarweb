@@ -2,7 +2,7 @@ package com.xxd.sugarcoat.support.dev.dict.api;
 
 import lombok.Data;
 
-import javax.persistence.Column;
+import java.util.List;
 
 /**
  * @author xxd
@@ -11,12 +11,16 @@ import javax.persistence.Column;
  */
 @Data
 public class DictDTO {
-    @Column(length = 32)
+    private String id;
     private String groupCode;
-    @Column(length = 32)
     private String groupName;
-    @Column(length = 32)
-    private String code;
-    @Column(length = 32)
-    private String name;
+    private List<DictItemDTO> dictItemDTOList;
+
+    @Data
+    public class DictItemDTO {
+        private String id;
+        private String code;
+        private String name;
+    }
+
 }

@@ -8,6 +8,6 @@ import com.xxd.sugarcoat.support.dev.orm.api.BaseRepository;
  * @description: 字典仓库
  * @date 2023/3/20
  */
-public interface DictRepository extends BaseRepository<Dict> {
+public interface DictRepository extends BaseRepository<DictGroup> {
 
 }

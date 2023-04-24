@@ -17,7 +17,7 @@ import javax.persistence.Entity;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class Dict extends BaseEntity {
+public class DictItem extends BaseEntity {
 
     @Column(length = 32)
     private String code;

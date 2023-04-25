@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.support.dev.param.utils;
 
-import com.xxd.sugarcoat.support.dev.param.api.ParamCache;
+import com.xxd.sugarcoat.support.dev.param.api.ParamService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 public class ParamInit {
 
     @Resource
-    public void setParamCache(ParamCache paramCache) {
-        ParamUtil.init(paramCache);
+    public void setParamCache(ParamService paramService) {
+        ParamHelper.init(paramService);
     }
 }

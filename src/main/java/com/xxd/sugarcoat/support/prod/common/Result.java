@@ -38,6 +38,15 @@ public class Result<T> {
         return build(data, HttpCode.OK.getCode(), msg);
     }
 
+    public static <T, E> Result<PageData<E>> page(T page, Class<E> clazz) {
+        return page(page, clazz, HttpCode.OK.getMsg());
+    }
+
+    public static <T, E> Result<PageData<E>> page(T page, Class<E> clazz, String msg) {
+        PageData<E> pageData = PageDataAdaptManager.convert(page, clazz);
+        return build(pageData, HttpCode.OK.getCode(), msg);
+    }
+
     public static <T> Result<T> error() {
         return build(HttpCode.INTERNAL_SERVER_ERROR);
     }

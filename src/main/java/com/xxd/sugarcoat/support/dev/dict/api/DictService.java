@@ -1,9 +1,6 @@
 package com.xxd.sugarcoat.support.dev.dict.api;
 
-import cn.hutool.core.collection.CollUtil;
-
-import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 
 /**
  * @author xxd
@@ -14,10 +11,13 @@ public interface DictService {
 
     void save(DictDTO dictDTO);
 
-    void update(DictDTO dictDTO);
+    void removeDict(String dictId);
 
-    void remove(String id);
+    void removeDictItem(String dictItemId);
 
-    void remove(String type, String code);
+    DictItemDTO findByItemId(String dictItemId);
 
+    DictDTO findByGroupId(String groupId);
+
+    DictDTO findByGroupCode(String groupCode);
 }

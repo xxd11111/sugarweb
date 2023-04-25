@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.dict.api;
+package com.xxd.sugarcoat.support.dev.dict.model;
 
 import com.xxd.sugarcoat.support.dev.orm.BaseEntity;
 import lombok.*;
@@ -26,6 +26,6 @@ public class DictGroup extends BaseEntity {
     private String groupName;
     @OneToMany
     @ToString.Exclude
-    private List<DictItem> dictList;
+    private List<DictItem> dictItemList;
 
 }

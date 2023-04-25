@@ -2,6 +2,7 @@ package com.xxd.sugarcoat.support.dev.dict;
 
 import com.xxd.sugarcoat.support.dev.dict.api.DictService;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,12 +16,12 @@ public class DictHelper {
 
     protected static DictService dictService;
 
-    public static String getDict(String type, String code) {
-        return dictService.get(type, code);
-    }
-
-    public static Map<String, String> getDict(String type) {
-        return dictService.get(type);
-    }
+    //public static String getDictName(String groupCode, String code) {
+    //    return dictService.get(type, code);
+    //}
+    //
+    //public static List<String> getDict(String groupCode) {
+    //    return (List<String>) dictService.findByGroupId(groupCode);
+    //}
 
 }

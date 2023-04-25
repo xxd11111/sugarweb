@@ -1,35 +1,40 @@
-package com.xxd.sugarcoat.support.dev.param.api;
+package com.xxd.sugarcoat.support.dev.dict.model;
 
 import com.xxd.sugarcoat.support.dev.orm.BaseEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.util.Objects;
 
 /**
  * @author xxd
- * @description 参数dto
- * @date 2022-11-18
+ * @version 1.0
+ * @description: 基础字典信息
+ * @date 2023/3/20
  */
+@Entity
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
-public class Param extends BaseEntity {
+@RequiredArgsConstructor
+public class DictItem extends BaseEntity {
+
+    @Column(length = 32)
     private String code;
+    @Column(length = 32)
     private String name;
-    private String value;
-    private String comment;
+    @ManyToOne
+    private DictGroup dictGroup;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Param param = (Param) o;
-        return getId() != null && Objects.equals(getId(), param.getId());
+        DictItem dictItem = (DictItem) o;
+        return getId() != null && Objects.equals(getId(), dictItem.getId());
     }
 
     @Override

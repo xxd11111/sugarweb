@@ -16,11 +16,4 @@ public class DictDTO {
     private String groupName;
     private List<DictItemDTO> dictItemDTOList;
 
-    @Data
-    public class DictItemDTO {
-        private String id;
-        private String code;
-        private String name;
-    }
-
 }

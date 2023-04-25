@@ -1,8 +1,8 @@
 package com.xxd.sugarcoat.support.dev.dict;
 
-import com.xxd.sugarcoat.support.dev.dict.api.DefaultDictServiceImpl;
 import com.xxd.sugarcoat.support.dev.dict.api.DictService;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -19,13 +19,9 @@ public class DictAutoConfiguration implements InitializingBean {
 
     private final ApplicationContext applicationContext;
 
+    @Autowired
     public DictAutoConfiguration(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-    }
-
-    @Override
-    public void afterPropertiesSet() {
-        DictHelper.dictService = applicationContext.getBean(DictService.class);
     }
 
     @Bean
@@ -35,5 +31,8 @@ public class DictAutoConfiguration implements InitializingBean {
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
 
+    }
 }

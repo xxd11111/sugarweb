@@ -22,7 +22,7 @@ spring:
       maximum-pool-size: 30
       minimum-idle: 5
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+#    database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     open-in-view: false
     properties:

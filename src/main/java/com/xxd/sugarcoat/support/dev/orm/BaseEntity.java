@@ -2,6 +2,7 @@ package com.xxd.sugarcoat.support.dev.orm;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -41,6 +42,7 @@ public class BaseEntity {
     @LastModifiedDate
     private Date updateDate;
 
+    @Column(length = 1)
     private String delFlag;
 
     @Override

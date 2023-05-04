@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.Objects;
 
@@ -19,14 +20,17 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 public class DictItem extends BaseEntity {
 
     @Column(length = 32)
     private String code;
     @Column(length = 32)
     private String name;
-    @ManyToOne
+    @Column(length = 32, name = "dict_group_id", insertable = false, updatable = false)
+    private String dictGroupId;
+    @ToString.Exclude
+    @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
+    @JoinColumn(name = "dict_group_id")
     private DictGroup dictGroup;
 
     @Override

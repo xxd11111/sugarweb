@@ -1,6 +1,8 @@
 package com.xxd.sugarcoat.support.dev.dict.api;
 
-import java.util.List;
+import com.xxd.sugarcoat.support.prod.common.PageParam;
+
+import java.util.Set;
 
 /**
  * @author xxd
@@ -11,13 +13,18 @@ public interface DictService {
 
     void save(DictDTO dictDTO);
 
-    void removeDict(String dictId);
+    void save(DictItemDTO dictItemDTO);
 
-    void removeDictItem(String dictItemId);
+    void removeDict(Set<String> groupIds);
+
+    void removeDictItem(Set<String> dictItemIds);
 
     DictItemDTO findByItemId(String dictItemId);
 
     DictDTO findByGroupId(String groupId);
 
     DictDTO findByGroupCode(String groupCode);
+
+    Object pageDict(PageParam pageParam, DictQueryVO queryVO);
+
 }

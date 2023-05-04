@@ -7,4 +7,5 @@ public class DictItemDTO {
     private String id;
     private String code;
     private String name;
+    private String groupId;
 }

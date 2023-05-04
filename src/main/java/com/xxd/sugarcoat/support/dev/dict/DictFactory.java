@@ -41,7 +41,7 @@ public class DictFactory {
                 dictItem.setName(dictItemDTO.getName());
                 dictItemList.add(dictItem);
             }
-            dictGroup.setDictItemList(dictItemList);
+            dictGroup.setDictItems(dictItemList);
         } else {
             dictGroup = new DictGroup();
             dictGroup.setId(dictDTO.getId());
@@ -56,7 +56,7 @@ public class DictFactory {
                 dictItem.setName(dictItemDTO.getName());
                 dictItemList.add(dictItem);
             }
-            dictGroup.setDictItemList(dictItemList);
+            dictGroup.setDictItems(dictItemList);
         }
 
         return dictGroup;

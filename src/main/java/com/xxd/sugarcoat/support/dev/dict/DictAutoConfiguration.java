@@ -1,6 +1,9 @@
 package com.xxd.sugarcoat.support.dev.dict;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.xxd.sugarcoat.support.dev.dict.api.DictService;
+import com.xxd.sugarcoat.support.dev.dict.model.DictItemRepository;
+import com.xxd.sugarcoat.support.dev.dict.model.DictRepository;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,8 +29,10 @@ public class DictAutoConfiguration implements InitializingBean {
 
     @Bean
     @ConditionalOnMissingBean
-    public DictService dictService() {
-        return new DefaultDictServiceImpl();
+    public DictService dictService(DictRepository dictRepository,
+                                   DictItemRepository dictItemRepository,
+                                   JPAQueryFactory jpaQueryFactory) {
+        return new DefaultDictServiceImpl(dictRepository, dictItemRepository, jpaQueryFactory);
     }
 
 

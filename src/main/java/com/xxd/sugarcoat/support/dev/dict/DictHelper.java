@@ -2,9 +2,6 @@ package com.xxd.sugarcoat.support.dev.dict;
 
 import com.xxd.sugarcoat.support.dev.dict.api.DictService;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author xxd
  * @description 字典工具类

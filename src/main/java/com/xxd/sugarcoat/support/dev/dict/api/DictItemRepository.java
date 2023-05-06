@@ -1,5 +1,6 @@
-package com.xxd.sugarcoat.support.dev.dict.model;
+package com.xxd.sugarcoat.support.dev.dict.api;
 
+import com.xxd.sugarcoat.support.dev.dict.model.DictItem;
 import com.xxd.sugarcoat.support.dev.orm.api.BaseRepository;
 
 /**

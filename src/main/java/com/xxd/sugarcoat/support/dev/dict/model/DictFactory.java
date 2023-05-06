@@ -1,11 +1,9 @@
-package com.xxd.sugarcoat.support.dev.dict;
+package com.xxd.sugarcoat.support.dev.dict.model;
 
 import cn.hutool.core.util.StrUtil;
 import com.xxd.sugarcoat.support.dev.dict.api.DictDTO;
 import com.xxd.sugarcoat.support.dev.dict.api.DictItemDTO;
-import com.xxd.sugarcoat.support.dev.dict.model.DictGroup;
-import com.xxd.sugarcoat.support.dev.dict.model.DictItem;
-import com.xxd.sugarcoat.support.dev.dict.model.DictRepository;
+import com.xxd.sugarcoat.support.dev.dict.api.DictGroupRepository;
 import com.xxd.sugarcoat.support.dev.exception.ValidateException;
 
 import java.util.ArrayList;
@@ -19,7 +17,7 @@ import java.util.List;
  * @date 2023/4/25
  */
 public class DictFactory {
-    private static DictRepository dictRepository;
+    private static DictGroupRepository dictGroupRepository;
 
     public static DictGroup create(DictDTO dictDTO) {
         //code 库内唯一
@@ -27,7 +25,7 @@ public class DictFactory {
         //code name 组内唯一
         DictGroup dictGroup;
         if (StrUtil.isNotBlank(dictDTO.getId())) {
-            dictGroup = dictRepository.findById(dictDTO.getId())
+            dictGroup = dictGroupRepository.findById(dictDTO.getId())
                     .orElseThrow(() -> new ValidateException("dict not find,id{}", dictDTO.getId()));
             dictGroup.setId(dictDTO.getId());
             dictGroup.setGroupCode(dictDTO.getGroupCode());

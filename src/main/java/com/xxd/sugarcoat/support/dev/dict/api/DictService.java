@@ -1,6 +1,7 @@
 package com.xxd.sugarcoat.support.dev.dict.api;
 
 import com.xxd.sugarcoat.support.prod.common.PageParam;
+import org.springframework.data.domain.Page;
 
 import java.util.Set;
 
@@ -25,6 +26,6 @@ public interface DictService {
 
     DictDTO findByGroupCode(String groupCode);
 
-    Object pageDict(PageParam pageParam, DictQueryVO queryVO);
+    Page<DictDTO> pageDict(PageParam pageParam, DictQueryVO queryVO);
 
 }

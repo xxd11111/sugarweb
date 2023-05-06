@@ -1,9 +1,11 @@
-package com.xxd.sugarcoat.support.dev.dict;
+package com.xxd.sugarcoat.support.dev.dict.controller;
 
+import com.xxd.sugarcoat.support.dev.dict.api.DictService;
 import com.xxd.sugarcoat.support.dev.dict.api.DictDTO;
 import com.xxd.sugarcoat.support.dev.dict.api.DictItemDTO;
 import com.xxd.sugarcoat.support.dev.dict.api.DictQueryVO;
-import com.xxd.sugarcoat.support.dev.dict.api.DictService;
+import com.xxd.sugarcoat.support.dev.dict.model.DictGroup;
+import com.xxd.sugarcoat.support.prod.common.PageData;
 import com.xxd.sugarcoat.support.prod.common.PageParam;
 import com.xxd.sugarcoat.support.prod.common.Result;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +56,7 @@ public class DictController {
     }
 
     @GetMapping("pageDict")
-    public Result<?> pageDict(PageParam pageParam, DictQueryVO queryVO) {
-        return Result.data(dictService.pageDict(pageParam, queryVO));
+    public Result<PageData<DictGroup>> pageDict(PageParam pageParam, DictQueryVO queryVO) {
+        return Result.page(dictService.pageDict(pageParam, queryVO), DictGroup.class);
     }
 }

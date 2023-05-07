@@ -5,7 +5,7 @@ import com.xxd.sugarcoat.support.prod.common.HttpCode;
 
 /**
  * @author xxd
- * @description 业务逻辑异常
+ * @description 业务逻辑异常（例如）
  * @date 2022-11-12
  */
 public class ServiceException extends RuntimeException {

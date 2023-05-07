@@ -125,26 +125,26 @@ public class DefaultDictServiceImpl implements DictService {
                 return null;
             }
         });
-        PageRequest pageRequest = PageRequest
-                .of(pageParam.getPageNum(), pageParam.getPageSize())
-                .withSort(Sort.Direction.DESC, dictGroup.createDate.getMetadata().getName());
-        dictRepository.findAll(
-                , pageRequest);
+//        PageRequest pageRequest = PageRequest
+//                .of(pageParam.getPageNum(), pageParam.getPageSize())
+//                .withSort(Sort.Direction.DESC, dictGroup.createDate.getMetadata().getName());
+//        dictRepository.findAll(
+//                , pageRequest);
         return null;
     }
 
-    public void test() {
-        PageRequest pageRequest = PageRequest.of(1, 20);
-        QDictGroup dictGroup = QDictGroup.dictGroup;
-        QDictItem dictItem = QDictItem.dictItem;
-        List<DictGroup> dictGroupList = jpaQueryFactory.selectFrom(dictGroup)
-                .where(dictGroup.groupCode.eq("queryVO.getGroupCode()")
-                        .or(dictGroup.groupName.like("queryVO.getGroupName())"))
-                )
-                .leftJoin(dictItem).on(dictItem.dictGroupId.eq(dictGroup.id))
-                .offset(pageRequest.getOffset())
-                .limit(pageRequest.getPageSize())
-                .fetch();
-    }
+//    public void test() {
+//        PageRequest pageRequest = PageRequest.of(1, 20);
+//        QDictGroup dictGroup = QDictGroup.dictGroup;
+//        QDictItem dictItem = QDictItem.dictItem;
+//        List<DictGroup> dictGroupList = jpaQueryFactory.selectFrom(dictGroup)
+//                .where(dictGroup.groupCode.eq("queryVO.getGroupCode()")
+//                        .or(dictGroup.groupName.like("queryVO.getGroupName())"))
+//                )
+//                .leftJoin(dictItem).on(dictItem.dictGroupId.eq(dictGroup.id))
+//                .offset(pageRequest.getOffset())
+//                .limit(pageRequest.getPageSize())
+//                .fetch();
+//    }
 
 }

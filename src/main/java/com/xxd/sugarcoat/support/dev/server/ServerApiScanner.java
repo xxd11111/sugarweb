@@ -26,6 +26,8 @@ public class ServerApiScanner {
     @Resource
     private RequestMappingHandlerMapping mappingHandlerMapping;
 
+    private Set<ServerApi> serverApis;
+
     public Set<ServerApi> scanApi() {
         Set<ServerApi> urlList = new HashSet<>();
         Map<RequestMappingInfo, HandlerMethod> map = mappingHandlerMapping.getHandlerMethods();
@@ -50,6 +52,10 @@ public class ServerApiScanner {
         }
         log.info(String.valueOf(urlList));
         return urlList;
+    }
+
+    public Set<ServerApi> getApi() {
+        return serverApis;
     }
 
 }

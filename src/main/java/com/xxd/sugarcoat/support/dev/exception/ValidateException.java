@@ -5,7 +5,7 @@ import com.xxd.sugarcoat.support.prod.common.HttpCode;
 
 /**
  * @author xxd
- * @description 校验异常
+ * @description 校验异常（参数规范问题）
  * @date 2022-11-12
  */
 public class ValidateException extends RuntimeException {

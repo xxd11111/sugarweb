@@ -9,6 +9,7 @@ import com.xxd.sugarcoat.support.orm.ExpressionWrapper;
 import com.xxd.sugarcoat.support.servelt.exception.api.ValidateException;
 import com.xxd.sugarcoat.support.servelt.protocol.PageData;
 import com.xxd.sugarcoat.support.servelt.protocol.PageParam;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
@@ -19,8 +20,10 @@ import org.springframework.data.domain.Sort;
  * @version 1.0
  * @date 2023/5/8
  */
+
+@RequiredArgsConstructor
 public class DefaultServerApiServiceImpl implements ServerApiService {
-    ServerApiRepository serverApiRepository;
+    private final ServerApiRepository serverApiRepository;
 
     @Override
     public void save(ServerApiDTO serverApi) {
@@ -42,15 +45,14 @@ public class DefaultServerApiServiceImpl implements ServerApiService {
 
     @Override
     public ServerApiDTO findOne(String id) {
-        ServerApi serverApi = serverApiRepository.findById(id).orElseThrow(() -> {
-            throw new ValidateException("serverApi not find");
-        });
+        ServerApi serverApi = serverApiRepository.findById(id)
+                .orElseThrow(() -> new ValidateException("serverApi not find"));
         ServerApiDTO serverApiDTO = new ServerApiDTO();
         serverApiDTO.setId(serverApi.getId());
         serverApiDTO.setCode(serverApi.getCode());
         serverApiDTO.setName(serverApi.getName());
         serverApiDTO.setUrl(serverApi.getUrl());
-        serverApiDTO.setMethodType(serverApi.getUrl());
+        serverApiDTO.setMethodType(serverApi.getMethodType());
         serverApiDTO.setRemark(serverApi.getRemark());
         serverApiDTO.setStatus(serverApi.getStatus());
         return serverApiDTO;

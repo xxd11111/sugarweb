@@ -7,22 +7,36 @@ spring:
     name: sugarcoat
   # 连接数据库
   datasource:
-#    mysql数据库
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-#    username: root
-#    password: 123456
     type: com.zaxxer.hikari.HikariDataSource
+    # 连接池设置
+    hikari:
+      # 最大连接池数量
+      maximum-pool-size: 30
+      # 最小空闲线程数量
+      minimum-idle: 5
+      # 配置获取连接等待超时的时间
+      connectionTimeout: 30000
+      # 校验超时时间
+      validationTimeout: 5000
+      # 空闲连接存活最大时间，默认10分钟
+      idleTimeout: 600000
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+      maxLifetime: 1800000
+      # 连接测试query（配置检测连接是否有效）
+      connectionTestQuery: SELECT 1
+      # 多久检查一次连接的活性
+      keepaliveTime: 30000
+    #    mysql数据库
+    #    driver-class-name: com.mysql.cj.jdbc.Driver
+    #    url: jdbc:mysql://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    #    username: root
+    #    password: 123456
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
     username: root
     password: xxd123456
-    # 连接池设置
-    hikari:
-      maximum-pool-size: 30
-      minimum-idle: 5
   jpa:
-#    database-platform: org.hibernate.dialect.MySQLDialect
+    #    database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
     open-in-view: false
     properties:
@@ -32,6 +46,20 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  redis:
+    # 地址
+    host: localhost
+    # 端口，默认为6379
+    port: 6379
+    # 数据库索引
+    database: 0
+    # 密码(如没有密码请注释掉)
+    # password:
+    # 连接超时时间
+    timeout: 10s
+    # 是否开启ssl
+    ssl: false
 
 springdoc:
   #这里定义了两个分组，可定义多个，也可以不定义

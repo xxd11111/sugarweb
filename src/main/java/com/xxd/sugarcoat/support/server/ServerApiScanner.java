@@ -1,6 +1,9 @@
 package com.xxd.sugarcoat.support.server;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -23,8 +26,10 @@ import java.util.Set;
 @Component
 public class ServerApiScanner {
 
-    @Resource
-    private RequestMappingHandlerMapping mappingHandlerMapping;
+//    @Lazy
+//    @Autowired
+    //todo bug
+    private  RequestMappingHandlerMapping mappingHandlerMapping;
 
     private Set<ServerApi> serverApis;
 

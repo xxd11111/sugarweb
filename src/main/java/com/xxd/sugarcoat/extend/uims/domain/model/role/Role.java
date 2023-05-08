@@ -1,7 +1,7 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.role;
 
 import com.xxd.sugarcoat.extend.uims.domain.model.menu.Menu;
-import com.xxd.sugarcoat.support.undo.status.AccessibleEnum;
+import com.xxd.sugarcoat.support.devUndo.status.AccessibleEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
 

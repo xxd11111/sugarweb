@@ -4,7 +4,7 @@ import com.xxd.sugarcoat.extend.uims.application.dto.MenuDTO;
 import com.xxd.sugarcoat.extend.uims.application.dto.MenuPageDTO;
 import com.xxd.sugarcoat.extend.uims.application.service.MenuService;
 import com.xxd.sugarcoat.extend.uims.application.dto.StatusDTO;
-import com.xxd.sugarcoat.support.prod.common.Result;
+import com.xxd.sugarcoat.support.servelt.protocol.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotBlank;

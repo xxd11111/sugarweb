@@ -1,6 +1,7 @@
 package com.xxd.sugarcoat.support.dev.server;
 
-import java.util.Set;
+import com.xxd.sugarcoat.support.servelt.protocol.PageData;
+import com.xxd.sugarcoat.support.servelt.protocol.PageParam;
 
 /**
  * @author xxd
@@ -10,8 +11,14 @@ import java.util.Set;
  */
 public interface ServerApiService {
 
-    Set<ServerApi> scanApi();
+    void save(ServerApi serverApi);
 
-    void refreshApi(Set<ServerApi> serverApis);
+    void remove(String id);
+
+    ServerApi findOne(String id);
+
+    PageData<ServerApi> findPage(PageParam pageParam, ServerApiQueryVO queryVO);
+
+    void refresh();
 
 }

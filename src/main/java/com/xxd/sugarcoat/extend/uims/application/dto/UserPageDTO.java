@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.extend.uims.application.dto;
 
-import com.xxd.sugarcoat.support.prod.common.PageParam;
+import com.xxd.sugarcoat.support.servelt.protocol.PageParam;
 
 /**
  * @author xxd

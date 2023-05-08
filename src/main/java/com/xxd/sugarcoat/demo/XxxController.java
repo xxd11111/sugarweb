@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.demo;
 
-import com.xxd.sugarcoat.support.prod.common.Result;
+import com.xxd.sugarcoat.support.servelt.protocol.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

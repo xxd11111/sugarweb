@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.user;
 
-import com.xxd.sugarcoat.support.dev.orm.api.BaseRepository;
+import com.xxd.sugarcoat.support.orm.api.BaseRepository;
 
 /**
  * @author xxd

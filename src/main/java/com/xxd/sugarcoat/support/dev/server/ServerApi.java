@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.support.dev.server;
 
-import com.xxd.sugarcoat.support.undo.status.AccessibleEnum;
+import com.xxd.sugarcoat.support.devUndo.status.AccessibleEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
 

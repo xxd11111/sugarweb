@@ -40,13 +40,13 @@ public class ParamController {
         return Result.ok();
     }
 
-    @GetMapping("findParam/{id}")
-    public Result<ParamDTO> findParam(@PathVariable String id) {
+    @GetMapping("findOne/{id}")
+    public Result<ParamDTO> findOne(@PathVariable String id) {
         return Result.data(paramService.findById(id));
     }
 
-    @GetMapping("pageParam")
-    public Result<PageData<ParamDTO>> pageParam(PageParam pageParam, ParamQueryVO queryVO) {
+    @GetMapping("findPage")
+    public Result<PageData<ParamDTO>> findPage(PageParam pageParam, ParamQueryVO queryVO) {
         return Result.data(paramService.findPage(pageParam, queryVO));
     }
 }

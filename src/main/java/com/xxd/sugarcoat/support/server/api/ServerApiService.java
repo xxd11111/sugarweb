@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.server;
+package com.xxd.sugarcoat.support.server.api;
 
 import com.xxd.sugarcoat.support.servelt.protocol.PageData;
 import com.xxd.sugarcoat.support.servelt.protocol.PageParam;
@@ -11,14 +11,12 @@ import com.xxd.sugarcoat.support.servelt.protocol.PageParam;
  */
 public interface ServerApiService {
 
-    void save(ServerApi serverApi);
+    void save(ServerApiDTO serverApiDTO);
 
     void remove(String id);
 
-    ServerApi findOne(String id);
+    ServerApiDTO findOne(String id);
 
-    PageData<ServerApi> findPage(PageParam pageParam, ServerApiQueryVO queryVO);
-
-    void refresh();
+    PageData<ServerApiDTO> findPage(PageParam pageParam, ServerApiQueryVO queryVO);
 
 }

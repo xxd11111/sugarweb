@@ -2,7 +2,7 @@ package com.xxd.sugarcoat.extend.uims.domain.model.user;
 
 import cn.hutool.core.collection.CollUtil;
 import com.xxd.sugarcoat.extend.uims.domain.model.role.Role;
-import com.xxd.sugarcoat.support.dev.server.ServerApi;
+import com.xxd.sugarcoat.support.server.ServerApi;
 import com.xxd.sugarcoat.support.devUndo.status.AccessUtil;
 import com.xxd.sugarcoat.support.devUndo.status.AccessibleEnum;
 import com.xxd.sugarcoat.support.dev.user.api.UserInfo;

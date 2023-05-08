@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.server.access;
+package com.xxd.sugarcoat.support.server.api;
 
 import javax.servlet.http.HttpServletRequest;
 

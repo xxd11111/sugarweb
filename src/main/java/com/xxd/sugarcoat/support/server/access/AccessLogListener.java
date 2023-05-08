@@ -1,5 +1,6 @@
-package com.xxd.sugarcoat.support.dev.server.access;
+package com.xxd.sugarcoat.support.server.access;
 
+import com.xxd.sugarcoat.support.server.api.AccessLogService;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

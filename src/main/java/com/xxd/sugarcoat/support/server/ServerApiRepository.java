@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.server;
+package com.xxd.sugarcoat.support.server;
 
 import com.xxd.sugarcoat.support.orm.api.BaseRepository;
 

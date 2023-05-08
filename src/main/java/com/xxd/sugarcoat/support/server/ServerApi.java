@@ -1,13 +1,10 @@
-package com.xxd.sugarcoat.support.dev.server;
+package com.xxd.sugarcoat.support.server;
 
-import com.xxd.sugarcoat.support.devUndo.status.AccessibleEnum;
+import com.xxd.sugarcoat.support.orm.BaseEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import java.util.Objects;
 
 /**
@@ -20,10 +17,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class ServerApi {
-
-    @Id
-    private String id;
+public class ServerApi extends BaseEntity {
 
     private String name;
 
@@ -35,15 +29,14 @@ public class ServerApi {
 
     private String remark;
 
-    @Enumerated(EnumType.STRING)
-    private AccessibleEnum status;
+    private String status;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         ServerApi serverApi = (ServerApi) o;
-        return id != null && Objects.equals(id, serverApi.id);
+        return getId() != null && Objects.equals(getId(), serverApi.getId());
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.xxd.sugarcoat.extend.uims.domain.model.menu;
 
-import com.xxd.sugarcoat.support.dev.server.ServerApi;
+import com.xxd.sugarcoat.support.server.ServerApi;
 import com.xxd.sugarcoat.support.devUndo.status.AccessibleEnum;
 import lombok.*;
 import org.hibernate.Hibernate;

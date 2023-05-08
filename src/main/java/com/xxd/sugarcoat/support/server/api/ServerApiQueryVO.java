@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.server;
+package com.xxd.sugarcoat.support.server.api;
 
 import lombok.Data;
 

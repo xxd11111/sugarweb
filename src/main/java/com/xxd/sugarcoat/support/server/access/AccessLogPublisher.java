@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.server.access;
+package com.xxd.sugarcoat.support.server.access;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;

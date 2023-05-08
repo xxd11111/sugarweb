@@ -5,7 +5,7 @@ import com.xxd.sugarcoat.support.prod.common.HttpCode;
 
 /**
  * @author xxd
- * @description 与安全相关异常
+ * @description 与安全相关异常（异常攻击等问题）
  * @date 2022-11-12
  */
 public class SecurityException extends RuntimeException {

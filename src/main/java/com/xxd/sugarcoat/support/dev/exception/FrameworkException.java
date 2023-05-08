@@ -5,7 +5,7 @@ import com.xxd.sugarcoat.support.prod.common.HttpCode;
 
 /**
  * @author xxd
- * @description 用于框架组件抛出异常
+ * @description 用于框架组件抛出异常（框架初始化问题，框架使用异常）
  * @date 2022-11-12
  */
 public class FrameworkException extends RuntimeException {

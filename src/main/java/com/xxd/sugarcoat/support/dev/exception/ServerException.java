@@ -5,7 +5,7 @@ import com.xxd.sugarcoat.support.prod.common.HttpCode;
 
 /**
  * @author xxd
- * @description 服务器异常,用于非api访问时抛出的错误
+ * @description 服务器异常（定时任务等）
  * @date 2022-11-12
  */
 public class ServerException extends RuntimeException {

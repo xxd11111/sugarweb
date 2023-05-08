@@ -2,8 +2,8 @@ package com.xxd.sugarcoat.support.dev.exception.handler;
 
 import com.xxd.sugarcoat.support.dev.exception.*;
 import com.xxd.sugarcoat.support.dev.exception.SecurityException;
-import com.xxd.sugarcoat.support.dev.log.exception.ExceptionLogService;
-import com.xxd.sugarcoat.support.dev.log.exception.NoneExceptionLogService;
+import com.xxd.sugarcoat.support.dev.exception.exception.ExceptionLogService;
+import com.xxd.sugarcoat.support.dev.exception.exception.NoneExceptionLogService;
 import com.xxd.sugarcoat.support.prod.common.HttpCode;
 import com.xxd.sugarcoat.support.prod.common.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author xxd
- * @description 全局异常拦截
+ * @description 全局异常拦截（只做基础异常拦截，其余自行实现）
  * @date 2022-10-27
  */
 
@@ -33,15 +33,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(FrameworkException.class)
-    public Result<?> baseException(HttpServletRequest req, Throwable ex){
-        log.error("[BaseException]", ex);
+    public Result<?> frameworkException(HttpServletRequest req, Throwable ex) {
+        log.error("[FrameworkException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
         return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(SecurityException.class)
-    public Result<?> securityException(HttpServletRequest req, Throwable ex){
+    public Result<?> securityException(HttpServletRequest req, Throwable ex) {
         log.error("[SecurityException]", ex);
         //日志插入
         logClient.sendSecurityLog(req, ex);
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ServerException.class)
-    public Result<?> serverException(HttpServletRequest req, Throwable ex){
+    public Result<?> serverException(HttpServletRequest req, Throwable ex) {
         log.error("[ServerException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ServiceException.class)
-    public Result<?> serviceException(HttpServletRequest req, Throwable ex){
+    public Result<?> serviceException(HttpServletRequest req, Throwable ex) {
         log.error("[ServiceException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ValidateException.class)
-    public Result<?> validateException(HttpServletRequest req, Throwable ex){
+    public Result<?> validateException(HttpServletRequest req, Throwable ex) {
         log.error("[ValidateException]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public Result<?> exceptionHandler(HttpServletRequest req, Throwable ex){
+    public Result<?> exceptionHandler(HttpServletRequest req, Throwable ex) {
         log.error("[Exception]", ex);
         //日志插入
         logClient.sendErrorLog(req, ex);

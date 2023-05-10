@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.doc;
+package com.xxd.sugarcoat.support.doc;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

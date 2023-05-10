@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.dev.doc;
+package com.xxd.sugarcoat.support.doc;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

@@ -2,6 +2,9 @@ server:
   port: 8889
   servlet:
     context-path: /sugarcoat
+
+#localhost:8889/sugarcoat/doc.html
+
 spring:
   application:
     name: sugarcoat
@@ -62,12 +65,22 @@ spring:
 
 springdoc:
   #这里定义了两个分组，可定义多个，也可以不定义
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
   group-configs:
     - group: 1.演示模块
       packages-to-scan: com.xxd.sugarcoat
   swagger-ui:
+    enabled: true
+    path: /swagger-ui
     # 禁止默认路径
     disable-swagger-default-url: true
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
 
 # 日志配置
 logging:
@@ -97,6 +110,16 @@ sugarcoat:
       timeout: 3000
       # 发布和订阅连接池大小
       subscriptionConnectionPoolSize: 50
---- # redis 单机配置(单机与集群只能开启一个另一个需要注释掉)
+# redis 单机配置(单机与集群只能开启一个另一个需要注释掉)
+  swagger:
+    title: sugarcoat开发平台
+    description: ""
+    version: 1.0
+    url: ""
+    email: ""
+    license: MIT
+    license-url: ""
+
+
 
 

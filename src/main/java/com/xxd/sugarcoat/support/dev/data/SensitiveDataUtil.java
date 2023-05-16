@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.devUndo.data;
+package com.xxd.sugarcoat.support.dev.data;
 
 /**
  * @author xxd

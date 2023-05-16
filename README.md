@@ -5,7 +5,7 @@
 springboot
 undertow
 lombok
-hutool
+hutool工具类
 权限框架：springSecurity
 文档框架：knife4j spring-doc
 持久化：mybatis-plus

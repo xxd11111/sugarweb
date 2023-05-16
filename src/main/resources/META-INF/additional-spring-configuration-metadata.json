@@ -44,5 +44,40 @@
       "name": "sugarcoat.cache.singleServerConfig.subscriptionConnectionPoolSize",
       "type": "java.lang.String",
       "description": "Description for sugarcoat.cache.singleServerConfig.subscriptionConnectionPoolSize."
+    },
+    {
+      "name": "sugarcoat.swagger.title",
+      "type": "java.lang.String",
+      "description": "Description for sugarcoat.swagger.title."
+    },
+    {
+      "name": "sugarcoat.swagger.description",
+      "type": "java.lang.String",
+      "description": "Description for sugarcoat.swagger.description."
+    },
+    {
+      "name": "sugarcoat.swagger.version",
+      "type": "java.lang.String",
+      "description": "Description for sugarcoat.swagger.version."
+    },
+    {
+      "name": "sugarcoat.swagger.url",
+      "type": "java.lang.String",
+      "description": "Description for sugarcoat.swagger.url."
+    },
+    {
+      "name": "sugarcoat.swagger.email",
+      "type": "java.lang.String",
+      "description": "Description for sugarcoat.swagger.email."
+    },
+    {
+      "name": "sugarcoat.swagger.license",
+      "type": "java.lang.String",
+      "description": "Description for sugarcoat.swagger.license."
+    },
+    {
+      "name": "sugarcoat.swagger.license-url",
+      "type": "java.lang.String",
+      "description": "Description for sugarcoat.swagger.license-url."
     }
   ] }

@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.devUndo.tenant;
+package com.xxd.sugarcoat.support.dev.tenant;
 
 /**
  * @author xxd

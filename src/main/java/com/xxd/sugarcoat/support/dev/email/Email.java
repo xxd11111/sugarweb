@@ -1,4 +1,4 @@
-package com.xxd.sugarcoat.support.devUndo.email;
+package com.xxd.sugarcoat.support.dev.email;
 
 /**
  * @author xxd

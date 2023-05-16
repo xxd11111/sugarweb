@@ -8,6 +8,8 @@ server:
 spring:
   application:
     name: sugarcoat
+  jackson:
+    time-zone: GMT+8
   # 连接数据库
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

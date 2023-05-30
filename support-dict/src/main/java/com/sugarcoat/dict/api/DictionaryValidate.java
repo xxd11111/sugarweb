@@ -1,4 +1,4 @@
-package com.sugarcoat.dict.valid;
+package com.sugarcoat.dict.api;
 
 import com.sugarcoat.protocol.enums.EnumValidator;
 
@@ -7,11 +7,11 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * TODO
+ * 字典校验注解
  *
  * @author xxd
  * @version 1.0
- * @date 2023/5/6
+ * @date 2023/5/29
  */
 @Target({
         ElementType.METHOD,
@@ -26,21 +26,13 @@ import java.lang.annotation.*;
 @Constraint(
         validatedBy = EnumValidator.class
 )
-public @interface Dictionary {
-
+public @interface DictionaryValidate {
     /**
      * 字典组code
      */
-    String value();
+    String dictionaryGroupCode();
 
-    /**
-     * 集成了字典功能的class
-     */
-    Class<?> dictGroupClass();
-
-    String message() default "{fieldName}必须在指定范围 {codes}";
-
-    String fieldName() default "";
+    String message() default "";
 
     Class<?>[] groups() default {};
 

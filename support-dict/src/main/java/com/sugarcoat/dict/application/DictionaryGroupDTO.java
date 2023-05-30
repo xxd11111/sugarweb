@@ -1,4 +1,4 @@
-package com.sugarcoat.dict.api;
+package com.sugarcoat.dict.application;
 
 import lombok.Data;
 
@@ -10,10 +10,10 @@ import java.util.List;
  * @date 2023/4/19 23:21
  */
 @Data
-public class DictDTO {
+public class DictionaryGroupDTO {
     private String id;
     private String groupCode;
     private String groupName;
-    private List<DictItemDTO> dictItemDTOList;
+    private List<DictionaryDTO> dictionaryDTOList;
 
 }

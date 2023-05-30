@@ -1,0 +1,16 @@
+package com.sugarcoat.dict.api;
+
+/**
+ * 字典
+ *
+ * @author xxd
+ * @version 1.0
+ * @date 2023/5/29
+ */
+public interface Dictionary {
+
+    String getDictionaryCode();
+
+    String getDictionaryName();
+
+}

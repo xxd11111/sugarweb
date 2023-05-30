@@ -9,5 +9,5 @@ import com.sugarcoat.orm.api.BaseRepository;
  * @version 1.0
  * @date 2023/4/25
  */
-public interface DictItemRepository extends BaseRepository<DictItem> {
+public interface SugarcoatDictionaryRepository extends BaseRepository<SugarcoatDictionary> {
 }

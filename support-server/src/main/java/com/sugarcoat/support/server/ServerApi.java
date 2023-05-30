@@ -1,10 +1,11 @@
 package com.sugarcoat.support.server;
 
-import com.sugarcoat.orm.BaseEntity;
+import com.sugarcoat.orm.EntityExt;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 /**
@@ -17,7 +18,10 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class ServerApi extends BaseEntity {
+public class ServerApi extends EntityExt {
+
+    @Id
+    private String id;
 
     private String name;
 

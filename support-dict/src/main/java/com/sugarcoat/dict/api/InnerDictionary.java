@@ -3,7 +3,7 @@ package com.sugarcoat.dict.api;
 import java.lang.annotation.*;
 
 /**
- * TODO
+ * 枚举字典
  *
  * @author xxd
  * @version 1.0
@@ -12,5 +12,6 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface DictCode {
+public @interface InnerDictionary {
+
 }

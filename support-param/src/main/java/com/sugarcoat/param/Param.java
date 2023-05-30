@@ -1,10 +1,11 @@
 package com.sugarcoat.param;
 
-import com.sugarcoat.orm.BaseEntity;
+import com.sugarcoat.orm.EntityExt;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 /**
@@ -16,7 +17,9 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-public class Param extends BaseEntity {
+public class Param extends EntityExt {
+    @Id
+    private String id;
     private String code;
     private String name;
     private String value;

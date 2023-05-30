@@ -1,4 +1,4 @@
-package com.sugarcoat.dict.api;
+package com.sugarcoat.dict.application;
 
 import lombok.Data;
 

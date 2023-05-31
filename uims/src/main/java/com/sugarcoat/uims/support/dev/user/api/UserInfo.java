@@ -1,8 +1,9 @@
 package com.sugarcoat.uims.support.dev.user.api;
 
 /**
+ * 用户信息
+ *
  * @author xxd
- * @description 账号
  * @date 2022-12-16
  */
 public interface UserInfo {
@@ -11,7 +12,9 @@ public interface UserInfo {
 
     String getUsername();
 
-    String getPassword();
+    boolean checkCertificate(String certificate);
+
+    String getUserType();
 
     boolean isAdmin();
 

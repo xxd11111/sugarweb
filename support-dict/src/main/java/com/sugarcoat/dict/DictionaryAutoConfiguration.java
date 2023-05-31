@@ -1,5 +1,6 @@
 package com.sugarcoat.dict;
 
+import com.sugarcoat.dict.api.DictionaryClient;
 import com.sugarcoat.dict.application.DictionaryService;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryGroupRepository;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryRepository;
@@ -16,30 +17,18 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 public class DictionaryAutoConfiguration {
-    //集群模式钩子
 
-    //挂在字典策略(unModify)
-
-    //注册集群监听器
-
-    //注册缓存监听器
-
-    //加载innerDictionary
-
-    //加载dbDictionary
-
-    //冲突检测
-
-    //冲突策略
-
-    //缓存初始化
-
-    //异常终止钩子
     @Bean
     @ConditionalOnMissingBean
     public DictionaryService dictService(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository,
                                          SugarcoatDictionaryRepository sugarcoatDictionaryRepository) {
         return new SugarcoatDictionaryServiceImpl(sugarcoatDictionaryGroupRepository, sugarcoatDictionaryRepository);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DictionaryClient dictionaryClient(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
+        return new SugarcoatDictionaryClient(sugarcoatDictionaryGroupRepository);
     }
 
 }

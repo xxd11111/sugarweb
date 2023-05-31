@@ -1,16 +1,11 @@
 package com.sugarcoat.support.server.api;
 
-import cn.hutool.core.util.StrUtil;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.PageData;
 import com.sugarcoat.protocol.PageParam;
 import com.sugarcoat.support.server.ServerApi;
 import com.sugarcoat.support.server.ServerApiRepository;
-import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.protocol.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 /**
  * TODO

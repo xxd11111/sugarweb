@@ -11,12 +11,12 @@ import java.util.Collection;
  * @description 枚举校验工具
  * @date 2022-11-14
  */
-public class EnumValidator implements ConstraintValidator<InEnum, Serializable> {
+public class EnumValidator implements ConstraintValidator<EnumValidate, String> {
     private final Collection<Serializable> enumCodes = new ArrayList<>();
     private String fieldName;
 
     @Override
-    public void initialize(InEnum annotation) {
+    public void initialize(EnumValidate annotation) {
         this.fieldName = annotation.fieldName();
         EnumValue<?>[] values = annotation.value().getEnumConstants();
         if (values.length > 0) {
@@ -27,11 +27,7 @@ public class EnumValidator implements ConstraintValidator<InEnum, Serializable> 
     }
 
     @Override
-    public boolean isValid(Serializable value, ConstraintValidatorContext context) {
-        // 为空时，默认不校验，即认为通过
-        if (value == null) {
-            return true;
-        }
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         // 校验通过
         if (enumCodes.contains(value)) {
             return true;

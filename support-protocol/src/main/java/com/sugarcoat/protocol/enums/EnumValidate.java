@@ -1,17 +1,13 @@
-package com.sugarcoat.dict.api;
-
-import com.sugarcoat.protocol.enums.EnumValidator;
+package com.sugarcoat.protocol.enums;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * 字典校验注解
- *
  * @author xxd
- * @version 1.0
- * @date 2023/5/29
+ * @description TODO
+ * @date 2022-11-14
  */
 @Target({
         ElementType.METHOD,
@@ -26,13 +22,15 @@ import java.lang.annotation.*;
 @Constraint(
         validatedBy = EnumValidator.class
 )
-public @interface DictionaryValidate {
+public @interface EnumValidate {
     /**
-     * 字典组code
+     * @return 实现 EnumValuable 接口的
      */
-    String groupCode();
+    Class<? extends EnumValue<?>> value();
 
-    String message() default "";
+    String message() default "{fieldName}必须在指定范围 {enumCodes}";
+
+    String fieldName() default "";
 
     Class<?>[] groups() default {};
 

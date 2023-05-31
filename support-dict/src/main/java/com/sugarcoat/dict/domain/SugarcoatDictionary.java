@@ -1,7 +1,7 @@
 package com.sugarcoat.dict.domain;
 
 import com.sugarcoat.dict.api.Dictionary;
-import com.sugarcoat.orm.EntityExt;
+import com.sugarcoat.orm.api.EntityExt;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,6 +29,8 @@ public class SugarcoatDictionary extends EntityExt implements Dictionary {
     private String dictionaryCode;
     @Column(length = 32)
     private String dictionaryName;
+    @Column(length = 32)
+    private String groupCode;
     @Column(length = 32, name = "group_id", insertable = false, updatable = false)
     private String groupId;
     @ToString.Exclude

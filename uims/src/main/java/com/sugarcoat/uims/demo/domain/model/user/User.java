@@ -3,8 +3,6 @@ package com.sugarcoat.uims.demo.domain.model.user;
 import cn.hutool.core.collection.CollUtil;
 import com.sugarcoat.support.server.ServerApi;
 import com.sugarcoat.uims.demo.domain.model.role.Role;
-import com.sugarcoat.uims.support.devUndo.status.AccessUtil;
-import com.sugarcoat.uims.support.devUndo.status.AccessibleEnum;
 import com.sugarcoat.uims.support.dev.user.api.UserInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -29,12 +27,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Entity
 public class User implements UserInfo {
+
     @Id
     private String id;
 
     private String username;
 
     private String password;
+
+    private String userType;
 
     private String salt;
 
@@ -54,7 +55,7 @@ public class User implements UserInfo {
     private Set<ServerApi> serverApis;
 
     @Enumerated(EnumType.STRING)
-    private AccessibleEnum status;
+    private String status;
 
     public Set<String> listRoleCodes() {
         if (CollUtil.isEmpty(roles)) {
@@ -71,7 +72,14 @@ public class User implements UserInfo {
     }
 
     public boolean isAccess() {
-        return AccessUtil.isAccess(status);
+        //todo
+        return "1".equals(status);
+    }
+
+    @Override
+    public boolean checkCertificate(String certificate) {
+        //todo 加密方式问题
+        return certificate.equals(password);
     }
 
     @Override

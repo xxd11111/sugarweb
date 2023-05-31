@@ -1,6 +1,7 @@
 package com.sugarcoat.dict.valid;
 
-import com.sugarcoat.dict.api.DictionaryGroup;
+import cn.hutool.core.util.StrUtil;
+import com.sugarcoat.dict.api.DictHelper;
 import com.sugarcoat.dict.api.DictionaryValidate;
 
 import javax.validation.ConstraintValidator;
@@ -14,19 +15,18 @@ import javax.validation.ConstraintValidatorContext;
  * @date 2023/5/6
  */
 public class DictionaryValidator implements ConstraintValidator<DictionaryValidate, String> {
-    private DictionaryGroup dictionaryGroup;
+    private String groupCode;
 
     @Override
     public void initialize(DictionaryValidate constraintAnnotation) {
-        String groupCode = constraintAnnotation.dictionaryGroupCode();
-        dictionaryGroup = null;
+        groupCode = constraintAnnotation.groupCode();
     }
 
     @Override
-    public boolean isValid(String serializable, ConstraintValidatorContext constraintValidatorContext) {
-        if (dictionaryGroup == null) {
+    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+        if (StrUtil.isEmpty(groupCode) || StrUtil.isEmpty(value)) {
             return false;
         }
-        return dictionaryGroup.existDictionary(serializable);
+        return DictHelper.existDictionary(groupCode, value);
     }
 }

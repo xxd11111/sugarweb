@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server;
 
-import com.sugarcoat.orm.EntityExt;
+import com.sugarcoat.orm.api.EntityExt;
 import lombok.*;
 import org.hibernate.Hibernate;
 

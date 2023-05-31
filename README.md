@@ -27,7 +27,7 @@ hutool工具类
 "monitor	监控组件"
 "orm		持久化封装"
 "oss		文件存储"
-"param	    参数配置"
+"sugarcoatParam	    参数配置"
 "protection	系统保护组件"
 "sms		短信封装"
 "status	    启停状态封装"

@@ -1,4 +1,4 @@
-package com.sugarcoat.support.server;
+package com.sugarcoat.support.server.serverApi;
 
 import com.sugarcoat.orm.api.EntityExt;
 import lombok.*;

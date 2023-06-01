@@ -1,19 +1,27 @@
-package com.sugarcoat.support.server.access;
+package com.sugarcoat.support.server.log;
 
-import lombok.Data;
+import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
+ * 访问日志
+ *
  * @author xxd
- * @description 接口调用日志
  * @date 2022-10-27
  */
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Entity
 public class AccessLog {
     /**
      * 日志 id
      */
+    @Id
     private String id;
     /**
      * 应用名

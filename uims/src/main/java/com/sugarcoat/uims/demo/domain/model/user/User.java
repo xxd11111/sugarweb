@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.demo.domain.model.user;
 
 import cn.hutool.core.collection.CollUtil;
-import com.sugarcoat.support.server.ServerApi;
+import com.sugarcoat.support.server.serverApi.ServerApi;
 import com.sugarcoat.uims.demo.domain.model.role.Role;
 import com.sugarcoat.uims.support.dev.user.api.UserInfo;
 import lombok.Getter;

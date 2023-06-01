@@ -1,14 +1,20 @@
 package com.sugarcoat.dict.application.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.sugarcoat.dict.application.DictQueryVO;
 import com.sugarcoat.dict.application.DictionaryDTO;
 import com.sugarcoat.dict.application.DictionaryGroupDTO;
 import com.sugarcoat.dict.application.DictionaryService;
 import com.sugarcoat.dict.domain.*;
 import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParam;
+import com.sugarcoat.protocol.PageParameter;
 import com.sugarcoat.protocol.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -81,24 +87,22 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 
 
     @Override
-    public PageData<DictionaryGroupDTO> findDictPage(PageParam pageParam, DictQueryVO queryVO) {
-        //QDefaultDictionary dd = QDefaultDictionary;
-        //QDefaultDictionaryGroup dictGroup = QDefaultDictionaryGroup.dictGroup;
-        ////构造分页，按照创建时间降序
-        //PageRequest pageRequest = PageRequest
-        //        .of(pageParam.getPageNum(), pageParam.getPageSize())
-        //        .withSort(Sort.Direction.DESC, dictGroup.createDate.getMetadata().getName());
-        ////条件查询
-        //BooleanExpression expression = Expressions.TRUE;
-        //if (StrUtil.isNotEmpty(queryVO.getGroupName())) {
-        //    expression.and(dictGroup.groupName.like(queryVO.getGroupName(), '/'));
-        //}
-        //if (StrUtil.isNotEmpty(queryVO.getGroupCode())) {
-        //    expression.and(dictGroup.groupCode.eq(queryVO.getGroupCode()));
-        //}
-        //Page<DictDTO> page = dictGroupRepository.findAll(expression, pageRequest).map(this::getDictDTO);
-        //return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
-        return null;
+    public PageData<DictionaryGroupDTO> findDictPage(PageParameter pageParameter, DictQueryVO queryVO) {
+        QSugarcoatDictionaryGroup dictGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
+        //构造分页，按照创建时间降序
+        PageRequest pageRequest = PageRequest
+                .of(pageParameter.getPageNum(), pageParameter.getPageSize())
+                .withSort(Sort.Direction.DESC, dictGroup.createDate.getMetadata().getName());
+        //条件查询
+        BooleanExpression expression = Expressions.TRUE;
+        if (StrUtil.isNotEmpty(queryVO.getGroupName())) {
+            expression.and(dictGroup.groupName.like(queryVO.getGroupName(), '/'));
+        }
+        if (StrUtil.isNotEmpty(queryVO.getGroupCode())) {
+            expression.and(dictGroup.groupCode.eq(queryVO.getGroupCode()));
+        }
+        Page<DictionaryGroupDTO> page = sugarcoatDictionaryGroupRepository.findAll(expression, pageRequest).map(this::getDictDTO);
+        return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
     }
 
     private DictionaryGroupDTO getDictDTO(SugarcoatDictionaryGroup dict) {

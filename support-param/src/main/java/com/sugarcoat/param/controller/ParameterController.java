@@ -4,7 +4,7 @@ import com.sugarcoat.param.application.ParameterDTO;
 import com.sugarcoat.param.application.ParamQueryCmd;
 import com.sugarcoat.param.application.ParameterService;
 import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParam;
+import com.sugarcoat.protocol.PageParameter;
 import com.sugarcoat.protocol.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +47,7 @@ public class ParameterController {
     }
 
     @GetMapping("findPage")
-    public Result<PageData<ParameterDTO>> findPage(PageParam pageParam, ParamQueryCmd queryVO) {
-        return Result.data(parameterService.findPage(pageParam, queryVO));
+    public Result<PageData<ParameterDTO>> findPage(PageParameter pageParameter, ParamQueryCmd queryVO) {
+        return Result.data(parameterService.findPage(pageParameter, queryVO));
     }
 }

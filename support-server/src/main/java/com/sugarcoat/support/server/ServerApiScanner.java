@@ -1,5 +1,6 @@
 package com.sugarcoat.support.server;
 
+import com.sugarcoat.support.server.serverApi.ServerApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;

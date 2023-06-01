@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server;
 
-import com.sugarcoat.support.server.api.ServerApiService;
-import com.sugarcoat.support.server.api.DefaultServerApiServiceImpl;
+import com.sugarcoat.support.server.serverApi.ServerApiService;
+import com.sugarcoat.support.server.serverApi.ServerApiServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +16,6 @@ public class ServerAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public ServerApiService serverApiService(ServerApiRepository serverApiRepository){
-        return new DefaultServerApiServiceImpl(serverApiRepository);
+        return new ServerApiServiceImpl(serverApiRepository);
     }
 }

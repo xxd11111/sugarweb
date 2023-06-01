@@ -11,7 +11,7 @@ import javax.validation.constraints.Min;
  * @date 2022-11-13
  */
 @Data
-public class PageParam {
+public class PageParameter {
 
     private static final Integer PAGE_NUM = 1;
     private static final Integer PAGE_SIZE = 10;

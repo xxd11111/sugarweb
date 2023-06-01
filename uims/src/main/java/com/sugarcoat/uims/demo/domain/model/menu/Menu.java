@@ -1,7 +1,6 @@
 package com.sugarcoat.uims.demo.domain.model.menu;
 
-import com.sugarcoat.support.server.ServerApi;
-import com.sugarcoat.uims.support.devUndo.status.AccessibleEnum;
+import com.sugarcoat.support.server.serverApi.ServerApi;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -61,8 +60,7 @@ public class Menu {
     /**
      * 状态
      */
-    @Enumerated(EnumType.STRING)
-    private AccessibleEnum status;
+    private String status;
 
     @Override
     public boolean equals(Object o) {

@@ -1,7 +1,6 @@
 package com.sugarcoat.uims.demo.domain.model.role;
 
 import com.sugarcoat.uims.demo.domain.model.menu.Menu;
-import com.sugarcoat.uims.support.devUndo.status.AccessibleEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -30,8 +29,7 @@ public class Role {
     @Transient
     private Collection<Menu> menus;
 
-    @Enumerated(EnumType.STRING)
-    private AccessibleEnum status;
+    private String status;
 
     @Override
     public boolean equals(Object o) {

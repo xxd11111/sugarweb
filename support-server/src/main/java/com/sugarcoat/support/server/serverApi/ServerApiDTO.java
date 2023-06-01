@@ -1,4 +1,4 @@
-package com.sugarcoat.support.server.api;
+package com.sugarcoat.support.server.serverApi;
 
 import lombok.Data;
 

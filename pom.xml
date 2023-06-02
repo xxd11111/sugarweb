@@ -17,6 +17,7 @@
         <module>support-param</module>
         <module>support-protocol</module>
         <module>uims</module>
+        <module>support-oss</module>
     </modules>
 
     <name>${project.artifactId}</name>

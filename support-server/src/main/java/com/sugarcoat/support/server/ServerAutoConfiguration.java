@@ -1,5 +1,6 @@
 package com.sugarcoat.support.server;
 
+import com.sugarcoat.support.server.serverApi.ServerApiRepository;
 import com.sugarcoat.support.server.serverApi.ServerApiService;
 import com.sugarcoat.support.server.serverApi.ServerApiServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

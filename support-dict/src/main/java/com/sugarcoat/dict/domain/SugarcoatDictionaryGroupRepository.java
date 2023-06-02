@@ -1,6 +1,6 @@
 package com.sugarcoat.dict.domain;
 
-import com.sugarcoat.orm.api.BaseRepository;
+import com.sugarcoat.orm.api.SugarcoatRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
  * @date 2023/3/20
  */
 @Repository
-public interface SugarcoatDictionaryGroupRepository extends BaseRepository<SugarcoatDictionaryGroup> {
+public interface SugarcoatDictionaryGroupRepository extends SugarcoatRepository<SugarcoatDictionaryGroup> {
 
 }

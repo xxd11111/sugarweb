@@ -2,15 +2,11 @@ package com.sugarcoat.support.server;
 
 import com.sugarcoat.protocol.HttpCode;
 import com.sugarcoat.protocol.Result;
-import com.sugarcoat.protocol.exception.*;
 import com.sugarcoat.protocol.exception.SecurityException;
-import com.sugarcoat.support.server.log.AccessLogService;
-import com.sugarcoat.support.server.log.AccessLogServiceImpl;
-import com.sugarcoat.support.server.log.ErrorLogEvent;
-import com.sugarcoat.support.server.log.ErrorLogPublisher;
+import com.sugarcoat.protocol.exception.*;
+import com.sugarcoat.support.server.log.error.ErrorLogPublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -18,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author xxd
- * @description 全局异常拦截（只做基础异常拦截，其余自行实现）
+ * @description 全局异常拦截
  * @date 2022-10-27
  */
 
@@ -26,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 @AllArgsConstructor
 public class GlobalExceptionHandler {
-    
+
     private final ErrorLogPublisher errorLogPublisher;
 
     @ExceptionHandler(FrameworkException.class)

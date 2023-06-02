@@ -7,11 +7,13 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
+ * 实体类信息补充，新增，更新
+ *
  * @author xxd
- * @description 基础实体类
  * @date 2022-11-12
  */
 @Getter
@@ -24,17 +26,14 @@ public class EntityExt {
     private String createBy;
 
     @CreatedDate
-    private Date createDate;
+    private LocalDateTime createDate;
 
     @LastModifiedBy
     @Column(length = 32)
     private String updateBy;
 
     @LastModifiedDate
-    private Date updateDate;
-
-    @Column(length = 1)
-    private String delFlag;
+    private LocalDateTime updateDate;
 
     @Override
     public int hashCode() {

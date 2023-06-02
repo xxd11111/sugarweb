@@ -2,13 +2,14 @@ package com.sugarcoat.protocol;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author xxd
- * @description TODO
+ * @description 分页数据
  * @date 2022-11-13
  */
 @Getter
@@ -44,5 +45,9 @@ public class PageData<T> {
 
     public static <T> PageData<T> empty() {
         return new PageData<>(new ArrayList<>(), 0, 0, 0);
+    }
+
+    public static <T> PageData<T> of(Page<T> page) {
+        return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
     }
 }

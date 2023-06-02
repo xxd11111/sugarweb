@@ -5,7 +5,7 @@ import com.sugarcoat.protocol.PageData;
 import com.sugarcoat.protocol.PageParameter;
 
 /**
- * 日志服务
+ * 接口服务
  * @author xxd
  * @version 1.0
  * @date 2023/3/13

@@ -2,6 +2,7 @@ package com.sugarcoat.dict;
 
 import com.sugarcoat.dict.api.DictionaryClient;
 import com.sugarcoat.dict.application.DictionaryService;
+import com.sugarcoat.dict.domain.SugarcoatDictionaryClient;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryGroupRepository;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryRepository;
 import com.sugarcoat.dict.application.impl.SugarcoatDictionaryServiceImpl;

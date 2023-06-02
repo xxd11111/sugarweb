@@ -5,16 +5,15 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.orm.api.ExpressionWrapper;
 import com.sugarcoat.protocol.PageData;
 import com.sugarcoat.protocol.PageParameter;
-import com.sugarcoat.support.server.QServerApi;
-import com.sugarcoat.support.server.ServerApiRepository;
 import com.sugarcoat.protocol.exception.ValidateException;
+import com.sugarcoat.support.server.QServerApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 /**
- * TODO
+ * 接口服务
  *
  * @author xxd
  * @version 1.0
@@ -55,9 +54,18 @@ public class ServerApiServiceImpl implements ServerApiService {
                 .and(StrUtil.isNotEmpty(queryVO.getStatus()), serverApi.status.eq(queryVO.getStatus()))
                 .and(StrUtil.isNotEmpty(queryVO.getMethodType()), serverApi.methodType.eq(queryVO.getMethodType()))
                 .build();
-        Page<ServerApi> page = serverApiRepository.findAll(expression, pageRequest);
-        //return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
-        return null;
+        Page<ServerApiDTO> page = serverApiRepository.findAll(expression, pageRequest).map(entity -> {
+            ServerApiDTO serverApiDTO = new ServerApiDTO();
+            serverApiDTO.setId(entity.getId());
+            serverApiDTO.setCode(entity.getCode());
+            serverApiDTO.setName(entity.getName());
+            serverApiDTO.setUrl(entity.getUrl());
+            serverApiDTO.setRemark(entity.getRemark());
+            serverApiDTO.setStatus(entity.getStatus());
+            serverApiDTO.setMethodType(entity.getMethodType());
+            return serverApiDTO;
+        });
+        return PageData.of(page);
     }
 
 }

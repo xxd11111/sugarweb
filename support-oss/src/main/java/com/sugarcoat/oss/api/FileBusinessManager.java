@@ -1,4 +1,4 @@
-package com.sugarcoat.oss;
+package com.sugarcoat.oss.api;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import java.util.List;
  * @author xxd
  * @date 2023/6/2
  */
-public interface FileBusinessClient {
+public interface FileBusinessManager {
 
     void associateFile(String associationId, FileGroup fileGroup, List<String> fileIds);
 

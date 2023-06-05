@@ -1,4 +1,4 @@
-package com.sugarcoat.oss;
+package com.sugarcoat.oss.application;
 
 import com.sugarcoat.orm.api.SugarcoatRepository;
 
@@ -9,6 +9,6 @@ import com.sugarcoat.orm.api.SugarcoatRepository;
  * @version 1.0
  * @date 2023/6/2
  */
-public interface FileRepository extends SugarcoatRepository<FileInfo> {
+public interface FileRepository extends SugarcoatRepository<SugarcoatFileInfo> {
 
 }

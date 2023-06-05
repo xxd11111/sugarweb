@@ -16,11 +16,11 @@ public class ParameterHelper {
         return getInstance().getValue(code);
     }
 
-    private static ParameterClient getInstance() {
+    private static ParameterManager getInstance() {
         return ParameterHelperInner.PARAMETER_CLIENT;
     }
 
     private static class ParameterHelperInner {
-        private static final ParameterClient PARAMETER_CLIENT = SpringUtil.getBean(ParameterClient.class);
+        private static final ParameterManager PARAMETER_CLIENT = SpringUtil.getBean(ParameterManager.class);
     }
 }

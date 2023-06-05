@@ -9,7 +9,7 @@ import java.util.Collection;
  * @version 1.0
  * @date 2023/5/29
  */
-public interface DictionaryClient {
+public interface DictionaryManager {
 
     Dictionary getDictionary(String groupCode, String dictionaryCode);
 

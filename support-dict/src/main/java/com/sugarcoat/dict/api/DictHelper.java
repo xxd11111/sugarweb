@@ -13,7 +13,7 @@ public class DictHelper {
     private DictHelper() {
     }
 
-    private static DictionaryClient getInstance() {
+    private static DictionaryManager getInstance() {
         return DictHelperInner.DICTIONARY_CLIENT;
     }
 
@@ -38,7 +38,7 @@ public class DictHelper {
     }
 
     private static class DictHelperInner {
-        private final static DictionaryClient DICTIONARY_CLIENT = SpringUtil.getBean(DictionaryClient.class);
+        private final static DictionaryManager DICTIONARY_CLIENT = SpringUtil.getBean(DictionaryManager.class);
     }
 
 }

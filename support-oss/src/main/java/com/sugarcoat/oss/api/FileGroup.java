@@ -1,4 +1,4 @@
-package com.sugarcoat.oss;
+package com.sugarcoat.oss.api;
 
 /**
  * 文件业务类型

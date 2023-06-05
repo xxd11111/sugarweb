@@ -1,8 +1,8 @@
 package com.sugarcoat.dict;
 
-import com.sugarcoat.dict.api.DictionaryClient;
+import com.sugarcoat.dict.api.DictionaryManager;
 import com.sugarcoat.dict.application.DictionaryService;
-import com.sugarcoat.dict.domain.SugarcoatDictionaryClient;
+import com.sugarcoat.dict.domain.SugarcoatDictionaryManager;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryGroupRepository;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryRepository;
 import com.sugarcoat.dict.application.impl.SugarcoatDictionaryServiceImpl;
@@ -28,8 +28,8 @@ public class DictionaryAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DictionaryClient dictionaryClient(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
-        return new SugarcoatDictionaryClient(sugarcoatDictionaryGroupRepository);
+    public DictionaryManager dictionaryClient(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
+        return new SugarcoatDictionaryManager(sugarcoatDictionaryGroupRepository);
     }
 
 }

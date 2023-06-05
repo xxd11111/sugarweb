@@ -7,7 +7,7 @@ package com.sugarcoat.param.api;
  * @version 1.0
  * @date 2023/5/31
  */
-public interface ParameterClient {
+public interface ParameterManager {
 
     String getValue(String code);
 

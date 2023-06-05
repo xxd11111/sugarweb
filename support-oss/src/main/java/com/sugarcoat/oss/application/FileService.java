@@ -1,5 +1,6 @@
-package com.sugarcoat.oss;
+package com.sugarcoat.oss.application;
 
+import com.sugarcoat.oss.api.FileGroup;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 public interface FileService {
 
-    FileInfo upload(FileGroup fileGroup, MultipartFile multipartFile);
+    SugarcoatFileInfo upload(FileGroup fileGroup, MultipartFile multipartFile);
 
     void download(HttpServletResponse response, FileGroup fileGroup, String fileId);
 

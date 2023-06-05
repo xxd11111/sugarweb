@@ -1,11 +1,8 @@
 package com.sugarcoat.dict.domain;
 
 import com.sugarcoat.dict.api.Dictionary;
-import com.sugarcoat.dict.api.DictionaryClient;
+import com.sugarcoat.dict.api.DictionaryManager;
 import com.sugarcoat.dict.api.DictionaryGroup;
-import com.sugarcoat.dict.domain.QSugarcoatDictionaryGroup;
-import com.sugarcoat.dict.domain.SugarcoatDictionaryGroup;
-import com.sugarcoat.dict.domain.SugarcoatDictionaryGroupRepository;
 
 import java.util.Collection;
 
@@ -16,11 +13,11 @@ import java.util.Collection;
  * @version 1.0
  * @date 2023/5/30
  */
-public class SugarcoatDictionaryClient implements DictionaryClient {
+public class SugarcoatDictionaryManager implements DictionaryManager {
 
     private final SugarcoatDictionaryGroupRepository dictionaryGroupRepository;
 
-    public SugarcoatDictionaryClient(SugarcoatDictionaryGroupRepository dictionaryGroupRepository) {
+    public SugarcoatDictionaryManager(SugarcoatDictionaryGroupRepository dictionaryGroupRepository) {
         this.dictionaryGroupRepository = dictionaryGroupRepository;
     }
 

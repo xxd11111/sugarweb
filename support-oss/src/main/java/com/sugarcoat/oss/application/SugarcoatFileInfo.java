@@ -1,19 +1,29 @@
-package com.sugarcoat.oss;
+package com.sugarcoat.oss.application;
 
-import lombok.Data;
+import com.sugarcoat.oss.api.FileInfo;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 /**
  * 文件信息
  */
-@Data
-public class FileInfo {
+@Entity
+@Getter
+@Setter
+@ToString
+public class SugarcoatFileInfo implements FileInfo {
+
     /**
      * 主键
      */
     @Size(max = 32)
+    @Id
     private String fileId;
 
     /**
@@ -56,5 +66,4 @@ public class FileInfo {
      */
     @Size(max = 32)
     private String fileGroup;
-
 }

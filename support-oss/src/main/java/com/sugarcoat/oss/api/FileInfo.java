@@ -19,6 +19,4 @@ public interface FileInfo {
 
     LocalDateTime getUploadTime();
 
-    //String getAssociationId();
-
 }

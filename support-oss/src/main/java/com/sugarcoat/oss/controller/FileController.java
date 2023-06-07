@@ -30,23 +30,23 @@ public class FileController {
     @GetMapping("download")
     public void download(HttpServletResponse response, FileCmd fileCmd) {
         //ServletRequestAttributes response = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        fileService.download(response, fileCmd::getFileGroup, fileCmd.getFileId());
+        fileService.download(response, fileCmd.getFileGroup(), fileCmd.getFileId());
     }
 
     @PostMapping("upload")
     public Result<SugarcoatFileInfo> upload(MultipartFile multipartFile, String fileGroup) {
-        return Result.data(fileService.upload(() -> fileGroup, multipartFile));
+        return Result.data(fileService.upload(fileGroup, multipartFile));
     }
 
-    @PostMapping("upload")
+    @PostMapping("batchRemove")
     public Result<Void> remove(String fileGroup, Set<String> fileIds) {
-        fileService.remove(() -> fileGroup, fileIds);
+        fileService.remove(fileGroup, fileIds);
         return Result.ok();
     }
 
-    @PostMapping("upload")
+    @PostMapping("remove")
     public Result<Void> remove(String fileGroup, String fileId) {
-        fileService.remove(() -> fileGroup, fileId);
+        fileService.remove(fileGroup, fileId);
         return Result.ok();
     }
 }

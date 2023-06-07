@@ -3,7 +3,7 @@ package com.sugarcoat.oss.api;
 import java.io.InputStream;
 
 /**
- * TODO
+ * 文件客户端
  *
  * @author xxd
  * @version 1.0
@@ -13,7 +13,7 @@ public interface FileClient {
 
     void createBucket();
 
-    UploadResult upload(String path, InputStream inputStream, String contentType);
+    void upload(String path, InputStream inputStream, String contentType);
 
     InputStream getContent(String fileUrl);
 

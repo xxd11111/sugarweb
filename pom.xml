@@ -18,6 +18,7 @@
         <module>support-protocol</module>
         <module>uims</module>
         <module>support-oss</module>
+        <module>support-sms</module>
     </modules>
 
     <name>${project.artifactId}</name>

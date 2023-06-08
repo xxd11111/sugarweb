@@ -38,7 +38,7 @@ public class S3FileClient implements FileClient {
             client.createBucket(createBucketRequest);
             //client.setBucketPolicy();
         } catch (Exception e) {
-            throw new FrameworkException("创建Bucket失败, 请核对配置信息:[" + e.getMessage() + "]");
+            throw new FrameworkException("创建Bucket失败, message:{}",e.getMessage());
         }
     }
 
@@ -52,7 +52,6 @@ public class S3FileClient implements FileClient {
             metadata.setContentType(contentType);
             metadata.setContentLength(inputStream.available());
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, path, inputStream, metadata);
-            // 设置上传对象的 Acl 为公共读
             putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
             client.putObject(putObjectRequest);
         } catch (Exception e) {

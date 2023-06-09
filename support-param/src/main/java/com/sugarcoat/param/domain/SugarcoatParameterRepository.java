@@ -1,6 +1,6 @@
 package com.sugarcoat.param.domain;
 
-import com.sugarcoat.orm.api.SugarcoatRepository;
+import com.sugarcoat.orm.SugarcoatRepository;
 
 /**
  * 参数仓库

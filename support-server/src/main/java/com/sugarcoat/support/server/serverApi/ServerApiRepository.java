@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server.serverApi;
 
-import com.sugarcoat.orm.api.SugarcoatRepository;
+import com.sugarcoat.orm.SugarcoatRepository;
 
 /**
  * @author xxd

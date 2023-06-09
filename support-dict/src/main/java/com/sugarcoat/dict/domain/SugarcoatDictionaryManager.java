@@ -1,8 +1,8 @@
 package com.sugarcoat.dict.domain;
 
-import com.sugarcoat.dict.api.Dictionary;
-import com.sugarcoat.dict.api.DictionaryManager;
-import com.sugarcoat.dict.api.DictionaryGroup;
+import com.sugarcoat.api.dict.Dictionary;
+import com.sugarcoat.api.dict.DictionaryManager;
+import com.sugarcoat.api.dict.DictionaryGroup;
 
 import java.util.Collection;
 

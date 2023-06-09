@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server.log.error;
 
-import com.sugarcoat.orm.api.SugarcoatRepository;
+import com.sugarcoat.orm.SugarcoatRepository;
 
 /**
  * 异常日志仓库

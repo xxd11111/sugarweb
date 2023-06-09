@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>support-sugarcoatParam</artifactId>
+    <artifactId>support-param</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -21,12 +21,6 @@
             <groupId>com.xxd</groupId>
             <artifactId>support-orm</artifactId>
             <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.xxd</groupId>
-            <artifactId>support-protocol</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

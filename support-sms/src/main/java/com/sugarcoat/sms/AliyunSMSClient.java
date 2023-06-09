@@ -4,12 +4,12 @@ import cn.hutool.core.util.ArrayUtil;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.*;
 import com.aliyun.teaopenapi.models.Config;
-import com.sugarcoat.sms.api.SMSClient;
+import com.sugarcoat.api.sms.SMSClient;
 import com.sugarcoat.sms.exception.SmsException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * TODO
+ * 阿里云sms客户端
  *
  * @author xxd
  * @version 1.0

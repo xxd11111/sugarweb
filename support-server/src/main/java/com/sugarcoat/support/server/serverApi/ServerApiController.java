@@ -1,11 +1,8 @@
 package com.sugarcoat.support.server.serverApi;
 
-import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParameter;
-import com.sugarcoat.protocol.Result;
-import com.sugarcoat.support.server.serverApi.ServerApiQueryVO;
-import com.sugarcoat.support.server.serverApi.ServerApiService;
-import com.sugarcoat.support.server.serverApi.ServerApiDTO;
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,6 @@
 package com.sugarcoat.oss.application;
 
-import com.sugarcoat.orm.api.SugarcoatRepository;
+import com.sugarcoat.orm.SugarcoatRepository;
 
 /**
  * 文件信息仓库

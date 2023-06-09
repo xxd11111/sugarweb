@@ -1,6 +1,6 @@
 package com.sugarcoat.sms;
 
-import com.sugarcoat.sms.api.SMSClient;
+import com.sugarcoat.api.sms.SMSClient;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -9,7 +9,7 @@ import com.tencentcloudapi.sms.v20190711.SmsClient;
 import com.tencentcloudapi.sms.v20190711.models.*;
 
 /**
- * TODO
+ * 腾讯sms客户端
  *
  * @author xxd
  * @version 1.0

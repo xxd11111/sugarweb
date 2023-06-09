@@ -1,6 +1,6 @@
 package com.sugarcoat.oss.application;
 
-import com.sugarcoat.oss.api.FileInfo;
+import com.sugarcoat.api.oss.FileInfo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

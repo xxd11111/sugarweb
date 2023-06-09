@@ -1,7 +1,7 @@
 package com.sugarcoat.dict.application;
 
-import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParameter;
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
 
 import java.util.Set;
 

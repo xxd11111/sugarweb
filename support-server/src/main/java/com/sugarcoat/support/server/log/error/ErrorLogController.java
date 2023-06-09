@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server.log.error;
 
-import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParameter;
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

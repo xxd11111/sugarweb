@@ -1,7 +1,7 @@
 package com.sugarcoat.param.domain;
 
-import com.sugarcoat.orm.api.EntityExt;
-import com.sugarcoat.param.api.Parameter;
+import com.sugarcoat.orm.EntityExt;
+import com.sugarcoat.api.param.Parameter;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

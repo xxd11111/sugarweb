@@ -3,7 +3,7 @@ package com.sugarcoat.oss.controller;
 import com.sugarcoat.oss.application.FileCmd;
 import com.sugarcoat.oss.application.FileService;
 import com.sugarcoat.oss.application.SugarcoatFileInfo;
-import com.sugarcoat.protocol.Result;
+import com.sugarcoat.api.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

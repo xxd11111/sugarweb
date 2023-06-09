@@ -1,8 +1,8 @@
 package com.sugarcoat.support.server.serverApi;
 
 
-import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParameter;
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
 
 /**
  * 接口服务

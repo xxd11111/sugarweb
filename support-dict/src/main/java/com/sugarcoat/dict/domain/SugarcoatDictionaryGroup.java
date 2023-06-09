@@ -1,7 +1,7 @@
 package com.sugarcoat.dict.domain;
 
-import com.sugarcoat.dict.api.DictionaryGroup;
-import com.sugarcoat.orm.api.EntityExt;
+import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.orm.EntityExt;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

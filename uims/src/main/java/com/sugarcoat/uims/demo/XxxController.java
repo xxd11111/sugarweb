@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.demo;
 
-import com.sugarcoat.protocol.Result;
+import com.sugarcoat.api.common.Result;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

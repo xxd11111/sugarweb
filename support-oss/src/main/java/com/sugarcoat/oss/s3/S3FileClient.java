@@ -3,8 +3,8 @@ package com.sugarcoat.oss.s3;
 import cn.hutool.core.io.IoUtil;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.sugarcoat.oss.api.FileClient;
-import com.sugarcoat.protocol.exception.FrameworkException;
+import com.sugarcoat.api.oss.FileClient;
+import com.sugarcoat.api.exception.FrameworkException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 

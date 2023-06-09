@@ -1,9 +1,9 @@
 package com.sugarcoat.support.server;
 
-import com.sugarcoat.protocol.HttpCode;
-import com.sugarcoat.protocol.Result;
-import com.sugarcoat.protocol.exception.SecurityException;
-import com.sugarcoat.protocol.exception.*;
+import com.sugarcoat.api.common.HttpCode;
+import com.sugarcoat.api.common.Result;
+import com.sugarcoat.api.exception.SecurityException;
+import com.sugarcoat.api.exception.*;
 import com.sugarcoat.support.server.log.error.ErrorLogPublisher;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -21,10 +21,5 @@
             <artifactId>support-orm</artifactId>
             <version>1.0.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.xxd</groupId>
-            <artifactId>support-protocol</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 </project>

@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server.log.access;
 
-import com.sugarcoat.orm.api.SugarcoatRepository;
+import com.sugarcoat.orm.SugarcoatRepository;
 
 /**
  * 访问日志仓库

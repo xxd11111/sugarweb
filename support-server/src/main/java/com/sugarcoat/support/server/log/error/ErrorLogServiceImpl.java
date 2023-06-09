@@ -1,9 +1,9 @@
 package com.sugarcoat.support.server.log.error;
 
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParameter;
-import com.sugarcoat.protocol.exception.ValidateException;
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.support.server.log.QErrorLog;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

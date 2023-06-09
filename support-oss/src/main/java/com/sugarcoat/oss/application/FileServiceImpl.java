@@ -1,8 +1,8 @@
 package com.sugarcoat.oss.application;
 
 import cn.hutool.core.util.IdUtil;
-import com.sugarcoat.oss.api.FileClient;
-import com.sugarcoat.protocol.exception.ServerException;
+import com.sugarcoat.api.oss.FileClient;
+import com.sugarcoat.api.exception.ServerException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

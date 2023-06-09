@@ -1,8 +1,8 @@
 package com.sugarcoat.dict.valid;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.dict.api.DictHelper;
-import com.sugarcoat.dict.api.DictionaryValidate;
+import com.sugarcoat.api.dict.DictHelper;
+import com.sugarcoat.api.dict.DictionaryValidate;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

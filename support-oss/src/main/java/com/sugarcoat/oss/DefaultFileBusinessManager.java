@@ -1,7 +1,7 @@
 package com.sugarcoat.oss;
 
-import com.sugarcoat.oss.api.FileBusinessManager;
-import com.sugarcoat.oss.api.FileInfo;
+import com.sugarcoat.api.oss.FileBusinessManager;
+import com.sugarcoat.api.oss.FileInfo;
 
 import java.util.List;
 
@@ -15,12 +15,12 @@ import java.util.List;
 public class DefaultFileBusinessManager implements FileBusinessManager {
 
     @Override
-    public void associateFile(String associationId, FileGroup fileGroup, List<String> fileIds) {
+    public void associateFile(String associationId, String fileGroup, List<String> fileIds) {
 
     }
 
     @Override
-    public void separateFile(String associationId, FileGroup fileGroup) {
+    public void separateFile(String associationId, String fileGroup) {
 
     }
 
@@ -30,7 +30,7 @@ public class DefaultFileBusinessManager implements FileBusinessManager {
     }
 
     @Override
-    public List<FileInfo> listAssociationFile(String associationId, FileGroup fileGroup) {
+    public List<FileInfo> listAssociationFile(String associationId, String fileGroup) {
         return null;
     }
 

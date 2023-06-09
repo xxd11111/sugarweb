@@ -1,6 +1,6 @@
 package com.sugarcoat.dict;
 
-import com.sugarcoat.dict.api.DictionaryManager;
+import com.sugarcoat.api.dict.DictionaryManager;
 import com.sugarcoat.dict.application.DictionaryService;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryManager;
 import com.sugarcoat.dict.domain.SugarcoatDictionaryGroupRepository;

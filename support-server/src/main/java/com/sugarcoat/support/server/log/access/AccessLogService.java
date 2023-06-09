@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server.log.access;
 
-import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParameter;
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
 
 /**
  * 访问日志服务

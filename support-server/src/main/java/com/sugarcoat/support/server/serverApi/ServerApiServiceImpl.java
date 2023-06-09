@@ -2,10 +2,12 @@ package com.sugarcoat.support.server.serverApi;
 
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarcoat.orm.api.ExpressionWrapper;
-import com.sugarcoat.protocol.PageData;
-import com.sugarcoat.protocol.PageParameter;
-import com.sugarcoat.protocol.exception.ValidateException;
+import com.sugarcoat.api.common.PageDataAdapt;
+import com.sugarcoat.api.common.PageDataAdaptManager;
+import com.sugarcoat.orm.ExpressionWrapper;
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.support.server.QServerApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -65,7 +67,7 @@ public class ServerApiServiceImpl implements ServerApiService {
             serverApiDTO.setMethodType(entity.getMethodType());
             return serverApiDTO;
         });
-        return PageData.of(page);
+        return PageDataAdaptManager.convert(page, ServerApiDTO.class);
     }
 
 }

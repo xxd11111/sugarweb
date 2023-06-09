@@ -1,7 +1,7 @@
 package com.sugarcoat.sms;
 
 /**
- * TODO
+ * sms自动配置
  *
  * @author xxd
  * @version 1.0

@@ -11,16 +11,17 @@
 
     <artifactId>support-orm</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <dependencies>
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-api</artifactId>
+        </dependency>
+
         <!--Spring Data JPA-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

@@ -1,37 +1,32 @@
 package com.sugarcoat.cache;
 
-import cn.hutool.core.util.StrUtil;
 import org.redisson.api.NameMapper;
 
 /**
  * redis前缀key处理
- *
  */
 public class RedisKeyPrefixMapper implements NameMapper {
 
     private final String prefix;
 
     public RedisKeyPrefixMapper(String prefix) {
-        this.prefix = StrUtil.isBlank(prefix) ? "" : prefix + ":";
+        this.prefix = prefix == null || prefix.isEmpty() ? "" : prefix + ":";
     }
 
     @Override
     public String map(String name) {
-        if (StrUtil.isBlank(name)) {
-            return null;
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("未指定key");
         }
-        if (StrUtil.isNotBlank(prefix) && !name.startsWith(prefix)) {
-            return prefix + name;
-        }
-        return name;
+        return prefix + name;
     }
 
     @Override
     public String unmap(String name) {
-        if (StrUtil.isBlank(name)) {
+        if (name == null || name.isEmpty()) {
             return null;
         }
-        if (StrUtil.isNotBlank(prefix) && name.startsWith(prefix)) {
+        if (prefix != null) {
             return name.substring(prefix.length());
         }
         return name;

@@ -11,16 +11,15 @@
 
     <artifactId>support-email</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <dependencies>
         <!-- Spring Boot 邮件依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-api</artifactId>
         </dependency>
     </dependencies>
 </project>

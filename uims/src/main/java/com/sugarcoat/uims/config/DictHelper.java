@@ -1,6 +1,9 @@
-package com.sugarcoat.api.dict;
+package com.sugarcoat.uims.config;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.sugarcoat.api.dict.Dictionary;
+import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.api.dict.DictionaryManager;
 
 import java.util.Collection;
 

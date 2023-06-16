@@ -1,12 +1,10 @@
 package com.sugarcoat.sms;
 
-import cn.hutool.core.util.ArrayUtil;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.*;
 import com.aliyun.teaopenapi.models.Config;
 import com.sugarcoat.api.sms.SMSClient;
 import com.sugarcoat.sms.exception.SmsException;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * 阿里云sms客户端
@@ -37,10 +35,10 @@ public class AliyunSMSClient implements SMSClient {
 
     @Override
     public void sendMessage(String templateId, String phoneNumber, String[] params) {
-        if (StringUtils.isBlank(phoneNumber)) {
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
             throw new SmsException("目标不能为空");
         }
-        if (ArrayUtil.isEmpty(params)) {
+        if (params == null || params.length == 0) {
             throw new SmsException("参数不能为空");
         }
         //todo params
@@ -58,10 +56,10 @@ public class AliyunSMSClient implements SMSClient {
 
     @Override
     public void sendMessage(String templateId, String[] phoneNumbers, String[] params) {
-        if (ArrayUtil.isEmpty(phoneNumbers)) {
+        if (phoneNumbers == null || phoneNumbers.length == 0) {
             throw new SmsException("目标不能为空");
         }
-        if (ArrayUtil.isEmpty(params)) {
+        if (params == null || params.length == 0) {
             throw new SmsException("参数不能为空");
         }
         //todo params

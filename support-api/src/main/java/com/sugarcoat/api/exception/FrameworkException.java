@@ -1,6 +1,5 @@
 package com.sugarcoat.api.exception;
 
-import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
 /**
@@ -26,7 +25,7 @@ public class FrameworkException extends RuntimeException {
     }
 
     public FrameworkException(String message, Object... objects) {
-        this.message = StrUtil.format(message, objects);
+        this.message = String.format(message, objects);
     }
 
     public FrameworkException(HttpCode httpCode) {

@@ -1,7 +1,6 @@
 package com.sugarcoat.api.dict;
 
 import java.lang.annotation.*;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
  * 枚举字典
@@ -14,6 +13,5 @@ import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface InnerDictionary {
-    AbstractQueuedSynchronizer
     String groupCode();
 }

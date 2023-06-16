@@ -3,13 +3,15 @@ package com.sugarcoat.uims.domain.model.menu;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Collection;
 import java.util.Objects;
 
 /**
+ * TODO
  * @author xxd
- * @description TODO
  * @date 2022-12-07
  */
 @Getter
@@ -22,7 +24,7 @@ public class Menu {
      * 菜单id
      */
     @Id
-    private Long id;
+    private String id;
     /**
      * 菜单搜索索引
      */

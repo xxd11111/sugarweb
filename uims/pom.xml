@@ -12,12 +12,48 @@
     <groupId>com.sugarcoat</groupId>
     <artifactId>uims</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <dependencies>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <scope>provided</scope>
+            <version>5.8.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-cache</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-dict</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-doc</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-email</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-orm</artifactId>
@@ -25,9 +61,29 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <groupId>com.sugarcoat</groupId>
+            <artifactId>support-oss</artifactId>
+            <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-param</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-server</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-sms</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

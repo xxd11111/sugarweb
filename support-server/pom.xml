@@ -11,11 +11,11 @@
 
     <artifactId>support-server</artifactId>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
     <dependencies>
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-orm</artifactId>

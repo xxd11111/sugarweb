@@ -1,6 +1,5 @@
 package com.sugarcoat.api.exception;
 
-import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
 /**
@@ -25,7 +24,7 @@ public class SecurityException extends RuntimeException {
     }
 
     public SecurityException(String message, Object... objects) {
-        this.message = StrUtil.format(message, objects);
+        this.message = String.format(message, objects);
     }
 
     public SecurityException(HttpCode httpCode) {

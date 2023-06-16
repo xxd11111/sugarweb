@@ -1,10 +1,10 @@
 package com.sugarcoat.api.enums;
 
-import cn.hutool.core.comparator.CompareUtil;
-import cn.hutool.core.util.ArrayUtil;
 import com.sugarcoat.api.exception.ValidateException;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -16,7 +16,10 @@ public class EnumUtil {
 
     public static <T extends Serializable, K extends EnumValue<T>> EnumValue<T> getByCode(Class<K> clazz, T code) {
         K[] enumValues = clazz.getEnumConstants();
-        return ArrayUtil.firstMatch(enumValue -> CompareUtil.compare(enumValue.getCode(), code, false) == 0, enumValues);
+        return Arrays.stream(enumValues)
+                .filter(enumValue -> Objects.equals(enumValue.getCode(), code))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("not find"));
     }
 
     public static <T extends Serializable, K extends EnumValue<T>> EnumValue<T> checkByCode(Class<K> clazz, T code) {

@@ -1,7 +1,6 @@
 package com.sugarcoat.cache;
 
 
-import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.spring.starter.RedissonAutoConfigurationCustomizer;
@@ -13,6 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
+
+import java.util.Objects;
 
 /**
  * Redis 配置类
@@ -55,7 +56,7 @@ public class RedisAutoConfiguration {
             //todo 先看看默认的性能和效果如何
 //                    .setCodec(new JsonJacksonCodec(objectMapper));
             RedissonProperties.SingleServerConfig singleServerConfig = redissonProperties.getSingleServerConfig();
-            if (ObjectUtil.isNotNull(singleServerConfig)) {
+            if (Objects.nonNull(singleServerConfig)) {
                 // 使用单机模式
                 config.useSingleServer()
                         //设置redis key前缀
@@ -69,7 +70,7 @@ public class RedisAutoConfiguration {
             }
             // 集群配置方式 参考下方注释
             RedissonProperties.ClusterServersConfig clusterServersConfig = redissonProperties.getClusterServersConfig();
-            if (ObjectUtil.isNotNull(clusterServersConfig)) {
+            if (Objects.nonNull(clusterServersConfig)) {
                 config.useClusterServers()
                         //设置redis key前缀
                         .setNameMapper(new RedisKeyPrefixMapper(redissonProperties.getKeyPrefix()))

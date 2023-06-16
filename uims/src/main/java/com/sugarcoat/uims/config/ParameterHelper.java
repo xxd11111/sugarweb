@@ -1,6 +1,7 @@
-package com.sugarcoat.api.param;
+package com.sugarcoat.uims.config;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.sugarcoat.api.param.ParameterManager;
 import lombok.extern.slf4j.Slf4j;
 
 /**

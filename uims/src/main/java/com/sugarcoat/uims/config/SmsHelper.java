@@ -1,6 +1,8 @@
-package com.sugarcoat.api.sms;
+package com.sugarcoat.uims.config;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.sugarcoat.api.sms.MessageTemplate;
+import com.sugarcoat.api.sms.SMSClient;
 
 /**
  * sms帮助文档

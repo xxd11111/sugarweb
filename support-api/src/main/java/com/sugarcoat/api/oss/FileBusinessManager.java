@@ -10,14 +10,14 @@ import java.util.List;
  */
 public interface FileBusinessManager {
 
-    void associateFile(String associationId, String fileGroup, List<String> fileIds);
+	void associateFile(String associationId, String fileGroup, List<String> fileIds);
 
-    void separateFile(String associationId, String fileGroup);
+	void separateFile(String associationId, String fileGroup);
 
-    void separateAllFile(String associationId);
+	void separateAllFile(String associationId);
 
-    List<FileInfo> listAssociationFile(String associationId, String fileGroup);
+	List<FileInfo> listAssociationFile(String associationId, String fileGroup);
 
-    List<FileInfo> listAllAssociationFile(String associationId);
+	List<FileInfo> listAllAssociationFile(String associationId);
 
 }

@@ -9,8 +9,8 @@ package com.sugarcoat.api.orm;
  */
 public @interface DbEncrypt {
 
-    String encryptType() default "";
+	String encryptType() default "";
 
-    boolean decrypt() default false;
+	boolean decrypt() default false;
 
 }

@@ -8,5 +8,7 @@ package com.sugarcoat.api.sms;
  * @date 2023/6/8
  */
 public interface MessageTemplate {
-    String getTemplateId();
+
+	String getTemplateId();
+
 }

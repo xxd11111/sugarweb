@@ -8,15 +8,16 @@ package com.sugarcoat.api.user;
  */
 public interface UserInfo {
 
-    String getId();
+	String getId();
 
-    String getUsername();
+	String getUsername();
 
-    boolean checkCertificate(String certificate);
+	boolean checkCertificate(String certificate);
 
-    String getUserType();
+	String getUserType();
 
-    boolean isAdmin();
+	boolean isAdmin();
 
-    boolean isSuperAdmin();
+	boolean isSuperAdmin();
+
 }

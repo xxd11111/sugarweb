@@ -1,8 +1,8 @@
 package com.sugarcoat.oss.application;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
 /**
@@ -13,12 +13,12 @@ import java.util.Set;
  */
 public interface FileService {
 
-    SugarcoatFileInfo upload(String fileGroup, MultipartFile multipartFile);
+	SugarcoatFileInfo upload(String fileGroup, MultipartFile multipartFile);
 
-    void download(HttpServletResponse response, String fileGroup, String fileId);
+	void download(HttpServletResponse response, String fileGroup, String fileId);
 
-    void remove(String fileGroup, String fileId);
+	void remove(String fileGroup, String fileId);
 
-    void remove(String fileGroup, Set<String> fileIds);
+	void remove(String fileGroup, Set<String> fileIds);
 
 }

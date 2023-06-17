@@ -7,10 +7,10 @@ package com.sugarcoat.sms.exception;
  */
 public class SmsException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public SmsException(String msg) {
-        super(msg);
-    }
+	public SmsException(String msg) {
+		super(msg);
+	}
 
 }

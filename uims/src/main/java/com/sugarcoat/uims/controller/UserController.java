@@ -7,7 +7,7 @@ import com.sugarcoat.uims.application.dto.UserPageDTO;
 import com.sugarcoat.uims.application.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * @author xxd
@@ -18,30 +18,31 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping("user")
 public class UserController {
 
-    private UserService userService;
+	private UserService userService;
 
-    @GetMapping("{id}")
-    public Result findOne(@NotBlank @PathVariable String id) {
-        return null;
-    }
+	@GetMapping("{id}")
+	public Result findOne(@NotBlank @PathVariable String id) {
+		return null;
+	}
 
-    @GetMapping("page")
-    public Result page(@RequestParam UserPageDTO pageDTO) {
-        return null;
-    }
+	@GetMapping("page")
+	public Result page(@RequestParam UserPageDTO pageDTO) {
+		return null;
+	}
 
-    @PostMapping("save")
-    public Result save(@RequestBody UserDTO userDTO) {
-        return null;
-    }
+	@PostMapping("save")
+	public Result save(@RequestBody UserDTO userDTO) {
+		return null;
+	}
 
-    @PostMapping("update")
-    public Result update(@RequestBody UserDTO userDTO) {
-        return null;
-    }
+	@PostMapping("update")
+	public Result update(@RequestBody UserDTO userDTO) {
+		return null;
+	}
 
-    @PostMapping("status")
-    public Result status(@RequestBody StatusDTO statusDTO) {
-        return null;
-    }
+	@PostMapping("status")
+	public Result status(@RequestBody StatusDTO statusDTO) {
+		return null;
+	}
+
 }

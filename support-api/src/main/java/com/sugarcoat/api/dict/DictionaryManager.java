@@ -11,14 +11,14 @@ import java.util.Collection;
  */
 public interface DictionaryManager {
 
-    Dictionary getDictionary(String groupCode, String dictionaryCode);
+	Dictionary getDictionary(String groupCode, String dictionaryCode);
 
-    Collection<? extends Dictionary> getDictionary(String groupCode);
+	Collection<? extends Dictionary> getDictionary(String groupCode);
 
-    DictionaryGroup getDictionaryGroup(String groupCode);
+	DictionaryGroup getDictionaryGroup(String groupCode);
 
-    String getDictionaryName(String groupCode, String dictionaryCode);
+	String getDictionaryName(String groupCode, String dictionaryCode);
 
-    boolean existDictionary(String groupCode, String dictionaryCode);
+	boolean existDictionary(String groupCode, String dictionaryCode);
 
 }

@@ -19,15 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ErrorLogController {
 
-    private final ErrorLogService errorLogService;
+	private final ErrorLogService errorLogService;
 
-    @GetMapping("findOne")
-    public ErrorLog findOne(String id) {
-        return errorLogService.findOne(id);
-    }
+	@GetMapping("findOne")
+	public ErrorLog findOne(String id) {
+		return errorLogService.findOne(id);
+	}
 
-    @GetMapping("findPage")
-    public PageData<ErrorLog> findPage(PageParameter pageParameter, ErrorLogQueryCmd queryCmd) {
-        return errorLogService.findPage(pageParameter, queryCmd);
-    }
+	@GetMapping("findPage")
+	public PageData<ErrorLog> findPage(PageParameter pageParameter, ErrorLogQueryCmd queryCmd) {
+		return errorLogService.findPage(pageParameter, queryCmd);
+	}
+
 }

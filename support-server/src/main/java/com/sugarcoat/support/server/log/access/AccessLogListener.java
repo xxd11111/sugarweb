@@ -15,11 +15,12 @@ import org.springframework.scheduling.annotation.Async;
 @AllArgsConstructor
 public class AccessLogListener implements ApplicationListener<AccessLogEvent> {
 
-    private final AccessLogRepository accessLogRepository;
+	private final AccessLogRepository accessLogRepository;
 
-    @Override
-    public void onApplicationEvent(@NonNull AccessLogEvent event) {
-        AccessLog source = (AccessLog) event.getSource();
-        accessLogRepository.save(source);
-    }
+	@Override
+	public void onApplicationEvent(@NonNull AccessLogEvent event) {
+		AccessLog source = (AccessLog) event.getSource();
+		accessLogRepository.save(source);
+	}
+
 }

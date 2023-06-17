@@ -7,7 +7,7 @@ import com.sugarcoat.uims.application.dto.StatusDTO;
 import com.sugarcoat.uims.application.service.RoleService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * @author xxd
@@ -17,30 +17,32 @@ import javax.validation.constraints.NotBlank;
 @RestController
 @RequestMapping("/role")
 public class RoleController {
-    private RoleService roleService;
 
-    @GetMapping("{id}")
-    public Result findOne(@NotBlank @PathVariable String id) {
-        return null;
-    }
+	private RoleService roleService;
 
-    @GetMapping("page")
-    public Result page(@RequestParam RolePageDTO pageDTO) {
-        return null;
-    }
+	@GetMapping("{id}")
+	public Result findOne(@NotBlank @PathVariable String id) {
+		return null;
+	}
 
-    @PostMapping("save")
-    public Result save(@RequestBody RoleDTO menuDTO) {
-        return null;
-    }
+	@GetMapping("page")
+	public Result page(@RequestParam RolePageDTO pageDTO) {
+		return null;
+	}
 
-    @PostMapping("update")
-    public Result update(@RequestBody RoleDTO menuDTO) {
-        return null;
-    }
+	@PostMapping("save")
+	public Result save(@RequestBody RoleDTO menuDTO) {
+		return null;
+	}
 
-    @PostMapping("status")
-    public Result status(@RequestBody StatusDTO statusDTO) {
-        return null;
-    }
+	@PostMapping("update")
+	public Result update(@RequestBody RoleDTO menuDTO) {
+		return null;
+	}
+
+	@PostMapping("status")
+	public Result status(@RequestBody StatusDTO statusDTO) {
+		return null;
+	}
+
 }

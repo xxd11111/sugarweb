@@ -9,6 +9,6 @@ package com.sugarcoat.api.email;
  */
 public interface EmailClient {
 
-    public void sendEmail(EmailDTO emailDTO);
+	public void sendEmail(EmailDTO emailDTO);
 
 }

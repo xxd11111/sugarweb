@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * @author xxd
@@ -20,26 +20,33 @@ import javax.persistence.*;
 @Setter
 @ToString
 public class SugarcoatDictionary extends EntityExt implements Dictionary {
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(length = 32)
-    private String dictionaryId;
-    @Column(length = 32)
-    private String dictionaryCode;
-    @Column(length = 32)
-    private String dictionaryName;
-    @Column(length = 32)
-    private String groupCode;
-    @Column(length = 32, name = "group_id", insertable = false, updatable = false)
-    private String groupId;
-    @ToString.Exclude
-    @ManyToOne(fetch = javax.persistence.FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private SugarcoatDictionaryGroup dictionaryGroup;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+	@Id
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@Column(length = 32)
+	private String dictionaryId;
+
+	@Column(length = 32)
+	private String dictionaryCode;
+
+	@Column(length = 32)
+	private String dictionaryName;
+
+	@Column(length = 32)
+	private String groupCode;
+
+	@Column(length = 32, name = "group_id", insertable = false, updatable = false)
+	private String groupId;
+
+	@ToString.Exclude
+	@ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
+	@JoinColumn(name = "group_id")
+	private SugarcoatDictionaryGroup dictionaryGroup;
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
+
 }

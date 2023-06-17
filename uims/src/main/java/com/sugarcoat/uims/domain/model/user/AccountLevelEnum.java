@@ -13,11 +13,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AccountLevelEnum implements EnumValue<Integer> {
-    SUPER_ADMIN(0, "管理员"),
-    ADMIN(1, "管理员"),
-    USER(2, "用户"),
-    ANONYMOUS(3, "游客");
 
-    private final Integer code;
-    private final String desc;
+	SUPER_ADMIN(0, "管理员"), ADMIN(1, "管理员"), USER(2, "用户"), ANONYMOUS(3, "游客");
+
+	private final Integer code;
+
+	private final String desc;
+
 }

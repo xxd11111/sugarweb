@@ -9,23 +9,24 @@ package com.sugarcoat.dict;
  */
 public class DictionaryContext {
 
-    //集群模式钩子
+	// 集群模式钩子
 
-    //挂在字典策略(unModify)
+	// 挂在字典策略(unModify)
 
-    //注册集群监听器
+	// 注册集群监听器
 
-    //注册缓存监听器
+	// 注册缓存监听器
 
-    //加载innerDictionary
+	// 加载innerDictionary
 
-    //加载dbDictionary
+	// 加载dbDictionary
 
-    //冲突检测
+	// 冲突检测
 
-    //冲突策略
+	// 冲突策略
 
-    //缓存初始化
+	// 缓存初始化
 
-    //异常终止钩子
+	// 异常终止钩子
+
 }

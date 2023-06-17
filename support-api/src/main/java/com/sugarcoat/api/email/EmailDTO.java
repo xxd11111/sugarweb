@@ -13,10 +13,17 @@ import java.util.List;
  */
 @Data
 public class EmailDTO {
-    private String to;
-    private String from;
-    private String subject;
-    private String text;
-    private List<String> attachment;
-    private List<String> inline;
+
+	private String to;
+
+	private String from;
+
+	private String subject;
+
+	private String text;
+
+	private List<String> attachment;
+
+	private List<String> inline;
+
 }

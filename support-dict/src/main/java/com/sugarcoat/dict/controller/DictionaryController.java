@@ -23,49 +23,51 @@ import java.util.Set;
 @RequestMapping("dictionary")
 @RequiredArgsConstructor
 public class DictionaryController {
-    private final DictionaryService dictionaryService;
 
-    @PostMapping("saveDictionaryGroup")
-    public Result<Void> saveDict(@RequestBody DictionaryGroupDTO dictionaryGroupDTO) {
-        dictionaryService.save(dictionaryGroupDTO);
-        return Result.ok();
-    }
+	private final DictionaryService dictionaryService;
 
-    @PostMapping("saveDictionary")
-    public Result<Void> saveDictItem(@RequestBody DictionaryDTO dictionaryDTO) {
-        dictionaryService.save(dictionaryDTO);
-        return Result.ok();
-    }
+	@PostMapping("saveDictionaryGroup")
+	public Result<Void> saveDict(@RequestBody DictionaryGroupDTO dictionaryGroupDTO) {
+		dictionaryService.save(dictionaryGroupDTO);
+		return Result.ok();
+	}
 
-    @DeleteMapping("removeDictionaryGroup/{groupIds}")
-    public Result<Void> removeDict(@PathVariable Set<String> groupIds) {
-        dictionaryService.removeDictionaryGroup(groupIds);
-        return Result.ok();
-    }
+	@PostMapping("saveDictionary")
+	public Result<Void> saveDictItem(@RequestBody DictionaryDTO dictionaryDTO) {
+		dictionaryService.save(dictionaryDTO);
+		return Result.ok();
+	}
 
-    @DeleteMapping("removeDictionary/{dictionaryIds}")
-    public Result<Void> removeDictionary(@PathVariable Set<String> dictionaryIds) {
-        dictionaryService.removeDictionary(dictionaryIds);
-        return Result.ok();
-    }
+	@DeleteMapping("removeDictionaryGroup/{groupIds}")
+	public Result<Void> removeDict(@PathVariable Set<String> groupIds) {
+		dictionaryService.removeDictionaryGroup(groupIds);
+		return Result.ok();
+	}
 
-    @GetMapping("findDictionaryGroup/{groupId}")
-    public Result<DictionaryGroupDTO> findDictionaryGroup(@PathVariable String groupId) {
-        return Result.data(dictionaryService.findByGroupId(groupId));
-    }
+	@DeleteMapping("removeDictionary/{dictionaryIds}")
+	public Result<Void> removeDictionary(@PathVariable Set<String> dictionaryIds) {
+		dictionaryService.removeDictionary(dictionaryIds);
+		return Result.ok();
+	}
 
-    @GetMapping("findDictionary/{dictionaryId}")
-    public Result<DictionaryDTO> findDictionary(@PathVariable String dictionaryId) {
-        return Result.data(dictionaryService.findByDictionaryId(dictionaryId));
-    }
+	@GetMapping("findDictionaryGroup/{groupId}")
+	public Result<DictionaryGroupDTO> findDictionaryGroup(@PathVariable String groupId) {
+		return Result.data(dictionaryService.findByGroupId(groupId));
+	}
 
-    @GetMapping("findByGroupCode/{groupCode}")
-    public Result<DictionaryGroupDTO> findByGroupCode(@PathVariable String groupCode) {
-        return Result.data(dictionaryService.findByGroupCode(groupCode));
-    }
+	@GetMapping("findDictionary/{dictionaryId}")
+	public Result<DictionaryDTO> findDictionary(@PathVariable String dictionaryId) {
+		return Result.data(dictionaryService.findByDictionaryId(dictionaryId));
+	}
 
-    @GetMapping("findDictionaryPage")
-    public Result<PageData<DictionaryGroupDTO>> findDictPage(PageParameter pageParameter, DictQueryVO queryVO) {
-        return Result.data(dictionaryService.findDictPage(pageParameter, queryVO));
-    }
+	@GetMapping("findByGroupCode/{groupCode}")
+	public Result<DictionaryGroupDTO> findByGroupCode(@PathVariable String groupCode) {
+		return Result.data(dictionaryService.findByGroupCode(groupCode));
+	}
+
+	@GetMapping("findDictionaryPage")
+	public Result<PageData<DictionaryGroupDTO>> findDictPage(PageParameter pageParameter, DictQueryVO queryVO) {
+		return Result.data(dictionaryService.findDictPage(pageParameter, queryVO));
+	}
+
 }

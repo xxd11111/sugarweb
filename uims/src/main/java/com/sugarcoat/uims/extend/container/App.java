@@ -9,19 +9,22 @@ import io.undertow.Undertow;
  */
 public class App {
 
-    private String id;
-    private String appName;
-    private String appUri;
-    private String storageType;
+	private String id;
 
+	private String appName;
 
-    public static void main(String[] args) {
-        for(int i = 8080; i < 8081; i++){
-            int finalI = i;
-            Undertow.builder()
-                    .addHttpListener(i, "localhost")
-                    .setHandler(httpServerExchange -> httpServerExchange.getResponseSender().send("hello:"+ finalI)).build().start();
-        }
+	private String appUri;
 
-    }
+	private String storageType;
+
+	public static void main(String[] args) {
+		for (int i = 8080; i < 8081; i++) {
+			int finalI = i;
+			Undertow.builder().addHttpListener(i, "localhost")
+					.setHandler(httpServerExchange -> httpServerExchange.getResponseSender().send("hello:" + finalI))
+					.build().start();
+		}
+
+	}
+
 }

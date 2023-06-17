@@ -13,20 +13,20 @@ import java.util.Set;
  */
 public interface ParameterService {
 
-    void save(ParameterDTO parameterDTO);
+	void save(ParameterDTO parameterDTO);
 
-    void remove(String id);
+	void remove(String id);
 
-    void reset(String id);
+	void reset(String id);
 
-    ParameterDTO findByCode(String code);
+	ParameterDTO findByCode(String code);
 
-    ParameterDTO findById(String id);
+	ParameterDTO findById(String id);
 
-    PageData<ParameterDTO> findPage(PageParameter pageParameter, ParamQueryCmd cmd);
+	PageData<ParameterDTO> findPage(PageParameter pageParameter, ParamQueryCmd cmd);
 
-    void remove(Set<String> ids);
+	void remove(Set<String> ids);
 
-    void reset(Set<String> ids);
+	void reset(Set<String> ids);
 
 }

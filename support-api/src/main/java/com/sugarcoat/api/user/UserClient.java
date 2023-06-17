@@ -9,6 +9,6 @@ package com.sugarcoat.api.user;
  */
 public interface UserClient {
 
-    UserInfo currentUser();
+	UserInfo currentUser();
 
 }

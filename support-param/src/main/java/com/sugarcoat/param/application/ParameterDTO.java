@@ -11,10 +11,17 @@ import lombok.Data;
  */
 @Data
 public class ParameterDTO {
-    private String id;
-    private String code;
-    private String name;
-    private String value;
-    private String comment;
-    private String defaultValue;
+
+	private String id;
+
+	private String code;
+
+	private String name;
+
+	private String value;
+
+	private String comment;
+
+	private String defaultValue;
+
 }

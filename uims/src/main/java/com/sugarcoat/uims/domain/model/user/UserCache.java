@@ -11,8 +11,13 @@ import java.util.Collection;
  */
 @Data
 public class UserCache {
-    private String userId;
-    private String username;
-    private Collection<String> apis;
-    private Collection<String> roles;
+
+	private String userId;
+
+	private String username;
+
+	private Collection<String> apis;
+
+	private Collection<String> roles;
+
 }

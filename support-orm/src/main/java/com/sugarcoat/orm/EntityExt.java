@@ -6,9 +6,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * 实体类信息补充，新增，更新
@@ -19,24 +18,26 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@MappedSuperclass
+// @MappedSuperclass
 public class EntityExt {
-    @CreatedBy
-    @Column(length = 32)
-    private String createBy;
 
-    @CreatedDate
-    private LocalDateTime createDate;
+	@CreatedBy
+	@Column(length = 32)
+	private String createBy;
 
-    @LastModifiedBy
-    @Column(length = 32)
-    private String updateBy;
+	@CreatedDate
+	private LocalDateTime createDate;
 
-    @LastModifiedDate
-    private LocalDateTime updateDate;
+	@LastModifiedBy
+	@Column(length = 32)
+	private String updateBy;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+	@LastModifiedDate
+	private LocalDateTime updateDate;
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
+
 }

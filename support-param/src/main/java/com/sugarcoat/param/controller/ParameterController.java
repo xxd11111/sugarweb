@@ -21,33 +21,35 @@ import java.util.Set;
 @RequestMapping("param")
 @RequiredArgsConstructor
 public class ParameterController {
-    private final ParameterService parameterService;
 
-    @PostMapping("save")
-    public Result<?> save(@RequestBody ParameterDTO dictDTO) {
-        parameterService.save(dictDTO);
-        return Result.ok();
-    }
+	private final ParameterService parameterService;
 
-    @DeleteMapping("remove/{ids}")
-    public Result<?> remove(@PathVariable Set<String> ids) {
-        parameterService.remove(ids);
-        return Result.ok();
-    }
+	@PostMapping("save")
+	public Result<?> save(@RequestBody ParameterDTO dictDTO) {
+		parameterService.save(dictDTO);
+		return Result.ok();
+	}
 
-    @PostMapping("reset/{ids}")
-    public Result<?> reset(@PathVariable Set<String> ids) {
-        parameterService.reset(ids);
-        return Result.ok();
-    }
+	@DeleteMapping("remove/{ids}")
+	public Result<?> remove(@PathVariable Set<String> ids) {
+		parameterService.remove(ids);
+		return Result.ok();
+	}
 
-    @GetMapping("findOne/{id}")
-    public Result<ParameterDTO> findOne(@PathVariable String id) {
-        return Result.data(parameterService.findById(id));
-    }
+	@PostMapping("reset/{ids}")
+	public Result<?> reset(@PathVariable Set<String> ids) {
+		parameterService.reset(ids);
+		return Result.ok();
+	}
 
-    @GetMapping("findPage")
-    public Result<PageData<ParameterDTO>> findPage(PageParameter pageParameter, ParamQueryCmd queryVO) {
-        return Result.data(parameterService.findPage(pageParameter, queryVO));
-    }
+	@GetMapping("findOne/{id}")
+	public Result<ParameterDTO> findOne(@PathVariable String id) {
+		return Result.data(parameterService.findById(id));
+	}
+
+	@GetMapping("findPage")
+	public Result<PageData<ParameterDTO>> findPage(PageParameter pageParameter, ParamQueryCmd queryVO) {
+		return Result.data(parameterService.findPage(pageParameter, queryVO));
+	}
+
 }

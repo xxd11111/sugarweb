@@ -9,10 +9,10 @@ package com.sugarcoat.api.oss;
  */
 public interface FileBusinessInfo {
 
-    String getFileGroup();
+	String getFileGroup();
 
-    String getAssociationId();
+	String getAssociationId();
 
-    String getFileId();
+	String getFileId();
 
 }

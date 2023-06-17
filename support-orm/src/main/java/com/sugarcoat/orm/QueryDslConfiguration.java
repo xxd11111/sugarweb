@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 /**
  * querydsl配置
@@ -13,8 +13,10 @@ import javax.persistence.EntityManager;
  */
 @Configuration
 public class QueryDslConfiguration {
-    @Bean
-    public JPAQueryFactory jpaQueryFactory(EntityManager em) {
-        return new JPAQueryFactory(em);
-    }
+
+	@Bean
+	public JPAQueryFactory jpaQueryFactory(EntityManager em) {
+		return new JPAQueryFactory(em);
+	}
+
 }

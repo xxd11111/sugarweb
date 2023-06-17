@@ -9,6 +9,9 @@ import lombok.Data;
  */
 @Data
 public class StatusDTO {
-    private String id;
-    private String status;
+
+	private String id;
+
+	private String status;
+
 }

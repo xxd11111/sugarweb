@@ -2,7 +2,6 @@ package com.sugarcoat.support.server.serverApi;
 
 import lombok.Data;
 
-
 /**
  * TODO
  *
@@ -12,17 +11,19 @@ import lombok.Data;
  */
 @Data
 public class ServerApiDTO {
-    private String id;
 
-    private String name;
+	private String id;
 
-    private String code;
+	private String name;
 
-    private String url;
+	private String code;
 
-    private String methodType;
+	private String url;
 
-    private String remark;
+	private String methodType;
 
-    private String status;
+	private String remark;
+
+	private String status;
+
 }

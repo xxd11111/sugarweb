@@ -12,9 +12,10 @@ import org.springframework.context.ApplicationEventPublisher;
 @AllArgsConstructor
 public class AccessLogPublisher {
 
-    private final ApplicationEventPublisher applicationEventPublisher;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishEvent(AccessLogEvent accessLogEvent) {
-        applicationEventPublisher.publishEvent(accessLogEvent);
-    }
+	public void publishEvent(AccessLogEvent accessLogEvent) {
+		applicationEventPublisher.publishEvent(accessLogEvent);
+	}
+
 }

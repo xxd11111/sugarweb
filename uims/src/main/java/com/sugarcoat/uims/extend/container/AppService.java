@@ -1,6 +1,5 @@
 package com.sugarcoat.uims.extend.container;
 
-
 /**
  * @author xxd
  * @description TODO
@@ -8,18 +7,18 @@ package com.sugarcoat.uims.extend.container;
  */
 public interface AppService {
 
-    void loadApp(App app);
+	void loadApp(App app);
 
-    void loadAppByNet(String url);
+	void loadAppByNet(String url);
 
-    void loadAppByLocal(String path);
+	void loadAppByLocal(String path);
 
-    void loadAppByMarket(String markId);
+	void loadAppByMarket(String markId);
 
-    void startApp(String id);
+	void startApp(String id);
 
-    void stopApp(String id);
+	void stopApp(String id);
 
-    void updateApp(String id);
+	void updateApp(String id);
 
 }

@@ -19,15 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AccessLogController {
 
-    private final AccessLogService accessLogService;
+	private final AccessLogService accessLogService;
 
-    @GetMapping("findOne")
-    public AccessLog findOne(String id) {
-        return accessLogService.findOne(id);
-    }
+	@GetMapping("findOne")
+	public AccessLog findOne(String id) {
+		return accessLogService.findOne(id);
+	}
 
-    @GetMapping("findPage")
-    public PageData<AccessLog> findPage(PageParameter pageParameter, AccessLogQueryCmd queryCmd) {
-        return accessLogService.findPage(pageParameter, queryCmd);
-    }
+	@GetMapping("findPage")
+	public PageData<AccessLog> findPage(PageParameter pageParameter, AccessLogQueryCmd queryCmd) {
+		return accessLogService.findPage(pageParameter, queryCmd);
+	}
+
 }

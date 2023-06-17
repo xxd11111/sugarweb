@@ -25,34 +25,29 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3FileConfiguration {
 
-    @Value("${sugarcoat.s3.endpoint}")
-    private String endPoint;
+	@Value("${sugarcoat.s3.endpoint}")
+	private String endPoint;
 
-    @Value("${sugarcoat.s3.accessKey}")
-    private String accessKey;
+	@Value("${sugarcoat.s3.accessKey}")
+	private String accessKey;
 
-    @Value("${sugarcoat.s3.secretKey}")
-    private String secretKey;
+	@Value("${sugarcoat.s3.secretKey}")
+	private String secretKey;
 
-    @Bean
-    public AmazonS3 s3client() {
-        AwsClientBuilder.EndpointConfiguration endpointConfig =
-                new AwsClientBuilder.EndpointConfiguration(endPoint, Region.getRegion(Regions.CN_NORTH_1).getName());
+	@Bean
+	public AmazonS3 s3client() {
+		AwsClientBuilder.EndpointConfiguration endpointConfig = new AwsClientBuilder.EndpointConfiguration(endPoint,
+				Region.getRegion(Regions.CN_NORTH_1).getName());
 
-        AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-        AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
-        ClientConfiguration clientConfig = new ClientConfiguration();
-        //http和https指定
-        clientConfig.setProtocol(Protocol.HTTP);
-        AmazonS3 S3client = AmazonS3Client.builder()
-                .withEndpointConfiguration(endpointConfig)
-                .withClientConfiguration(clientConfig)
-                .withCredentials(awsCredentialsProvider)
-                .disableChunkedEncoding()
-                .withPathStyleAccessEnabled(true)
-                .withForceGlobalBucketAccessEnabled(true)
-                .build();
-        return S3client;
-    }
+		AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+		AWSCredentialsProvider awsCredentialsProvider = new AWSStaticCredentialsProvider(awsCredentials);
+		ClientConfiguration clientConfig = new ClientConfiguration();
+		// http和https指定
+		clientConfig.setProtocol(Protocol.HTTP);
+		AmazonS3 S3client = AmazonS3Client.builder().withEndpointConfiguration(endpointConfig)
+				.withClientConfiguration(clientConfig).withCredentials(awsCredentialsProvider).disableChunkedEncoding()
+				.withPathStyleAccessEnabled(true).withForceGlobalBucketAccessEnabled(true).build();
+		return S3client;
+	}
 
 }

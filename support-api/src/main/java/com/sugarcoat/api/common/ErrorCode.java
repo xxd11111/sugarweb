@@ -6,7 +6,9 @@ package com.sugarcoat.api.common;
  * @date 2022-11-15
  */
 public interface ErrorCode {
-    int getCode();
 
-    String getMsg();
+	int getCode();
+
+	String getMsg();
+
 }

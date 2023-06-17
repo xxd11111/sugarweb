@@ -8,4 +8,5 @@ package com.sugarcoat.sms;
  * @date 2023/6/8
  */
 public class SmsAutoConfiguration {
+
 }

@@ -9,9 +9,11 @@ import java.lang.annotation.*;
  * @version 1.0
  * @date 2023/4/21
  */
-@Target({ElementType.FIELD})
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface InnerDictionary {
-    String groupCode();
+
+	String groupCode();
+
 }

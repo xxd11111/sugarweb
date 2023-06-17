@@ -4,8 +4,8 @@ import com.sugarcoat.orm.EntityExt;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.util.Objects;
 
 /**
@@ -20,31 +20,34 @@ import java.util.Objects;
 @Entity
 public class ServerApi extends EntityExt {
 
-    @Id
-    private String id;
+	@Id
+	private String id;
 
-    private String name;
+	private String name;
 
-    private String code;
+	private String code;
 
-    private String url;
+	private String url;
 
-    private String methodType;
+	private String methodType;
 
-    private String remark;
+	private String remark;
 
-    private String status;
+	private String status;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ServerApi serverApi = (ServerApi) o;
-        return getId() != null && Objects.equals(getId(), serverApi.getId());
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+			return false;
+		ServerApi serverApi = (ServerApi) o;
+		return getId() != null && Objects.equals(getId(), serverApi.getId());
+	}
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
+
 }

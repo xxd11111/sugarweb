@@ -6,7 +6,7 @@ import com.sugarcoat.uims.application.dto.StatusDTO;
 import com.sugarcoat.uims.application.service.ApiService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * @author xxd
@@ -16,21 +16,22 @@ import javax.validation.constraints.NotBlank;
 @RestController
 @RequestMapping("/api")
 public class ApiController {
-    private ApiService apiService;
 
-    @GetMapping("{id}")
-    public Result findOne(@NotBlank @PathVariable String id) {
-        return null;
-    }
+	private ApiService apiService;
 
-    @GetMapping("page")
-    public Result page(@RequestParam ApiPageDTO pageDTO) {
-        return null;
-    }
+	@GetMapping("{id}")
+	public Result findOne(@NotBlank @PathVariable String id) {
+		return null;
+	}
 
-    @PostMapping("status")
-    public Result status(@RequestBody StatusDTO statusDTO) {
-        return null;
-    }
+	@GetMapping("page")
+	public Result page(@RequestParam ApiPageDTO pageDTO) {
+		return null;
+	}
+
+	@PostMapping("status")
+	public Result status(@RequestBody StatusDTO statusDTO) {
+		return null;
+	}
 
 }

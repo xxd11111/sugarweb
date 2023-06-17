@@ -15,35 +15,38 @@ import java.util.List;
 @Setter
 public class PageData<T> {
 
-    /**
-     * 分页数据
-     */
-    private List<T> records;
-    /**
-     * 总记录数
-     */
-    private long total;
-    /**
-     * 每页记录数
-     */
-    private long pageSize;
-    /**
-     * 当前页数
-     */
-    private long currentPage;
+	/**
+	 * 分页数据
+	 */
+	private List<T> records;
 
-    public PageData() {
-    }
+	/**
+	 * 总记录数
+	 */
+	private long total;
 
-    public PageData(List<T> records, long total, long pageSize, long currentPage) {
-        this.records = records;
-        this.total = total;
-        this.pageSize = pageSize;
-        this.currentPage = currentPage;
-    }
+	/**
+	 * 每页记录数
+	 */
+	private long pageSize;
 
-    public static <T> PageData<T> empty() {
-        return new PageData<>(new ArrayList<>(), 0, 0, 0);
-    }
+	/**
+	 * 当前页数
+	 */
+	private long currentPage;
+
+	public PageData() {
+	}
+
+	public PageData(List<T> records, long total, long pageSize, long currentPage) {
+		this.records = records;
+		this.total = total;
+		this.pageSize = pageSize;
+		this.currentPage = currentPage;
+	}
+
+	public static <T> PageData<T> empty() {
+		return new PageData<>(new ArrayList<>(), 0, 0, 0);
+	}
 
 }

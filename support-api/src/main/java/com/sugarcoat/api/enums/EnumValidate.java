@@ -1,7 +1,7 @@
 package com.sugarcoat.api.enums;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import java.lang.annotation.*;
 
 /**
@@ -9,30 +9,24 @@ import java.lang.annotation.*;
  * @description TODO
  * @date 2022-11-14
  */
-@Target({
-        ElementType.METHOD,
-        ElementType.FIELD,
-        ElementType.ANNOTATION_TYPE,
-        ElementType.CONSTRUCTOR,
-        ElementType.PARAMETER,
-        ElementType.TYPE_USE
-})
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR,
+		ElementType.PARAMETER, ElementType.TYPE_USE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(
-        validatedBy = EnumValidator.class
-)
+@Constraint(validatedBy = EnumValidator.class)
 public @interface EnumValidate {
-    /**
-     * @return 实现 EnumValuable 接口的
-     */
-    Class<? extends EnumValue<?>> value();
 
-    String message() default "{fieldName}必须在指定范围 {enumCodes}";
+	/**
+	 * @return 实现 EnumValuable 接口的
+	 */
+	Class<? extends EnumValue<?>> value();
 
-    String fieldName() default "";
+	String message() default "{fieldName}必须在指定范围 {enumCodes}";
 
-    Class<?>[] groups() default {};
+	String fieldName() default "";
 
-    Class<? extends Payload>[] payload() default {};
+	Class<?>[] groups() default {};
+
+	Class<? extends Payload>[] payload() default {};
+
 }

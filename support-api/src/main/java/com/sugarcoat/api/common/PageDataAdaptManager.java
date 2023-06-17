@@ -12,14 +12,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class PageDataAdaptManager {
 
-    private static PageDataAdapt pageDataAdapt;
+	private static PageDataAdapt pageDataAdapt;
 
-    //@Autowired
-    //public void setPageDataAdapt(PageDataAdapt pageDataAdapt) {
-    //    PageDataAdaptManager.pageDataAdapt = pageDataAdapt;
-    //}
+	// @Autowired
+	// public void setPageDataAdapt(PageDataAdapt pageDataAdapt) {
+	// PageDataAdaptManager.pageDataAdapt = pageDataAdapt;
+	// }
 
-    public static <T> PageData<T> convert(Object page, Class<T> clazz) {
-        return pageDataAdapt.convert(page, clazz);
-    }
+	public static <T> PageData<T> convert(Object page, Class<T> clazz) {
+		return pageDataAdapt.convert(page, clazz);
+	}
+
 }

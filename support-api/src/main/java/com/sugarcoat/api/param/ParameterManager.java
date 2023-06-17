@@ -9,6 +9,6 @@ package com.sugarcoat.api.param;
  */
 public interface ParameterManager {
 
-    String getValue(String code);
+	String getValue(String code);
 
 }

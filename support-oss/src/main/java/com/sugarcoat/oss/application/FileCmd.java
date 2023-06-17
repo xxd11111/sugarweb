@@ -11,6 +11,9 @@ import lombok.Data;
  */
 @Data
 public class FileCmd {
-    private String fileGroup;
-    private String fileId;
+
+	private String fileGroup;
+
+	private String fileId;
+
 }

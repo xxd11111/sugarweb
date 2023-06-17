@@ -6,5 +6,7 @@ package com.sugarcoat.uims;
  * @date 2022-12-15
  */
 public class Common {
-    public static final String TABLE_PREFIX = "uims_";
+
+	public static final String TABLE_PREFIX = "uims_";
+
 }

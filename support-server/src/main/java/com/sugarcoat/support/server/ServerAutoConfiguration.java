@@ -14,9 +14,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 public class ServerAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean
-    public ServerApiService serverApiService(ServerApiRepository serverApiRepository){
-        return new ServerApiServiceImpl(serverApiRepository);
-    }
+
+	@Bean
+	@ConditionalOnMissingBean
+	public ServerApiService serverApiService(ServerApiRepository serverApiRepository) {
+		return new ServerApiServiceImpl(serverApiRepository);
+	}
+
 }

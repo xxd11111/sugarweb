@@ -14,28 +14,29 @@ import java.util.List;
  */
 public class DefaultFileBusinessManager implements FileBusinessManager {
 
-    @Override
-    public void associateFile(String associationId, String fileGroup, List<String> fileIds) {
+	@Override
+	public void associateFile(String associationId, String fileGroup, List<String> fileIds) {
 
-    }
+	}
 
-    @Override
-    public void separateFile(String associationId, String fileGroup) {
+	@Override
+	public void separateFile(String associationId, String fileGroup) {
 
-    }
+	}
 
-    @Override
-    public void separateAllFile(String associationId) {
+	@Override
+	public void separateAllFile(String associationId) {
 
-    }
+	}
 
-    @Override
-    public List<FileInfo> listAssociationFile(String associationId, String fileGroup) {
-        return null;
-    }
+	@Override
+	public List<FileInfo> listAssociationFile(String associationId, String fileGroup) {
+		return null;
+	}
 
-    @Override
-    public List<FileInfo> listAllAssociationFile(String associationId) {
-        return null;
-    }
+	@Override
+	public List<FileInfo> listAllAssociationFile(String associationId) {
+		return null;
+	}
+
 }

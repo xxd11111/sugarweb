@@ -10,6 +10,8 @@ import java.io.Serializable;
  * @date 2022-11-14
  */
 public interface EnumValue<T extends Serializable> {
-    @JsonValue
-    T getCode();
+
+	@JsonValue
+	T getCode();
+
 }

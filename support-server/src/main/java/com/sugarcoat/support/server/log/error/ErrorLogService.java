@@ -11,8 +11,8 @@ import com.sugarcoat.api.common.PageParameter;
  */
 public interface ErrorLogService {
 
-    ErrorLog findOne(String id);
+	ErrorLog findOne(String id);
 
-    PageData<ErrorLog> findPage(PageParameter pageParameter, ErrorLogQueryCmd errorLogQueryCmd);
+	PageData<ErrorLog> findPage(PageParameter pageParameter, ErrorLogQueryCmd errorLogQueryCmd);
 
 }

@@ -15,9 +15,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ParameterAutoConfiguration {
-    @Bean
-    @ConditionalOnMissingBean
-    public ParameterService getParamService(SugarcoatParameterRepository sugarcoatParameterRepository) {
-        return new DefaultParameterServiceImpl(sugarcoatParameterRepository);
-    }
+
+	@Bean
+	@ConditionalOnMissingBean
+	public ParameterService getParamService(SugarcoatParameterRepository sugarcoatParameterRepository) {
+		return new DefaultParameterServiceImpl(sugarcoatParameterRepository);
+	}
+
 }

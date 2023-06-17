@@ -14,24 +14,23 @@ import java.util.function.Supplier;
  */
 public class EnumUtil {
 
-    public static <T extends Serializable, K extends EnumValue<T>> EnumValue<T> getByCode(Class<K> clazz, T code) {
-        K[] enumValues = clazz.getEnumConstants();
-        return Arrays.stream(enumValues)
-                .filter(enumValue -> Objects.equals(enumValue.getCode(), code))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("not find"));
-    }
+	public static <T extends Serializable, K extends EnumValue<T>> EnumValue<T> getByCode(Class<K> clazz, T code) {
+		K[] enumValues = clazz.getEnumConstants();
+		return Arrays.stream(enumValues).filter(enumValue -> Objects.equals(enumValue.getCode(), code)).findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("not find"));
+	}
 
-    public static <T extends Serializable, K extends EnumValue<T>> EnumValue<T> checkByCode(Class<K> clazz, T code) {
-        return checkByCode(clazz, code, () -> new ValidateException("枚举转换异常"));
-    }
+	public static <T extends Serializable, K extends EnumValue<T>> EnumValue<T> checkByCode(Class<K> clazz, T code) {
+		return checkByCode(clazz, code, () -> new ValidateException("枚举转换异常"));
+	}
 
-    public static <T extends Serializable, E extends RuntimeException, K extends EnumValue<T>> EnumValue<T> checkByCode(Class<K> clazz, T code, Supplier<E> errorSupplier) {
-        EnumValue<T> enumValue = getByCode(clazz, code);
-        if (null == enumValue) {
-            throw errorSupplier.get();
-        }
-        return enumValue;
-    }
+	public static <T extends Serializable, E extends RuntimeException, K extends EnumValue<T>> EnumValue<T> checkByCode(
+			Class<K> clazz, T code, Supplier<E> errorSupplier) {
+		EnumValue<T> enumValue = getByCode(clazz, code);
+		if (null == enumValue) {
+			throw errorSupplier.get();
+		}
+		return enumValue;
+	}
 
 }

@@ -12,32 +12,32 @@ import com.querydsl.core.types.dsl.Expressions;
  */
 public class ExpressionWrapper {
 
-    private final BooleanExpression expression;
+	private final BooleanExpression expression;
 
-    public ExpressionWrapper(BooleanExpression expression) {
-        this.expression = expression;
-    }
+	public ExpressionWrapper(BooleanExpression expression) {
+		this.expression = expression;
+	}
 
-    public static ExpressionWrapper of() {
-        return new ExpressionWrapper(Expressions.TRUE);
-    }
+	public static ExpressionWrapper of() {
+		return new ExpressionWrapper(Expressions.TRUE);
+	}
 
-    public ExpressionWrapper and(boolean flag, BooleanExpression booleanExpression) {
-        if (flag) {
-            expression.and(booleanExpression);
-        }
-        return this;
-    }
+	public ExpressionWrapper and(boolean flag, BooleanExpression booleanExpression) {
+		if (flag) {
+			expression.and(booleanExpression);
+		}
+		return this;
+	}
 
-    public ExpressionWrapper or(boolean flag, BooleanExpression booleanExpression) {
-        if (flag) {
-            expression.or(booleanExpression);
-        }
-        return this;
-    }
+	public ExpressionWrapper or(boolean flag, BooleanExpression booleanExpression) {
+		if (flag) {
+			expression.or(booleanExpression);
+		}
+		return this;
+	}
 
-    public BooleanExpression build() {
-        return expression;
-    }
+	public BooleanExpression build() {
+		return expression;
+	}
 
 }

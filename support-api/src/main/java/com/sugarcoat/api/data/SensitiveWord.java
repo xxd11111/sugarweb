@@ -9,6 +9,6 @@ package com.sugarcoat.api.data;
  */
 public @interface SensitiveWord {
 
-    String type() default "";
+	String type() default "";
 
 }

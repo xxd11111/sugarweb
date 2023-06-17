@@ -10,4 +10,5 @@ import com.sugarcoat.orm.SugarcoatRepository;
  * @date 2023/6/1
  */
 public interface ErrorLogRepository extends SugarcoatRepository<ErrorLog> {
+
 }

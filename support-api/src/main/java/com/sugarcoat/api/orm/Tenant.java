@@ -9,6 +9,6 @@ package com.sugarcoat.api.orm;
  */
 public @interface Tenant {
 
-    String columnName() default "";
+	String columnName() default "";
 
 }

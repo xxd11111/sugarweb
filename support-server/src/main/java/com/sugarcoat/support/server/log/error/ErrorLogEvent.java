@@ -10,7 +10,9 @@ import org.springframework.context.ApplicationEvent;
  * @date 2023/6/1
  */
 public class ErrorLogEvent extends ApplicationEvent {
-    public ErrorLogEvent(ErrorLog source) {
-        super(source);
-    }
+
+	public ErrorLogEvent(ErrorLog source) {
+		super(source);
+	}
+
 }

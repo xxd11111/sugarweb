@@ -11,6 +11,9 @@ import lombok.Data;
  */
 @Data
 public class DictQueryVO {
-    private String groupCode;
-    private String groupName;
+
+	private String groupCode;
+
+	private String groupName;
+
 }

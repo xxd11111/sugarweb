@@ -8,4 +8,5 @@ package com.sugarcoat.api.valid;
  * @date 2023/5/8
  */
 public interface SaveGroup {
+
 }

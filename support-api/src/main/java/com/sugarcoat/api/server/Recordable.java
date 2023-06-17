@@ -8,7 +8,9 @@ package com.sugarcoat.api.server;
  * @date 2023/6/1
  */
 public @interface Recordable {
-    String group();
 
-    String title();
+	String group();
+
+	String title();
+
 }

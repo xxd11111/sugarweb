@@ -16,11 +16,12 @@ import org.springframework.scheduling.annotation.Async;
 @AllArgsConstructor
 public class ErrorLogListener implements ApplicationListener<ErrorLogEvent> {
 
-    private final ErrorLogRepository errorLogRepository;
+	private final ErrorLogRepository errorLogRepository;
 
-    @Override
-    public void onApplicationEvent(@NonNull ErrorLogEvent event) {
-        ErrorLog source = (ErrorLog) event.getSource();
-        errorLogRepository.save(source);
-    }
+	@Override
+	public void onApplicationEvent(@NonNull ErrorLogEvent event) {
+		ErrorLog source = (ErrorLog) event.getSource();
+		errorLogRepository.save(source);
+	}
+
 }

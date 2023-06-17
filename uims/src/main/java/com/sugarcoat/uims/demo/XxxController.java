@@ -3,8 +3,8 @@ package com.sugarcoat.uims.demo;
 import com.sugarcoat.api.common.Result;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,25 +16,27 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/xxx")
 public class XxxController {
-    @Resource
-    HttpServletRequest httpServletRequest;
 
-    @GetMapping("test1")
-    public Result<Object> test1() {
-        httpServletRequest.setAttribute("a", "b");
-        return Result.ok();
-    }
+	@Resource
+	HttpServletRequest httpServletRequest;
 
-    @DeleteMapping("test2")
-    public Result<Object> test2() {
-        return Result.ok();
-    }
+	@GetMapping("test1")
+	public Result<Object> test1() {
+		httpServletRequest.setAttribute("a", "b");
+		return Result.ok();
+	}
 
-    @GetMapping("test3")
-    public Result<Object> test4() throws IOException {
-        File file = new File("D:\\临时测试\\aaaabbbb.txt");
-        file.createNewFile();
-        file.delete();
-        return Result.ok();
-    }
+	@DeleteMapping("test2")
+	public Result<Object> test2() {
+		return Result.ok();
+	}
+
+	@GetMapping("test3")
+	public Result<Object> test4() throws IOException {
+		File file = new File("D:\\临时测试\\aaaabbbb.txt");
+		file.createNewFile();
+		file.delete();
+		return Result.ok();
+	}
+
 }

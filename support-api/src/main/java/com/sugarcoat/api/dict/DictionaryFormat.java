@@ -8,4 +8,5 @@ package com.sugarcoat.api.dict;
  * @date 2023/5/30
  */
 public @interface DictionaryFormat {
+
 }

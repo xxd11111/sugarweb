@@ -1,9 +1,8 @@
 package com.sugarcoat.support.server.log.error;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 异常日志发布者
@@ -15,15 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class ErrorLogPublisher {
 
-    private final ApplicationEventPublisher applicationEventPublisher;
+	private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishEvent(ErrorLog errorLog) {
-        applicationEventPublisher.publishEvent(new ErrorLogEvent(errorLog));
-    }
+	public void publishEvent(ErrorLog errorLog) {
+		applicationEventPublisher.publishEvent(new ErrorLogEvent(errorLog));
+	}
 
-    public void publishEvent(HttpServletRequest req, Throwable ex) {
-        ErrorLog errorLog = new ErrorLog();
-        //todo
-        publishEvent(errorLog);
-    }
+	public void publishEvent(HttpServletRequest req, Throwable ex) {
+		ErrorLog errorLog = new ErrorLog();
+		// todo
+		publishEvent(errorLog);
+	}
+
 }

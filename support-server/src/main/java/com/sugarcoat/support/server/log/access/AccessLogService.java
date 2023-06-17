@@ -11,8 +11,8 @@ import com.sugarcoat.api.common.PageParameter;
  */
 public interface AccessLogService {
 
-    AccessLog findOne(String id);
+	AccessLog findOne(String id);
 
-    PageData<AccessLog> findPage(PageParameter pageParameter, AccessLogQueryCmd accessLogQueryCmd);
+	PageData<AccessLog> findPage(PageParameter pageParameter, AccessLogQueryCmd accessLogQueryCmd);
 
 }

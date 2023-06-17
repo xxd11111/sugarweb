@@ -8,32 +8,34 @@ package com.sugarcoat.api.user;
  * @date 2023/3/9
  */
 public class UserHelper {
-    protected static UserClient userClient;
 
-    private UserHelper() {
-    }
+	protected static UserClient userClient;
 
-    public static UserInfo currentAccount() {
-        return userClient.currentUser();
-    }
+	private UserHelper() {
+	}
 
-    public static String getUsername() {
-        return userClient.currentUser().getUsername();
-    }
+	public static UserInfo currentAccount() {
+		return userClient.currentUser();
+	}
 
-    public static String getUserType() {
-        return userClient.currentUser().getUserType();
-    }
+	public static String getUsername() {
+		return userClient.currentUser().getUsername();
+	}
 
-    public static String getId() {
-        return userClient.currentUser().getId();
-    }
+	public static String getUserType() {
+		return userClient.currentUser().getUserType();
+	}
 
-    public static boolean isAdmin() {
-        return userClient.currentUser().isAdmin();
-    }
+	public static String getId() {
+		return userClient.currentUser().getId();
+	}
 
-    public static boolean isSuperAdmin() {
-        return userClient.currentUser().isSuperAdmin();
-    }
+	public static boolean isAdmin() {
+		return userClient.currentUser().isAdmin();
+	}
+
+	public static boolean isSuperAdmin() {
+		return userClient.currentUser().isSuperAdmin();
+	}
+
 }

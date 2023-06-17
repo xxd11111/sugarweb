@@ -11,9 +11,13 @@ import java.util.List;
  */
 @Data
 public class DictionaryGroupDTO {
-    private String id;
-    private String groupCode;
-    private String groupName;
-    private List<DictionaryDTO> dictionaryDTOList;
+
+	private String id;
+
+	private String groupCode;
+
+	private String groupName;
+
+	private List<DictionaryDTO> dictionaryDTOList;
 
 }

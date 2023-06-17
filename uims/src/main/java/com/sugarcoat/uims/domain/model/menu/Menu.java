@@ -3,14 +3,15 @@ package com.sugarcoat.uims.domain.model.menu;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import java.util.Collection;
 import java.util.Objects;
 
 /**
  * TODO
+ *
  * @author xxd
  * @date 2022-12-07
  */
@@ -20,59 +21,72 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 public class Menu {
-    /**
-     * 菜单id
-     */
-    @Id
-    private String id;
-    /**
-     * 菜单搜索索引
-     */
-    private String menuIndex;
-    /**
-     * 菜单名
-     */
-    private String menuName;
-    /**
-     * 菜单编码
-     */
-    private String menuCode;
-    /**
-     * 菜单类型
-     */
-    private MenuTypeEnum menuType;
-    /**
-     * 菜单url
-     */
-    private String menuUrl;
-    /**
-     * 菜单图标
-     */
-    private String icon;
-    /**
-     * 菜单顺序
-     */
-    private Integer orderNum;
-    /**
-     * 菜单接口
-     */
-    @Transient
-    private Collection<String> serverApis;
-    /**
-     * 状态
-     */
-    private String status;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Menu menu = (Menu) o;
-        return id != null && Objects.equals(id, menu.id);
-    }
+	/**
+	 * 菜单id
+	 */
+	@Id
+	private String id;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+	/**
+	 * 菜单搜索索引
+	 */
+	private String menuIndex;
+
+	/**
+	 * 菜单名
+	 */
+	private String menuName;
+
+	/**
+	 * 菜单编码
+	 */
+	private String menuCode;
+
+	/**
+	 * 菜单类型
+	 */
+	private MenuTypeEnum menuType;
+
+	/**
+	 * 菜单url
+	 */
+	private String menuUrl;
+
+	/**
+	 * 菜单图标
+	 */
+	private String icon;
+
+	/**
+	 * 菜单顺序
+	 */
+	private Integer orderNum;
+
+	/**
+	 * 菜单接口
+	 */
+	@Transient
+	private Collection<String> serverApis;
+
+	/**
+	 * 状态
+	 */
+	private String status;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+			return false;
+		Menu menu = (Menu) o;
+		return id != null && Objects.equals(id, menu.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
+
 }

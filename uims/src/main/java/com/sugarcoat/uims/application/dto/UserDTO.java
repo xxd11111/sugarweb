@@ -6,4 +6,5 @@ package com.sugarcoat.uims.application.dto;
  * @date 2022-12-27
  */
 public class UserDTO {
+
 }

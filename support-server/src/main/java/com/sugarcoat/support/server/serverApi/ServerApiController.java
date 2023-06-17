@@ -17,15 +17,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("serverApi")
 @RequiredArgsConstructor
 public class ServerApiController {
-    private final ServerApiService serverApiService;
 
-    @GetMapping("findOne/{id}")
-    public Result<ServerApiDTO> findOne(@PathVariable String id) {
-        return Result.data(serverApiService.findOne(id));
-    }
+	private final ServerApiService serverApiService;
 
-    @GetMapping("findPage")
-    public Result<PageData<ServerApiDTO>> findPage(PageParameter pageParameter, ServerApiQueryVO queryVO) {
-        return Result.data(serverApiService.findPage(pageParameter, queryVO));
-    }
+	@GetMapping("findOne/{id}")
+	public Result<ServerApiDTO> findOne(@PathVariable String id) {
+		return Result.data(serverApiService.findOne(id));
+	}
+
+	@GetMapping("findPage")
+	public Result<PageData<ServerApiDTO>> findPage(PageParameter pageParameter, ServerApiQueryVO queryVO) {
+		return Result.data(serverApiService.findPage(pageParameter, queryVO));
+	}
+
 }

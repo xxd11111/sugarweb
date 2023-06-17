@@ -8,4 +8,5 @@ package com.sugarcoat.support.server.log.error;
  * @date 2023/6/1
  */
 public class ErrorLogQueryCmd {
+
 }

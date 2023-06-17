@@ -6,4 +6,5 @@ package com.sugarcoat.uims.domain.model.notice;
  * @date 2022-11-24
  */
 public class NoticeRead {
+
 }

@@ -7,8 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.util.Objects;
 
 /**
@@ -22,28 +22,37 @@ import java.util.Objects;
 @Setter
 @ToString
 public class SugarcoatParameter extends EntityExt implements Parameter {
-    @Id
-    private String id;
-    private String code;
-    private String name;
-    private String value;
-    private String comment;
-    private String defaultValue;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SugarcoatParameter sugarcoatParam = (SugarcoatParameter) o;
-        return getId() != null && Objects.equals(getId(), sugarcoatParam.getId());
-    }
+	@Id
+	private String id;
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
+	private String code;
 
-    public void resetValue() {
-        value = defaultValue;
-    }
+	private String name;
+
+	private String value;
+
+	private String comment;
+
+	private String defaultValue;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
+			return false;
+		SugarcoatParameter sugarcoatParam = (SugarcoatParameter) o;
+		return getId() != null && Objects.equals(getId(), sugarcoatParam.getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
+
+	public void resetValue() {
+		value = defaultValue;
+	}
+
 }

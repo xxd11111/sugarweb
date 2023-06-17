@@ -8,51 +8,54 @@ import com.sugarcoat.api.common.HttpCode;
  * @date 2022-11-12
  */
 public class ServerException extends RuntimeException {
-    /**
-     * 全局错误码
-     */
-    private Integer code;
-    /**
-     * 错误提示
-     */
-    private String message;
 
-    /**
-     * 空构造方法，避免反序列化问题
-     */
-    public ServerException() {
-    }
+	/**
+	 * 全局错误码
+	 */
+	private Integer code;
 
-    public ServerException(String message, Object... objects) {
-        this.message = String.format(message, objects);
-    }
+	/**
+	 * 错误提示
+	 */
+	private String message;
 
-    public ServerException(HttpCode httpCode) {
-        this.code = httpCode.getCode();
-        this.message = httpCode.getMsg();
-    }
+	/**
+	 * 空构造方法，避免反序列化问题
+	 */
+	public ServerException() {
+	}
 
-    public ServerException(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
+	public ServerException(String message, Object... objects) {
+		this.message = String.format(message, objects);
+	}
 
-    public Integer getCode() {
-        return code;
-    }
+	public ServerException(HttpCode httpCode) {
+		this.code = httpCode.getCode();
+		this.message = httpCode.getMsg();
+	}
 
-    public ServerException setCode(Integer code) {
-        this.code = code;
-        return this;
-    }
+	public ServerException(Integer code, String message) {
+		this.code = code;
+		this.message = message;
+	}
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
+	public Integer getCode() {
+		return code;
+	}
 
-    public ServerException setMessage(String message) {
-        this.message = message;
-        return this;
-    }
+	public ServerException setCode(Integer code) {
+		this.code = code;
+		return this;
+	}
+
+	@Override
+	public String getMessage() {
+		return message;
+	}
+
+	public ServerException setMessage(String message) {
+		this.message = message;
+		return this;
+	}
+
 }

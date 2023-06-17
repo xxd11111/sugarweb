@@ -8,4 +8,5 @@ package com.sugarcoat.api.param;
  * @date 2023/5/31
  */
 public @interface InnerParameter {
+
 }

@@ -16,11 +16,12 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "sms")
 public class SmsProperties {
 
-    private Boolean enabled;
+	private Boolean enabled;
 
-    private String type;
+	private String type;
 
-    private TencentSmsProperties tencentSmsProperties;
+	private TencentSmsProperties tencentSmsProperties;
 
-    private AliyunSmsProperties aliyunSmsProperties;
+	private AliyunSmsProperties aliyunSmsProperties;
+
 }

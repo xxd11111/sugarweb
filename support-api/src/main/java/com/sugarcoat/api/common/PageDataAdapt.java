@@ -8,11 +8,12 @@ package com.sugarcoat.api.common;
  * @date 2023/4/25
  */
 public interface PageDataAdapt {
-    /**
-     * 转为pageData
-     *
-     * @param t
-     * @return
-     */
-    <T> PageData<T> convert(Object t, Class<T> clazz);
+
+	/**
+	 * 转为pageData
+	 * @param t
+	 * @return
+	 */
+	<T> PageData<T> convert(Object t, Class<T> clazz);
+
 }

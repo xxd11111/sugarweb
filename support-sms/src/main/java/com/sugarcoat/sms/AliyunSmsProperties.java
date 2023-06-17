@@ -9,24 +9,24 @@ package com.sugarcoat.sms;
  */
 public class AliyunSmsProperties {
 
-    /**
-     * 配置节点
-     */
-    private String endpoint = "dysmsapi.aliyuncs.com";
+	/**
+	 * 配置节点
+	 */
+	private String endpoint = "dysmsapi.aliyuncs.com";
 
-    /**
-     * key
-     */
-    private String accessKeyId;
+	/**
+	 * key
+	 */
+	private String accessKeyId;
 
-    /**
-     * 密匙
-     */
-    private String accessKeySecret;
+	/**
+	 * 密匙
+	 */
+	private String accessKeySecret;
 
-    /**
-     * 短信签名
-     */
-    private String signName;
+	/**
+	 * 短信签名
+	 */
+	private String signName;
 
 }

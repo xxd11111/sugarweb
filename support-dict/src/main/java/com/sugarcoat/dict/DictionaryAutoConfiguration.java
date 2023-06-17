@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 /**
  * @author xxd
  * @description 字典工具类初始化
@@ -19,17 +18,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 public class DictionaryAutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean
-    public DictionaryService dictService(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository,
-                                         SugarcoatDictionaryRepository sugarcoatDictionaryRepository) {
-        return new SugarcoatDictionaryServiceImpl(sugarcoatDictionaryGroupRepository, sugarcoatDictionaryRepository);
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public DictionaryService dictService(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository,
+			SugarcoatDictionaryRepository sugarcoatDictionaryRepository) {
+		return new SugarcoatDictionaryServiceImpl(sugarcoatDictionaryGroupRepository, sugarcoatDictionaryRepository);
+	}
 
-    @Bean
-    @ConditionalOnMissingBean
-    public DictionaryManager dictionaryClient(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
-        return new SugarcoatDictionaryManager(sugarcoatDictionaryGroupRepository);
-    }
+	@Bean
+	@ConditionalOnMissingBean
+	public DictionaryManager dictionaryClient(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
+		return new SugarcoatDictionaryManager(sugarcoatDictionaryGroupRepository);
+	}
 
 }

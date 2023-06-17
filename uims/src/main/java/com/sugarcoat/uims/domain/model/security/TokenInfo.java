@@ -9,13 +9,23 @@ import lombok.Data;
  */
 @Data
 public class TokenInfo {
-    private String uuid;
-    private Long loginTime;
-    private Long lastActiveTime;
-    private Long lastRefreshTime;
-    private Long maxActiveTime;
-    private String os;
-    private String ip;
-    private String mac;
-    private String browser;
+
+	private String uuid;
+
+	private Long loginTime;
+
+	private Long lastActiveTime;
+
+	private Long lastRefreshTime;
+
+	private Long maxActiveTime;
+
+	private String os;
+
+	private String ip;
+
+	private String mac;
+
+	private String browser;
+
 }

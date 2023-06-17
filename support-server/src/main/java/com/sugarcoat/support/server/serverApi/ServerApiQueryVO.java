@@ -11,13 +11,15 @@ import lombok.Data;
  */
 @Data
 public class ServerApiQueryVO {
-    private String code;
 
-    private String name;
+	private String code;
 
-    private String url;
+	private String name;
 
-    private String methodType;
+	private String url;
 
-    private String status;
+	private String methodType;
+
+	private String status;
+
 }

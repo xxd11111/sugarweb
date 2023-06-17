@@ -6,4 +6,5 @@ package com.sugarcoat.api.valid;
  * @author xxd
  */
 public interface AddGroup {
+
 }

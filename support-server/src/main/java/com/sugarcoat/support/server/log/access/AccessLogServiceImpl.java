@@ -4,7 +4,6 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageParameter;
 import com.sugarcoat.api.exception.ValidateException;
-import com.sugarcoat.support.server.log.QErrorLog;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,19 +20,20 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class AccessLogServiceImpl implements AccessLogService {
 
-    private final AccessLogRepository accessLogRepository;
+	private final AccessLogRepository accessLogRepository;
 
-    @Override
-    public AccessLog findOne(String id) {
-        return accessLogRepository.findById(id).orElseThrow(() -> new ValidateException("访问日志不存在"));
-    }
+	@Override
+	public AccessLog findOne(String id) {
+		return accessLogRepository.findById(id).orElseThrow(() -> new ValidateException("访问日志不存在"));
+	}
 
-    @Override
-    public PageData<AccessLog> findPage(PageParameter pageParameter, AccessLogQueryCmd accessLogQueryCmd) {
-        QErrorLog qErrorLog = QErrorLog.errorLog;
-        PageRequest pageRequest = PageRequest.of(pageParameter.getPageNum(), pageParameter.getPageSize())
-                .withSort(Sort.Direction.DESC, qErrorLog.errorTime.getMetadata().getName());
-        Page<AccessLog> page = accessLogRepository.findAll(Expressions.TRUE, pageRequest);
-        return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
-    }
+	@Override
+	public PageData<AccessLog> findPage(PageParameter pageParameter, AccessLogQueryCmd accessLogQueryCmd) {
+		QAccessLog qAccessLog = QAccessLog.accessLog;
+		PageRequest pageRequest = PageRequest.of(pageParameter.getPageNum(), pageParameter.getPageSize())
+				.withSort(Sort.Direction.DESC, qAccessLog.beginTime.getMetadata().getName());
+		Page<AccessLog> page = accessLogRepository.findAll(Expressions.TRUE, pageRequest);
+		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
+	}
+
 }

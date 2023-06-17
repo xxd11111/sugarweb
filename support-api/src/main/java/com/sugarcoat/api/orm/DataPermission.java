@@ -9,8 +9,8 @@ package com.sugarcoat.api.orm;
  */
 public @interface DataPermission {
 
-    String columnName() default "";
+	String columnName() default "";
 
-    String type() default "";
+	String type() default "";
 
 }

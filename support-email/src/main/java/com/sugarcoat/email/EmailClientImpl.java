@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import java.io.File;
 
 /**
@@ -19,31 +19,33 @@ import java.io.File;
 @RequiredArgsConstructor
 public class EmailClientImpl {
 
-    private final JavaMailSenderImpl mailSender;
+	private final JavaMailSenderImpl mailSender;
 
-    public void sendEmail(EmailDTO emailDTO){
-        //todo file inputStream
-        MimeMessage message = mailSender.createMimeMessage();
-        try {
-            MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
-            //附件
-            File file = new File("C:\\code\\SpringDemo\\src\\main\\resources\\static\\test.txt");
-            //收件人
-            messageHelper.setTo(emailDTO.getTo());
-            //发件人
-            messageHelper.setFrom(emailDTO.getFrom());
-            //标题
-            messageHelper.setSubject(emailDTO.getSubject());
-            //发送html
-            messageHelper.setText(emailDTO.getText(),true);
-            //附件
-            messageHelper.addAttachment("测试附件.txt",file);
-            //传入图片
-            File pic = new File("C:\\code\\SpringDemo\\src\\main\\resources\\static\\d1.jpg");
-            messageHelper.addInline("img", pic);
-            mailSender.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
+	public void sendEmail(EmailDTO emailDTO) {
+		// todo file inputStream
+		MimeMessage message = mailSender.createMimeMessage();
+		try {
+			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
+			// 附件
+			File file = new File("C:\\code\\SpringDemo\\src\\main\\resources\\static\\test.txt");
+			// 收件人
+			messageHelper.setTo(emailDTO.getTo());
+			// 发件人
+			messageHelper.setFrom(emailDTO.getFrom());
+			// 标题
+			messageHelper.setSubject(emailDTO.getSubject());
+			// 发送html
+			messageHelper.setText(emailDTO.getText(), true);
+			// 附件
+			messageHelper.addAttachment("测试附件.txt", file);
+			// 传入图片
+			File pic = new File("C:\\code\\SpringDemo\\src\\main\\resources\\static\\d1.jpg");
+			messageHelper.addInline("img", pic);
+			mailSender.send(message);
+		}
+		catch (MessagingException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

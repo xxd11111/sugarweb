@@ -13,14 +13,16 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum FlagEnum {
-    /**
-     * 是
-     */
-    TRUE("1"),
-    /**
-     * 否
-     */
-    FALSE("0");
 
-    private final String code;
+	/**
+	 * 是
+	 */
+	TRUE("1"),
+	/**
+	 * 否
+	 */
+	FALSE("0");
+
+	private final String code;
+
 }

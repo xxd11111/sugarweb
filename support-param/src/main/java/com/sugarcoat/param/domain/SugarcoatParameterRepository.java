@@ -9,4 +9,5 @@ import com.sugarcoat.orm.SugarcoatRepository;
  * @date 2023/5/6 23:54
  */
 public interface SugarcoatParameterRepository extends SugarcoatRepository<SugarcoatParameter> {
+
 }

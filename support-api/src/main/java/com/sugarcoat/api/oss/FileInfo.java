@@ -7,16 +7,16 @@ import java.time.LocalDateTime;
  */
 public interface FileInfo {
 
-    String getFileGroup();
+	String getFileGroup();
 
-    String getFileUrl();
+	String getFileUrl();
 
-    String getFileName();
+	String getFileName();
 
-    String getFileType();
+	String getFileType();
 
-    String getFileSize();
+	String getFileSize();
 
-    LocalDateTime getUploadTime();
+	LocalDateTime getUploadTime();
 
 }

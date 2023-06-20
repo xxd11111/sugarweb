@@ -1,73 +1,60 @@
 # sugarcoat
 
-#### 介绍
-sugarcoat提供一组通用web-api，以及默认实现
+## 介绍
 
-#### 框架选型:
-springboot  
-undertow  
-lombok  
-工具类:hutool  
-缓存：
-权限框架：springSecurity  
-文档框架：knife4j spring-doc  
-持久化：jpa    
-日志框架:logback  
-定时任务：quartz  
+>sugarcoat提供一组通用web应用api以及默认实现，方便快捷的构建web应用，真正做到开箱即用，直接编写业务代码，免去重复造轮子的问题
 
-#### 功能组件
-|模组|描述|依赖组件|
-|:-|:-|:-:|
-"user	用户"
-"serverApi		项目接口组件"
-"cache	    缓存"
-"common	    web通用"
-"data		数据功能"
-"dictionary		字典"
-"doc		接口文档"
-"email	    邮箱功能"
-"enums	    枚举类封装"
-"exception	异常处理"
-"log		日志组件"
-"monitor	监控组件"
-"orm		持久化封装"
-"oss		文件存储"
-"sugarcoatParam	    参数配置"
-"protection	系统保护组件"
-"sms		短信封装"
-"status	    启停状态封装"
-"tenant	    动态多租户组件"
-"validate	校验组件"
+## 框架选型:
 
-#### 软件架构
-软件架构说明
+springboot+springSecurity+jpa+quartz+redisson
 
+## 项目结构
 
-#### 安装教程
+| 模组        | 描述         | 依赖组件             |
+|-----------|------------|------------------|
+| api       | 功能api规范    | 无                |
+| cache     | 缓存实现       | redisson         |
+| doc       | 接口文档实现     | openapi,knife4j  |
+| email     | 邮件实现       | springboot-email |
+| sms       | 短信实现       | aliyun,tencent   |
+| oss       | 文件存储实现     | aws-s3           |
+| scheduler | 定时任务实现     | quartz           |
+| orm       | 持久化实现      | jpa              |
+| dict      | 字典实现       | orm              |
+| param     | 系统参数实现     | orm              |
+| server    | 服务端实现      | orm              |
+| uims      | 用户界面实现(案例) | 以上全部             |
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+## 功能清单
 
-#### 使用说明
+服务端：接口返回对象，通用分页对象，错误码，状态码，通用异常类，接口日志，错误日志，应用接口文档，接口信息  
+定时任务:quartz  
+安全防护：敏感数据处理，幂等，限流，防重提交  
+第三方接入：邮件功能，短信功能  
+文件存储：亚马逊s3规范  
+持久化：jpa，数据权限，数据存储加密，多租户  
+数据字典：字典功能实现，字典校验  
+系统参数:功能实现  
+缓存:redisson  
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+#### 依赖关系图
 
-#### 参与贡献
+一张图片
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+## 安装教程
 
+1. xxxx
+2. xxxx
+3. xxxx
 
-#### 特技
+## 使用说明
 
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+1. xxxx
+2. xxxx
+3. xxxx
+
+## 参与贡献
+
+## 交流与讨论
+qq群：
+

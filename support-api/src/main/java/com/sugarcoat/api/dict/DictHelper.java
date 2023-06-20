@@ -1,9 +1,6 @@
 package com.sugarcoat.api.dict;
 
-import com.sugarcoat.api.SpringUtil;
-import com.sugarcoat.api.dict.Dictionary;
-import com.sugarcoat.api.dict.DictionaryGroup;
-import com.sugarcoat.api.dict.DictionaryManager;
+import com.sugarcoat.api.BeanUtil;
 
 import java.util.Collection;
 
@@ -43,7 +40,7 @@ public class DictHelper {
 
 	private static class DictHelperInner {
 
-		private final static DictionaryManager DICTIONARY_CLIENT = SpringUtil.getBean(DictionaryManager.class);
+		private final static DictionaryManager DICTIONARY_CLIENT = BeanUtil.getBean(DictionaryManager.class);
 
 	}
 

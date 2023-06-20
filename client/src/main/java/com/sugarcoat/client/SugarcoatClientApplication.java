@@ -7,4 +7,5 @@ package com.sugarcoat.client;
  * @date 2023/6/18 19:42
  */
 public class SugarcoatClientApplication {
+
 }

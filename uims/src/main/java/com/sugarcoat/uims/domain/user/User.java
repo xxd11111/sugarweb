@@ -1,7 +1,7 @@
-package com.sugarcoat.uims.domain.model.user;
+package com.sugarcoat.uims.domain.user;
 
 import cn.hutool.core.collection.CollUtil;
-import com.sugarcoat.uims.domain.model.role.Role;
+import com.sugarcoat.uims.domain.role.Role;
 import com.sugarcoat.api.user.UserInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class User implements UserInfo {
 	private String salt;
 
 	@Enumerated(EnumType.STRING)
-	private AccountLevelEnum accountLevel;
+	private AccountType accountType;
 
 	private String nickName;
 
@@ -55,7 +55,7 @@ public class User implements UserInfo {
 
 	private String status;
 
-	public Set<String> listRoleCodes() {
+	public Set<String> listRoles() {
 		if (CollUtil.isEmpty(roles)) {
 			return new HashSet<>();
 		}
@@ -72,9 +72,12 @@ public class User implements UserInfo {
 	}
 
 	@Override
-	public boolean checkCertificate(String certificate) {
+	public void checkCertificate(String certificate) {
 		// todo 加密方式问题
-		return certificate.equals(password);
+		boolean equals = certificate.equals(password);
+		if (!equals){
+			throw new SecurityException("凭证错误");
+		}
 	}
 
 	@Override

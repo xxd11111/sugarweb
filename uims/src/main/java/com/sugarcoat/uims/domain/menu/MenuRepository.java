@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.model.menu;
+package com.sugarcoat.uims.domain.menu;
 
 import com.sugarcoat.orm.SugarcoatRepository;
 

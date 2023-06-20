@@ -1,6 +1,6 @@
 package com.sugarcoat.api.sms;
 
-import com.sugarcoat.api.SpringUtil;
+import com.sugarcoat.api.BeanUtil;
 
 /**
  * sms帮助文档
@@ -25,7 +25,7 @@ public class SmsHelper {
 
 	private static class SmsHelperInner {
 
-		private static final SMSClient SMS_CLIENT = SpringUtil.getBean(SMSClient.class);
+		private static final SMSClient SMS_CLIENT = BeanUtil.getBean(SMSClient.class);
 
 	}
 

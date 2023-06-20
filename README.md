@@ -1,24 +1,29 @@
 # sugarcoat
 
 #### 介绍
-框架选型:
-springboot
-undertow
-lombok
-hutool工具类
-权限框架：springSecurity
-文档框架：knife4j spring-doc
-持久化：mybatis-plus
-日志框架:logback
-定时任务：quartz
+sugarcoat提供一组通用web-api，以及默认实现
+
+#### 框架选型:
+springboot  
+undertow  
+lombok  
+工具类:hutool  
+缓存：
+权限框架：springSecurity  
+文档框架：knife4j spring-doc  
+持久化：jpa    
+日志框架:logback  
+定时任务：quartz  
 
 #### 功能组件
+|模组|描述|依赖组件|
+|:-|:-|:-:|
 "user	用户"
 "serverApi		项目接口组件"
 "cache	    缓存"
 "common	    web通用"
 "data		数据功能"
-"sugarcoatDictionary		字典"
+"dictionary		字典"
 "doc		接口文档"
 "email	    邮箱功能"
 "enums	    枚举类封装"

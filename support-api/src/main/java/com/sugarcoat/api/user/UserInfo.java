@@ -12,7 +12,7 @@ public interface UserInfo {
 
 	String getUsername();
 
-	boolean checkCertificate(String certificate);
+	void checkCertificate(String certificate);
 
 	String getUserType();
 

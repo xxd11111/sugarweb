@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.model.notice;
+package com.sugarcoat.uims.domain.notice;
 
 /**
  * @author xxd

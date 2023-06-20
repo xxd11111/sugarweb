@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.demo;
+package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.Result;
 import org.springframework.web.bind.annotation.*;

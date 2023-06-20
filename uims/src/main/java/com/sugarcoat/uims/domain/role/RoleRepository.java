@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.model.role;
+package com.sugarcoat.uims.domain.role;
 
 import com.sugarcoat.orm.SugarcoatRepository;
 

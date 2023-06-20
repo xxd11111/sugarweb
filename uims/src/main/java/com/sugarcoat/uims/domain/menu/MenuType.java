@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.model.menu;
+package com.sugarcoat.uims.domain.menu;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +10,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum MenuTypeEnum {
+public enum MenuType {
 
 	DIR("1"), // 目录
-	MENU("2"), // 菜单
-	BUTTON("3"); // 按钮
+	FUNC("2"); // 按钮
 
 	/**
 	 * 类型

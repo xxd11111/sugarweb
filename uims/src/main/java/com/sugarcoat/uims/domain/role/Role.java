@@ -1,6 +1,6 @@
-package com.sugarcoat.uims.domain.model.role;
+package com.sugarcoat.uims.domain.role;
 
-import com.sugarcoat.uims.domain.model.menu.Menu;
+import com.sugarcoat.uims.domain.menu.Menu;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -27,7 +27,7 @@ public class Role {
 
 	private String roleCode;
 
-	@Transient
+	@ManyToMany
 	private Collection<Menu> menus;
 
 	private String status;

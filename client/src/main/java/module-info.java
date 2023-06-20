@@ -1,10 +1,9 @@
-module com.example.demo {
-    requires javafx.controls;
+module com.sugarcoat.client {
+    requires com.sugarcoat.gui;
     requires javafx.fxml;
+    requires javafx.graphics;
+    requires javafx.controls;
 
-
-    opens com.example.demo to javafx.fxml;
-    exports com.example.demo;
-    exports com.sugarcoat.client;
     opens com.sugarcoat.client to javafx.fxml;
+    exports com.sugarcoat.client;
 }

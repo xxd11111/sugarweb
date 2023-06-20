@@ -1,6 +1,6 @@
 package com.sugarcoat.api.param;
 
-import com.sugarcoat.api.SpringUtil;
+import com.sugarcoat.api.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -22,7 +22,7 @@ public class ParameterHelper {
 
 	private static class ParameterHelperInner {
 
-		private static final ParameterManager PARAMETER_CLIENT = SpringUtil.getBean(ParameterManager.class);
+		private static final ParameterManager PARAMETER_CLIENT = BeanUtil.getBean(ParameterManager.class);
 
 	}
 

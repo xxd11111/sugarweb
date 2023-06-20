@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.model.user;
+package com.sugarcoat.uims.domain.user;
 
 import com.sugarcoat.orm.SugarcoatRepository;
 

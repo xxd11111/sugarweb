@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.model.security;
+package com.sugarcoat.uims.domain.security;
 
 import lombok.Data;
 

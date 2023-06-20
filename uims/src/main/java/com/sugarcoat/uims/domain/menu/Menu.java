@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.model.menu;
+package com.sugarcoat.uims.domain.menu;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -46,7 +46,7 @@ public class Menu {
 	/**
 	 * 菜单类型
 	 */
-	private MenuTypeEnum menuType;
+	private MenuType menuType;
 
 	/**
 	 * 菜单url
@@ -64,7 +64,7 @@ public class Menu {
 	private Integer orderNum;
 
 	/**
-	 * 菜单接口
+	 * 菜单权限
 	 */
 	@Transient
 	private Collection<String> serverApis;

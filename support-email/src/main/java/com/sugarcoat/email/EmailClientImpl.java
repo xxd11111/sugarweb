@@ -1,5 +1,6 @@
 package com.sugarcoat.email;
 
+import com.sugarcoat.api.email.EmailClient;
 import com.sugarcoat.api.email.EmailDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -17,10 +18,11 @@ import java.io.File;
  * @date 2023/6/9
  */
 @RequiredArgsConstructor
-public class EmailClientImpl {
+public class EmailClientImpl implements EmailClient {
 
 	private final JavaMailSenderImpl mailSender;
 
+	@Override
 	public void sendEmail(EmailDTO emailDTO) {
 		// todo file inputStream
 		MimeMessage message = mailSender.createMimeMessage();

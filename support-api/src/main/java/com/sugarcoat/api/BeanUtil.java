@@ -12,21 +12,23 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SpringUtil implements BeanFactoryPostProcessor, ApplicationContextAware {
+public class BeanUtil implements BeanFactoryPostProcessor, ApplicationContextAware {
 
 	private static ConfigurableListableBeanFactory beanFactory;
 
 	private static ApplicationContext applicationContext;
 
-	public SpringUtil() {
+	public BeanUtil() {
 	}
 
+	@Override
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-		SpringUtil.beanFactory = beanFactory;
+		BeanUtil.beanFactory = beanFactory;
 	}
 
+	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
-		SpringUtil.applicationContext = applicationContext;
+		BeanUtil.applicationContext = applicationContext;
 	}
 
 	public static ApplicationContext getApplicationContext() {

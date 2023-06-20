@@ -6,7 +6,7 @@
 
 ## 框架选型:
 
-springboot+springSecurity+jpa+quartz+redisson
+springboot3.1+springSecurity+jpa+quartz+redisson
 
 ## 项目结构
 
@@ -56,5 +56,5 @@ springboot+springSecurity+jpa+quartz+redisson
 ## 参与贡献
 
 ## 交流与讨论
-qq群：
+qq群：827838560
 

@@ -12,6 +12,8 @@ public class TokenInfo {
 
 	private String uuid;
 
+	private String ip;
+
 	private Long loginTime;
 
 	private Long lastActiveTime;
@@ -20,12 +22,8 @@ public class TokenInfo {
 
 	private Long maxActiveTime;
 
-	private String os;
+	private String platform;
 
-	private String ip;
-
-	private String mac;
-
-	private String browser;
+	private String userAgent;
 
 }

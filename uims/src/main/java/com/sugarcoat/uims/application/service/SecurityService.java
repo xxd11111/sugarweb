@@ -1,7 +1,9 @@
-package com.sugarcoat.uims.domain.security;
+package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.user.UserInfo;
+import com.sugarcoat.uims.application.dto.LoginDTO;
+import com.sugarcoat.uims.domain.security.LoginVO;
+import com.sugarcoat.uims.domain.security.SessionInfo;
 
 /**
  * 安全服务
@@ -12,7 +14,9 @@ import com.sugarcoat.api.user.UserInfo;
  */
 public interface SecurityService {
 
-    UserInfo login(LoginVO loginInfo);
+    LoginDTO login(LoginVO loginInfo);
+
+    void authenticate();
 
     void logout();
 

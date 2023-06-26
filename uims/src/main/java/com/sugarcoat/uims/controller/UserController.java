@@ -4,7 +4,9 @@ import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.StatusDTO;
 import com.sugarcoat.uims.application.dto.UserDTO;
 import com.sugarcoat.uims.application.dto.UserPageDTO;
+import com.sugarcoat.uims.application.service.UserQueryVO;
 import com.sugarcoat.uims.application.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.constraints.NotBlank;
@@ -16,33 +18,27 @@ import jakarta.validation.constraints.NotBlank;
  */
 @RestController
 @RequestMapping("user")
+@RequiredArgsConstructor
 public class UserController {
 
-	private UserService userService;
+	private final UserService userService;
 
 	@GetMapping("{id}")
 	public Result findOne(@NotBlank @PathVariable String id) {
-		return null;
+		return Result.data(userService.find(id));
+
 	}
 
 	@GetMapping("page")
-	public Result page(@RequestParam UserPageDTO pageDTO) {
-		return null;
+	public Result page(@RequestParam UserQueryVO userQueryVO) {
+		return Result.data(userService.page(userQueryVO));
+
 	}
 
 	@PostMapping("save")
 	public Result save(@RequestBody UserDTO userDTO) {
-		return null;
-	}
+		return Result.data(userService.save(userDTO));
 
-	@PostMapping("update")
-	public Result update(@RequestBody UserDTO userDTO) {
-		return null;
-	}
-
-	@PostMapping("status")
-	public Result status(@RequestBody StatusDTO statusDTO) {
-		return null;
 	}
 
 }

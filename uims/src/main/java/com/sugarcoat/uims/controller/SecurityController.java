@@ -1,5 +1,7 @@
 package com.sugarcoat.uims.controller;
 
+import lombok.RequiredArgsConstructor;
+
 /**
  * TODO
  *
@@ -7,6 +9,7 @@ package com.sugarcoat.uims.controller;
  * @version 1.0
  * @date 2023/6/26
  */
+@RequiredArgsConstructor
 public class SecurityController {
     //登录
     //退出

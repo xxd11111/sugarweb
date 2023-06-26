@@ -1,48 +1,48 @@
 package com.sugarcoat.uims.controller;
 
+import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.MenuDTO;
 import com.sugarcoat.uims.application.dto.MenuPageDTO;
+import com.sugarcoat.uims.application.dto.MenuQueryVO;
 import com.sugarcoat.uims.application.service.MenuService;
-import com.sugarcoat.uims.application.dto.StatusDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.constraints.NotBlank;
 
 /**
+ * 菜单控制器
+ *
  * @author xxd
- * @description TODO
  * @date 2022-12-28
  */
 @RestController
 @RequestMapping("/menu")
+@RequiredArgsConstructor
 public class MenuController {
 
-	private MenuService menuService;
+	private final MenuService menuService;
 
 	@GetMapping("{id}")
-	public Result findOne(@NotBlank @PathVariable String id) {
-		return null;
+	public Result<MenuDTO> findOne(@NotBlank @PathVariable String id) {
+		return Result.data(menuService.find(id));
 	}
 
 	@GetMapping("page")
-	public Result page(@RequestParam MenuPageDTO pageDTO) {
-		return null;
+	public Result<PageData<MenuPageDTO>> page(@RequestParam MenuQueryVO menuQueryVO) {
+		return Result.data(menuService.page(menuQueryVO));
 	}
 
 	@PostMapping("save")
-	public Result save(@RequestBody MenuDTO menuDTO) {
-		return null;
+	public Result<String> save(@RequestBody MenuDTO menuDTO) {
+		return Result.data(menuService.save(menuDTO));
 	}
 
 	@PostMapping("update")
-	public Result update(@RequestBody MenuDTO menuDTO) {
-		return null;
-	}
-
-	@PostMapping("status")
-	public Result status(@RequestBody StatusDTO statusDTO) {
-		return null;
+	public Result<Void> update(@RequestBody MenuDTO menuDTO) {
+		menuService.modify(menuDTO);
+		return Result.ok();
 	}
 
 }

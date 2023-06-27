@@ -16,7 +16,7 @@ public interface MenuService {
 
     String save(MenuDTO menuDTO);
 
-    Void modify(MenuDTO menuDTO);
+    void modify(MenuDTO menuDTO);
 
     void remove(String id);
 

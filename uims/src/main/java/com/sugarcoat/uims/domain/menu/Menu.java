@@ -1,11 +1,9 @@
 package com.sugarcoat.uims.domain.menu;
 
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -29,6 +27,11 @@ public class Menu {
 	private String id;
 
 	/**
+	 * 菜单pid
+	 */
+	private String pid;
+
+	/**
 	 * 菜单搜索索引
 	 */
 	private String menuIndex;
@@ -46,6 +49,7 @@ public class Menu {
 	/**
 	 * 菜单类型
 	 */
+	@Enumerated(EnumType.STRING)
 	private MenuType menuType;
 
 	/**

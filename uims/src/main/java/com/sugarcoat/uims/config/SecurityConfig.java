@@ -1,5 +1,7 @@
 package com.sugarcoat.uims.config;
 
+import com.sugarcoat.uims.application.service.AuthenticateFilter;
+import com.sugarcoat.uims.application.service.SecurityService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +21,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public AuthenticateFilter authenticateFilter(SecurityService securityService) {
+        return new AuthenticateFilter(securityService);
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http,
+                                           AuthenticateFilter authenticateFilter) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -27,10 +35,8 @@ public class SecurityConfig {
                         authorizationManagerRequestMatcherRegistry
                                 .requestMatchers("/**").permitAll()
                                 .anyRequest().authenticated())
-                .authenticationManager(authentication -> authentication)
-                .formLogin(httpSecurityFormLoginConfigurer -> {
-
-                })
+                .addFilter(authenticateFilter)
+                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer.loginPage("/").permitAll())
                 .cors(httpSecurityCorsConfigurer -> {
 
                 })

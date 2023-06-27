@@ -3,6 +3,7 @@ package com.sugarcoat.uims.application.service;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.NewPasswordDTO;
 import com.sugarcoat.uims.application.dto.UserDTO;
+import com.sugarcoat.uims.application.dto.UserQueryVO;
 
 /**
  * @author xxd
@@ -20,10 +21,6 @@ public interface UserService {
     void modifyPassword(NewPasswordDTO newPasswordDTO);
 
     void remove(String id);
-
-    void enable(String id);
-
-    void disable(String id);
 
     boolean existUsername(String username);
 

@@ -20,7 +20,7 @@ public interface SecurityService {
 
     void logout();
 
-    void logout(String sessionId);
+    void kickOut(String sessionId);
 
     PageData<SessionInfo> sessionPage();
 

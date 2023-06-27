@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application.dto;
 
 /**
  * TODO

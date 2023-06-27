@@ -6,10 +6,11 @@ import com.sugarcoat.uims.application.dto.MenuDTO;
 import com.sugarcoat.uims.application.dto.MenuPageDTO;
 import com.sugarcoat.uims.application.dto.MenuQueryVO;
 import com.sugarcoat.uims.application.service.MenuService;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * 菜单控制器
@@ -22,27 +23,45 @@ import jakarta.validation.constraints.NotBlank;
 @RequiredArgsConstructor
 public class MenuController {
 
-	private final MenuService menuService;
+    private final MenuService menuService;
 
-	@GetMapping("{id}")
-	public Result<MenuDTO> findOne(@NotBlank @PathVariable String id) {
-		return Result.data(menuService.find(id));
-	}
+    @GetMapping("{id}")
+    public Result<MenuDTO> findOne(@NotBlank @PathVariable String id) {
+        return Result.data(menuService.find(id));
+    }
 
-	@GetMapping("page")
-	public Result<PageData<MenuPageDTO>> page(@RequestParam MenuQueryVO menuQueryVO) {
-		return Result.data(menuService.page(menuQueryVO));
-	}
+    @GetMapping("page")
+    public Result<PageData<MenuPageDTO>> page(@RequestParam MenuQueryVO menuQueryVO) {
+        return Result.data(menuService.page(menuQueryVO));
+    }
 
-	@PostMapping("save")
-	public Result<String> save(@RequestBody MenuDTO menuDTO) {
-		return Result.data(menuService.save(menuDTO));
-	}
+    @PostMapping("save")
+    public Result<String> save(@RequestBody MenuDTO menuDTO) {
+        return Result.data(menuService.save(menuDTO));
+    }
 
-	@PostMapping("update")
-	public Result<Void> update(@RequestBody MenuDTO menuDTO) {
-		menuService.modify(menuDTO);
-		return Result.ok();
-	}
+    @PostMapping("update")
+    public Result<Void> update(@RequestBody MenuDTO menuDTO) {
+        menuService.modify(menuDTO);
+        return Result.ok();
+    }
+
+    @PostMapping("update")
+    public Result<Void> update(String[] apis) {
+        menuService.associateApi(List.of(apis));
+        return Result.ok();
+    }
+
+    @PostMapping("associateApi")
+    public Result<Void> associateApi(String[] apis) {
+        menuService.associateApi(List.of(apis));
+        return Result.ok();
+    }
+
+    @PostMapping("remove")
+    public Result<Void> remove(String id) {
+        menuService.remove(id);
+        return Result.ok();
+    }
 
 }

@@ -6,8 +6,9 @@ import com.sugarcoat.uims.application.dto.UserDTO;
 import com.sugarcoat.uims.application.dto.UserQueryVO;
 
 /**
+ * 用户服务
+ *
  * @author xxd
- * @description TODO
  * @date 2023-01-12
  */
 public interface UserService {

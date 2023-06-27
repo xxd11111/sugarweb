@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
+ * 账号类型
+ *
  * @author xxd
  * @version 1.0
- * @description: TODO
  * @date 2023/3/9
  */
 @Getter

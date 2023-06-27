@@ -3,7 +3,7 @@ package com.sugarcoat.uims.domain.security;
 import java.util.List;
 
 /**
- * TODO
+ * 用户安全配置
  *
  * @author xxd
  * @version 1.0

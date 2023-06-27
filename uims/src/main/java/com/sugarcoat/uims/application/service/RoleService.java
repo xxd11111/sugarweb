@@ -9,8 +9,9 @@ import com.sugarcoat.uims.application.dto.RoleQueryVO;
 import java.util.List;
 
 /**
+ * 角色服务
+ *
  * @author xxd
- * @description TODO
  * @date 2022-12-29
  */
 public interface RoleService {

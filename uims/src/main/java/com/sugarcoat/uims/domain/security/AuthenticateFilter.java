@@ -1,5 +1,6 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.domain.security;
 
+import com.sugarcoat.uims.application.service.SessionService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,7 +10,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 /**
- * TODO
+ * 认证过滤器
  *
  * @author xxd
  * @version 1.0
@@ -17,15 +18,16 @@ import java.io.IOException;
  */
 
 public class AuthenticateFilter extends OncePerRequestFilter {
-    private final SecurityService securityService;
 
-    public AuthenticateFilter(SecurityService securityService) {
-        this.securityService = securityService;
+    private final SessionService sessionService;
+
+    public AuthenticateFilter(SessionService sessionService) {
+        this.sessionService = sessionService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        securityService.authenticate();
+        sessionService.authenticate();
         filterChain.doFilter(request, response);
     }
 }

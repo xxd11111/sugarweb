@@ -40,15 +40,9 @@ public class MenuController {
         return Result.data(menuService.save(menuDTO));
     }
 
-    @PostMapping("update")
-    public Result<Void> update(@RequestBody MenuDTO menuDTO) {
+    @PostMapping("modify")
+    public Result<Void> modify(@RequestBody MenuDTO menuDTO) {
         menuService.modify(menuDTO);
-        return Result.ok();
-    }
-
-    @PostMapping("update")
-    public Result<Void> update(String[] apis) {
-        menuService.associateApi(List.of(apis));
         return Result.ok();
     }
 

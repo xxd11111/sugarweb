@@ -6,5 +6,5 @@ package com.sugarcoat.uims.application.dto;
  * @author xxd
  * @date 2023/6/26 21:53
  */
-public class LoginDTO {
+public class LoginVO {
 }

@@ -1,20 +1,20 @@
 package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.uims.application.dto.LoginDTO;
-import com.sugarcoat.uims.domain.security.LoginVO;
+import com.sugarcoat.uims.application.dto.LoginVO;
+import com.sugarcoat.uims.domain.security.LoginDTO;
 import com.sugarcoat.uims.domain.security.SessionInfo;
 
 /**
- * 安全服务
+ * 会话服务实现类
  *
  * @author xxd
  * @version 1.0
  * @date 2023/6/26
  */
-public interface SecurityService {
+public interface SessionService {
 
-    LoginDTO login(LoginVO loginInfo);
+    LoginVO login(LoginDTO loginDTO);
 
     void authenticate();
 
@@ -22,7 +22,7 @@ public interface SecurityService {
 
     void kickOut(String sessionId);
 
-    PageData<SessionInfo> sessionPage();
+    PageData<SessionInfo> page();
 
     SessionInfo find(String sessionId);
 

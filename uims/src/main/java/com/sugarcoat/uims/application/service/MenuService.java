@@ -8,8 +8,9 @@ import com.sugarcoat.uims.application.dto.MenuQueryVO;
 import java.util.List;
 
 /**
+ * 菜单服务
+ *
  * @author xxd
- * @description TODO
  * @date 2022-12-29
  */
 public interface MenuService {

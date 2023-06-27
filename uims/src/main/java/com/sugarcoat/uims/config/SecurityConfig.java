@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.config;
 
-import com.sugarcoat.uims.application.service.AuthenticateFilter;
-import com.sugarcoat.uims.application.service.SecurityService;
+import com.sugarcoat.uims.domain.security.AuthenticateFilter;
+import com.sugarcoat.uims.application.service.SessionService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,8 +21,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public AuthenticateFilter authenticateFilter(SecurityService securityService) {
-        return new AuthenticateFilter(securityService);
+    public AuthenticateFilter authenticateFilter(SessionService sessionService) {
+        return new AuthenticateFilter(sessionService);
     }
 
     @Bean

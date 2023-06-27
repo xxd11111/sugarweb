@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 /**
- * TODO
+ * 菜单
  *
  * @author xxd
  * @date 2022-12-07
@@ -70,8 +70,7 @@ public class Menu {
 	/**
 	 * 菜单权限
 	 */
-	@Transient
-	private Collection<String> serverApis;
+	private String apiCode;
 
 	/**
 	 * 状态

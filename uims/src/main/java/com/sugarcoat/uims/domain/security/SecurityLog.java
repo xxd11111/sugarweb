@@ -3,8 +3,9 @@ package com.sugarcoat.uims.domain.security;
 import lombok.Data;
 
 /**
+ * 安全日志
+ *
  * @author xxd
- * @description 安全日志
  * @date 2022-10-27
  */
 @Data

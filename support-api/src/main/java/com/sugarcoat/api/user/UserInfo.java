@@ -12,8 +12,6 @@ public interface UserInfo {
 
 	String getUsername();
 
-	void checkCertificate(String certificate);
-
 	String getUserType();
 
 	boolean isAdmin();

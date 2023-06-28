@@ -2,8 +2,8 @@ package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.MenuDTO;
-import com.sugarcoat.uims.application.dto.MenuPageDTO;
-import com.sugarcoat.uims.application.dto.MenuQueryVO;
+import com.sugarcoat.uims.application.dto.MenuTreeVO;
+import com.sugarcoat.uims.application.dto.MenuQueryDTO;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public interface MenuService {
 
     void remove(String id);
 
-    PageData<MenuPageDTO> page(MenuQueryVO menuQueryVO);
+    PageData<MenuTreeVO> page(MenuQueryDTO menuQueryDTOVO);
 
     MenuDTO find(String id);
 

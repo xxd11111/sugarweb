@@ -2,9 +2,9 @@ package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.RoleDTO;
-import com.sugarcoat.uims.application.dto.RoleInfoVO;
-import com.sugarcoat.uims.application.dto.RolePageDTO;
-import com.sugarcoat.uims.application.dto.RoleQueryVO;
+import com.sugarcoat.uims.application.dto.RoleVO;
+import com.sugarcoat.uims.application.dto.RolePageVO;
+import com.sugarcoat.uims.application.dto.RoleQueryDTO;
 import com.sugarcoat.uims.domain.role.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,12 +44,12 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public PageData<RolePageDTO> page(RoleQueryVO roleQueryVO) {
+    public PageData<RolePageVO> page(RoleQueryDTO roleQueryDTO) {
         return null;
     }
 
     @Override
-    public RoleInfoVO find(String id) {
+    public RoleVO find(String id) {
         return null;
     }
 }

@@ -2,8 +2,8 @@ package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.MenuDTO;
-import com.sugarcoat.uims.application.dto.MenuPageDTO;
-import com.sugarcoat.uims.application.dto.MenuQueryVO;
+import com.sugarcoat.uims.application.dto.MenuTreeVO;
+import com.sugarcoat.uims.application.dto.MenuQueryDTO;
 import com.sugarcoat.uims.domain.menu.MenuRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,7 @@ public class MenuServiceImpl implements MenuService{
     }
 
     @Override
-    public PageData<MenuPageDTO> page(MenuQueryVO menuQueryVO) {
+    public PageData<MenuTreeVO> page(MenuQueryDTO menuQueryDTOVO) {
         return null;
     }
 

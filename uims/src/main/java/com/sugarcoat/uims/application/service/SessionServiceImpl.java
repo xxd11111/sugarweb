@@ -1,8 +1,8 @@
 package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.uims.application.dto.PasswordLoginDTO;
 import com.sugarcoat.uims.application.dto.LoginVO;
-import com.sugarcoat.uims.domain.security.LoginDTO;
 import com.sugarcoat.uims.domain.security.SessionInfo;
 import com.sugarcoat.uims.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class SessionServiceImpl implements SessionService {
     private final UserRepository userRepository;
 
     @Override
-    public LoginVO login(LoginDTO loginDTO) {
+    public PasswordLoginDTO login(LoginVO loginVO) {
         return null;
     }
 

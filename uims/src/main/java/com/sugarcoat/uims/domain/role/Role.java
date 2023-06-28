@@ -1,5 +1,6 @@
 package com.sugarcoat.uims.domain.role;
 
+import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.uims.domain.menu.Menu;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -31,7 +32,7 @@ public class Role {
 	@ManyToMany
 	private Collection<Menu> menus;
 
-	private String status;
+	private BooleanFlag enable;
 
 	@Override
 	public boolean equals(Object o) {

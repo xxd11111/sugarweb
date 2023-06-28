@@ -3,7 +3,7 @@ package com.sugarcoat.uims.application.service;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.NewPasswordDTO;
 import com.sugarcoat.uims.application.dto.UserDTO;
-import com.sugarcoat.uims.application.dto.UserQueryVO;
+import com.sugarcoat.uims.application.dto.UserQueryDTO;
 import com.sugarcoat.uims.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageData<UserDTO> page(UserQueryVO userQueryVO) {
+    public PageData<UserDTO> page(UserQueryDTO userQueryDTO) {
         return null;
     }
 

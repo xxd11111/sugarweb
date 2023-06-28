@@ -1,18 +1,19 @@
 package com.sugarcoat.uims.application.dto;
 
 import com.sugarcoat.api.common.BooleanFlag;
+import com.sugarcoat.uims.domain.user.AccountType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 /**
- * 用户dto
+ * 用户查询dto
  *
  * @author xxd
- * @date 2022-12-27
+ * @date 2023/6/26 23:15
  */
 @Data
-public class UserDTO {
-
-    private String id;
+public class UserQueryDTO {
 
     private String username;
 
@@ -22,7 +23,8 @@ public class UserDTO {
 
     private String nickName;
 
-    private String password;
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
 
     private BooleanFlag enable;
 }

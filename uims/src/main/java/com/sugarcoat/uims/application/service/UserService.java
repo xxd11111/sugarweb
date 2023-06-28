@@ -3,7 +3,7 @@ package com.sugarcoat.uims.application.service;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.NewPasswordDTO;
 import com.sugarcoat.uims.application.dto.UserDTO;
-import com.sugarcoat.uims.application.dto.UserQueryVO;
+import com.sugarcoat.uims.application.dto.UserQueryDTO;
 
 /**
  * 用户服务
@@ -17,7 +17,7 @@ public interface UserService {
 
     UserDTO find(String id);
 
-    PageData<UserDTO> page(UserQueryVO userQueryVO);
+    PageData<UserDTO> page(UserQueryDTO userQueryDTO);
 
     void modifyPassword(NewPasswordDTO newPasswordDTO);
 

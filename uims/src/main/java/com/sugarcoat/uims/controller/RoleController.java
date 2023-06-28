@@ -3,9 +3,9 @@ package com.sugarcoat.uims.controller;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.RoleDTO;
-import com.sugarcoat.uims.application.dto.RoleInfoVO;
-import com.sugarcoat.uims.application.dto.RolePageDTO;
-import com.sugarcoat.uims.application.dto.RoleQueryVO;
+import com.sugarcoat.uims.application.dto.RoleVO;
+import com.sugarcoat.uims.application.dto.RolePageVO;
+import com.sugarcoat.uims.application.dto.RoleQueryDTO;
 import com.sugarcoat.uims.application.service.RoleService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -27,13 +27,13 @@ public class RoleController {
     private final RoleService roleService;
 
     @GetMapping("{id}")
-    public Result<RoleInfoVO> findOne(@NotBlank @PathVariable String id) {
+    public Result<RoleVO> findOne(@NotBlank @PathVariable String id) {
         return Result.data(roleService.find(id));
     }
 
     @GetMapping("page")
-    public Result<PageData<RolePageDTO>> page(@RequestParam RoleQueryVO roleQueryVO) {
-        return Result.data(roleService.page(roleQueryVO));
+    public Result<PageData<RolePageVO>> page(@RequestParam RoleQueryDTO roleQueryDTO) {
+        return Result.data(roleService.page(roleQueryDTO));
     }
 
     @PostMapping("save")

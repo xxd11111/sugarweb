@@ -1,11 +1,13 @@
 package com.sugarcoat.uims.domain.menu;
 
+import com.sugarcoat.api.common.BooleanFlag;
+import com.sugarcoat.support.server.serverApi.ServerApi;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * 菜单
@@ -32,9 +34,9 @@ public class Menu {
 	private String pid;
 
 	/**
-	 * 菜单搜索索引
+	 * 菜单编码
 	 */
-	private String menuIndex;
+	private String menuCode;
 
 	/**
 	 * 菜单名
@@ -42,15 +44,16 @@ public class Menu {
 	private String menuName;
 
 	/**
-	 * 菜单编码
-	 */
-	private String menuCode;
-
-	/**
 	 * 菜单类型
 	 */
 	@Enumerated(EnumType.STRING)
 	private MenuType menuType;
+
+	/**
+	 * url类型
+	 */
+	@Enumerated(EnumType.STRING)
+	private MenuUrlType urlType;
 
 	/**
 	 * 菜单url
@@ -65,17 +68,19 @@ public class Menu {
 	/**
 	 * 菜单顺序
 	 */
-	private Integer orderNum;
+	private Integer sequence;
 
 	/**
 	 * 菜单权限
 	 */
-	private String apiCode;
+	@ManyToMany
+	private Set<ServerApi> serverApis;
 
 	/**
 	 * 状态
 	 */
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private BooleanFlag enable;
 
 	@Override
 	public boolean equals(Object o) {

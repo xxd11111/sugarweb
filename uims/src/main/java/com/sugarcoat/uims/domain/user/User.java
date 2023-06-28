@@ -1,6 +1,8 @@
 package com.sugarcoat.uims.domain.user;
 
 import cn.hutool.core.collection.CollUtil;
+import com.sugarcoat.api.common.BooleanFlag;
+import com.sugarcoat.support.server.serverApi.ServerApi;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.role.Role;
 import com.sugarcoat.api.user.UserInfo;
@@ -36,9 +38,9 @@ public class User implements UserInfo {
 
     private String username;
 
-    private String mobilePhone;
-
     private String email;
+
+    private String mobilePhone;
 
     private String nickName;
 
@@ -46,15 +48,13 @@ public class User implements UserInfo {
 
     private String password;
 
-    private String userType;
-
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
     @ManyToMany
     private Set<Role> roles;
 
-    private String status;
+    private BooleanFlag enable;
 
     public Set<String> listRoles() {
         if (CollUtil.isEmpty(roles)) {
@@ -76,7 +76,9 @@ public class User implements UserInfo {
         return roles.stream()
                 .map(Role::getMenus)
                 .flatMap(Collection::parallelStream)
-                .map(Menu::getApiCode)
+                .map(Menu::getServerApis)
+                .flatMap(Collection::parallelStream)
+                .map(ServerApi::getCode)
                 .collect(Collectors.toSet());
     }
 
@@ -86,6 +88,11 @@ public class User implements UserInfo {
         if (!equals) {
             throw new SecurityException("凭证错误");
         }
+    }
+
+    @Override
+    public String getUserType() {
+        return accountType.getCode();
     }
 
     @Override

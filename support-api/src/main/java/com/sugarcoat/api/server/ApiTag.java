@@ -6,7 +6,7 @@ package com.sugarcoat.api.server;
  * @author xxd
  * @date 2023/6/27 22:40
  */
-public @interface ServerApi {
+public @interface ApiTag {
 
     String code();
 

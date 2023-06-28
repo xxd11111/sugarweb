@@ -12,17 +12,17 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum FlagEnum {
+public enum BooleanFlag implements Flag {
 
-	/**
-	 * 是
-	 */
-	TRUE("1"),
-	/**
-	 * 否
-	 */
-	FALSE("0");
+    /**
+     * 是
+     */
+    TRUE("1"),
+    /**
+     * 否
+     */
+    FALSE("0");
 
-	private final String code;
+    private final String code;
 
 }

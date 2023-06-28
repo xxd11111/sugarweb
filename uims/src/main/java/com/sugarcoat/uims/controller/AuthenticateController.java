@@ -1,10 +1,10 @@
 package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.Result;
-import com.sugarcoat.api.server.ServerApi;
-import com.sugarcoat.uims.application.dto.LoginVO;
+import com.sugarcoat.api.server.ApiTag;
+import com.sugarcoat.uims.application.dto.PasswordLoginDTO;
 import com.sugarcoat.uims.application.service.SessionService;
-import com.sugarcoat.uims.domain.security.LoginDTO;
+import com.sugarcoat.uims.application.dto.LoginVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +24,14 @@ public class AuthenticateController {
 
     private final SessionService sessionService;
 
-    @ServerApi(code = "post:authenticate:login", name = "登录")
+    @ApiTag(code = "post:authenticate:login", name = "登录")
     @PostMapping("/login")
-    public Result login(LoginDTO loginDTO) {
-        LoginVO login = sessionService.login(loginDTO);
+    public Result login(LoginVO loginVO) {
+        PasswordLoginDTO login = sessionService.login(loginVO);
         return Result.data(login);
     }
 
-    @ServerApi(code = "post:authenticate:logout", name = "退出")
+    @ApiTag(code = "post:authenticate:logout", name = "退出")
     @PostMapping("/logout")
     public Result logout() {
         sessionService.logout();

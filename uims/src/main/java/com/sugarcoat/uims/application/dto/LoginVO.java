@@ -1,10 +1,12 @@
 package com.sugarcoat.uims.application.dto;
 
 /**
- * TODO
+ * 登录返回信息
  *
  * @author xxd
- * @date 2023/6/26 21:53
+ * @version 1.0
+ * @date 2023/6/26
  */
 public class LoginVO {
+
 }

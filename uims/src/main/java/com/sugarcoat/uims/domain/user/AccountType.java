@@ -1,5 +1,6 @@
 package com.sugarcoat.uims.domain.user;
 
+import com.sugarcoat.api.common.Flag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,14 +13,14 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum AccountType {
+public enum AccountType implements Flag {
 
-    SUPER_ADMIN(0, "超级管理员"),
-    ADMIN(1, "管理员"),
-    COMMON(2, "普通用户"),
-    ANONYMOUS(3, "游客");
+    SUPER_ADMIN("1", "超级管理员"),
+    ADMIN("2", "管理员"),
+    COMMON("3", "普通用户"),
+    ANONYMOUS("4", "游客");
 
-    private final Integer code;
+    private final String code;
 
     private final String desc;
 

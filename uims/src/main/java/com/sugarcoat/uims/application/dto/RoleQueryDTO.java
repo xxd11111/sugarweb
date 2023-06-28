@@ -3,23 +3,19 @@ package com.sugarcoat.uims.application.dto;
 import com.sugarcoat.api.common.BooleanFlag;
 import lombok.Data;
 
-import java.util.Collection;
-
 /**
- * 角色dto
+ * 角色查询dto
  *
  * @author xxd
- * @date 2022-12-29
+ * @date 2023/6/26 22:16
  */
 @Data
-public class RoleDTO {
-    private Long id;
+public class RoleQueryDTO {
 
     private String roleName;
 
     private String roleCode;
 
-    private Collection<String> menus;
-
     private BooleanFlag enable;
+
 }

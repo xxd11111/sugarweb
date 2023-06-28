@@ -6,20 +6,21 @@ import lombok.Data;
 import java.util.Collection;
 
 /**
- * 角色dto
+ * 角色详情vo
  *
  * @author xxd
- * @date 2022-12-29
+ * @date 2023/6/26 21:58
  */
 @Data
-public class RoleDTO {
+public class RoleVO {
+
     private Long id;
 
     private String roleName;
 
     private String roleCode;
 
-    private Collection<String> menus;
+    private Collection<MenuTreeVO> menus;
 
     private BooleanFlag enable;
 }

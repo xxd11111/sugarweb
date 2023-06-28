@@ -9,8 +9,9 @@ import jakarta.persistence.Id;
 import java.util.Objects;
 
 /**
+ * 服务接口
+ *
  * @author xxd
- * @description TODO
  * @date 2022-10-25
  */
 @Getter
@@ -23,17 +24,15 @@ public class ServerApi extends EntityExt {
 	@Id
 	private String id;
 
-	private String name;
-
 	private String code;
+
+	private String name;
 
 	private String url;
 
 	private String methodType;
 
 	private String remark;
-
-	private String status;
 
 	@Override
 	public boolean equals(Object o) {

@@ -1,10 +1,21 @@
 package com.sugarcoat.uims.application.dto;
 
+import lombok.Data;
+
 /**
- * TODO
+ * 密码
  *
  * @author xxd
  * @date 2023/6/26 21:44
  */
+@Data
 public class NewPasswordDTO {
+
+    private String oldPassword;
+
+    private String newPassword;
+
+    private String verifyUuid;
+
+    private String verifyValue;
 }

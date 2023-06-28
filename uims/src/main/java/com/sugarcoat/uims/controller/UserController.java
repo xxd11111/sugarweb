@@ -3,7 +3,7 @@ package com.sugarcoat.uims.controller;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.NewPasswordDTO;
 import com.sugarcoat.uims.application.dto.UserDTO;
-import com.sugarcoat.uims.application.dto.UserQueryVO;
+import com.sugarcoat.uims.application.dto.UserQueryDTO;
 import com.sugarcoat.uims.application.service.UserService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping("page")
-    public Result page(@RequestParam UserQueryVO userQueryVO) {
-        return Result.data(userService.page(userQueryVO));
+    public Result page(@RequestParam UserQueryDTO userQueryDTO) {
+        return Result.data(userService.page(userQueryDTO));
     }
 
     @PostMapping("save")

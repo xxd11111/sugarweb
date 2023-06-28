@@ -3,8 +3,8 @@ package com.sugarcoat.uims.controller;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.MenuDTO;
-import com.sugarcoat.uims.application.dto.MenuPageDTO;
-import com.sugarcoat.uims.application.dto.MenuQueryVO;
+import com.sugarcoat.uims.application.dto.MenuTreeVO;
+import com.sugarcoat.uims.application.dto.MenuQueryDTO;
 import com.sugarcoat.uims.application.service.MenuService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +31,8 @@ public class MenuController {
     }
 
     @GetMapping("page")
-    public Result<PageData<MenuPageDTO>> page(@RequestParam MenuQueryVO menuQueryVO) {
-        return Result.data(menuService.page(menuQueryVO));
+    public Result<PageData<MenuTreeVO>> page(@RequestParam MenuQueryDTO menuQueryDTOVO) {
+        return Result.data(menuService.page(menuQueryDTOVO));
     }
 
     @PostMapping("save")

@@ -3,20 +3,18 @@ package com.sugarcoat.uims.application.dto;
 import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.uims.domain.menu.MenuType;
 import com.sugarcoat.uims.domain.menu.MenuUrlType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.util.Set;
 
 /**
- * 菜单树vo
+ * 菜单dto
  *
  * @author xxd
  * @date 2022-12-29
  */
 @Data
-public class MenuTreeVO {
+public class MenuDto {
     /**
      * 菜单id
      */
@@ -26,11 +24,6 @@ public class MenuTreeVO {
      * 菜单pid
      */
     private String pid;
-
-    /**
-     * 菜单pid
-     */
-    private Set<MenuTreeVO> menuTrees;
 
     /**
      * 菜单编码
@@ -45,14 +38,12 @@ public class MenuTreeVO {
     /**
      * 菜单类型
      */
-    @Enumerated(EnumType.STRING)
     private MenuType menuType;
 
     /**
      * url类型
      */
-    @Enumerated(EnumType.STRING)
-    private MenuUrlType urlType;
+    private MenuUrlType menuUrlType;
 
     /**
      * 菜单url
@@ -77,6 +68,5 @@ public class MenuTreeVO {
     /**
      * 状态
      */
-    @Enumerated(EnumType.STRING)
     private BooleanFlag enable;
 }

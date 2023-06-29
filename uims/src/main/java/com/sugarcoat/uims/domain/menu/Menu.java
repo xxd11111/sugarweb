@@ -53,7 +53,7 @@ public class Menu {
 	 * url类型
 	 */
 	@Enumerated(EnumType.STRING)
-	private MenuUrlType urlType;
+	private MenuUrlType menuUrlType;
 
 	/**
 	 * 菜单url

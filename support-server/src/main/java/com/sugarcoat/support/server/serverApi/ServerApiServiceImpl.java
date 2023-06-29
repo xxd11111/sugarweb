@@ -35,7 +35,6 @@ public class ServerApiServiceImpl implements ServerApiService {
 		serverApiDTO.setUrl(serverApi.getUrl());
 		serverApiDTO.setMethodType(serverApi.getMethodType());
 		serverApiDTO.setRemark(serverApi.getRemark());
-		serverApiDTO.setStatus(serverApi.getStatus());
 		return serverApiDTO;
 	}
 
@@ -64,7 +63,6 @@ public class ServerApiServiceImpl implements ServerApiService {
 			serverApiDTO.setName(entity.getName());
 			serverApiDTO.setUrl(entity.getUrl());
 			serverApiDTO.setRemark(entity.getRemark());
-			serverApiDTO.setStatus(entity.getStatus());
 			serverApiDTO.setMethodType(entity.getMethodType());
 			return serverApiDTO;
 		});

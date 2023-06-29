@@ -20,7 +20,7 @@ public class RoleVO {
 
     private String roleCode;
 
-    private Collection<MenuTreeVO> menus;
+    private Collection<MenuTreeVo> menus;
 
     private BooleanFlag enable;
 }

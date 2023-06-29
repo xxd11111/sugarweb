@@ -12,7 +12,7 @@ import lombok.Data;
  * @date 2023/6/26 22:23
  */
 @Data
-public class MenuQueryDTO {
+public class MenuQueryDto {
 
     /**
      * 菜单编码

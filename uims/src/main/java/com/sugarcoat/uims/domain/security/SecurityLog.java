@@ -11,39 +11,39 @@ import lombok.Data;
 @Data
 public class SecurityLog {
 
-	/**
-	 * 事件类型
-	 */
-	private String id;
+    /**
+     * 事件类型
+     */
+    private String id;
 
-	/**
-	 * 事件类型
-	 */
-	private String eventType;
+    /**
+     * 事件类型
+     */
+    private String eventType;
 
-	/**
-	 * 用户id
-	 */
-	private String userId;
+    /**
+     * 用户id
+     */
+    private String userId;
 
-	/**
-	 * 用户名
-	 */
-	private String username;
+    /**
+     * 用户名
+     */
+    private String username;
 
-	/**
-	 * 操作ip
-	 */
-	private String actionIp;
+    /**
+     * 操作ip
+     */
+    private String actionIp;
 
-	/**
-	 * 操作类型
-	 */
-	private String actionType;
+    /**
+     * 操作类型
+     */
+    private String actionType;
 
-	/**
-	 * 相关信息
-	 */
-	private String message;
+    /**
+     * 相关信息
+     */
+    private String message;
 
 }

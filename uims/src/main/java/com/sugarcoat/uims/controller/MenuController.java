@@ -2,9 +2,9 @@ package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
-import com.sugarcoat.uims.application.dto.MenuDTO;
-import com.sugarcoat.uims.application.dto.MenuTreeVO;
-import com.sugarcoat.uims.application.dto.MenuQueryDTO;
+import com.sugarcoat.uims.application.dto.MenuDto;
+import com.sugarcoat.uims.application.dto.MenuTreeVo;
+import com.sugarcoat.uims.application.dto.MenuQueryDto;
 import com.sugarcoat.uims.application.service.MenuService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -26,29 +26,29 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping("{id}")
-    public Result<MenuDTO> findOne(@NotBlank @PathVariable String id) {
+    public Result<MenuDto> findOne(@NotBlank @PathVariable String id) {
         return Result.data(menuService.find(id));
     }
 
     @GetMapping("page")
-    public Result<PageData<MenuTreeVO>> page(@RequestParam MenuQueryDTO menuQueryDTOVO) {
+    public Result<PageData<MenuTreeVo>> page(@RequestParam MenuQueryDto menuQueryDTOVO) {
         return Result.data(menuService.page(menuQueryDTOVO));
     }
 
     @PostMapping("save")
-    public Result<String> save(@RequestBody MenuDTO menuDTO) {
+    public Result<String> save(@RequestBody MenuDto menuDTO) {
         return Result.data(menuService.save(menuDTO));
     }
 
     @PostMapping("modify")
-    public Result<Void> modify(@RequestBody MenuDTO menuDTO) {
+    public Result<Void> modify(@RequestBody MenuDto menuDTO) {
         menuService.modify(menuDTO);
         return Result.ok();
     }
 
     @PostMapping("associateApi")
-    public Result<Void> associateApi(String[] apis) {
-        menuService.associateApi(List.of(apis));
+    public Result<Void> associateApi(String id, String[] apis) {
+        menuService.associateApi(id, List.of(apis));
         return Result.ok();
     }
 

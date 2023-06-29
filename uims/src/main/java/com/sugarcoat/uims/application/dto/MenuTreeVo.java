@@ -10,13 +10,13 @@ import lombok.Data;
 import java.util.Set;
 
 /**
- * 菜单dto
+ * 菜单树vo
  *
  * @author xxd
  * @date 2022-12-29
  */
 @Data
-public class MenuDTO {
+public class MenuTreeVo {
     /**
      * 菜单id
      */
@@ -26,6 +26,11 @@ public class MenuDTO {
      * 菜单pid
      */
     private String pid;
+
+    /**
+     * 菜单pid
+     */
+    private Set<MenuTreeVo> menuTrees;
 
     /**
      * 菜单编码
@@ -47,7 +52,7 @@ public class MenuDTO {
      * url类型
      */
     @Enumerated(EnumType.STRING)
-    private MenuUrlType urlType;
+    private MenuUrlType menuUrlType;
 
     /**
      * 菜单url

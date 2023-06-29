@@ -1,9 +1,9 @@
 package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.uims.application.dto.MenuDTO;
-import com.sugarcoat.uims.application.dto.MenuTreeVO;
-import com.sugarcoat.uims.application.dto.MenuQueryDTO;
+import com.sugarcoat.uims.application.dto.MenuDto;
+import com.sugarcoat.uims.application.dto.MenuTreeVo;
+import com.sugarcoat.uims.application.dto.MenuQueryDto;
 
 import java.util.List;
 
@@ -15,16 +15,16 @@ import java.util.List;
  */
 public interface MenuService {
 
-    String save(MenuDTO menuDTO);
+    String save(MenuDto menuDTO);
 
-    void modify(MenuDTO menuDTO);
+    void modify(MenuDto menuDTO);
 
     void remove(String id);
 
-    PageData<MenuTreeVO> page(MenuQueryDTO menuQueryDTOVO);
+    PageData<MenuTreeVo> page(MenuQueryDto menuQueryDTOVO);
 
-    MenuDTO find(String id);
+    MenuDto find(String id);
 
-    void associateApi(List<String> apis);
+    void associateApi(String id, List<String> apis);
 
 }

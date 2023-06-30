@@ -13,7 +13,7 @@ import com.sugarcoat.uims.application.dto.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.menu.MenuRepository;
-import com.sugarcoat.uims.domain.menu.QMenu;
+import com.sugarcoat.uims.domain.model.menu.QMenu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

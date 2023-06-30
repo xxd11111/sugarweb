@@ -1,8 +1,8 @@
 package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.uims.application.dto.RoleDTO;
-import com.sugarcoat.uims.application.dto.RoleVO;
+import com.sugarcoat.uims.application.dto.RoleDto;
+import com.sugarcoat.uims.application.dto.RoleVo;
 import com.sugarcoat.uims.application.dto.RolePageVO;
 import com.sugarcoat.uims.application.dto.RoleQueryDTO;
 import com.sugarcoat.uims.domain.role.RoleRepository;
@@ -24,12 +24,12 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
     @Override
-    public String save(RoleDTO roleDTO) {
+    public String save(RoleDto roleDTO) {
         return null;
     }
 
     @Override
-    public void modify(RoleDTO roleDTO) {
+    public void modify(RoleDto roleDTO) {
 
     }
 
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleVO find(String id) {
+    public RoleVo find(String id) {
         return null;
     }
 }

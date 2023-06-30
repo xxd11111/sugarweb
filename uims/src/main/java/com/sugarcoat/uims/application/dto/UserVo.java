@@ -16,7 +16,7 @@ import java.util.Set;
  * @date 2023/6/26 21:41
  */
 @Data
-public class UserVO {
+public class UserVo {
 
     private String id;
 
@@ -32,7 +32,7 @@ public class UserVO {
     private AccountType accountType;
 
     @ManyToMany
-    private Set<RoleVO> roles;
+    private Set<RoleVo> roles;
 
     private BooleanFlag enable;
 }

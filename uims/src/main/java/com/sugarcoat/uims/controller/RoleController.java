@@ -2,8 +2,8 @@ package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
-import com.sugarcoat.uims.application.dto.RoleDTO;
-import com.sugarcoat.uims.application.dto.RoleVO;
+import com.sugarcoat.uims.application.dto.RoleDto;
+import com.sugarcoat.uims.application.dto.RoleVo;
 import com.sugarcoat.uims.application.dto.RolePageVO;
 import com.sugarcoat.uims.application.dto.RoleQueryDTO;
 import com.sugarcoat.uims.application.service.RoleService;
@@ -27,7 +27,7 @@ public class RoleController {
     private final RoleService roleService;
 
     @GetMapping("{id}")
-    public Result<RoleVO> findOne(@NotBlank @PathVariable String id) {
+    public Result<RoleVo> findOne(@NotBlank @PathVariable String id) {
         return Result.data(roleService.find(id));
     }
 
@@ -37,12 +37,12 @@ public class RoleController {
     }
 
     @PostMapping("save")
-    public Result<String> save(@RequestBody RoleDTO menuDTO) {
+    public Result<String> save(@RequestBody RoleDto menuDTO) {
         return Result.data(roleService.save(menuDTO));
     }
 
     @PostMapping("update")
-    public Result<Void> update(@RequestBody RoleDTO menuDTO) {
+    public Result<Void> update(@RequestBody RoleDto menuDTO) {
         roleService.modify(menuDTO);
         return Result.ok();
     }

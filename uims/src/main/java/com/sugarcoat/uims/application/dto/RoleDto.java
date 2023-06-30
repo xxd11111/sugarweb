@@ -12,7 +12,7 @@ import java.util.Collection;
  * @date 2022-12-29
  */
 @Data
-public class RoleDTO {
+public class RoleDto {
     private Long id;
 
     private String roleName;

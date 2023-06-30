@@ -12,7 +12,7 @@ import java.util.Collection;
  * @date 2023/6/26 21:58
  */
 @Data
-public class RoleVO {
+public class RoleVo {
 
     private Long id;
 

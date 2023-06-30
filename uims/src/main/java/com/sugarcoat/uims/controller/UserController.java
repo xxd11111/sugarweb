@@ -2,7 +2,7 @@ package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.NewPasswordDTO;
-import com.sugarcoat.uims.application.dto.UserDTO;
+import com.sugarcoat.uims.application.dto.UserDto;
 import com.sugarcoat.uims.application.dto.UserQueryDTO;
 import com.sugarcoat.uims.application.service.UserService;
 import jakarta.validation.constraints.NotBlank;
@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("save")
-    public Result save(@RequestBody UserDTO userDTO) {
+    public Result save(@RequestBody UserDto userDTO) {
         return Result.data(userService.save(userDTO));
     }
 

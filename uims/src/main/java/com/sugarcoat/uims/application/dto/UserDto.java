@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2022-12-27
  */
 @Data
-public class UserDTO {
+public class UserDto {
 
     private String id;
 

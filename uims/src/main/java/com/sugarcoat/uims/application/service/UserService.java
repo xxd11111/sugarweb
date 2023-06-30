@@ -2,7 +2,7 @@ package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.NewPasswordDTO;
-import com.sugarcoat.uims.application.dto.UserDTO;
+import com.sugarcoat.uims.application.dto.UserDto;
 import com.sugarcoat.uims.application.dto.UserQueryDTO;
 
 /**
@@ -13,11 +13,11 @@ import com.sugarcoat.uims.application.dto.UserQueryDTO;
  */
 public interface UserService {
 
-    String save(UserDTO userDTO);
+    String save(UserDto userDTO);
 
-    UserDTO find(String id);
+    UserDto find(String id);
 
-    PageData<UserDTO> page(UserQueryDTO userQueryDTO);
+    PageData<UserDto> page(UserQueryDTO userQueryDTO);
 
     void modifyPassword(NewPasswordDTO newPasswordDTO);
 

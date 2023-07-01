@@ -4,6 +4,7 @@ import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.dto.MenuTreeVo;
 import com.sugarcoat.uims.domain.menu.Menu;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
@@ -18,11 +19,15 @@ public interface MenuMapper {
 
     MenuMapper INSTANCE = Mappers.getMapper(MenuMapper.class);
 
+    @Mapping(target = "serverApis", ignore = true)
     Menu menuDtoToMenu(MenuDto menuDTO);
 
+    @Mapping(target = "serverApis", ignore = true)
     void updateMenu(MenuDto menuDTO, @MappingTarget Menu menu);
 
+    @Mapping(target = "serverApis", ignore = true)
     MenuDto menuToMenuDto(Menu menu);
 
+    @Mapping(target = "serverApis", ignore = true)
     MenuTreeVo menuToMenuTreeVo(Menu menu);
 }

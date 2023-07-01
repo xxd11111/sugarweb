@@ -1,7 +1,5 @@
 package com.sugarcoat.api.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 /**
  * 标识枚举
@@ -10,8 +8,6 @@ import lombok.Getter;
  * @version 1.0
  * @date 2023/4/27
  */
-@Getter
-@AllArgsConstructor
 public enum BooleanFlag implements Flag {
 
     /**
@@ -22,6 +18,15 @@ public enum BooleanFlag implements Flag {
      * 否
      */
     FALSE("0");
+
+    @Override
+    public String getCode() {
+        return code;
+    }
+
+    BooleanFlag(String code) {
+        this.code = code;
+    }
 
     private final String code;
 

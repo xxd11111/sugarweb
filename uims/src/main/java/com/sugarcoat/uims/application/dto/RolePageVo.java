@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2022-12-29
  */
 @Data
-public class RolePageVO {
+public class RolePageVo {
 
     private Long id;
 

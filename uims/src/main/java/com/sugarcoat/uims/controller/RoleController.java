@@ -4,7 +4,7 @@ import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.RoleDto;
 import com.sugarcoat.uims.application.dto.RoleVo;
-import com.sugarcoat.uims.application.dto.RolePageVO;
+import com.sugarcoat.uims.application.dto.RolePageVo;
 import com.sugarcoat.uims.application.dto.RoleQueryDTO;
 import com.sugarcoat.uims.application.service.RoleService;
 import jakarta.validation.constraints.NotBlank;
@@ -32,7 +32,7 @@ public class RoleController {
     }
 
     @GetMapping("page")
-    public Result<PageData<RolePageVO>> page(@RequestParam RoleQueryDTO roleQueryDTO) {
+    public Result<PageData<RolePageVo>> page(@RequestParam RoleQueryDTO roleQueryDTO) {
         return Result.data(roleService.page(roleQueryDTO));
     }
 
@@ -48,8 +48,8 @@ public class RoleController {
     }
 
     @PostMapping("associateMenu")
-    public Result<Void> update(String[] menus) {
-        roleService.associateMenu(List.of(menus));
+    public Result<Void> update(String id, String[] menus) {
+        roleService.associateMenu(id, List.of(menus));
         return Result.ok();
     }
 

@@ -3,7 +3,7 @@ package com.sugarcoat.uims.application.service;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.RoleDto;
 import com.sugarcoat.uims.application.dto.RoleVo;
-import com.sugarcoat.uims.application.dto.RolePageVO;
+import com.sugarcoat.uims.application.dto.RolePageVo;
 import com.sugarcoat.uims.application.dto.RoleQueryDTO;
 
 import java.util.List;
@@ -22,9 +22,9 @@ public interface RoleService {
 
     void remove(String id);
 
-    void associateMenu(List<String> menuIds);
+    void associateMenu(String id, List<String> menuIds);
 
-    PageData<RolePageVO> page(RoleQueryDTO roleQueryDTO);
+    PageData<RolePageVo> page(RoleQueryDTO roleQueryDTO);
 
     RoleVo find(String id);
 

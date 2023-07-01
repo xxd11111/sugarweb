@@ -23,7 +23,7 @@ import java.util.Objects;
 public class Role {
 
 	@Id
-	private Long id;
+	private String id;
 
 	private String roleName;
 
@@ -32,6 +32,7 @@ public class Role {
 	@ManyToMany
 	private Collection<Menu> menus;
 
+	@Enumerated(EnumType.STRING)
 	private BooleanFlag enable;
 
 	@Override

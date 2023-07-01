@@ -22,6 +22,7 @@ public interface UserMapper {
 
     UserDto userToUserDto(User user);
 
-    UserVo userToUserVo(User user);
+
+//    UserVo userToUserVo(User user);
 
 }

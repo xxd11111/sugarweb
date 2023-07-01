@@ -13,7 +13,7 @@ import com.sugarcoat.uims.application.dto.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.menu.MenuRepository;
-import com.sugarcoat.uims.domain.model.menu.QMenu;
+import com.sugarcoat.uims.domain.menu.QMenu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,7 +62,7 @@ public class MenuServiceImpl implements MenuService {
         BooleanExpression booleanExpression = ExpressionWrapper.of()
                 .and(StrUtil.isNotBlank(dto.getMenuCode()), QMenu.menu.menuCode.like(dto.getMenuCode(), '/'))
                 .and(StrUtil.isNotBlank(dto.getMenuCode()), QMenu.menu.menuName.like(dto.getMenuName(), '/'))
-                .and(StrUtil.isNotBlank(dto.getMenuCode()), QMenu.menu.menuCode.eq(dto.getEnable().getCode()))
+                .and(StrUtil.isNotBlank(dto.getMenuCode()), QMenu.menu.enable.eq(dto.getEnable()))
                 .build();
 
         Page<MenuTreeVo> page = menuRepository.findAll(booleanExpression, PageRequest.of(1, 10))

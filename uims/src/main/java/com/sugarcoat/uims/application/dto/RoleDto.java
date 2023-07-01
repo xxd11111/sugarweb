@@ -13,7 +13,7 @@ import java.util.Collection;
  */
 @Data
 public class RoleDto {
-    private Long id;
+    private String id;
 
     private String roleName;
 

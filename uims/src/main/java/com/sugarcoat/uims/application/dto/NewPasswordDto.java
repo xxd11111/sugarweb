@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2023/6/26 21:44
  */
 @Data
-public class NewPasswordDTO {
+public class NewPasswordDto {
 
     private String oldPassword;
 

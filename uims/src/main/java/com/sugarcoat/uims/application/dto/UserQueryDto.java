@@ -7,15 +7,13 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 /**
- * 用户分页vo
+ * 用户查询dto
  *
  * @author xxd
- * @date 2022-12-28
+ * @date 2023/6/26 23:15
  */
 @Data
-public class UserPageVO {
-
-    private String id;
+public class UserQueryDto {
 
     private String username;
 

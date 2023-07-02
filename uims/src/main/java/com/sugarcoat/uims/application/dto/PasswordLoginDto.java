@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2023/6/26 21:53
  */
 @Data
-public class PasswordLoginDTO {
+public class PasswordLoginDto {
 
     private String account;
 

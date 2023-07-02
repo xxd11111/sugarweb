@@ -1,9 +1,9 @@
 package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.Result;
-import com.sugarcoat.uims.application.dto.NewPasswordDTO;
+import com.sugarcoat.uims.application.dto.NewPasswordDto;
 import com.sugarcoat.uims.application.dto.UserDto;
-import com.sugarcoat.uims.application.dto.UserQueryDTO;
+import com.sugarcoat.uims.application.dto.UserQueryDto;
 import com.sugarcoat.uims.application.service.UserService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("page")
-    public Result page(@RequestParam UserQueryDTO userQueryDTO) {
+    public Result page(@RequestParam UserQueryDto userQueryDTO) {
         return Result.data(userService.page(userQueryDTO));
     }
 
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("modifyPassword")
-    public Result save(@RequestBody NewPasswordDTO newPasswordDTO) {
+    public Result save(@RequestBody NewPasswordDto newPasswordDTO) {
         userService.modifyPassword(newPasswordDTO);
         return Result.ok();
     }
@@ -60,8 +60,8 @@ public class UserController {
         return Result.data(userService.existUsername(username));
     }
 
-    @GetMapping("existPhoneNumber")
-    public Result existPhoneNumber(String phoneNumber) {
-        return Result.data(userService.existPhoneNumber(phoneNumber));
+    @GetMapping("existMobilePhone")
+    public Result existMobilePhone(String mobilePhone) {
+        return Result.data(userService.existMobilePhone(mobilePhone));
     }
 }

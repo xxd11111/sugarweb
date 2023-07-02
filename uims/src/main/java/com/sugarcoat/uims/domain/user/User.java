@@ -90,6 +90,11 @@ public class User implements UserInfo {
         }
     }
 
+    public void modifyPassword(String newPassword) {
+        // todo 加密方式问题
+        password = newPassword;
+    }
+
     @Override
     public String getUserType() {
         return accountType.getCode();

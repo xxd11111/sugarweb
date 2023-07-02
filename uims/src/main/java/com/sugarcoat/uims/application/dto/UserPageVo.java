@@ -1,27 +1,19 @@
 package com.sugarcoat.uims.application.dto;
 
+import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.uims.domain.user.AccountType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
-import java.util.Set;
-
 /**
- * 登录返回信息
+ * 用户分页vo
  *
  * @author xxd
- * @version 1.0
- * @date 2023/6/26
+ * @date 2022-12-28
  */
 @Data
-public class LoginVO {
-
-    private String uuid;
-
-    private String lastLoginIp;
-
-    private Long lastLoginTime;
-
-    private String lastLoginPlatform;
+public class UserPageVo {
 
     private String id;
 
@@ -33,8 +25,8 @@ public class LoginVO {
 
     private String nickName;
 
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    private Set<MenuTreeVo> menus;
-
+    private BooleanFlag enable;
 }

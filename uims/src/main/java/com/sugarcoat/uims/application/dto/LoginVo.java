@@ -1,19 +1,29 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.uims.domain.user.AccountType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Data;
 
+import java.util.Set;
+
 /**
- * 用户查询dto
+ * 登录返回信息
  *
  * @author xxd
- * @date 2023/6/26 23:15
+ * @version 1.0
+ * @date 2023/6/26
  */
 @Data
-public class UserQueryDTO {
+public class LoginVo {
+
+    private String uuid;
+
+    private String lastLoginIp;
+
+    private Long lastLoginTime;
+
+    private String lastLoginPlatform;
+
+    private String id;
 
     private String username;
 
@@ -23,8 +33,8 @@ public class UserQueryDTO {
 
     private String nickName;
 
-    @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    private BooleanFlag enable;
+    private Set<MenuTreeVo> menus;
+
 }

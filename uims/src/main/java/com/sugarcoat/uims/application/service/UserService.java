@@ -1,9 +1,7 @@
 package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.uims.application.dto.NewPasswordDTO;
-import com.sugarcoat.uims.application.dto.UserDto;
-import com.sugarcoat.uims.application.dto.UserQueryDTO;
+import com.sugarcoat.uims.application.dto.*;
 
 /**
  * 用户服务
@@ -15,17 +13,17 @@ public interface UserService {
 
     String save(UserDto userDTO);
 
-    UserDto find(String id);
+    UserVo find(String id);
 
-    PageData<UserDto> page(UserQueryDTO userQueryDTO);
+    PageData<UserPageVo> page(UserQueryDto userQueryDto);
 
-    void modifyPassword(NewPasswordDTO newPasswordDTO);
+    void modifyPassword(NewPasswordDto newPasswordDto);
 
     void remove(String id);
 
     boolean existUsername(String username);
 
-    boolean existPhoneNumber(String phoneNumber);
+    boolean existMobilePhone(String mobilePhone);
 
     boolean existEmail(String email);
 

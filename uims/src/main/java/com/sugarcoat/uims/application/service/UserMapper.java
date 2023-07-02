@@ -1,9 +1,11 @@
 package com.sugarcoat.uims.application.service;
 
 import com.sugarcoat.uims.application.dto.UserDto;
+import com.sugarcoat.uims.application.dto.UserPageVo;
 import com.sugarcoat.uims.application.dto.UserVo;
 import com.sugarcoat.uims.domain.user.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -23,6 +25,9 @@ public interface UserMapper {
     UserDto userToUserDto(User user);
 
 
-//    UserVo userToUserVo(User user);
+    @Mapping(target = "roles", ignore = true)
+    UserVo userToUserVo(User user);
+
+    UserPageVo userToUserPageVo(User user);
 
 }

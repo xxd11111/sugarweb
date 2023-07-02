@@ -1,6 +1,7 @@
 package com.sugarcoat.uims.domain.security;
 
 import com.sugarcoat.api.user.UserInfo;
+import lombok.Data;
 
 /**
  * 会话信息
@@ -9,6 +10,7 @@ import com.sugarcoat.api.user.UserInfo;
  * @version 1.0
  * @date 2023/6/26
  */
+@Data
 public class SessionInfo {
 
     private String sessionId;

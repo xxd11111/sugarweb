@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -7,9 +7,11 @@ import com.sugarcoat.api.common.PageDataAdaptManager;
 import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.uims.application.dto.RoleDto;
-import com.sugarcoat.uims.application.dto.RoleVo;
-import com.sugarcoat.uims.application.dto.RolePageVo;
-import com.sugarcoat.uims.application.dto.RoleQueryDTO;
+import com.sugarcoat.uims.application.vo.RoleVo;
+import com.sugarcoat.uims.application.vo.RolePageVo;
+import com.sugarcoat.uims.application.dto.RoleQueryDto;
+import com.sugarcoat.uims.application.mapper.RoleMapper;
+import com.sugarcoat.uims.application.RoleService;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.menu.MenuRepository;
 import com.sugarcoat.uims.domain.role.QRole;
@@ -65,7 +67,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public PageData<RolePageVo> page(RoleQueryDTO dto) {
+    public PageData<RolePageVo> page(RoleQueryDto dto) {
         BooleanExpression expression = ExpressionWrapper.of()
                 .and(StrUtil.isNotEmpty(dto.getRoleCode()), QRole.role.roleCode.like(dto.getRoleCode(), '/'))
                 .and(StrUtil.isNotEmpty(dto.getRoleName()), QRole.role.roleName.like(dto.getRoleName(), '/'))

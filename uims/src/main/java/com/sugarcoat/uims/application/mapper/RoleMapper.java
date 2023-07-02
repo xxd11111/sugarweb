@@ -1,16 +1,13 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application.mapper;
 
 import com.sugarcoat.uims.application.dto.RoleDto;
-import com.sugarcoat.uims.application.dto.RolePageVo;
-import com.sugarcoat.uims.application.dto.RoleVo;
-import com.sugarcoat.uims.domain.menu.Menu;
+import com.sugarcoat.uims.application.vo.RolePageVo;
+import com.sugarcoat.uims.application.vo.RoleVo;
 import com.sugarcoat.uims.domain.role.Role;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
-
-import java.util.Collection;
 
 /**
  * 角色mapper

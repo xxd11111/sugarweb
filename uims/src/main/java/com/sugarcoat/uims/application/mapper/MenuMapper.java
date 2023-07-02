@@ -1,7 +1,7 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application.mapper;
 
 import com.sugarcoat.uims.application.dto.MenuDto;
-import com.sugarcoat.uims.application.dto.MenuTreeVo;
+import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.domain.menu.Menu;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

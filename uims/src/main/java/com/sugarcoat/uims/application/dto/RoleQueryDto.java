@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2023/6/26 22:16
  */
 @Data
-public class RoleQueryDTO {
+public class RoleQueryDto {
 
     private String roleName;
 

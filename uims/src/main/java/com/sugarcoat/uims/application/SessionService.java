@@ -1,8 +1,8 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
-import com.sugarcoat.uims.application.dto.LoginVo;
+import com.sugarcoat.uims.application.vo.LoginVo;
 import com.sugarcoat.uims.domain.security.SessionInfo;
 
 /**
@@ -14,7 +14,7 @@ import com.sugarcoat.uims.domain.security.SessionInfo;
  */
 public interface SessionService {
 
-    PasswordLoginDto login(LoginVo loginVO);
+    LoginVo login(PasswordLoginDto passwordLoginDto);
 
     void authenticate();
 

@@ -11,9 +11,9 @@ import com.sugarcoat.api.user.UserInfo;
  */
 public class SessionInfo {
 
-    private String uuid;
+    private String sessionId;
 
-    private String ip;
+    private String loginId;
 
     private Long loginTime;
 
@@ -28,4 +28,5 @@ public class SessionInfo {
     private String userAgent;
 
     private UserInfo userInfo;
+
 }

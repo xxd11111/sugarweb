@@ -3,8 +3,8 @@ package com.sugarcoat.uims.controller;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.api.server.ApiTag;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
-import com.sugarcoat.uims.application.service.SessionService;
-import com.sugarcoat.uims.application.dto.LoginVo;
+import com.sugarcoat.uims.application.SessionService;
+import com.sugarcoat.uims.application.vo.LoginVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +26,8 @@ public class AuthenticateController {
 
     @ApiTag(code = "post:authenticate:login", name = "登录")
     @PostMapping("/login")
-    public Result login(LoginVo loginVO) {
-        PasswordLoginDto login = sessionService.login(loginVO);
+    public Result login(PasswordLoginDto passwordLoginDto) {
+        LoginVo login = sessionService.login(passwordLoginDto);
         return Result.data(login);
     }
 

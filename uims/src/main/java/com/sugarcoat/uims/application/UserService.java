@@ -1,7 +1,9 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.*;
+import com.sugarcoat.uims.application.vo.UserPageVo;
+import com.sugarcoat.uims.application.vo.UserVo;
 
 /**
  * 用户服务

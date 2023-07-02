@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -8,6 +8,10 @@ import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.api.user.UserHelper;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.uims.application.dto.*;
+import com.sugarcoat.uims.application.mapper.UserMapper;
+import com.sugarcoat.uims.application.UserService;
+import com.sugarcoat.uims.application.vo.UserPageVo;
+import com.sugarcoat.uims.application.vo.UserVo;
 import com.sugarcoat.uims.domain.user.QUser;
 import com.sugarcoat.uims.domain.user.User;
 import com.sugarcoat.uims.domain.user.UserRepository;

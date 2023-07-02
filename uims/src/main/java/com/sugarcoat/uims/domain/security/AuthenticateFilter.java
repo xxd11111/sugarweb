@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.security;
 
-import com.sugarcoat.uims.application.service.SessionService;
+import com.sugarcoat.uims.application.SessionService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

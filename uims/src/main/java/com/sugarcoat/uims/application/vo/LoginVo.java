@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.application.dto;
+package com.sugarcoat.uims.application.vo;
 
 import com.sugarcoat.uims.domain.user.AccountType;
 import lombok.Data;
@@ -35,6 +35,6 @@ public class LoginVo {
 
     private AccountType accountType;
 
-    private Set<MenuTreeVo> menus;
+    private Set<LoginMenuVo> menus;
 
 }

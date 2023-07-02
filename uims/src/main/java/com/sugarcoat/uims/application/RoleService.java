@@ -1,10 +1,10 @@
-package com.sugarcoat.uims.application.service;
+package com.sugarcoat.uims.application;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.RoleDto;
-import com.sugarcoat.uims.application.dto.RoleVo;
-import com.sugarcoat.uims.application.dto.RolePageVo;
-import com.sugarcoat.uims.application.dto.RoleQueryDTO;
+import com.sugarcoat.uims.application.vo.RoleVo;
+import com.sugarcoat.uims.application.vo.RolePageVo;
+import com.sugarcoat.uims.application.dto.RoleQueryDto;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public interface RoleService {
 
     void associateMenu(String id, List<String> menuIds);
 
-    PageData<RolePageVo> page(RoleQueryDTO roleQueryDTO);
+    PageData<RolePageVo> page(RoleQueryDto roleQueryDTO);
 
     RoleVo find(String id);
 

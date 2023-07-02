@@ -3,10 +3,10 @@ package com.sugarcoat.uims.controller;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.RoleDto;
-import com.sugarcoat.uims.application.dto.RoleVo;
-import com.sugarcoat.uims.application.dto.RolePageVo;
-import com.sugarcoat.uims.application.dto.RoleQueryDTO;
-import com.sugarcoat.uims.application.service.RoleService;
+import com.sugarcoat.uims.application.vo.RoleVo;
+import com.sugarcoat.uims.application.vo.RolePageVo;
+import com.sugarcoat.uims.application.dto.RoleQueryDto;
+import com.sugarcoat.uims.application.RoleService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +32,7 @@ public class RoleController {
     }
 
     @GetMapping("page")
-    public Result<PageData<RolePageVo>> page(@RequestParam RoleQueryDTO roleQueryDTO) {
+    public Result<PageData<RolePageVo>> page(@RequestParam RoleQueryDto roleQueryDTO) {
         return Result.data(roleService.page(roleQueryDTO));
     }
 

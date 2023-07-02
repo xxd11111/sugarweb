@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.application.dto;
+package com.sugarcoat.uims.application.vo;
 
 import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.uims.domain.user.AccountType;

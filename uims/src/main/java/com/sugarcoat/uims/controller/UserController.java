@@ -4,7 +4,7 @@ import com.sugarcoat.api.common.Result;
 import com.sugarcoat.uims.application.dto.NewPasswordDto;
 import com.sugarcoat.uims.application.dto.UserDto;
 import com.sugarcoat.uims.application.dto.UserQueryDto;
-import com.sugarcoat.uims.application.service.UserService;
+import com.sugarcoat.uims.application.UserService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

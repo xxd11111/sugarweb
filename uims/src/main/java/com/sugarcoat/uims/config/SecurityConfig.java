@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.config;
 
 import com.sugarcoat.uims.domain.security.AuthenticateFilter;
-import com.sugarcoat.uims.application.service.SessionService;
+import com.sugarcoat.uims.application.SessionService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

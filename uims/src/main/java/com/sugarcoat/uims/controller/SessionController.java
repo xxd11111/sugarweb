@@ -2,7 +2,7 @@ package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.Result;
-import com.sugarcoat.uims.application.service.SessionService;
+import com.sugarcoat.uims.application.SessionService;
 import com.sugarcoat.uims.domain.security.SessionInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

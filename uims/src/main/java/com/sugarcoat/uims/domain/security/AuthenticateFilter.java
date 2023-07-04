@@ -1,6 +1,5 @@
 package com.sugarcoat.uims.domain.security;
 
-import com.sugarcoat.uims.application.SessionService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,15 +18,15 @@ import java.io.IOException;
 
 public class AuthenticateFilter extends OncePerRequestFilter {
 
-    private final SessionService sessionService;
+    private final SessionManager sessionManager;
 
-    public AuthenticateFilter(SessionService sessionService) {
-        this.sessionService = sessionService;
+    public AuthenticateFilter(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        sessionService.authenticate();
+        sessionManager.authenticate();
         filterChain.doFilter(request, response);
     }
 }

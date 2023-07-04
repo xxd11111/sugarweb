@@ -23,8 +23,6 @@ public interface UserMapper {
 
     User userDtoToUser(UserDto userDto);
 
-    LoginVo userToLoginVo(User user);
-
     @Mapping(target = "roles", ignore = true)
     UserVo userToUserVo(User user);
 

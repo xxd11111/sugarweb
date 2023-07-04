@@ -1,7 +1,7 @@
 package com.sugarcoat.api.user;
 
 /**
- * 用户
+ * 用户 todo 更替为 sessionHelper
  *
  * @author xxd
  * @version 1.0

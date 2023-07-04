@@ -1,5 +1,9 @@
 package com.sugarcoat.uims.domain.security;
 
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.uims.domain.user.User;
+
 /**
  * 会话管理
  *
@@ -8,12 +12,16 @@ package com.sugarcoat.uims.domain.security;
  */
 public interface SessionManager {
 
-    String create();
+    SessionInfo create(User user);
 
-    String refresh();
+    SessionInfo refresh();
 
-    String delete();
+    void delete(String sessionId);
 
-    String authenticate();
+    SessionInfo authenticate();
+
+    PageData<SessionInfo> findAll(PageParameter pageParameter);
+
+    SessionInfo findOne(String sessionId);
 
 }

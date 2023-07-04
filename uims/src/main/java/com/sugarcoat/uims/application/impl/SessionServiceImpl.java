@@ -2,11 +2,13 @@ package com.sugarcoat.uims.application.impl;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.user.UserHelper;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
 import com.sugarcoat.uims.application.vo.LoginVo;
 import com.sugarcoat.uims.application.SessionService;
 import com.sugarcoat.uims.application.mapper.UserMapper;
 import com.sugarcoat.uims.domain.security.SessionInfo;
+import com.sugarcoat.uims.domain.security.SessionManager;
 import com.sugarcoat.uims.domain.user.QUser;
 import com.sugarcoat.uims.domain.user.User;
 import com.sugarcoat.uims.domain.user.UserRepository;
@@ -24,14 +26,15 @@ import org.springframework.stereotype.Service;
 public class SessionServiceImpl implements SessionService {
 
     private final UserRepository userRepository;
+    private final SessionManager sessionManager;
 
     @Override
     public LoginVo login(PasswordLoginDto passwordLoginDto) {
         User user = userRepository.findOne(QUser.user.username.eq(passwordLoginDto.getAccount()))
                 .orElseThrow(() -> new ValidateException("not find user"));
         user.checkCertificate(passwordLoginDto.getPassword());
-
-        LoginVo loginVo = UserMapper.INSTANCE.userToLoginVo(user);
+        SessionInfo sessionInfo = sessionManager.create(user);
+        LoginVo loginVo = new LoginVo();
         loginVo.setLastLoginIp("");
         loginVo.setLastLoginIp("");
         loginVo.setLastLoginIp("");
@@ -42,17 +45,18 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void authenticate() {
-
+        sessionManager.authenticate();
     }
 
     @Override
     public void logout() {
-
+        String sessionId = "";
+        sessionManager.delete(sessionId);
     }
 
     @Override
     public void kickOut(String sessionId) {
-
+        sessionManager.delete(sessionId);
     }
 
     @Override

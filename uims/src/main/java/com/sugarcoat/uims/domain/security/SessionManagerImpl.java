@@ -1,5 +1,8 @@
 package com.sugarcoat.uims.domain.security;
 
+import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.uims.domain.user.User;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,22 +15,32 @@ import org.springframework.stereotype.Component;
 public class SessionManagerImpl implements SessionManager {
 
     @Override
-    public String create() {
+    public SessionInfo create(User user) {
         return null;
     }
 
     @Override
-    public String refresh() {
+    public SessionInfo refresh() {
         return null;
     }
 
     @Override
-    public String delete() {
+    public void delete(String sessionId) {
+
+    }
+
+    @Override
+    public SessionInfo authenticate() {
         return null;
     }
 
     @Override
-    public String authenticate() {
+    public PageData<SessionInfo> findAll(PageParameter pageParameter) {
+        return null;
+    }
+
+    @Override
+    public SessionInfo findOne(String sessionId) {
         return null;
     }
 }

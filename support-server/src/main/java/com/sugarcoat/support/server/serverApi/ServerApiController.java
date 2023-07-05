@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server.serverApi;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +26,8 @@ public class ServerApiController {
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<ServerApiDTO>> findPage(PageParameter pageParameter, ServerApiQueryVO queryVO) {
-		return Result.data(serverApiService.findPage(pageParameter, queryVO));
+	public Result<PageData<ServerApiDTO>> findPage(PageDto pageDto, ServerApiQueryVO queryVO) {
+		return Result.data(serverApiService.findPage(pageDto, queryVO));
 	}
 
 }

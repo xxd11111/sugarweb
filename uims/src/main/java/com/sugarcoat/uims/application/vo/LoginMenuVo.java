@@ -20,7 +20,7 @@ public class LoginMenuVo {
     /**
      * 菜单pid
      */
-    private Set<LoginMenuVo> menuTrees;
+    private Set<LoginMenuVo> menus;
 
     /**
      * 菜单编码

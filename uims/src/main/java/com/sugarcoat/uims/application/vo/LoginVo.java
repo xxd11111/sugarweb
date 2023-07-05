@@ -15,15 +15,15 @@ import java.util.Set;
 @Data
 public class LoginVo {
 
-    private String uuid;
+    private String sessionId;
+
+    private String userId;
 
     private String lastLoginIp;
 
     private Long lastLoginTime;
 
     private String lastLoginPlatform;
-
-    private String id;
 
     private String username;
 

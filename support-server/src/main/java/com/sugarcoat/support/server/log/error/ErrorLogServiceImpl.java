@@ -2,7 +2,7 @@ package com.sugarcoat.support.server.log.error;
 
 import com.querydsl.core.types.dsl.Expressions;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.exception.ValidateException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,9 +27,9 @@ public class ErrorLogServiceImpl implements ErrorLogService {
 	}
 
 	@Override
-	public PageData<ErrorLog> findPage(PageParameter pageParameter, ErrorLogQueryCmd errorLogQueryCmd) {
+	public PageData<ErrorLog> findPage(PageDto pageDto, ErrorLogQueryCmd errorLogQueryCmd) {
 		QErrorLog qErrorLog = QErrorLog.errorLog;
-		PageRequest pageRequest = PageRequest.of(pageParameter.getPageNum(), pageParameter.getPageSize())
+		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, qErrorLog.errorTime.getMetadata().getName());
 		Page<ErrorLog> page = errorLogRepository.findAll(Expressions.TRUE, pageRequest);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());

@@ -1,8 +1,9 @@
 package com.sugarcoat.uims.domain.security;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
-import com.sugarcoat.uims.domain.user.User;
+import com.sugarcoat.api.common.PageDto;
+
+import java.util.List;
 
 /**
  * 会话管理
@@ -12,16 +13,20 @@ import com.sugarcoat.uims.domain.user.User;
  */
 public interface SessionManager {
 
-    SessionInfo create(User user);
+    void create(SessionInfo sessionInfo);
 
-    SessionInfo refresh();
+    void update(SessionInfo sessionInfo);
 
-    void delete(String sessionId);
+    void delete(String userId, String sessionId);
 
-    SessionInfo authenticate();
+    void deleteAll(String userId);
 
-    PageData<SessionInfo> findAll(PageParameter pageParameter);
+    SessionInfo authenticate(TokenInfo tokenInfo);
+
+    PageData<SessionInfo> findAll(PageDto pageDto);
 
     SessionInfo findOne(String sessionId);
+
+    List<SessionInfo> findAll(String userId);
 
 }

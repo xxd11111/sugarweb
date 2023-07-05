@@ -5,7 +5,7 @@ import com.sugarcoat.dict.application.DictionaryGroupDTO;
 import com.sugarcoat.dict.application.DictionaryDTO;
 import com.sugarcoat.dict.application.DictQueryVO;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -66,8 +66,8 @@ public class DictionaryController {
 	}
 
 	@GetMapping("findDictionaryPage")
-	public Result<PageData<DictionaryGroupDTO>> findDictPage(PageParameter pageParameter, DictQueryVO queryVO) {
-		return Result.data(dictionaryService.findDictPage(pageParameter, queryVO));
+	public Result<PageData<DictionaryGroupDTO>> findDictPage(PageDto pageDto, DictQueryVO queryVO) {
+		return Result.data(dictionaryService.findDictPage(pageDto, queryVO));
 	}
 
 }

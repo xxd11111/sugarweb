@@ -4,7 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageDataAdaptManager;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -39,9 +39,9 @@ public class ServerApiServiceImpl implements ServerApiService {
 	}
 
 	@Override
-	public PageData<ServerApiDTO> findPage(PageParameter pageParameter, ServerApiQueryVO queryVO) {
+	public PageData<ServerApiDTO> findPage(PageDto pageDto, ServerApiQueryVO queryVO) {
 		QServerApi serverApi = QServerApi.serverApi;
-		PageRequest pageRequest = PageRequest.of(pageParameter.getPageNum(), pageParameter.getPageSize())
+		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, serverApi.url.getMetadata().getName());
 
 		BooleanExpression expression = ExpressionWrapper.of()

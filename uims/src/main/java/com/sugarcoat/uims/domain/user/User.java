@@ -5,7 +5,6 @@ import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.support.server.serverApi.ServerApi;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.role.Role;
-import com.sugarcoat.api.user.UserInfo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

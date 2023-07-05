@@ -6,7 +6,7 @@ import com.sugarcoat.param.domain.QSugarcoatParameter;
 import com.sugarcoat.param.domain.SugarcoatParameter;
 import com.sugarcoat.param.domain.SugarcoatParameterRepository;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -71,8 +71,8 @@ public class DefaultParameterServiceImpl implements ParameterService {
 	}
 
 	@Override
-	public PageData<ParameterDTO> findPage(PageParameter pageParameter, ParamQueryCmd cmd) {
-		PageRequest pageRequest = PageRequest.of(pageParameter.getPageNum(), pageParameter.getPageSize());
+	public PageData<ParameterDTO> findPage(PageDto pageDto, ParamQueryCmd cmd) {
+		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize());
 		Page<ParameterDTO> page = sugarcoatParameterRepository.findAll(Expressions.TRUE, pageRequest)
 				.map(SugarcoatParameterConvert::getParamDTO);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());

@@ -1,9 +1,18 @@
 package com.sugarcoat.uims.domain.security;
 
+import cn.hutool.core.util.StrUtil;
+import com.sugarcoat.api.common.HttpCode;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
-import com.sugarcoat.uims.domain.user.User;
+import com.sugarcoat.api.common.PageDto;
+import com.sugarcoat.api.exception.SecurityException;
+import lombok.RequiredArgsConstructor;
+import org.redisson.api.RBucket;
+import org.redisson.api.RKeys;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 会话管理实现类
@@ -12,35 +21,112 @@ import org.springframework.stereotype.Component;
  * @date 2023/7/2 20:51
  */
 @Component
+@RequiredArgsConstructor
 public class SessionManagerImpl implements SessionManager {
 
+    private final RedissonClient redissonClient;
+
+    private static final String KEY_PREFIX = "session";
+
     @Override
-    public SessionInfo create(User user) {
-        return null;
+    public void create(SessionInfo sessionInfo) {
+        String key = sessionKey(sessionInfo.getUserId(), sessionInfo.getSessionId());
+        RBucket<Object> bucket = redissonClient.getBucket(key);
+        bucket.set(sessionInfo);
     }
 
     @Override
-    public SessionInfo refresh() {
-        return null;
+    public void update(SessionInfo sessionInfo) {
+        String key = sessionKey(sessionInfo.getUserId(), sessionInfo.getSessionId());
+        RBucket<Object> bucket = redissonClient.getBucket(key);
+        bucket.set(sessionInfo);
     }
 
     @Override
-    public void delete(String sessionId) {
-
+    public void delete(String userId, String sessionId) {
+        String key = userKeyPattern(sessionId);
+        redissonClient.getBucket(key);
     }
 
     @Override
-    public SessionInfo authenticate() {
-        return null;
+    public void deleteAll(String userId) {
+        String key = userKeyPattern(userId);
+        redissonClient.getKeys().deleteByPattern(key);
     }
 
     @Override
-    public PageData<SessionInfo> findAll(PageParameter pageParameter) {
-        return null;
+    public SessionInfo authenticate(TokenInfo tokenInfo) {
+        String key = userKeyPattern(tokenInfo.getSessionId());
+        RBucket<SessionInfo> bucket = redissonClient.getBucket(key);
+        SessionInfo sessionInfo = bucket.get();
+
+        boolean flag = StrUtil.equals(tokenInfo.getIp(), sessionInfo.getIp())
+                && StrUtil.equals(tokenInfo.getMac(), sessionInfo.getMac())
+                && StrUtil.equals(tokenInfo.getUserId(), sessionInfo.getUserId());
+        if (!flag) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
+        return sessionInfo;
+    }
+
+    @Override
+    public PageData<SessionInfo> findAll(PageDto pageDto) {
+        String allKeyPattern = allKeyPattern();
+        RKeys keys = redissonClient.getKeys();
+        Iterable<String> keysByPattern = keys.getKeysByPattern(allKeyPattern);
+        List<String> keyResult = new ArrayList<>(pageDto.getSize());
+        int i = 1;
+        for (String key : keysByPattern) {
+            if (pageDto.getStart() >= i && pageDto.getEnd() <= i) {
+                keyResult.add(key);
+            } else if (pageDto.getEnd() > i) {
+                break;
+            }
+            i++;
+        }
+        List<SessionInfo> records = new ArrayList<>();
+        for (String key : keyResult) {
+            RBucket<SessionInfo> bucket = redissonClient.getBucket(key);
+            SessionInfo sessionInfo = bucket.get();
+            records.add(sessionInfo);
+        }
+        PageData<SessionInfo> page = new PageData<>();
+        page.setSize(pageDto.getSize());
+        page.setPage(pageDto.getPage());
+        page.setRecords(records);
+        return page;
     }
 
     @Override
     public SessionInfo findOne(String sessionId) {
-        return null;
+        String key = userKeyPattern(sessionId);
+        RBucket<SessionInfo> bucket = redissonClient.getBucket(key);
+        return bucket.get();
+    }
+
+    @Override
+    public List<SessionInfo> findAll(String userId) {
+        String userKeyPattern = userKeyPattern(userId);
+        RKeys keys = redissonClient.getKeys();
+        Iterable<String> keysByPattern = keys.getKeysByPattern(userKeyPattern);
+        List<SessionInfo> records = new ArrayList<>();
+        for (String key : keysByPattern) {
+            RBucket<SessionInfo> bucket = redissonClient.getBucket(key);
+            SessionInfo sessionInfo = bucket.get();
+            records.add(sessionInfo);
+        }
+        return records;
+    }
+
+    private String sessionKey(String userId, String sessionId) {
+        return KEY_PREFIX + ":" + userId + ":" + sessionId;
+    }
+
+    private String userKeyPattern(String userId) {
+        return KEY_PREFIX + ":" + userId + ":*";
+    }
+
+    private String allKeyPattern() {
+        return KEY_PREFIX + ":*";
     }
 }

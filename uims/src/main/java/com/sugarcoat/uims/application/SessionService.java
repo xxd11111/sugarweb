@@ -2,6 +2,7 @@ package com.sugarcoat.uims.application;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
+import com.sugarcoat.uims.domain.security.TokenInfo;
 import com.sugarcoat.uims.application.vo.LoginVo;
 import com.sugarcoat.uims.domain.security.SessionInfo;
 
@@ -16,11 +17,11 @@ public interface SessionService {
 
     LoginVo login(PasswordLoginDto passwordLoginDto);
 
-    void authenticate();
+    void authenticate(TokenInfo tokenInfo);
 
     void logout();
 
-    void kickOut(String sessionId);
+    void kickOut(String userId, String sessionId);
 
     PageData<SessionInfo> page();
 

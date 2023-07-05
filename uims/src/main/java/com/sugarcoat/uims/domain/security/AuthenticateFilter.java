@@ -26,7 +26,8 @@ public class AuthenticateFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        sessionManager.authenticate();
+        TokenInfo tokenInfo = new TokenInfo();
+        sessionManager.authenticate(tokenInfo);
         filterChain.doFilter(request, response);
     }
 }

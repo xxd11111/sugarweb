@@ -1,7 +1,7 @@
 package com.sugarcoat.param.application;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 
 import java.util.Set;
 
@@ -23,7 +23,7 @@ public interface ParameterService {
 
 	ParameterDTO findById(String id);
 
-	PageData<ParameterDTO> findPage(PageParameter pageParameter, ParamQueryCmd cmd);
+	PageData<ParameterDTO> findPage(PageDto pageDto, ParamQueryCmd cmd);
 
 	void remove(Set<String> ids);
 

@@ -28,21 +28,21 @@ public class PageData<T> {
 	/**
 	 * 每页记录数
 	 */
-	private long pageSize;
+	private long size;
 
 	/**
 	 * 当前页数
 	 */
-	private long currentPage;
+	private long page;
 
 	public PageData() {
 	}
 
-	public PageData(List<T> records, long total, long pageSize, long currentPage) {
+	public PageData(List<T> records, long total, long size, long page) {
 		this.records = records;
 		this.total = total;
-		this.pageSize = pageSize;
-		this.currentPage = currentPage;
+		this.size = size;
+		this.page = page;
 	}
 
 	public static <T> PageData<T> empty() {

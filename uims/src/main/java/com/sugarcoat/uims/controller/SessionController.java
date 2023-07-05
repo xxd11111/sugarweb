@@ -23,8 +23,8 @@ public class SessionController {
     private final SessionService sessionService;
 
     @PostMapping("/kickOut")
-    public Result<Void> kickOut(String sessionId) {
-        sessionService.kickOut(sessionId);
+    public Result<Void> kickOut(String userId, String sessionId) {
+        sessionService.kickOut(userId, sessionId);
         return Result.ok();
     }
 

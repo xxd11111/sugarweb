@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server.log.access;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +27,8 @@ public class AccessLogController {
 	}
 
 	@GetMapping("findPage")
-	public PageData<AccessLog> findPage(PageParameter pageParameter, AccessLogQueryCmd queryCmd) {
-		return accessLogService.findPage(pageParameter, queryCmd);
+	public PageData<AccessLog> findPage(PageDto pageDto, AccessLogQueryCmd queryCmd) {
+		return accessLogService.findPage(pageDto, queryCmd);
 	}
 
 }

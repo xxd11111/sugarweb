@@ -8,7 +8,7 @@ import com.sugarcoat.dict.application.DictionaryGroupDTO;
 import com.sugarcoat.dict.application.DictionaryService;
 import com.sugarcoat.dict.domain.*;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.exception.ValidateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -89,10 +89,10 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	}
 
 	@Override
-	public PageData<DictionaryGroupDTO> findDictPage(PageParameter pageParameter, DictQueryVO queryVO) {
+	public PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVO queryVO) {
 		QSugarcoatDictionaryGroup dictGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
 		// 构造分页，按照创建时间降序
-		PageRequest pageRequest = PageRequest.of(pageParameter.getPageNum(), pageParameter.getPageSize())
+		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, dictGroup.groupCode.getMetadata().getName());
 		// 条件查询
 		BooleanExpression expression = Expressions.TRUE;

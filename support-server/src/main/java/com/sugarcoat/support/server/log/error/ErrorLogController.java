@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server.log.error;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +27,8 @@ public class ErrorLogController {
 	}
 
 	@GetMapping("findPage")
-	public PageData<ErrorLog> findPage(PageParameter pageParameter, ErrorLogQueryCmd queryCmd) {
-		return errorLogService.findPage(pageParameter, queryCmd);
+	public PageData<ErrorLog> findPage(PageDto pageDto, ErrorLogQueryCmd queryCmd) {
+		return errorLogService.findPage(pageDto, queryCmd);
 	}
 
 }

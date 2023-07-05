@@ -1,6 +1,5 @@
 package com.sugarcoat.uims.domain.security;
 
-import com.sugarcoat.api.user.UserInfo;
 import lombok.Data;
 
 /**
@@ -15,11 +14,13 @@ public class SessionInfo {
 
     private String sessionId;
 
-    private String loginId;
+    private String userId;
+
+    private String ip;
+
+    private String mac;
 
     private Long loginTime;
-
-    private Long lastActiveTime;
 
     private Long lastRefreshTime;
 
@@ -28,7 +29,5 @@ public class SessionInfo {
     private String platform;
 
     private String userAgent;
-
-    private UserInfo userInfo;
 
 }

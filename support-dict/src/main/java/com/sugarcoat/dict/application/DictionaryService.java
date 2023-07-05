@@ -1,7 +1,7 @@
 package com.sugarcoat.dict.application;
 
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageParameter;
+import com.sugarcoat.api.common.PageDto;
 
 import java.util.Set;
 
@@ -27,6 +27,6 @@ public interface DictionaryService {
 
 	DictionaryGroupDTO findByGroupCode(String groupCode);
 
-	PageData<DictionaryGroupDTO> findDictPage(PageParameter pageParameter, DictQueryVO queryVO);
+	PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVO queryVO);
 
 }

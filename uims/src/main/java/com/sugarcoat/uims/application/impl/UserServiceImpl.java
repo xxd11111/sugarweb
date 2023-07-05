@@ -5,7 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDataAdaptManager;
 import com.sugarcoat.api.exception.ValidateException;
-import com.sugarcoat.api.user.UserHelper;
+import com.sugarcoat.uims.domain.security.SecurityHelper;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.uims.application.dto.*;
 import com.sugarcoat.uims.application.mapper.UserMapper;
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void modifyPassword(NewPasswordDto newPasswordDto) {
-        String id = UserHelper.getId();
+        String id = SecurityHelper.getId();
         User user = userRepository.findById(id).orElseThrow(() -> new ValidateException("not dind user"));
         String oldPassword = newPasswordDto.getOldPassword();
         user.checkCertificate(oldPassword);

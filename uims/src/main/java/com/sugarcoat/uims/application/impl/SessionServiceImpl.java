@@ -7,7 +7,6 @@ import com.sugarcoat.uims.application.dto.PasswordLoginDto;
 import com.sugarcoat.uims.application.vo.LoginVo;
 import com.sugarcoat.uims.domain.security.SessionInfo;
 import com.sugarcoat.uims.domain.security.SessionManager;
-import com.sugarcoat.uims.domain.security.TokenInfo;
 import com.sugarcoat.uims.domain.user.QUser;
 import com.sugarcoat.uims.domain.user.User;
 import com.sugarcoat.uims.domain.user.UserRepository;
@@ -25,6 +24,7 @@ import org.springframework.stereotype.Service;
 public class SessionServiceImpl implements SessionService {
 
     private final UserRepository userRepository;
+
     private final SessionManager sessionManager;
 
     @Override
@@ -41,11 +41,6 @@ public class SessionServiceImpl implements SessionService {
         loginVo.setLastLoginIp("");
         loginVo.setLastLoginIp("");
         return loginVo;
-    }
-
-    @Override
-    public void authenticate(TokenInfo tokenInfo) {
-        sessionManager.authenticate(tokenInfo);
     }
 
     @Override
@@ -67,6 +62,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public SessionInfo find(String sessionId) {
+        SessionInfo one = sessionManager.findOne(sessionId);
         return null;
     }
 }

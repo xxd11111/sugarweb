@@ -17,8 +17,6 @@ public interface SessionService {
 
     LoginVo login(PasswordLoginDto passwordLoginDto);
 
-    void authenticate(TokenInfo tokenInfo);
-
     void logout();
 
     void kickOut(String userId, String sessionId);

@@ -25,7 +25,7 @@ public interface SessionManager {
 
     PageData<SessionInfo> findAll(PageDto pageDto);
 
-    SessionInfo findOne(String sessionId);
+    SessionInfo findOne(String userId, String sessionId);
 
     List<SessionInfo> findAll(String userId);
 

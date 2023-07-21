@@ -1,10 +1,13 @@
 package com.sugarcoat.uims.application.impl;
 
+import cn.hutool.core.util.IdUtil;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.uims.application.SessionService;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
 import com.sugarcoat.uims.application.vo.LoginVo;
+import com.sugarcoat.uims.domain.menu.Menu;
+import com.sugarcoat.uims.domain.security.SecurityHelper;
 import com.sugarcoat.uims.domain.security.SessionInfo;
 import com.sugarcoat.uims.domain.security.SessionManager;
 import com.sugarcoat.uims.domain.user.QUser;
@@ -12,6 +15,8 @@ import com.sugarcoat.uims.domain.user.User;
 import com.sugarcoat.uims.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 /**
  * 会话服务实现类
@@ -33,20 +38,44 @@ public class SessionServiceImpl implements SessionService {
                 .orElseThrow(() -> new ValidateException("not find user"));
         user.checkCertificate(passwordLoginDto.getPassword());
         SessionInfo sessionInfo = new SessionInfo();
+        sessionInfo.setSessionId(IdUtil.simpleUUID());
+        sessionInfo.setUserId(user.getId());
+        //todo
+        //sessionInfo.setIp();
+        //sessionInfo.setMac();
+        //sessionInfo.setPlatform();
+        //sessionInfo.setUserAgent();
+        long loginTime = System.currentTimeMillis();
+        sessionInfo.setLoginTime(loginTime);
+        sessionInfo.setLastRefreshTime(loginTime);
+        //todo
+        //sessionInfo.setMaxActiveTime(1000 * 60 * 60 * 24L);
         sessionManager.create(sessionInfo);
         LoginVo loginVo = new LoginVo();
-        loginVo.setLastLoginIp("");
-        loginVo.setLastLoginIp("");
-        loginVo.setLastLoginIp("");
-        loginVo.setLastLoginIp("");
-        loginVo.setLastLoginIp("");
+        loginVo.setUserId(user.getId());
+        loginVo.setAccountType(user.getAccountType());
+        loginVo.setEmail(user.getEmail());
+        loginVo.setMobilePhone(user.getMobilePhone());
+        loginVo.setUsername(user.getUsername());
+        loginVo.setNickName(user.getNickName());
+        Set<Menu> menus = user.listMenus();
+        //todo
+        //loginVo.setMenus(menus);
+
+        loginVo.setSessionId(sessionInfo.getSessionId());
+        //loginVo.setLastLoginTime();
+        //loginVo.setLastLoginPlatform("");
+        //loginVo.setLastLoginIp("");
+
+        //todo insert loginLog
+
         return loginVo;
     }
 
     @Override
     public void logout() {
-        String userId = "";
-        String sessionId = "";
+        String userId = SecurityHelper.currentUserId();
+        String sessionId = SecurityHelper.currentSessionId();
         sessionManager.delete(userId, sessionId);
     }
 
@@ -61,8 +90,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public SessionInfo find(String sessionId) {
-        SessionInfo one = sessionManager.findOne(sessionId);
-        return null;
+    public SessionInfo find(String userId, String sessionId) {
+        return sessionManager.findOne(userId, sessionId);
     }
 }

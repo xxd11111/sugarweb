@@ -20,6 +20,15 @@ public class SecurityHelper {
         return currentUser.get();
     }
 
+    public static String currentUserId() {
+        return currentAccount().getId();
+    }
+
+    public static String currentSessionId() {
+        //todo
+        return null;
+    }
+
     public static String getUsername() {
         return currentUser.get().getUsername();
     }

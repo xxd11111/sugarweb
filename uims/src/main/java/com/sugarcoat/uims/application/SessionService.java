@@ -23,6 +23,6 @@ public interface SessionService {
 
     PageData<SessionInfo> page();
 
-    SessionInfo find(String sessionId);
+    SessionInfo find(String userId, String sessionId);
 
 }

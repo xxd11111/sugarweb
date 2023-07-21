@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class User implements UserInfo {
+public class User {
 
     @Id
     private String id;
@@ -51,6 +51,7 @@ public class User implements UserInfo {
     private AccountType accountType;
 
     @ManyToMany
+    @ToString.Exclude
     private Set<Role> roles;
 
     private BooleanFlag enable;
@@ -94,17 +95,14 @@ public class User implements UserInfo {
         password = newPassword;
     }
 
-    @Override
     public String getUserType() {
         return accountType.getCode();
     }
 
-    @Override
     public boolean isAdmin() {
         return false;
     }
 
-    @Override
     public boolean isSuperAdmin() {
         return false;
     }

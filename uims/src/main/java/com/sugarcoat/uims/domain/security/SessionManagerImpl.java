@@ -98,7 +98,7 @@ public class SessionManagerImpl implements SessionManager {
     }
 
     @Override
-    public SessionInfo findOne(String sessionId) {
+    public SessionInfo findOne(String userId, String sessionId) {
         String key = userKeyPattern(sessionId);
         RBucket<SessionInfo> bucket = redissonClient.getBucket(key);
         return bucket.get();

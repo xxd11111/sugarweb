@@ -29,8 +29,8 @@ public class SessionController {
     }
 
     @PostMapping("/find")
-    public Result<SessionInfo> find(String sessionId) {
-        return Result.data(sessionService.find(sessionId));
+    public Result<SessionInfo> find(String userId, String sessionId) {
+        return Result.data(sessionService.find(userId, sessionId));
     }
 
     @PostMapping("/page")

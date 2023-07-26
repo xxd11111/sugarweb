@@ -6,6 +6,7 @@ import com.sugarcoat.api.oss.FileClient;
 import com.sugarcoat.api.exception.FrameworkException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

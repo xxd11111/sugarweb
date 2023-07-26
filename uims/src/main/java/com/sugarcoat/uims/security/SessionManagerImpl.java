@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.security;
+package com.sugarcoat.uims.security;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;

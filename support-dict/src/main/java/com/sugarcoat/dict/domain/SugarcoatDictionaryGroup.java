@@ -33,7 +33,7 @@ public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGro
 	@Column(length = 32)
 	private String groupName;
 
-	@OneToMany(mappedBy = "SugarcoatDictionaryGroup", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "dictionaryId", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private Collection<SugarcoatDictionary> dictionaries = new java.util.ArrayList<>();
 

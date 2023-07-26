@@ -5,7 +5,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDataAdaptManager;
 import com.sugarcoat.api.exception.ValidateException;
-import com.sugarcoat.uims.domain.security.SecurityHelper;
+import com.sugarcoat.uims.security.SecurityHelper;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.uims.application.dto.*;
 import com.sugarcoat.uims.application.mapper.UserMapper;

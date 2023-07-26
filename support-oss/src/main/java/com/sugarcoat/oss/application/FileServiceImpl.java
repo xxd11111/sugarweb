@@ -20,7 +20,7 @@ import java.util.UUID;
  * @version 1.0
  * @date 2023/6/2
  */
-@Service
+//@Service
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 

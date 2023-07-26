@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.security;
+package com.sugarcoat.uims.security;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;

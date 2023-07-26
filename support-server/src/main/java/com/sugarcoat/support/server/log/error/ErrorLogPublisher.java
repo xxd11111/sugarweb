@@ -3,6 +3,7 @@ package com.sugarcoat.support.server.log.error;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 
 /**
  * 异常日志发布者
@@ -12,6 +13,7 @@ import org.springframework.context.ApplicationEventPublisher;
  * @date 2023/6/1
  */
 @AllArgsConstructor
+@Component
 public class ErrorLogPublisher {
 
 	private final ApplicationEventPublisher applicationEventPublisher;

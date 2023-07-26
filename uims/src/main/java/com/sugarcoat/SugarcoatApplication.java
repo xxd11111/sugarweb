@@ -1,4 +1,4 @@
-package com.sugarcoat.uims;
+package com.sugarcoat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

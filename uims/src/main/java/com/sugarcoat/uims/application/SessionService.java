@@ -2,9 +2,8 @@ package com.sugarcoat.uims.application;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
-import com.sugarcoat.uims.domain.security.TokenInfo;
 import com.sugarcoat.uims.application.vo.LoginVo;
-import com.sugarcoat.uims.domain.security.SessionInfo;
+import com.sugarcoat.uims.security.SessionInfo;
 
 /**
  * 会话服务实现类

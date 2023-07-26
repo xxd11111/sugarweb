@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.domain.security;
+package com.sugarcoat.uims.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

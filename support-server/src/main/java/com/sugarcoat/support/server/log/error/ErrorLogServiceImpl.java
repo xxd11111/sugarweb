@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 /**
  * 异常日志服务
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Sort;
  * @date 2023/6/1
  */
 @AllArgsConstructor
+@Component
 public class ErrorLogServiceImpl implements ErrorLogService {
 
 	private final ErrorLogRepository errorLogRepository;

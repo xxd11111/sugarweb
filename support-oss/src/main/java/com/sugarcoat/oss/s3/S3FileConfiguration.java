@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0
  * @date 2023/6/6
  */
-@Configuration
+//@Configuration
 public class S3FileConfiguration {
 
 	@Value("${sugarcoat.s3.endpoint}")

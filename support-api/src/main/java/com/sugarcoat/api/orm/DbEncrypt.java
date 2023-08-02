@@ -1,7 +1,7 @@
 package com.sugarcoat.api.orm;
 
 /**
- * 加密存储注解，存储时加密，获取时解密或不解密
+ * todo 加密存储注解，存储时加密，获取时解密或不解密
  *
  * @author xxd
  * @version 1.0

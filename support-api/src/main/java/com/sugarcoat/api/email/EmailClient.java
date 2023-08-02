@@ -1,7 +1,7 @@
 package com.sugarcoat.api.email;
 
 /**
- * TODO
+ * 邮件操作客户端
  *
  * @author xxd
  * @version 1.0
@@ -9,6 +9,6 @@ package com.sugarcoat.api.email;
  */
 public interface EmailClient {
 
-	void sendEmail(EmailDTO emailDTO);
+	void sendEmail(EmailDto emailDto);
 
 }

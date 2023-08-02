@@ -3,7 +3,7 @@ package com.sugarcoat.api.dict;
 import java.lang.annotation.*;
 
 /**
- * 枚举字典
+ * 枚举字典用于初始化
  *
  * @author xxd
  * @version 1.0

@@ -3,14 +3,14 @@ package com.sugarcoat.api.common;
 import org.springframework.stereotype.Component;
 
 /**
- * TODO
+ * 分页适配器管理者
  *
  * @author xxd
  * @version 1.0
  * @date 2023/4/25
  */
 @Component
-public class PageDataAdaptManager {
+public class PageDataConvert {
 
 	private static PageDataAdapt pageDataAdapt;
 

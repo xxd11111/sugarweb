@@ -3,7 +3,7 @@ package com.sugarcoat.uims.application.impl;
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDataAdaptManager;
+import com.sugarcoat.api.common.PageDataConvert;
 import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.support.server.serverApi.ServerApi;
@@ -69,7 +69,7 @@ public class MenuServiceImpl implements MenuService {
 
         Page<MenuTreeVo> page = menuRepository.findAll(booleanExpression, PageRequest.of(1, 10))
                 .map(MenuMapper.INSTANCE::menuToMenuTreeVo);
-        return PageDataAdaptManager.convert(page, MenuTreeVo.class);
+        return PageDataConvert.convert(page, MenuTreeVo.class);
     }
 
     @Override

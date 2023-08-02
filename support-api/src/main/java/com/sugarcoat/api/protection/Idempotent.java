@@ -1,8 +1,9 @@
 package com.sugarcoat.api.protection;
 
 /**
+ * todo 幂等
+ *
  * @author xxd
- * @description TODO
  * @date 2022-11-21
  */
 public class Idempotent {

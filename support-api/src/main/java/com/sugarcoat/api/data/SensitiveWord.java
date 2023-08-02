@@ -1,7 +1,7 @@
 package com.sugarcoat.api.data;
 
 /**
- * 敏感词
+ * todo 敏感词
  *
  * @author xxd
  * @version 1.0

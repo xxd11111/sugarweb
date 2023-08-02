@@ -12,16 +12,16 @@ import lombok.Data;
 @Data
 public class PageDto {
 
-    private static final Integer PAGE = 1;
+    private static final Integer DEFAULT_PAGE = 1;
 
-    private static final Integer SIZE = 10;
+    private static final Integer DEFAULT_SIZE = 10;
 
     @Min(value = 1, message = "页码最小值为 1")
-    private Integer page = PAGE;
+    private Integer page = DEFAULT_PAGE;
 
     @Min(value = 1, message = "每页条数最小值为 1")
     @Max(value = 100, message = "每页条数最大值为 100")
-    private Integer size = SIZE;
+    private Integer size = DEFAULT_SIZE;
 
 
     public int getStart() {

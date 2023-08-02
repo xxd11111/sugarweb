@@ -3,7 +3,7 @@ package com.sugarcoat.uims.application.impl;
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDataAdaptManager;
+import com.sugarcoat.api.common.PageDataConvert;
 import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.uims.security.SecurityHelper;
 import com.sugarcoat.orm.ExpressionWrapper;
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         PageRequest pageRequest = PageRequest.of(1, 10);
         Page<UserPageVo> page = userRepository.findAll(expression, pageRequest)
                 .map(UserMapper.INSTANCE::userToUserPageVo);
-        return PageDataAdaptManager.convert(page, UserPageVo.class);
+        return PageDataConvert.convert(page, UserPageVo.class);
     }
 
     @Override

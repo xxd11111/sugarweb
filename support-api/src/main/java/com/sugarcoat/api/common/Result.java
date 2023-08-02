@@ -1,8 +1,5 @@
 package com.sugarcoat.api.common;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * @author xxd
  * @description 响应对象

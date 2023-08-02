@@ -3,7 +3,7 @@ package com.sugarcoat.api.dict;
 import java.util.Collection;
 
 /**
- * 字典客户端 只做查询
+ * 字典客户端 todo 增删操作
  *
  * @author xxd
  * @version 1.0

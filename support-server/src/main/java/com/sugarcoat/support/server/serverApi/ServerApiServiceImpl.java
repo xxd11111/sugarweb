@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server.serverApi;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarcoat.api.common.PageDataAdaptManager;
+import com.sugarcoat.api.common.PageDataConvert;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
@@ -66,7 +66,7 @@ public class ServerApiServiceImpl implements ServerApiService {
 			serverApiDTO.setMethodType(entity.getMethodType());
 			return serverApiDTO;
 		});
-		return PageDataAdaptManager.convert(page, ServerApiDTO.class);
+		return PageDataConvert.convert(page, ServerApiDTO.class);
 	}
 
 }

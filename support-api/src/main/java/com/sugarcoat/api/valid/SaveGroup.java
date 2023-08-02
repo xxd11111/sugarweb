@@ -1,7 +1,7 @@
 package com.sugarcoat.api.valid;
 
 /**
- * TODO
+ * 保存分组
  *
  * @author xxd
  * @version 1.0

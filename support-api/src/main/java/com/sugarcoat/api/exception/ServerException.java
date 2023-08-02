@@ -3,8 +3,9 @@ package com.sugarcoat.api.exception;
 import com.sugarcoat.api.common.HttpCode;
 
 /**
+ * 服务器异常（定时任务，中间件异常，磁盘问题）若细分可补充
+ *
  * @author xxd
- * @description 服务器异常（定时任务等）
  * @date 2022-11-12
  */
 public class ServerException extends RuntimeException {

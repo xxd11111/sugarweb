@@ -3,7 +3,7 @@ package com.sugarcoat.uims.application.impl;
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDataAdaptManager;
+import com.sugarcoat.api.common.PageDataConvert;
 import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.uims.application.dto.RoleDto;
@@ -77,7 +77,7 @@ public class RoleServiceImpl implements RoleService {
         PageRequest pageable = PageRequest.of(1, 10);
         Page<RolePageVo> page = roleRepository.findAll(expression, pageable)
                 .map(RoleMapper.INSTANCE::roleToRolePageVo);
-        return PageDataAdaptManager.convert(page, RolePageVo.class);
+        return PageDataConvert.convert(page, RolePageVo.class);
     }
 
     @Override

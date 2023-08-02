@@ -11,12 +11,18 @@ import java.io.InputStream;
  */
 public interface FileClient {
 
+	/**
+	 * 创建
+	 */
 	void createBucket();
 
 	void upload(String path, InputStream inputStream, String contentType);
 
-	InputStream getContent(String fileUrl);
+	InputStream getContent(String filePath);
 
-	void delete(String fileUrl);
+	FileObject getFileObject(String filePath);
+
+	//todo 批量处理
+	void delete(String filePath);
 
 }

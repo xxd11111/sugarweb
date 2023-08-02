@@ -9,13 +9,13 @@ public interface FileInfo {
 
 	String getFileGroup();
 
-	String getFileUrl();
+	String getFilePath();
 
 	String getFileName();
 
 	String getFileType();
 
-	String getFileSize();
+	long getFileSize();
 
 	LocalDateTime getUploadTime();
 

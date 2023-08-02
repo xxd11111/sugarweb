@@ -1,18 +1,21 @@
 package com.sugarcoat.api.oss;
 
+import lombok.Data;
+
 /**
- * TODO
+ * 文件业务信息 todo 待思考业务绑定存储及上传限制
  *
  * @author xxd
  * @version 1.0
  * @date 2023/6/7
  */
-public interface FileBusinessInfo {
+@Data
+public class FileBusinessInfo {
 
-	String getFileGroup();
+	private String associationId;
 
-	String getAssociationId();
+	private String fileGroup;
 
-	String getFileId();
+	private String fileId;
 
 }

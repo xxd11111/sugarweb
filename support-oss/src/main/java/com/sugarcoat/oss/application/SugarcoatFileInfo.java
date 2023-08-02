@@ -8,6 +8,9 @@ import lombok.ToString;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+
 import java.time.LocalDateTime;
 
 /**
@@ -30,7 +33,7 @@ public class SugarcoatFileInfo implements FileInfo {
 	 * 路径
 	 */
 	@Size(max = 100)
-	private String fileUrl;
+	private String filePath;
 
 	/**
 	 * 文件名
@@ -48,7 +51,7 @@ public class SugarcoatFileInfo implements FileInfo {
 	 * 文件大小
 	 */
 	@Size(max = 32)
-	private String fileSize;
+	private long fileSize;
 
 	/**
 	 * 上传时间
@@ -62,9 +65,15 @@ public class SugarcoatFileInfo implements FileInfo {
 	private String associationId;
 
 	/**
-	 * 附件所属业务类型
+	 * 文件组
 	 */
 	@Size(max = 32)
 	private String fileGroup;
+
+	@CreatedBy
+	private String createBy;
+
+	@CreatedDate
+	private LocalDateTime createDate;
 
 }

@@ -3,6 +3,7 @@ package com.sugarcoat.oss;
 import com.sugarcoat.api.oss.FileBusinessManager;
 import com.sugarcoat.api.oss.FileInfo;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,6 +27,16 @@ public class DefaultFileBusinessManager implements FileBusinessManager {
 
 	@Override
 	public void separateAllFile(String associationId) {
+
+	}
+
+	@Override
+	public void separateFileId(String fileId) {
+
+	}
+
+	@Override
+	public void separateFileId(Collection<String> fileIds) {
 
 	}
 

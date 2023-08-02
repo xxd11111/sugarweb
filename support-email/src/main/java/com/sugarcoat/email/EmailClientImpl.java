@@ -1,7 +1,7 @@
 package com.sugarcoat.email;
 
 import com.sugarcoat.api.email.EmailClient;
-import com.sugarcoat.api.email.EmailDTO;
+import com.sugarcoat.api.email.EmailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -23,7 +23,7 @@ public class EmailClientImpl implements EmailClient {
 	private final JavaMailSenderImpl mailSender;
 
 	@Override
-	public void sendEmail(EmailDTO emailDTO) {
+	public void sendEmail(EmailDto emailDTO) {
 		// todo file inputStream
 		MimeMessage message = mailSender.createMimeMessage();
 		try {

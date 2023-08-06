@@ -26,14 +26,14 @@ public class AuthenticateController {
 
     @ApiTag(code = "post:authenticate:login", name = "登录")
     @PostMapping("/login")
-    public Result login(PasswordLoginDto passwordLoginDto) {
+    public Result<LoginVo> login(PasswordLoginDto passwordLoginDto) {
         LoginVo login = sessionService.login(passwordLoginDto);
         return Result.data(login);
     }
 
     @ApiTag(code = "post:authenticate:logout", name = "退出")
     @PostMapping("/logout")
-    public Result logout() {
+    public Result<Void> logout() {
         sessionService.logout();
         return Result.ok();
     }

@@ -76,9 +76,7 @@ public class User {
         return roles.stream()
                 .map(Role::getMenus)
                 .flatMap(Collection::parallelStream)
-                .map(Menu::getServerApis)
-                .flatMap(Collection::parallelStream)
-                .map(ServerApi::getCode)
+                .map(Menu::getApiCode)
                 .collect(Collectors.toSet());
     }
 

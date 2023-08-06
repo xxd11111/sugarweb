@@ -47,8 +47,8 @@ public class MenuController {
     }
 
     @PostMapping("associateApi")
-    public Result<Void> associateApi(String id, String[] apis) {
-        menuService.associateApi(id, List.of(apis));
+    public Result<Void> associateApi(String id, String apiCode) {
+        menuService.associateApi(id, apiCode);
         return Result.ok();
     }
 

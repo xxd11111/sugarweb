@@ -1,13 +1,11 @@
 package com.sugarcoat.uims.domain.menu;
 
 import com.sugarcoat.api.common.BooleanFlag;
-import com.sugarcoat.support.server.serverApi.ServerApi;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * 菜单
@@ -73,8 +71,7 @@ public class Menu {
 	/**
 	 * 菜单权限
 	 */
-	@ManyToMany
-	private Set<ServerApi> serverApis;
+	private String apiCode;
 
 	/**
 	 * 状态

@@ -79,11 +79,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void associateApi(String id, List<String> apis) {
+    public void associateApi(String id, String apiCode) {
         Menu menu = menuRepository.findById(id).orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + id));
         Set<ServerApi> serverApis = new HashSet<>();
-        serverApiRepository.findAllById(apis).forEach(serverApis::add);
-        menu.setServerApis(serverApis);
+        serverApiRepository.findById(apiCode).orElseThrow(()->new ValidateException("菜单不存在,id:{}" + id));
+        menu.setApiCode(apiCode);
         menuRepository.save(menu);
     }
 }

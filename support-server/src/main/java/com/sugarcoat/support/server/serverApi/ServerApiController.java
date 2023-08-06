@@ -21,12 +21,12 @@ public class ServerApiController {
 	private final ServerApiService serverApiService;
 
 	@GetMapping("findOne/{id}")
-	public Result<ServerApiDTO> findOne(@PathVariable String id) {
+	public Result<ServerApiDto> findOne(@PathVariable String id) {
 		return Result.data(serverApiService.findOne(id));
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<ServerApiDTO>> findPage(PageDto pageDto, ServerApiQueryVO queryVO) {
+	public Result<PageData<ServerApiDto>> findPage(PageDto pageDto, ServerApiQueryVo queryVO) {
 		return Result.data(serverApiService.findPage(pageDto, queryVO));
 	}
 

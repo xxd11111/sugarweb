@@ -18,17 +18,16 @@ import org.springframework.data.domain.Sort;
  * @version 1.0
  * @date 2023/5/8
  */
-
 @RequiredArgsConstructor
 public class ServerApiServiceImpl implements ServerApiService {
 
 	private final ServerApiRepository serverApiRepository;
 
 	@Override
-	public ServerApiDTO findOne(String id) {
+	public ServerApiDto findOne(String id) {
 		ServerApi serverApi = serverApiRepository.findById(id)
 				.orElseThrow(() -> new ValidateException("serverApi not find"));
-		ServerApiDTO serverApiDTO = new ServerApiDTO();
+		ServerApiDto serverApiDTO = new ServerApiDto();
 		serverApiDTO.setId(serverApi.getId());
 		serverApiDTO.setCode(serverApi.getCode());
 		serverApiDTO.setName(serverApi.getName());
@@ -39,7 +38,7 @@ public class ServerApiServiceImpl implements ServerApiService {
 	}
 
 	@Override
-	public PageData<ServerApiDTO> findPage(PageDto pageDto, ServerApiQueryVO queryVO) {
+	public PageData<ServerApiDto> findPage(PageDto pageDto, ServerApiQueryVo queryVO) {
 		QServerApi serverApi = QServerApi.serverApi;
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, serverApi.url.getMetadata().getName());
@@ -56,8 +55,8 @@ public class ServerApiServiceImpl implements ServerApiService {
 				// .and(StrUtil.isNotEmpty(queryVO.getMethodType()),
 				// serverApi.methodType.eq(queryVO.getMethodType()))
 				.build();
-		Page<ServerApiDTO> page = serverApiRepository.findAll(expression, pageRequest).map(entity -> {
-			ServerApiDTO serverApiDTO = new ServerApiDTO();
+		Page<ServerApiDto> page = serverApiRepository.findAll(expression, pageRequest).map(entity -> {
+			ServerApiDto serverApiDTO = new ServerApiDto();
 			serverApiDTO.setId(entity.getId());
 			serverApiDTO.setCode(entity.getCode());
 			serverApiDTO.setName(entity.getName());
@@ -66,7 +65,7 @@ public class ServerApiServiceImpl implements ServerApiService {
 			serverApiDTO.setMethodType(entity.getMethodType());
 			return serverApiDTO;
 		});
-		return PageDataConvert.convert(page, ServerApiDTO.class);
+		return PageDataConvert.convert(page, ServerApiDto.class);
 	}
 
 }

@@ -20,12 +20,8 @@ import java.util.Set;
  * @date 2022-11-17
  */
 @Slf4j
-@Component
 public class ServerApiScanner {
 
-	// @Lazy
-	// @Autowired
-	// todo bug
 	private RequestMappingHandlerMapping mappingHandlerMapping;
 
 	private Set<ServerApi> serverApis;

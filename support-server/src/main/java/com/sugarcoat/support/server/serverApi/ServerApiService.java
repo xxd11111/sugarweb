@@ -12,8 +12,8 @@ import com.sugarcoat.api.common.PageDto;
  */
 public interface ServerApiService {
 
-	ServerApiDTO findOne(String id);
+	ServerApiDto findOne(String id);
 
-	PageData<ServerApiDTO> findPage(PageDto pageDto, ServerApiQueryVO queryVO);
+	PageData<ServerApiDto> findPage(PageDto pageDto, ServerApiQueryVo queryVO);
 
 }

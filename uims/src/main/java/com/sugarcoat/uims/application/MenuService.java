@@ -25,6 +25,6 @@ public interface MenuService {
 
     MenuDto find(String id);
 
-    void associateApi(String id, List<String> apis);
+    void associateApi(String id, String apiCode);
 
 }

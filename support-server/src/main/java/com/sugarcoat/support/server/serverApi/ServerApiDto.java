@@ -10,15 +10,19 @@ import lombok.Data;
  * @date 2023/5/8
  */
 @Data
-public class ServerApiQueryVO {
+public class ServerApiDto {
 
-	private String code;
+	private String id;
 
 	private String name;
+
+	private String code;
 
 	private String url;
 
 	private String methodType;
+
+	private String remark;
 
 	private String status;
 

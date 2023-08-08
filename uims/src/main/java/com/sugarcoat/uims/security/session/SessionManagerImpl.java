@@ -1,10 +1,12 @@
-package com.sugarcoat.uims.security;
+package com.sugarcoat.uims.security.session;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.exception.SecurityException;
+import com.sugarcoat.uims.security.SessionInfo;
+import com.sugarcoat.uims.security.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RBucket;
 import org.redisson.api.RKeys;
@@ -59,7 +61,9 @@ public class SessionManagerImpl implements SessionManager {
         String key = userKeyPattern(tokenInfo.getSessionId());
         RBucket<SessionInfo> bucket = redissonClient.getBucket(key);
         SessionInfo sessionInfo = bucket.get();
-
+        if (sessionInfo == null) {
+            throw new SecurityException("");
+        }
         boolean flag = StrUtil.equals(tokenInfo.getIp(), sessionInfo.getIp())
                 && StrUtil.equals(tokenInfo.getMac(), sessionInfo.getMac())
                 && StrUtil.equals(tokenInfo.getUserId(), sessionInfo.getUserId());

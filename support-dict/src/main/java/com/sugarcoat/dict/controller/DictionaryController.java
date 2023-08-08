@@ -3,7 +3,7 @@ package com.sugarcoat.dict.controller;
 import com.sugarcoat.dict.application.DictionaryService;
 import com.sugarcoat.dict.application.DictionaryGroupDTO;
 import com.sugarcoat.dict.application.DictionaryDTO;
-import com.sugarcoat.dict.application.DictQueryVO;
+import com.sugarcoat.dict.application.DictQueryVo;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.common.Result;
@@ -66,8 +66,8 @@ public class DictionaryController {
 	}
 
 	@GetMapping("findDictionaryPage")
-	public Result<PageData<DictionaryGroupDTO>> findDictPage(PageDto pageDto, DictQueryVO queryVO) {
-		return Result.data(dictionaryService.findDictPage(pageDto, queryVO));
+	public Result<PageData<DictionaryGroupDTO>> findDictPage(PageDto pageDto, DictQueryVo queryVo) {
+		return Result.data(dictionaryService.findDictPage(pageDto, queryVo));
 	}
 
 }

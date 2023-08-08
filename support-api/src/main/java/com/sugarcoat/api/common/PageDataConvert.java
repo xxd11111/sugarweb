@@ -9,15 +9,17 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @date 2023/4/25
  */
-@Component
 public class PageDataConvert {
 
-	private static PageDataAdapt pageDataAdapt;
+	private static PageDataAdapt pageDataAdapt = new PageDataAdapt() {
+		@Override
+		public <T> PageData<T> convert(Object t, Class<T> clazz) {
+			if (t instanceof Page){
 
-	// @Autowired
-	// public void setPageDataAdapt(PageDataAdapt pageDataAdapt) {
-	// PageDataAdaptManager.pageDataAdapt = pageDataAdapt;
-	// }
+			}
+			return null;
+		}
+	};
 
 	public static <T> PageData<T> convert(Object page, Class<T> clazz) {
 		return pageDataAdapt.convert(page, clazz);

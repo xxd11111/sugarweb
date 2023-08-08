@@ -1,4 +1,4 @@
-package com.sugarcoat.uims.security;
+package com.sugarcoat.uims.security.log;
 
 import lombok.Data;
 

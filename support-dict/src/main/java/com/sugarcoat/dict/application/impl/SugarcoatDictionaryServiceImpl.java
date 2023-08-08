@@ -2,7 +2,7 @@ package com.sugarcoat.dict.application.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.dict.application.DictQueryVO;
+import com.sugarcoat.dict.application.DictQueryVo;
 import com.sugarcoat.dict.application.DictionaryDTO;
 import com.sugarcoat.dict.application.DictionaryGroupDTO;
 import com.sugarcoat.dict.application.DictionaryService;
@@ -89,7 +89,7 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	}
 
 	@Override
-	public PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVO queryVO) {
+	public PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVo queryVO) {
 		QSugarcoatDictionaryGroup dictGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
 		// 构造分页，按照创建时间降序
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())

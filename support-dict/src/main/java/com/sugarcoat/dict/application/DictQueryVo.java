@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 2023/4/26
  */
 @Data
-public class DictQueryVO {
+public class DictQueryVo {
 
 	private String groupCode;
 

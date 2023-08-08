@@ -1,5 +1,7 @@
 package com.sugarcoat.uims.security;
 
+import cn.hutool.core.util.StrUtil;
+import com.sugarcoat.uims.security.session.SessionManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,8 +28,11 @@ public class AuthenticateFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        TokenInfo tokenInfo = new TokenInfo();
-        sessionManager.authenticate(tokenInfo);
+        String authenticate = request.getHeader("authenticate");
+        if (StrUtil.isNotEmpty(authenticate)){
+            TokenInfo tokenInfo = new TokenInfo();
+            sessionManager.authenticate(tokenInfo);
+        }
         filterChain.doFilter(request, response);
     }
 }

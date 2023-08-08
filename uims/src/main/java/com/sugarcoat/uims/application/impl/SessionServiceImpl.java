@@ -9,7 +9,7 @@ import com.sugarcoat.uims.application.vo.LoginVo;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.security.SecurityHelper;
 import com.sugarcoat.uims.security.SessionInfo;
-import com.sugarcoat.uims.security.SessionManager;
+import com.sugarcoat.uims.security.session.SessionManager;
 import com.sugarcoat.uims.domain.user.QUser;
 import com.sugarcoat.uims.domain.user.User;
 import com.sugarcoat.uims.domain.user.UserRepository;

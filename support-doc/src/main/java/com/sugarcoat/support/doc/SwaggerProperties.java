@@ -1,4 +1,4 @@
-package com.sugarcoat.doc;
+package com.sugarcoat.support.doc;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;

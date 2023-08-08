@@ -1,5 +1,6 @@
 package com.sugarcoat.support.server;
 
+import com.sugarcoat.support.server.serverApi.ServerApiController;
 import com.sugarcoat.support.server.serverApi.ServerApiRepository;
 import com.sugarcoat.support.server.serverApi.ServerApiService;
 import com.sugarcoat.support.server.serverApi.ServerApiServiceImpl;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * 自动配置
@@ -18,13 +20,18 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 @EntityScan
-@ComponentScan
+@EnableJpaRepositories
 public class ServerAutoConfiguration {
 
 	@Bean
-//	@ConditionalOnMissingBean
+	@ConditionalOnMissingBean
 	public ServerApiService serverApiService(ServerApiRepository serverApiRepository) {
 		return new ServerApiServiceImpl(serverApiRepository);
+	}
+
+	@Bean
+	public ServerApiController serverApiController(ServerApiService serverApiService){
+		return new ServerApiController(serverApiService);
 	}
 
 }

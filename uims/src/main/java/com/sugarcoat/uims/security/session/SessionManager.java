@@ -1,7 +1,9 @@
-package com.sugarcoat.uims.security;
+package com.sugarcoat.uims.security.session;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
+import com.sugarcoat.uims.security.SessionInfo;
+import com.sugarcoat.uims.security.TokenInfo;
 
 import java.util.List;
 

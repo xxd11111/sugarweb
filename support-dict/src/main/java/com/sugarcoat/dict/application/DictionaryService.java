@@ -27,6 +27,6 @@ public interface DictionaryService {
 
 	DictionaryGroupDTO findByGroupCode(String groupCode);
 
-	PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVO queryVO);
+	PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVo queryVO);
 
 }

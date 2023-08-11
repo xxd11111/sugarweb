@@ -20,8 +20,6 @@
         <module>support-sms</module>
         <module>support-email</module>
         <module>uims</module>
-        <module>support-gui</module>
-        <module>client</module>
         <module>support-scheduler</module>
     </modules>
 

@@ -4,7 +4,7 @@ import com.sugarcoat.api.common.HttpCode;
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.api.exception.SecurityException;
 import com.sugarcoat.api.exception.*;
-import com.sugarcoat.support.server.log.error.ErrorLogPublisher;
+import com.sugarcoat.support.server.domain.error.ErrorLogPublisher;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

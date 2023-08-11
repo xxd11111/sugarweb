@@ -5,8 +5,9 @@ import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 /**
+ * 分页查询条件
+ *
  * @author xxd
- * @description 分页查询
  * @date 2022-11-13
  */
 @Data

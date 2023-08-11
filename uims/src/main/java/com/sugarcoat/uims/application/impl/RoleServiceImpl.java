@@ -3,7 +3,7 @@ package com.sugarcoat.uims.application.impl;
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDataConvert;
+import com.sugarcoat.orm.PageDataConvert;
 import com.sugarcoat.api.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.uims.application.dto.RoleDto;

@@ -18,7 +18,7 @@ public class PageData<T> {
 	/**
 	 * 分页数据
 	 */
-	private List<T> records;
+	private List<T> content;
 
 	/**
 	 * 总记录数
@@ -38,8 +38,8 @@ public class PageData<T> {
 	public PageData() {
 	}
 
-	public PageData(List<T> records, long total, long size, long page) {
-		this.records = records;
+	public PageData(List<T> content, long total, long size, long page) {
+		this.content = content;
 		this.total = total;
 		this.size = size;
 		this.page = page;

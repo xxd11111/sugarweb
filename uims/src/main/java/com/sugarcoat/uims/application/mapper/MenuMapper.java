@@ -19,15 +19,11 @@ public interface MenuMapper {
 
     MenuMapper INSTANCE = Mappers.getMapper(MenuMapper.class);
 
-    @Mapping(target = "serverApis", ignore = true)
     Menu menuDtoToMenu(MenuDto menuDTO);
 
-    @Mapping(target = "serverApis", ignore = true)
     void updateMenu(MenuDto menuDTO, @MappingTarget Menu menu);
 
-    @Mapping(target = "serverApis", ignore = true)
     MenuDto menuToMenuDto(Menu menu);
 
-    @Mapping(target = "serverApis", ignore = true)
     MenuTreeVo menuToMenuTreeVo(Menu menu);
 }

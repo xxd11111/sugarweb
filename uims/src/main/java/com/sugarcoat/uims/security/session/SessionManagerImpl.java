@@ -97,7 +97,7 @@ public class SessionManagerImpl implements SessionManager {
         PageData<SessionInfo> page = new PageData<>();
         page.setSize(pageDto.getSize());
         page.setPage(pageDto.getPage());
-        page.setRecords(records);
+        page.setContent(records);
         return page;
     }
 

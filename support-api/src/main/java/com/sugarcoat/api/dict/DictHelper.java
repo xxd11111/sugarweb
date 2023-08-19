@@ -5,8 +5,9 @@ import com.sugarcoat.api.BeanUtil;
 import java.util.Collection;
 
 /**
+ * 字典帮助类
+ *
  * @author xxd
- * @description 字典工具类
  * @date 2022-11-18
  */
 public class DictHelper {

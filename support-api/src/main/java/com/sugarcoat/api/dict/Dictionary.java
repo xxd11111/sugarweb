@@ -9,8 +9,8 @@ package com.sugarcoat.api.dict;
  */
 public interface Dictionary {
 
-	String getDictionaryCode();
+	String getCode();
 
-	String getDictionaryName();
+	String getName();
 
 }

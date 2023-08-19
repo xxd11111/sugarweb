@@ -14,6 +14,8 @@ import java.lang.annotation.*;
 @Documented
 public @interface InnerDictionary {
 
-	String groupCode();
+	String groupCode() default "";
+
+	String groupName() default "";
 
 }

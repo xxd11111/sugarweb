@@ -69,8 +69,8 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 				.orElseThrow(() -> new ValidateException("dictItem not find"));
 		DictionaryDTO dictionaryDTO = new DictionaryDTO();
 		dictionaryDTO.setId(sugarcoatDictionary.getDictionaryId());
-		dictionaryDTO.setDictionaryCode(sugarcoatDictionary.getDictionaryCode());
-		dictionaryDTO.setDictionaryName(sugarcoatDictionary.getDictionaryCode());
+		dictionaryDTO.setDictionaryCode(sugarcoatDictionary.getCode());
+		dictionaryDTO.setDictionaryName(sugarcoatDictionary.getCode());
 		return dictionaryDTO;
 	}
 
@@ -113,8 +113,8 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 		for (SugarcoatDictionary sugarcoatDictionary : sugarcoatDictionaryList) {
 			DictionaryDTO dictionaryDTO = new DictionaryDTO();
 			dictionaryDTO.setId(sugarcoatDictionary.getDictionaryId());
-			dictionaryDTO.setDictionaryCode(sugarcoatDictionary.getDictionaryCode());
-			dictionaryDTO.setDictionaryName(sugarcoatDictionary.getDictionaryName());
+			dictionaryDTO.setDictionaryCode(sugarcoatDictionary.getCode());
+			dictionaryDTO.setDictionaryName(sugarcoatDictionary.getName());
 			dictionaryDTOList.add(dictionaryDTO);
 		}
 		DictionaryGroupDTO dictionaryGroupDTO = new DictionaryGroupDTO();

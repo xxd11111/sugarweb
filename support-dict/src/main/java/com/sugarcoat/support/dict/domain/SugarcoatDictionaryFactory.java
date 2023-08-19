@@ -26,8 +26,8 @@ public class SugarcoatDictionaryFactory {
 		for (DictionaryDTO dictionaryDTO : dictionaryDTOList) {
 			SugarcoatDictionary sugarcoatDictionary = new SugarcoatDictionary();
 			sugarcoatDictionary.setDictionaryId(dictionaryDTO.getId());
-			sugarcoatDictionary.setDictionaryCode(dictionaryDTO.getDictionaryCode());
-			sugarcoatDictionary.setDictionaryName(dictionaryDTO.getDictionaryName());
+			sugarcoatDictionary.setCode(dictionaryDTO.getCode());
+			sugarcoatDictionary.setName(dictionaryDTO.getName());
 			sugarcoatDictionaryList.add(sugarcoatDictionary);
 		}
 		sugarcoatDictionaryGroup.setDictionaries(sugarcoatDictionaryList);

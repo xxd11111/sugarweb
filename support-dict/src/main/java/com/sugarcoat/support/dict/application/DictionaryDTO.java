@@ -7,9 +7,9 @@ public class DictionaryDTO {
 
 	private String id;
 
-	private String dictionaryCode;
+	private String code;
 
-	private String dictionaryName;
+	private String name;
 
 	private String groupId;
 

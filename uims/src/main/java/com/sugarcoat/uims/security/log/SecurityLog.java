@@ -1,6 +1,11 @@
 package com.sugarcoat.uims.security.log;
 
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.*;
+import org.hibernate.Hibernate;
+
+import java.util.Objects;
 
 /**
  * 安全日志
@@ -8,12 +13,17 @@ import lombok.Data;
  * @author xxd
  * @date 2022-10-27
  */
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Entity
 public class SecurityLog {
 
     /**
      * 事件类型
      */
+    @Id
     private String id;
 
     /**
@@ -46,4 +56,16 @@ public class SecurityLog {
      */
     private String message;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        SecurityLog that = (SecurityLog) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

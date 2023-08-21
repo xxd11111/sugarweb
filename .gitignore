@@ -23,6 +23,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# 以下配置参考 https://blog.csdn.net/weixin_42408447/article/details/120889511
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

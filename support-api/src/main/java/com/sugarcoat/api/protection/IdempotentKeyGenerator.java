@@ -1,6 +1,4 @@
-package com.sugarcoat.support.protection;
-
-import org.aspectj.lang.JoinPoint;
+package com.sugarcoat.api.protection;
 
 public interface IdempotentKeyGenerator {
 

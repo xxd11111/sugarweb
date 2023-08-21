@@ -2,9 +2,8 @@ package com.sugarcoat.support.protection;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-import org.aspectj.lang.JoinPoint;
+import com.sugarcoat.api.protection.IdempotentKeyGenerator;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @Component
 public class DefaultKeyGenerator implements IdempotentKeyGenerator {

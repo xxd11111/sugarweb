@@ -22,8 +22,6 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <scope>provided</scope>
-            <version>5.8.7</version>
         </dependency>
 
         <dependency>
@@ -86,6 +84,12 @@
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-sms</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sugarcoat</groupId>
+            <artifactId>support-protection</artifactId>
             <version>1.0.0</version>
         </dependency>
 

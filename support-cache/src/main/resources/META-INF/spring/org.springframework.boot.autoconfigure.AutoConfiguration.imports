@@ -1,1 +1,2 @@
 com.sugarcoat.support.cache.CacheAutoConfiguration
+com.sugarcoat.support.cache.RedisAutoConfiguration

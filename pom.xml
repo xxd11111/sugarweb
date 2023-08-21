@@ -21,6 +21,7 @@
         <module>support-email</module>
         <module>uims</module>
         <module>support-scheduler</module>
+        <module>support-protection</module>
     </modules>
 
     <name>${project.artifactId}</name>

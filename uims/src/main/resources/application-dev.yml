@@ -33,9 +33,9 @@ spring:
       keepaliveTime: 30000
     #    mysql数据库
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.2.39:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-    username: root
-    password: Lmh666...
+    url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:123456}
 #    driver-class-name: org.mariadb.jdbc.Driver
 #    url: jdbc:mariadb://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
 #    username: root
@@ -54,7 +54,7 @@ spring:
   data:
     redis:
       # 地址
-      host: 192.168.2.39
+      host: ${REDIS_SERVER_IP:localhost}
       # 端口，默认为6379
       port: 6379
       # 数据库索引

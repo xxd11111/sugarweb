@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class TestController {
 
     @Idempotent(errorMsg = "错误的请求")
-    @RateLimit(mark = "test:add", frequencyTime = 3, frequencyTimeUnit = TimeUnit.MINUTES, frequency = 5)
+    @RateLimit(mark = "test:add", frequencyTime = 10, frequency = 3)
     @PostMapping("add")
     public Result<String> findOne(@RequestBody EmailLoginVo vo) {
         return Result.data("你好:" + vo.toString());

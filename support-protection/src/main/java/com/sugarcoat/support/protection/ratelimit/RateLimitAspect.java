@@ -1,7 +1,9 @@
 package com.sugarcoat.support.protection.ratelimit;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
+import com.sugarcoat.api.exception.RateLimitException;
 import com.sugarcoat.api.exception.ServiceException;
 import com.sugarcoat.api.protection.RateLimit;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +14,8 @@ import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
+
+import java.util.Set;
 
 /**
  *
@@ -27,11 +31,11 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor
 public class RateLimitAspect implements InitializingBean {
 
-    public static final String REDIS_KEY = "ratelimit:";
+    private static final String REDIS_KEY = "ratelimit:";
 
     private final RedisTemplate<String, Object> redisTemplate;
     @Before("@annotation(rateLimit)")
-    public void aspect(JoinPoint point, RateLimit rateLimit) {
+    public synchronized void aspect(JoinPoint point, RateLimit rateLimit) {
         String mark = rateLimit.mark();
         if (StrUtil.isBlank(mark)) {
             return;
@@ -40,24 +44,23 @@ public class RateLimitAspect implements InitializingBean {
         String fullName = REDIS_KEY + mark;
 
         Long increment = redisTemplate.opsForValue().increment(fullName);
+
         Assert.notNull(increment, "error redis increment value");
-
-        Object o = redisTemplate.opsForValue().get(fullName);
-        if (ObjUtil.isNull(o)) {
-            redisTemplate.opsForValue().setIfAbsent(fullName, increment, rateLimit.frequencyTime(), rateLimit.frequencyTimeUnit());
-            return;
+        if (increment > rateLimit.frequency() && Boolean.TRUE.equals(redisTemplate.hasKey(fullName))) {
+            throw new RateLimitException(rateLimit.errorMsg());
         }
 
-        if (increment > Long.valueOf(rateLimit.frequency())) {
-            throw new ServiceException();
-        }
-
-        redisTemplate.opsForValue().set(fullName, increment, rateLimit.frequencyTime(), rateLimit.frequencyTimeUnit());
-
+        redisTemplate.expire(fullName, rateLimit.frequencyTime(), rateLimit.frequencyTimeUnit());
     }
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        redisTemplate.delete(REDIS_KEY + "*");
+        Set<String> keys = redisTemplate.keys(REDIS_KEY + "*");
+        if (CollUtil.isEmpty(keys)) {
+            return;
+        }
+
+        Long delete = redisTemplate.delete(keys);
+        log.info("init remove ratelimit: {}", delete);
     }
 }

@@ -33,7 +33,7 @@ public class IdempotentAspect {
      * @param idempotent 注解
      */
     @Before("@annotation(idempotent)")
-    public void aspect(JoinPoint point, Idempotent idempotent) {
+    public synchronized void aspect(JoinPoint point, Idempotent idempotent) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         Assert.notNull(requestAttributes, "error request context");
         HttpServletRequest request = requestAttributes.getRequest();

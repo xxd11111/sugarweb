@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
  * @date 2023/6/1
  */
 @AllArgsConstructor
-@Component
 public class ErrorLogPublisher {
 
 	private final ApplicationEventPublisher applicationEventPublisher;

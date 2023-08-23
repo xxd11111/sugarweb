@@ -1,4 +1,4 @@
-package com.sugarcoat.support.protection;
+package com.sugarcoat.support.protection.idempotent;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;

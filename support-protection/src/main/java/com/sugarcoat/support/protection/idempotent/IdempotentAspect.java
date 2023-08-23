@@ -1,4 +1,4 @@
-package com.sugarcoat.support.protection;
+package com.sugarcoat.support.protection.idempotent;
 
 import com.sugarcoat.api.exception.IdempotentException;
 import com.sugarcoat.api.protection.Idempotent;

@@ -3,12 +3,13 @@ package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.api.common.Result;
 import com.sugarcoat.api.protection.Idempotent;
+import com.sugarcoat.api.protection.RateLimit;
 import com.sugarcoat.uims.application.vo.EmailLoginVo;
-import com.sugarcoat.uims.application.vo.RoleVo;
-import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,7 +18,8 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class TestController {
 
-    @Idempotent(expire = 2L, unit = TimeUnit.DAYS, errorMsg = "错误的请求")
+    @Idempotent(errorMsg = "错误的请求")
+    @RateLimit(mark = "test:add", frequencyTime = 3, frequencyTimeUnit = TimeUnit.MINUTES, frequency = 5)
     @PostMapping("add")
     public Result<String> findOne(@RequestBody EmailLoginVo vo) {
         return Result.data("你好:" + vo.toString());

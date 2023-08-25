@@ -19,7 +19,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @ToString
-public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGroup {
+public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGroup<SugarcoatDictionary> {
 
 	@Id
 	@GeneratedValue(generator = "system-uuid")

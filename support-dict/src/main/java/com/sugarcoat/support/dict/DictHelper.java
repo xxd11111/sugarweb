@@ -1,8 +1,12 @@
-package com.sugarcoat.api.dict;
+package com.sugarcoat.support.dict;
 
 import com.sugarcoat.api.BeanUtil;
+import com.sugarcoat.api.dict.Dictionary;
+import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.api.dict.DictionaryManager;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * 字典帮助类
@@ -15,11 +19,11 @@ public class DictHelper {
 	private DictHelper() {
 	}
 
-	private static DictionaryManager getInstance() {
+	private static DictionaryManager<DictionaryGroup<Dictionary>, Dictionary> getInstance() {
 		return DictHelperInner.DICTIONARY_CLIENT;
 	}
 
-	public static Dictionary getDictionary(String groupCode, String dictionaryCode) {
+	public static Optional<? extends Dictionary> getDictionary(String groupCode, String dictionaryCode) {
 		return getInstance().getDictionary(groupCode, dictionaryCode);
 	}
 
@@ -27,11 +31,11 @@ public class DictHelper {
 		return getInstance().getDictionary(groupCode);
 	}
 
-	public static DictionaryGroup getDictionaryGroup(String groupCode) {
+	public static Optional<DictionaryGroup<Dictionary>> getDictionaryGroup(String groupCode) {
 		return getInstance().getDictionaryGroup(groupCode);
 	}
 
-	public static String getDictionaryName(String groupCode, String dictionaryCode) {
+	public static Optional<String> getDictionaryName(String groupCode, String dictionaryCode) {
 		return getInstance().getDictionaryName(groupCode, dictionaryCode);
 	}
 
@@ -41,7 +45,7 @@ public class DictHelper {
 
 	private static class DictHelperInner {
 
-		private final static DictionaryManager DICTIONARY_CLIENT = BeanUtil.getBean(DictionaryManager.class);
+		private final static DictionaryManager<DictionaryGroup<Dictionary>, Dictionary> DICTIONARY_CLIENT = BeanUtil.getBean(DictionaryManager.class);
 
 	}
 

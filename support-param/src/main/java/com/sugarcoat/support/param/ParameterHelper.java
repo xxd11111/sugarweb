@@ -1,6 +1,7 @@
-package com.sugarcoat.api.param;
+package com.sugarcoat.support.param;
 
 import com.sugarcoat.api.BeanUtil;
+import com.sugarcoat.api.param.ParameterManager;
 import lombok.extern.slf4j.Slf4j;
 
 /**

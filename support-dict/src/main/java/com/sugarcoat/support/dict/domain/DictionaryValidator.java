@@ -1,7 +1,7 @@
 package com.sugarcoat.support.dict.domain;
 
 import com.sugarcoat.api.dict.DictionaryValidate;
-import com.sugarcoat.api.dict.DictHelper;
+import com.sugarcoat.support.dict.DictHelper;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

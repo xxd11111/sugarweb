@@ -12,13 +12,13 @@ import java.util.Collection;
  * @date 2023/5/29
  */
 @Component
-public interface DictionaryGroup {
+public interface DictionaryGroup<T extends Dictionary> {
 
 	String getGroupCode();
 
 	String getGroupName();
 
-	Collection<? extends Dictionary> getDictionaries();
+	Collection<T> getDictionaries();
 
 	default boolean existDictionary(String dictionaryCode) {
 		Collection<? extends Dictionary> dictionaries = getDictionaries();
@@ -36,7 +36,7 @@ public interface DictionaryGroup {
 				.findFirst().map(Dictionary::getName).orElse(null);
 	}
 
-	default Dictionary getDictionary(String dictionaryCode) {
+	default T getDictionary(String dictionaryCode) {
 		if (dictionaryCode == null || dictionaryCode.isEmpty()) {
 			return null;
 		}

@@ -56,7 +56,7 @@ sugarcoat使用说明文档地址：(准备中)
 2. 检测本地环境，建议jdk17，mysql8.x，redis6.x
 3. 打开application-dev.yml，配置数据库地址，配置redis地址
 4. 项目中使用了querydsl，需要maven执行compile后才能启动
-5. uims为sugarcoat使用案例，启动服务后，打开浏览器输入
+5. uims为sugarcoat使用案例，启动服务后，打开浏览器输入http://localhost:8889/sugarcoat/doc.html
 
 ## 交流与讨论
 

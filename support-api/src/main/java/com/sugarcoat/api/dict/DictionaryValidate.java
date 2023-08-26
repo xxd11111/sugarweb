@@ -1,6 +1,6 @@
 package com.sugarcoat.api.dict;
 
-import com.sugarcoat.api.enums.EnumValidator;
+import com.sugarcoat.api.data.EnumValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

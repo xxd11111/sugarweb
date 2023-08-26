@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum MenuType implements Flag {
+public enum MenuType implements Flag<String> {
 
     DIR("1"), // 目录
 

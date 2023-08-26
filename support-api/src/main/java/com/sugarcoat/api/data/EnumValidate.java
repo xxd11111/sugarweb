@@ -1,5 +1,6 @@
-package com.sugarcoat.api.enums;
+package com.sugarcoat.api.data;
 
+import com.sugarcoat.api.common.Flag;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -21,7 +22,7 @@ public @interface EnumValidate {
     /**
      * @return 实现 EnumValuable 接口的
      */
-    Class<? extends EnumValue<?>> value();
+    Class<? extends Flag<?>> value();
 
     String message() default "{fieldName}必须在指定范围 {enumCodes}";
 

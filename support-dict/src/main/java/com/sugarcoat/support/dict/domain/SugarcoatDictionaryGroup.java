@@ -11,8 +11,9 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.Collection;
 
 /**
+ * 字典组
+ *
  * @author xxd
- * @description TODO
  * @date 2023/4/19 23:04
  */
 @Entity

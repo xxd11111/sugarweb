@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * @since 2023/8/25
  */
 @RequiredArgsConstructor
-public class DictScanner {
+public class DefaultDictionaryScanner {
 
     private final DictionaryManager<SugarcoatDictionaryGroup, SugarcoatDictionary> dictionaryManager;
 

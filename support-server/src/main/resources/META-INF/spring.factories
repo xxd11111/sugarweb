@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarcoat.support.server.ServerAutoConfiguration
+  com.sugarcoat.support.server.ServerAutoConfiguration\
+  com.sugarcoat.support.server.GlobalExceptionHandler

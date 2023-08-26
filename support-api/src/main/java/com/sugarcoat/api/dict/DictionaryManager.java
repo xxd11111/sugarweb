@@ -1,24 +1,31 @@
 package com.sugarcoat.api.dict;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
- * 字典客户端 todo 增删操作
+ * 字典客户端
  *
  * @author xxd
  * @version 1.0
  * @date 2023/5/29
  */
-public interface DictionaryManager {
+public interface DictionaryManager<T extends DictionaryGroup<K>, K extends Dictionary> {
 
-	Dictionary getDictionary(String groupCode, String dictionaryCode);
+    void save(T dictionaryGroup);
 
-	Collection<? extends Dictionary> getDictionary(String groupCode);
+    void remove(String groupCode, String dictionaryCode);
 
-	DictionaryGroup getDictionaryGroup(String groupCode);
+    void remove(String groupCode);
 
-	String getDictionaryName(String groupCode, String dictionaryCode);
+    Optional<K> getDictionary(String groupCode, String dictionaryCode);
 
-	boolean existDictionary(String groupCode, String dictionaryCode);
+    Collection<K> getDictionary(String groupCode);
+
+	Optional<T> getDictionaryGroup(String groupCode);
+
+	Optional<String> getDictionaryName(String groupCode, String dictionaryCode);
+
+    boolean existDictionary(String groupCode, String dictionaryCode);
 
 }

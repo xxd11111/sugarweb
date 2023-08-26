@@ -13,7 +13,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum AccountType implements Flag {
+public enum AccountType implements Flag<String> {
 
     SUPER_ADMIN("1", "超级管理员"),
     ADMIN("2", "管理员"),

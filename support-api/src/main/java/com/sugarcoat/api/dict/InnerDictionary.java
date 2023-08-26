@@ -3,6 +3,9 @@ package com.sugarcoat.api.dict;
 import java.lang.annotation.*;
 
 /**
+ * 只用于开发阶段，优化字典变动时，自动维护字典项
+ * 该部分属于程序内字典，不允许外部编辑，优先级最高
+ *
  * 枚举字典用于初始化
  *
  * @author xxd
@@ -14,8 +17,14 @@ import java.lang.annotation.*;
 @Documented
 public @interface InnerDictionary {
 
-	String groupCode() default "";
+	/**
+	 * 字典编码 为空时使用字段值
+	 */
+	String code() default "";
 
-	String groupName() default "";
+	/**
+	 * 字典名称 为空时使用类名
+	 */
+	String name() default "";
 
 }

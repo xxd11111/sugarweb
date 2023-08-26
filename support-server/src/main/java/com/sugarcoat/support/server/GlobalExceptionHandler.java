@@ -24,6 +24,22 @@ public class GlobalExceptionHandler {
 
 	private final ErrorLogPublisher errorLogPublisher;
 
+	@ExceptionHandler(IdempotentException.class)
+	public Result<?> idempotentException(HttpServletRequest req, Throwable ex) {
+		log.error("[IdempotentException]", ex);
+		// 日志插入
+		errorLogPublisher.publishEvent(req, ex);
+		return Result.error(ex.getMessage());
+	}
+
+	@ExceptionHandler(RateLimitException.class)
+	public Result<?> rateLimitException(HttpServletRequest req, Throwable ex) {
+		log.error("[RateLimitException]", ex);
+		// 日志插入
+		errorLogPublisher.publishEvent(req, ex);
+		return Result.error(ex.getMessage());
+	}
+
 	@ExceptionHandler(FrameworkException.class)
 	public Result<?> frameworkException(HttpServletRequest req, Throwable ex) {
 		log.error("[FrameworkException]", ex);

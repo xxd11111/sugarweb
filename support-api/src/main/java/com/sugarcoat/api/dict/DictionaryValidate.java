@@ -1,9 +1,9 @@
 package com.sugarcoat.api.dict;
 
-import com.sugarcoat.api.enums.EnumValidator;
-
+import com.sugarcoat.api.data.EnumValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+
 import java.lang.annotation.*;
 
 /**
@@ -13,30 +13,30 @@ import java.lang.annotation.*;
  * @version 1.0
  * @date 2023/5/29
  */
-// @Target({
-// ElementType.METHOD,
-// ElementType.FIELD,
-// ElementType.ANNOTATION_TYPE,
-// ElementType.CONSTRUCTOR,
-// ElementType.PARAMETER,
-// ElementType.TYPE_USE
-// })
-// @Retention(RetentionPolicy.RUNTIME)
-// @Documented
-// @Constraint(
-// validatedBy = EnumValidator.class
-// )
+@Target({
+        ElementType.METHOD,
+        ElementType.FIELD,
+        ElementType.ANNOTATION_TYPE,
+        ElementType.CONSTRUCTOR,
+        ElementType.PARAMETER,
+        ElementType.TYPE_USE
+})
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Constraint(
+        validatedBy = EnumValidator.class
+)
 public @interface DictionaryValidate {
 
-	/**
-	 * 字典组code
-	 */
-	String groupCode();
+    /**
+     * 字典组code
+     */
+    String groupCode();
 
-	String message() default "";
+    String message() default "";
 
-	Class<?>[] groups() default {};
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
+    Class<? extends Payload>[] payload() default {};
 
 }

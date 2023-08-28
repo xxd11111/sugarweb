@@ -9,6 +9,8 @@ import java.lang.annotation.*;
 /**
  * 字典校验注解
  *
+ * todo 分离DictionaryValidator 与 DictionaryValidate 减少api依赖
+ *
  * @author xxd
  * @version 1.0
  * @date 2023/5/29
@@ -24,7 +26,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(
-        validatedBy = EnumValidator.class
+        validatedBy = DictionaryValidator.class
 )
 public @interface DictionaryValidate {
 
@@ -33,6 +35,9 @@ public @interface DictionaryValidate {
      */
     String groupCode();
 
+    /**
+     * 异常时返回的异常消息
+     */
     String message() default "";
 
     Class<?>[] groups() default {};

@@ -9,8 +9,14 @@ package com.sugarcoat.api.dict;
  */
 public interface Dictionary {
 
-	String getCode();
+    /**
+     * 获取字典编码
+     */
+    String getCode();
 
-	String getName();
+    /**
+     * 获取字典名称
+     */
+    String getName();
 
 }

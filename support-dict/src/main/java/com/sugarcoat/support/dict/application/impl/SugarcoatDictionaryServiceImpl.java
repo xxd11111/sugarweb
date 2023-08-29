@@ -108,7 +108,7 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	}
 
 	private DictionaryGroupDTO getDictDTO(SugarcoatDictionaryGroup dict) {
-		Collection<SugarcoatDictionary> sugarcoatDictionaryList = dict.getDictionaries();
+		Collection<SugarcoatDictionary> sugarcoatDictionaryList = dict.getSugarcoatDictionaries();
 		List<DictionaryDTO> dictionaryDTOList = new ArrayList<>();
 		for (SugarcoatDictionary sugarcoatDictionary : sugarcoatDictionaryList) {
 			DictionaryDTO dictionaryDTO = new DictionaryDTO();

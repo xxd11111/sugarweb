@@ -4,7 +4,7 @@ import com.sugarcoat.orm.SugarcoatRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * TODO
+ * 字典仓库
  *
  * @author xxd
  * @version 1.0

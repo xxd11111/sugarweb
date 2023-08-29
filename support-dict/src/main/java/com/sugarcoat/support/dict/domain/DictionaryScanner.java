@@ -11,8 +11,8 @@ import java.util.List;
  * @author xxd
  * @since 2023/8/26
  */
-public interface DictionaryScanner<T extends DictionaryGroup<K>, K extends Dictionary> {
+public interface DictionaryScanner {
 
-    List<T> scan();
+    List<DictionaryGroup> scan();
 
 }

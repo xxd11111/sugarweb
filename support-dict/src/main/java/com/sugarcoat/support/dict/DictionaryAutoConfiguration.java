@@ -6,6 +6,7 @@ import com.sugarcoat.support.dict.application.impl.SugarcoatDictionaryServiceImp
 import com.sugarcoat.support.dict.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,8 +27,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration(proxyBeanMethods = false)
 @RequiredArgsConstructor
 public class DictionaryAutoConfiguration {
-
-    private final DictionaryProperties dictionaryProperties;
 
     @Bean
     @ConditionalOnMissingBean

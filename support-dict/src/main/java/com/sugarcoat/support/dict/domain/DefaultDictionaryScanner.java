@@ -27,11 +27,11 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class DefaultDictionaryScanner {
 
-    private final DictionaryManager<SugarcoatDictionaryGroup, SugarcoatDictionary> dictionaryManager;
+    private final DictionaryManager dictionaryManager;
 
     public void register(List<DictGroup> dictGroups) {
 
-        //todo
+        //todo 重构以下逻辑
         List<SugarcoatDictionaryGroup> dbList = new ArrayList<>();
         List<SugarcoatDictionaryGroup> adddictionaryGroups = new ArrayList<>();
         List<String> removeIds = new ArrayList<>();

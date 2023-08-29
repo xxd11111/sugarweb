@@ -21,7 +21,7 @@ public class DictionaryValidator implements ConstraintValidator<DictionaryValida
 	private String groupCode;
 
 	@NotEmpty
-	private final DictionaryManager<SugarcoatDictionaryGroup, SugarcoatDictionary> dictionaryManager;
+	private final DictionaryManager dictionaryManager;
 
 	@Override
 	public void initialize(DictionaryValidate constraintAnnotation) {

@@ -30,7 +30,7 @@ public class SugarcoatDictionaryFactory {
 			sugarcoatDictionary.setName(dictionaryDTO.getName());
 			sugarcoatDictionaryList.add(sugarcoatDictionary);
 		}
-		sugarcoatDictionaryGroup.setDictionaries(sugarcoatDictionaryList);
+		sugarcoatDictionaryGroup.setSugarcoatDictionaries(sugarcoatDictionaryList);
 		return sugarcoatDictionaryGroup;
 	}
 

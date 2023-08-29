@@ -1,5 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
+import com.sugarcoat.api.dict.Dictionary;
 import com.sugarcoat.api.dict.DictionaryGroup;
 import com.sugarcoat.orm.EntityExt;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -20,7 +22,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @ToString
-public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGroup<SugarcoatDictionary> {
+public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGroup {
 
 	@Id
 	@GeneratedValue(generator = "system-uuid")
@@ -36,6 +38,13 @@ public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGro
 
 	@OneToMany(mappedBy = "dictionaryId", cascade = CascadeType.ALL)
 	@ToString.Exclude
-	private Collection<SugarcoatDictionary> dictionaries = new java.util.ArrayList<>();
+	private Collection<SugarcoatDictionary> sugarcoatDictionaries = new java.util.ArrayList<>();
 
+	/**
+	 * 将sugarcoatDictionaries与getDictionaries分开处理泛型转型问题
+	 */
+	@Override
+	public Collection<Dictionary> getDictionaries() {
+		return new ArrayList<>(sugarcoatDictionaries);
+	}
 }

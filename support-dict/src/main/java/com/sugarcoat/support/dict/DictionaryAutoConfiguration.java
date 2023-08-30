@@ -16,8 +16,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 /**
  * 字典自动配置
  *
- *
- *
  * @author xxd
  * @date 2022-11-21
  */

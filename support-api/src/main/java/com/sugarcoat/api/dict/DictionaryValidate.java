@@ -1,6 +1,5 @@
 package com.sugarcoat.api.dict;
 
-import com.sugarcoat.api.data.EnumValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -8,8 +7,6 @@ import java.lang.annotation.*;
 
 /**
  * 字典校验注解
- *
- * todo 分离DictionaryValidator 与 DictionaryValidate 减少api依赖
  *
  * @author xxd
  * @version 1.0

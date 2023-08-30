@@ -8,9 +8,10 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
+ * 字典信息
+ *
  * @author xxd
  * @version 1.0
- * @description: 基础字典信息
  * @date 2023/3/20
  */
 @Entity

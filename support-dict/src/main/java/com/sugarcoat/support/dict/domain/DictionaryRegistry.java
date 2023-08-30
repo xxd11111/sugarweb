@@ -10,8 +10,8 @@ import java.util.List;
  * @author xxd
  * @since 2023/8/26
  */
-public interface DictionaryRegister {
+public interface DictionaryRegistry {
 
-    void register(List<DictionaryGroup> dictionaryGroups);
+    void register(List<SugarcoatDictionaryGroup> dictionaryGroups);
 
 }

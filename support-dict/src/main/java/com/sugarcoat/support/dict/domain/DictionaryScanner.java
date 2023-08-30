@@ -1,6 +1,5 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.api.dict.Dictionary;
 import com.sugarcoat.api.dict.DictionaryGroup;
 
 import java.util.List;
@@ -13,6 +12,10 @@ import java.util.List;
  */
 public interface DictionaryScanner {
 
-    List<DictionaryGroup> scan();
+    /**
+     * 扫描系统中存在的内置字典
+     * @return 字典列表
+     */
+    List<SugarcoatDictionaryGroup> scan();
 
 }

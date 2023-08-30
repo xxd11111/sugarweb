@@ -1,103 +1,36 @@
 package com.sugarcoat.support.dict.domain;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.dict.DictionaryManager;
+import com.sugarcoat.api.dict.DictionaryGroup;
 import com.sugarcoat.api.dict.InnerDictionary;
 import com.sugarcoat.api.dict.InnerDictionaryGroup;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 字典对象扫描
+ * 字典扫描
  *
  * @author xxd
- * @since 2023/8/25
+ * @date 2023/8/30 23:03
  */
-@RequiredArgsConstructor
-public class DefaultDictionaryScanner {
-
-    private final DictionaryManager dictionaryManager;
-
-    public void register(List<DictGroup> dictGroups) {
-
-        //todo 重构以下逻辑
-        List<SugarcoatDictionaryGroup> dbList = new ArrayList<>();
-        List<SugarcoatDictionaryGroup> adddictionaryGroups = new ArrayList<>();
-        List<String> removeIds = new ArrayList<>();
-        for (DictGroup dictGroup : dictGroups) {
-            boolean groupExist = false;
-            for (SugarcoatDictionaryGroup SugarcoatDictionaryGroup : dbList) {
-                if (StrUtil.equals(SugarcoatDictionaryGroup.getGroupCode(), "DICT_TYPE")) {
-                    if (StrUtil.equals(SugarcoatDictionaryGroup.getGroupCode(), dictGroup.getCode())) {
-                        groupExist = true;
-                    }
-                }
-            }
-            if (!groupExist) {
-                //新增字典组
-                SugarcoatDictionaryGroup dictionaryGroup = new SugarcoatDictionaryGroup();
-                adddictionaryGroups.add(dictionaryGroup);
-            }
-
-            List<Dict> dicts = dictGroup.getDicts();
-            int i = 1;
-            //系统内字典
-            for (Dict dict : dicts) {
-                boolean dictExist = false;
-                //数据库字典
-                for (SugarcoatDictionaryGroup SugarcoatDictionaryGroup : dbList) {
-                    if (StrUtil.equals(SugarcoatDictionaryGroup.getGroupCode(), dictGroup.getCode())) {
-                        if (StrUtil.equals(dict.getCode(), SugarcoatDictionaryGroup.getGroupCode())) {
-                            dictExist = true;
-                        }
-                    }
-                }
-
-                if (!groupExist || !dictExist) {
-                    SugarcoatDictionaryGroup SugarcoatDictionaryGroup = new SugarcoatDictionaryGroup();
-
-                    adddictionaryGroups.add(SugarcoatDictionaryGroup);
-                }
-            }
-            if (CollUtil.isNotEmpty(dbList)) {
-                AtomicBoolean exist = new AtomicBoolean(false);
-                //数据库列表
-                dbList.forEach((dictionaryGroup) -> {
-                    //代码中某组字典
-                    if (StrUtil.equals(dictGroup.getCode(), dictionaryGroup.getGroupCode())) {
-                        for (Dict dict : dicts) {
-                            if (StrUtil.equals(dict.getCode(), dictionaryGroup.getGroupCode())) {
-                                exist.set(true);
-                            }
-                        }
-                        if (!exist.get()) {
-                            removeIds.add(dictionaryGroup.getGroupCode());
-                        }
-                    }
-                });
-            }
+public class DefaultDictionaryScanner implements DictionaryScanner{
+    @Override
+    public List<SugarcoatDictionaryGroup> scan() {
+        String scanPackage = "";
+        //无效路径时处理
+        if (!packageValidate(scanPackage)){
+            //获取当前应用启动路径
+            //or 抛出异常
         }
-        //for (SugarcoatDictionaryGroup dictionaryGroup : adddictionaryGroups) {
-        //    dictService.addDict(dictionaryGroup);
-        //}
-        //dictService.removeByIds(removeIds);
-        System.out.println("");
-    }
-
-    public List<DictGroup> scan() {
-        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation("com.thinvent.catalog", InnerDictionaryGroup.class);
-        List<DictGroup> dictGroups = new ArrayList<>();
+        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(scanPackage, InnerDictionaryGroup.class);
+        List<SugarcoatDictionaryGroup> dictGroups = new ArrayList<>();
         for (Class<?> clazz : classes) {
             InnerDictionaryGroup annotation = clazz.getAnnotation(InnerDictionaryGroup.class);
             String name;
@@ -107,12 +40,13 @@ public class DefaultDictionaryScanner {
             } else {
                 name = annotation.code();
             }
-            DictGroup dictGroup = new DictGroup();
-            dictGroup.setCode(name);
-            dictGroup.setName(name);
+            SugarcoatDictionaryGroup dictGroup = new SugarcoatDictionaryGroup();
+            //todo 补全缺失设置
+            dictGroup.setGroupCode(name);
+            dictGroup.setGroupName(name);
             Object[] enumConstants = clazz.getEnumConstants();
             Field[] declaredFields = clazz.getDeclaredFields();
-            List<Dict> dicts = new ArrayList<>();
+            List<SugarcoatDictionary> dicts = new ArrayList<>();
             for (Object enumConstant : enumConstants) {
                 String dictCode = "";
                 String dictName = "";
@@ -137,15 +71,21 @@ public class DefaultDictionaryScanner {
                 if (dictName == null || dictName.isEmpty()) {
                     dictName = enumConstant.toString();
                 }
-                Dict dict = new Dict();
+                SugarcoatDictionary dict = new SugarcoatDictionary();
+                //todo 补全缺失设置
                 dict.setName(dictName);
                 dict.setCode(dictCode);
                 dicts.add(dict);
             }
-            dictGroup.setDicts(dicts);
+            dictGroup.setSugarcoatDictionaries(dicts);
             dictGroups.add(dictGroup);
         }
         return dictGroups;
+    }
+
+    private boolean packageValidate(String scanPackage) {
+        //todo
+        return true;
     }
 
 
@@ -194,19 +134,4 @@ public class DefaultDictionaryScanner {
         matcher.appendTail(sb);
         return sb.toString().replaceFirst("_", "");
     }
-
-    @Data
-    class DictGroup {
-        private String code;
-        private String name;
-
-        private List<Dict> dicts;
-    }
-
-    @Data
-    class Dict {
-        private String code;
-        private String name;
-    }
-
 }

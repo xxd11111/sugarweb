@@ -32,14 +32,10 @@ public class DictionaryValidatorImpl implements DictionaryValidator {
             return true;
         }
         DictionaryManager dictionaryManager = BeanUtil.getBean(DictionaryManager.class);
-        Optional<DictionaryGroup> dictionaryGroupOptional = dictionaryManager.getDictionary(groupCode);
-        if (dictionaryGroupOptional.isPresent()) {
-            DictionaryGroup dictionaryGroup = dictionaryGroupOptional.get();
-            boolean flag = dictionaryGroup.existDictionary(value);
+        boolean isPresent = dictionaryManager.existDictionary(groupCode, value);
+        if (isPresent) {
             //校验通过
-            if (flag) {
-                return true;
-            }
+            return true;
         }
         // 校验不通过，自定义提示语句（因为，注解上的 value 是枚举类，无法获得枚举类的实际值）
         context.disableDefaultConstraintViolation(); // 禁用默认的 message 的值

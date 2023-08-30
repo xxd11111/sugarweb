@@ -28,7 +28,7 @@ public class DictHelper {
 	}
 
 	public static Optional<DictionaryGroup> getDictionary(String groupCode) {
-		return getInstance().getDictionary(groupCode);
+		return getInstance().getDictionaryGroup(groupCode);
 	}
 
 	public static Optional<DictionaryGroup> getDictionaryGroup(String groupCode) {

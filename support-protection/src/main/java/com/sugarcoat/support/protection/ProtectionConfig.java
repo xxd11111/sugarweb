@@ -4,7 +4,7 @@ package com.sugarcoat.support.protection;
 import com.sugarcoat.api.protection.IdempotentKeyGenerator;
 import com.sugarcoat.support.protection.idempotent.DefaultKeyGenerator;
 import com.sugarcoat.support.protection.idempotent.IdempotentAspect;
-import com.sugarcoat.support.protection.ratelimit.RateLimitAspect;
+import com.sugarcoat.support.protection.ratelimit.core.RateLimitAspect;
 import com.sugarcoat.support.protection.ratelimit.RateLimitConfigConditionInject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -14,6 +14,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.RedisTemplate;
 
+/**
+ *
+ * 限流自动装配
+ *
+ * @Author lmh
+ * @Description 限流自动装配
+ * @CreateTime 2023-08-23 15:31
+ */
 @Slf4j
 @Configuration
 public class ProtectionConfig {

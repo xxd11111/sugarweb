@@ -30,6 +30,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-orm</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>

@@ -2,9 +2,10 @@ package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.InnerDictionary;
 import com.sugarcoat.api.dict.InnerDictionaryGroup;
+import com.sugarcoat.api.exception.FrameworkException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -20,12 +21,12 @@ import java.util.regex.Pattern;
  * @author xxd
  * @date 2023/8/30 23:03
  */
-public class DefaultDictionaryScanner implements DictionaryScanner{
+public class DefaultDictionaryScanner implements DictionaryScanner {
     @Override
     public List<SugarcoatDictionaryGroup> scan() {
         String scanPackage = "";
         //无效路径时处理
-        if (!packageValidate(scanPackage)){
+        if (!packageValidate(scanPackage)) {
             //获取当前应用启动路径
             //or 抛出异常
         }
@@ -40,39 +41,45 @@ public class DefaultDictionaryScanner implements DictionaryScanner{
             } else {
                 name = annotation.code();
             }
+            //字典组对象创建
             SugarcoatDictionaryGroup dictGroup = new SugarcoatDictionaryGroup();
-            //todo 补全缺失设置
             dictGroup.setGroupCode(name);
             dictGroup.setGroupName(name);
+            //解析枚举获取field信息
+            List<SugarcoatDictionary> dicts = new ArrayList<>();
             Object[] enumConstants = clazz.getEnumConstants();
             Field[] declaredFields = clazz.getDeclaredFields();
-            List<SugarcoatDictionary> dicts = new ArrayList<>();
             for (Object enumConstant : enumConstants) {
                 String dictCode = "";
                 String dictName = "";
                 for (Field field : declaredFields) {
                     field.setAccessible(true);
-                    Annotation dictCode1 = field.getAnnotation(InnerDictionary.class);
+                    Annotation enumDictCode = field.getAnnotation(InnerDictionary.class);
                     try {
-                        if (dictCode1 != null) {
+                        //获取字典编码
+                        if (enumDictCode != null) {
                             dictCode = (String) field.get(enumConstant);
                         }
-                        if (dictCode1 != null) {
+                        //获取字典名称
+                        if (enumDictCode != null) {
                             dictName = (String) field.get(enumConstant);
                         }
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        throw new FrameworkException(String.format("字典项数据获取异常,请检查字典枚举配置，class:{}", clazz.getName()));
                     }
 
                 }
+                //缺省设置，字典编码缺失抛异常
                 if (dictCode == null || dictCode.isEmpty()) {
-                    dictCode = enumConstant.toString();
+                    throw new FrameworkException(String.format("字典编码缺失,请检查字典枚举配置，class:{}", clazz.getName()));
                 }
+                //缺省设置，字典编码缺失抛异常
                 if (dictName == null || dictName.isEmpty()) {
                     dictName = enumConstant.toString();
                 }
+                //字典项对象创建
                 SugarcoatDictionary dict = new SugarcoatDictionary();
-                //todo 补全缺失设置
+                dict.setInnerFlag(BooleanFlag.TRUE);
                 dict.setName(dictName);
                 dict.setCode(dictCode);
                 dicts.add(dict);

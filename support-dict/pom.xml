@@ -15,7 +15,6 @@
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-orm</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>

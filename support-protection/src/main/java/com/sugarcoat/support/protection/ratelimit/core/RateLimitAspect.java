@@ -6,15 +6,20 @@ import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.exception.RateLimitException;
 import com.sugarcoat.api.exception.ServiceException;
 import com.sugarcoat.api.protection.RateLimit;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.redisson.api.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -22,44 +27,40 @@ import java.util.Set;
  * 限流注解 aop 拦截
  *
  * @Author lmh
- * @Description 限流注解 aop 拦截
+ * @Description TODO 限流注解 aop 拦截
  * @CreateTime 2023-08-23 15:31
  */
 @Slf4j
 @Aspect
 @RequiredArgsConstructor
-public class RateLimitAspect implements InitializingBean {
+public class RateLimitAspect {
 
-    private static final String REDIS_KEY = "ratelimit:";
+    public static final String PREFIX_REDIS_KEY = "ratelimit:";
+    private static final String REDIS_LOCK = "ratelimit:redis-lock";
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedissonClient client;
+
     @Before("@annotation(rateLimit)")
-    public synchronized void aspect(JoinPoint point, RateLimit rateLimit) {
-        String mark = rateLimit.mark();
-        if (StrUtil.isBlank(mark)) {
-            return;
+    public void aspect(JoinPoint point, RateLimit rateLimit) {
+        // 使用redis锁
+        RLock lock = client.getLock(REDIS_LOCK);
+        lock.lock();
+        try {
+            // 判断模式
+
+            String mark = rateLimit.mark();
+            if (StrUtil.isBlank(mark)) {
+                return;
+            }
+
+            RRateLimiter ra = client.getRateLimiter(PREFIX_REDIS_KEY + mark);
+            log.info("get ra: {}", mark);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
         }
 
-        String fullName = REDIS_KEY + mark;
-
-        Long increment = redisTemplate.opsForValue().increment(fullName);
-
-        Assert.notNull(increment, "error redis increment value");
-        if (increment > rateLimit.frequency() && Boolean.TRUE.equals(redisTemplate.hasKey(fullName))) {
-            throw new RateLimitException(rateLimit.errorMsg());
-        }
-
-        redisTemplate.expire(fullName, rateLimit.frequencyTime(), rateLimit.frequencyTimeUnit());
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Set<String> keys = redisTemplate.keys(REDIS_KEY + "*");
-        if (CollUtil.isEmpty(keys)) {
-            return;
-        }
-
-        Long delete = redisTemplate.delete(keys);
-        log.info("init remove ratelimit: {}", delete);
-    }
 }

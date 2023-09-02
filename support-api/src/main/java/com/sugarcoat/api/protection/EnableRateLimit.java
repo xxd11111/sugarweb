@@ -1,4 +1,4 @@
-package com.sugarcoat.support.protection.ratelimit.core;
+package com.sugarcoat.api.protection;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,5 +16,9 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EnableRateLimit {
+
+    String[] baseScanPackage() default {};
+
+    RateLimitMode mode() default RateLimitMode.ANNOTATION;
 
 }

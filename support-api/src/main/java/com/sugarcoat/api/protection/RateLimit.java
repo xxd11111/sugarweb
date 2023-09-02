@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2022-11-21
  */
 
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RateLimit {
 

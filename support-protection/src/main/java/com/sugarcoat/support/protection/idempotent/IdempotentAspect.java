@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -23,6 +25,10 @@ public class IdempotentAspect {
 
     private final IdempotentKeyGenerator idempotentKeyGenerator;
 
+    private final RedissonClient client;
+
+    private static final String REDIS_LOCK = "idempotent:redis-lock";
+
     /**
      * 前置通知
      * 1. 拿到方法入参和路径，并解析成幂等redisKey
@@ -33,18 +39,28 @@ public class IdempotentAspect {
      * @param idempotent 注解
      */
     @Before("@annotation(idempotent)")
-    public synchronized void aspect(JoinPoint point, Idempotent idempotent) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        Assert.notNull(requestAttributes, "error request context");
-        HttpServletRequest request = requestAttributes.getRequest();
-        String requestURI = request.getRequestURI();
-        String generator = idempotentKeyGenerator.generator(requestURI, point.getArgs());
+    public void aspect(JoinPoint point, Idempotent idempotent) {
+        RLock lock = client.getLock(REDIS_LOCK);
+        lock.lock();
 
-        Boolean flag = redisTemplate.opsForValue().setIfAbsent(generator, "", idempotent.expire(), idempotent.unit());
-        if (Boolean.TRUE.equals(flag)) {
-            return;
+        try {
+            ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            Assert.notNull(requestAttributes, "error request context");
+            HttpServletRequest request = requestAttributes.getRequest();
+            String requestURI = request.getRequestURI();
+            String generator = idempotentKeyGenerator.generator(requestURI, point.getArgs());
+
+            Boolean flag = redisTemplate.opsForValue().setIfAbsent(generator, "", idempotent.expire(), idempotent.unit());
+            if (Boolean.TRUE.equals(flag)) {
+                return;
+            }
+            throw new Exception(idempotent.errorMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IdempotentException(e.getMessage());
+        } finally {
+            lock.unlock();
         }
-        throw new IdempotentException(idempotent.errorMsg());
     }
 
 }

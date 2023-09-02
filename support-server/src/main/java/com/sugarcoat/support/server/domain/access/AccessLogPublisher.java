@@ -7,7 +7,7 @@ import org.springframework.context.ApplicationEventPublisher;
  * 访问日志发布者
  *
  * @author xxd
- * @date 2022-11-21
+ * @since 2022-11-21
  */
 @AllArgsConstructor
 public class AccessLogPublisher {

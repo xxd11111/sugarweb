@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/25
+ * @since 2023/6/25
  */
 @Data
 public class SecurityProperty {

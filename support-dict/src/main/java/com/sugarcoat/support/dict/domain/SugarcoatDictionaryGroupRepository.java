@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/3/20
+ * @since 2023/3/20
  */
 @Repository
 public interface SugarcoatDictionaryGroupRepository extends SugarcoatRepository<SugarcoatDictionaryGroup> {

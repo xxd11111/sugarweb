@@ -6,7 +6,7 @@ import com.sugarcoat.api.common.HttpCode;
  * 与安全相关异常（安全攻击等问题）
  *
  * @author xxd
- * @date 2022-11-12
+ * @since 2022-11-12
  */
 public class SecurityException extends RuntimeException {
 

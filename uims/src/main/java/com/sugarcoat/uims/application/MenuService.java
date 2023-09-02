@@ -11,7 +11,7 @@ import java.util.List;
  * 菜单服务
  *
  * @author xxd
- * @date 2022-12-29
+ * @since 2022-12-29
  */
 public interface MenuService {
 

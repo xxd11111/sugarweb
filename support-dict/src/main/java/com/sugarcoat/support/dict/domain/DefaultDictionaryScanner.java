@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * 字典扫描
  *
  * @author xxd
- * @date 2023/8/30 23:03
+ * @since 2023/8/30 23:03
  */
 public class DefaultDictionaryScanner implements DictionaryScanner {
     @Override

@@ -11,7 +11,7 @@ import java.util.Objects;
  * 安全日志
  *
  * @author xxd
- * @date 2022-10-27
+ * @since 2022-10-27
  */
 @Getter
 @Setter

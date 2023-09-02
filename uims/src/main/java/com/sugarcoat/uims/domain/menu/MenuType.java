@@ -8,7 +8,7 @@ import lombok.Getter;
  * 菜单类型
  *
  * @author xxd
- * @date 2022-10-25
+ * @since 2022-10-25
  */
 @Getter
 @AllArgsConstructor

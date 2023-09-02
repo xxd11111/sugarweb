@@ -10,7 +10,7 @@ import lombok.Data;
  * 用户分页vo
  *
  * @author xxd
- * @date 2022-12-28
+ * @since 2022-12-28
  */
 @Data
 public class UserPageVo {

@@ -5,7 +5,7 @@ package com.sugarcoat.support.server.application.dto;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/1
+ * @since 2023/6/1
  */
 public class ErrorLogQueryDto {
 

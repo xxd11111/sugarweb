@@ -5,12 +5,13 @@ import lombok.Data;
 import java.util.List;
 
 /**
+ * 字典组信息传输对象
+ *
  * @author xxd
- * @description TODO
- * @date 2023/4/19 23:21
+ * @since  2023/4/19 23:21
  */
 @Data
-public class DictionaryGroupDTO {
+public class DictionaryGroupDto {
 
 	private String id;
 
@@ -18,6 +19,6 @@ public class DictionaryGroupDTO {
 
 	private String groupName;
 
-	private List<DictionaryDTO> dictionaryDTOList;
+	private List<DictionaryDto> dictionaryDtoList;
 
 }

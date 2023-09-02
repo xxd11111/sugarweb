@@ -12,7 +12,7 @@ import java.util.Collection;
  * 枚举校验工具
  *
  * @author xxd
- * @date 2022-11-14
+ * @since 2022-11-14
  */
 public class EnumValidator implements ConstraintValidator<EnumValidate, String> {
 

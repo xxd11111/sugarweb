@@ -10,7 +10,7 @@ import lombok.Data;
  * 用户查询dto
  *
  * @author xxd
- * @date 2023/6/26 23:15
+ * @since 2023/6/26 23:15
  */
 @Data
 public class UserQueryDto {

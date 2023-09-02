@@ -6,7 +6,7 @@ package com.sugarcoat.api.common;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/4/27
+ * @since 2023/4/27
  */
 public enum BooleanFlag implements Flag<String> {
 

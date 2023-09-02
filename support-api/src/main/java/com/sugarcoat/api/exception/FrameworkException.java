@@ -6,7 +6,7 @@ import com.sugarcoat.api.common.HttpCode;
  * 用于框架组件抛出异常（框架初始化问题，框架使用异常）
  *
  * @author xxd
- * @date 2022-11-12
+ * @since 2022-11-12
  */
 public class FrameworkException extends RuntimeException {
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/1
+ * @since 2023/6/1
  */
 @AllArgsConstructor
 public class ErrorLogPublisher {

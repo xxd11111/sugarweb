@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/5/6
+ * @since 2023/5/6
  */
 @RequiredArgsConstructor
 public class DictionaryValidator implements ConstraintValidator<DictionaryValidate, String> {

@@ -14,7 +14,7 @@ import org.mapstruct.factory.Mappers;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/30
+ * @since 2023/6/30
  */
 @Mapper
 public interface RoleMapper {

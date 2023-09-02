@@ -7,7 +7,7 @@ import lombok.Data;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/5/8
+ * @since 2023/5/8
  */
 @Data
 public class ServerApiDto {

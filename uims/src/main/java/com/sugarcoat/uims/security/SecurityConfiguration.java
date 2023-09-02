@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author xxd
  * @description spring security配置
- * @date 2022-10-14
+ * @since 2022-10-14
  */
 @EnableWebSecurity
 @Configuration

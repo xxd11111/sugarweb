@@ -10,7 +10,7 @@ import com.sugarcoat.uims.security.SessionInfo;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/26
+ * @since 2023/6/26
  */
 public interface SessionService {
 

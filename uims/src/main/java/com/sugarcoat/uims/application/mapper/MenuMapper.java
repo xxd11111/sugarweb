@@ -12,7 +12,7 @@ import org.mapstruct.factory.Mappers;
  * 菜单mapper
  *
  * @author xxd
- * @date 2023/6/29 22:32
+ * @since 2023/6/29 22:32
  */
 @Mapper
 public interface MenuMapper {

@@ -13,7 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/3/20
+ * @since 2023/3/20
  */
 @Entity
 @Getter

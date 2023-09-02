@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 /**
  * @author xxd
  * @description 枚举工具类
- * @date 2022-11-22
+ * @since 2022-11-22
  */
 public class EnumUtil {
 

@@ -6,7 +6,7 @@ import lombok.Data;
  * 参数查询指令
  *
  * @author xxd
- * @date 2023/5/6 23:45
+ * @since 2023/5/6 23:45
  */
 @Data
 public class ParamQueryCmd {

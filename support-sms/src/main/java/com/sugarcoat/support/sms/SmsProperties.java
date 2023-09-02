@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/8
+ * @since 2023/6/8
  */
 @Data
 @Component

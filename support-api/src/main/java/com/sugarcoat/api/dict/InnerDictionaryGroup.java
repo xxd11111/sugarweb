@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/4/21
+ * @since 2023/4/21
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

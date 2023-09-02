@@ -5,7 +5,7 @@ package com.sugarcoat.api.sms;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/8
+ * @since 2023/6/8
  */
 public interface MessageTemplate {
 

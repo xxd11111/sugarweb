@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * 启动类
  *
  * @author xxd
- * @date 2022-10-09
+ * @since 2022-10-09
  */
 @EnableRateLimit
 @SpringBootApplication

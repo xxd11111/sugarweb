@@ -15,7 +15,7 @@ import java.io.File;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/9
+ * @since 2023/6/9
  */
 @RequiredArgsConstructor
 public class EmailClientImpl implements EmailClient {

@@ -3,7 +3,7 @@ package com.sugarcoat.support.dict.application;
 import lombok.Data;
 
 @Data
-public class DictionaryDTO {
+public class DictionaryDto {
 
 	private String id;
 

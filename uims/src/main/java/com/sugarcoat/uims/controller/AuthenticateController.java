@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/26
+ * @since 2023/6/26
  */
 @RestController
 @RequestMapping("/authenticate")

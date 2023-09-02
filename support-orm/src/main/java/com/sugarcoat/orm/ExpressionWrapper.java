@@ -8,7 +8,7 @@ import com.querydsl.core.types.dsl.Expressions;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/5/6
+ * @since 2023/5/6
  */
 public class ExpressionWrapper {
 

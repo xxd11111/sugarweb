@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 字典配置类
  *
  * @author xxd
- * @date 2023/8/28 22:59
+ * @since 2023/8/28 22:59
  */
 @ConfigurationProperties(prefix = "sugarcoat.dictionary")
 @ConditionalOnProperty(prefix = "sugarcoat.dictionary", name = "enable", havingValue = "true")

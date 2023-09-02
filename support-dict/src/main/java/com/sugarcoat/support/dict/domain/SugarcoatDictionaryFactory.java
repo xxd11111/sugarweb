@@ -1,7 +1,7 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.support.dict.application.DictionaryGroupDTO;
-import com.sugarcoat.support.dict.application.DictionaryDTO;
+import com.sugarcoat.support.dict.application.DictionaryGroupDto;
+import com.sugarcoat.support.dict.application.DictionaryDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,19 +11,19 @@ import java.util.List;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/4/25
+ * @since 2023/4/25
  */
 public class SugarcoatDictionaryFactory {
 
-	public static SugarcoatDictionaryGroup create(DictionaryGroupDTO dictionaryGroupDTO) {
+	public static SugarcoatDictionaryGroup create(DictionaryGroupDto dictionaryGroupDTO) {
 		SugarcoatDictionaryGroup sugarcoatDictionaryGroup;
 		sugarcoatDictionaryGroup = new SugarcoatDictionaryGroup();
 		sugarcoatDictionaryGroup.setGroupId(dictionaryGroupDTO.getId());
 		sugarcoatDictionaryGroup.setGroupCode(dictionaryGroupDTO.getGroupCode());
 		sugarcoatDictionaryGroup.setGroupName(dictionaryGroupDTO.getGroupName());
-		List<DictionaryDTO> dictionaryDTOList = dictionaryGroupDTO.getDictionaryDTOList();
+		List<DictionaryDto> dictionaryDtoList = dictionaryGroupDTO.getDictionaryDtoList();
 		ArrayList<SugarcoatDictionary> sugarcoatDictionaryList = new ArrayList<>();
-		for (DictionaryDTO dictionaryDTO : dictionaryDTOList) {
+		for (DictionaryDto dictionaryDTO : dictionaryDtoList) {
 			SugarcoatDictionary sugarcoatDictionary = new SugarcoatDictionary();
 			sugarcoatDictionary.setDictionaryId(dictionaryDTO.getId());
 			sugarcoatDictionary.setCode(dictionaryDTO.getCode());

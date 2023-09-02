@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/2
+ * @since 2023/6/2
  */
 @RestController
 @RequestMapping("/server/errorLog")

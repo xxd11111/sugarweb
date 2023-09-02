@@ -7,7 +7,7 @@ import lombok.Data;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/4/26
+ * @since 2023/4/26
  */
 @Data
 public class DictQueryVo {

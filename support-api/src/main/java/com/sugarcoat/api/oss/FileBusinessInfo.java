@@ -7,7 +7,7 @@ import lombok.Data;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/7
+ * @since 2023/6/7
  */
 @Data
 public class FileBusinessInfo {

@@ -7,7 +7,7 @@ import java.util.List;
  * 文件业务绑定服务
  *
  * @author xxd
- * @date 2023/6/2
+ * @since 2023/6/2
  */
 public interface FileBusinessManager {
 

@@ -7,7 +7,7 @@ import lombok.Data;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/7/5
+ * @since 2023/7/5
  */
 @Data
 public class TokenInfo {

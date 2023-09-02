@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * todo 限流注解
  *
  * @author xxd
- * @date 2022-11-21
+ * @since 2022-11-21
  */
 
 @Target({ElementType.METHOD, ElementType.TYPE})

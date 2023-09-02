@@ -1,9 +1,9 @@
 package com.sugarcoat.support.dict.controller;
 
 import com.sugarcoat.support.dict.application.DictionaryService;
-import com.sugarcoat.support.dict.application.DictionaryGroupDto;
-import com.sugarcoat.support.dict.application.DictionaryDto;
-import com.sugarcoat.support.dict.application.DictQueryVo;
+import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryDto;
+import com.sugarcoat.support.dict.application.dto.DictQueryDto;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.common.Result;
@@ -27,14 +27,14 @@ public class DictionaryController {
 	private final DictionaryService dictionaryService;
 
 	@PostMapping("saveDictionaryGroup")
-	public Result<Void> saveDict(@RequestBody DictionaryGroupDto dictionaryGroupDTO) {
-		dictionaryService.save(dictionaryGroupDTO);
+	public Result<Void> saveDict(@RequestBody DictionaryGroupDto dictionaryGroupDto) {
+		dictionaryService.save(dictionaryGroupDto);
 		return Result.ok();
 	}
 
 	@PostMapping("saveDictionary")
-	public Result<Void> saveDictItem(@RequestBody DictionaryDto dictionaryDTO) {
-		dictionaryService.save(dictionaryDTO);
+	public Result<Void> saveDictItem(@RequestBody DictionaryDto dictionaryDto) {
+		dictionaryService.save(dictionaryDto);
 		return Result.ok();
 	}
 
@@ -66,8 +66,8 @@ public class DictionaryController {
 	}
 
 	@GetMapping("findDictionaryPage")
-	public Result<PageData<DictionaryGroupDto>> findDictPage(PageDto pageDto, DictQueryVo queryVo) {
-		return Result.data(dictionaryService.findDictPage(pageDto, queryVo));
+	public Result<PageData<DictionaryGroupDto>> findDictPage(PageDto pageDto, DictQueryDto queryDto) {
+		return Result.data(dictionaryService.findDictPage(pageDto, queryDto));
 	}
 
 }

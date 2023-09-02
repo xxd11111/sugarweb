@@ -1,11 +1,12 @@
 package com.sugarcoat.support.dict.domain;
 
 import com.sugarcoat.api.dict.Dictionary;
-import com.sugarcoat.api.dict.DictionaryManager;
 import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.api.dict.DictionaryManager;
 import com.sugarcoat.api.exception.FrameworkException;
 import com.sugarcoat.api.exception.ServiceException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -64,6 +65,14 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
         QSugarcoatDictionaryGroup qDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
         return dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode))
                 .map(sugarcoatDictionaryGroup -> sugarcoatDictionaryGroup.getDictionary(dictionaryCode));
+    }
+
+    @Override
+    public Collection<DictionaryGroup> getAll() {
+        Iterable<SugarcoatDictionaryGroup> dictionaryGroups = dictionaryGroupRepository.findAll();
+        ArrayList<DictionaryGroup> result = new ArrayList<>();
+        dictionaryGroups.forEach(result::add);
+        return result;
     }
 
     @Override

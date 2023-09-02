@@ -1,5 +1,6 @@
 package com.sugarcoat.api.dict;
 
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -41,6 +42,13 @@ public interface DictionaryManager {
      * @return 字典
      */
     Optional<Dictionary> getDictionary(String groupCode, String dictionaryCode);
+
+    /**
+     * 获取所有字典组字典
+     *
+     * @return 字典组集合
+     */
+    Collection<DictionaryGroup> getAll();
 
     /**
      * 根据字典组编码获取字典组

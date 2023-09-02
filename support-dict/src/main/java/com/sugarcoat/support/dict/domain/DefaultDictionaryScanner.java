@@ -6,6 +6,7 @@ import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.InnerDictionary;
 import com.sugarcoat.api.dict.InnerDictionaryGroup;
 import com.sugarcoat.api.exception.FrameworkException;
+import com.sugarcoat.support.dict.DictionaryProperties;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -22,14 +23,23 @@ import java.util.regex.Pattern;
  * @since 2023/8/30 23:03
  */
 public class DefaultDictionaryScanner implements DictionaryScanner {
+
+    /**
+     * 扫描路径 @InnerDictionary
+     */
+    private final String scanPackage;
+
+    public DefaultDictionaryScanner(DictionaryProperties properties) {
+        String scanPackage = properties.getScanPackage();
+        if (StrUtil.isEmpty(scanPackage)) {
+            //todo 为null或者empty获取当前应用启动路径
+        }
+        this.scanPackage = scanPackage;
+    }
+
     @Override
     public List<SugarcoatDictionaryGroup> scan() {
-        String scanPackage = "";
-        //无效路径时处理
-        if (!packageValidate(scanPackage)) {
-            //获取当前应用启动路径
-            //or 抛出异常
-        }
+        //获取包下class
         Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(scanPackage, InnerDictionaryGroup.class);
         List<SugarcoatDictionaryGroup> dictGroups = new ArrayList<>();
         for (Class<?> clazz : classes) {
@@ -89,12 +99,6 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
         }
         return dictGroups;
     }
-
-    private boolean packageValidate(String scanPackage) {
-        //todo
-        return true;
-    }
-
 
     private static final Pattern UNDERLINE_PATTERN = Pattern.compile("_([a-z])");
 

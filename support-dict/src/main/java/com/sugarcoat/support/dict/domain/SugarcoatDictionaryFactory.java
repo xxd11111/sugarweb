@@ -1,13 +1,13 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.support.dict.application.DictionaryGroupDto;
-import com.sugarcoat.support.dict.application.DictionaryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 字典静态工厂
+ * 字典静态工厂 todo 优化
  *
  * @author xxd
  * @version 1.0

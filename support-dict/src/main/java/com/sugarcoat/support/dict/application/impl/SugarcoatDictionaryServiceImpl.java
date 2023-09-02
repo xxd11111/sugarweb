@@ -2,9 +2,9 @@ package com.sugarcoat.support.dict.application.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.support.dict.application.DictQueryVo;
-import com.sugarcoat.support.dict.application.DictionaryDto;
-import com.sugarcoat.support.dict.application.DictionaryGroupDto;
+import com.sugarcoat.support.dict.application.dto.DictQueryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
@@ -89,18 +89,18 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	}
 
 	@Override
-	public PageData<DictionaryGroupDto> findDictPage(PageDto pageDto, DictQueryVo queryVO) {
+	public PageData<DictionaryGroupDto> findDictPage(PageDto pageDto, DictQueryDto queryDto) {
 		QSugarcoatDictionaryGroup dictGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
 		// 构造分页，按照创建时间降序
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, dictGroup.groupCode.getMetadata().getName());
 		// 条件查询
 		BooleanExpression expression = Expressions.TRUE;
-		if (queryVO.getGroupName() != null && !queryVO.getGroupName().isEmpty()) {
-			expression.and(dictGroup.groupName.like(queryVO.getGroupName(), '/'));
+		if (queryDto.getGroupName() != null && !queryDto.getGroupName().isEmpty()) {
+			expression.and(dictGroup.groupName.like(queryDto.getGroupName(), '/'));
 		}
-		if (queryVO.getGroupCode() != null && !queryVO.getGroupCode().isEmpty()) {
-			expression.and(dictGroup.groupCode.eq(queryVO.getGroupCode()));
+		if (queryDto.getGroupCode() != null && !queryDto.getGroupCode().isEmpty()) {
+			expression.and(dictGroup.groupCode.eq(queryDto.getGroupCode()));
 		}
 		Page<DictionaryGroupDto> page = sugarcoatDictionaryGroupRepository.findAll(expression, pageRequest)
 				.map(this::getDictDTO);

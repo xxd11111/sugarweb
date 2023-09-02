@@ -1,7 +1,5 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.api.dict.DictionaryGroup;
-
 import java.util.List;
 
 /**

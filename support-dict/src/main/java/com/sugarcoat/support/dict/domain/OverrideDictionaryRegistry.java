@@ -1,6 +1,5 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.api.dict.DictionaryManager;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -13,8 +12,6 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 public class OverrideDictionaryRegistry implements DictionaryRegistry {
-
-    private final DictionaryManager dictionaryManager;
 
     @Override
     public void register(List<SugarcoatDictionaryGroup> dictionaryGroups) {

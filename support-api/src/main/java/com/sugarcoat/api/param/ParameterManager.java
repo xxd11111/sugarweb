@@ -9,7 +9,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 2023/5/31
  */
-public interface ParameterManager<T extends Parameter> {
+public interface ParameterManager {
 
 	String getValue(String code);
 
@@ -17,6 +17,6 @@ public interface ParameterManager<T extends Parameter> {
 
 	void remove(String code);
 
-	Optional<T> getParameter(String code);
+	Optional<Parameter> getParameter(String code);
 
 }

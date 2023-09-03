@@ -4,10 +4,14 @@ import cn.hutool.core.collection.CollUtil;
 import com.sugarcoat.api.dict.Dictionary;
 import com.sugarcoat.api.dict.DictionaryGroup;
 import com.sugarcoat.support.dict.DictionaryProperties;
+import org.redisson.api.RKeys;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * 字典缓存管理
@@ -15,7 +19,7 @@ import java.util.*;
  * @author xxd
  * @since 2023/9/2 22:45
  */
-public class DefaultDictionaryCacheManager implements DictionaryCacheManager{
+public class DefaultDictionaryCacheManager implements DictionaryCacheManager {
 
     private final String cachePrefix;
 
@@ -26,12 +30,14 @@ public class DefaultDictionaryCacheManager implements DictionaryCacheManager{
         this.redissonClient = redissonClient;
     }
 
+    @Override
     public void put(String groupCode, String dictionaryCode, String dictionaryName) {
         RMap<String, String> map = redissonClient.getMap(groupCode);
         map.put(dictionaryCode, dictionaryName);
     }
 
-    public void put(List<DictionaryGroup> dictionaryGroups) {
+    @Override
+    public void put(Collection<DictionaryGroup> dictionaryGroups) {
         if (CollUtil.isEmpty(dictionaryGroups)) {
             return;
         }
@@ -46,6 +52,7 @@ public class DefaultDictionaryCacheManager implements DictionaryCacheManager{
         }
     }
 
+    @Override
     public Optional<String> get(String groupCode, String dictionaryCode) {
         String cacheKey = getCacheKey(groupCode);
         RMap<String, String> map = redissonClient.getMap(cacheKey);
@@ -53,8 +60,18 @@ public class DefaultDictionaryCacheManager implements DictionaryCacheManager{
         return Optional.of(dictionaryName);
     }
 
+    @Override
+    public void clean() {
+        RKeys keys = redissonClient.getKeys();
+        keys.deleteByPattern(getKeyPattern());
+    }
+
     private String getCacheKey(String str) {
         return cachePrefix + str;
+    }
+
+    private String getKeyPattern() {
+        return cachePrefix + "*";
     }
 
 

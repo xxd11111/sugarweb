@@ -40,12 +40,6 @@ public class SugarcoatDictionary implements Dictionary {
     private String name;
 
     /**
-     * 是否系统内置
-     */
-    @Column(length = 32)
-    private BooleanFlag innerFlag;
-
-    /**
      * 组id
      */
     @Column(length = 32, name = "group_id", insertable = false, updatable = false)

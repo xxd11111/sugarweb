@@ -2,7 +2,7 @@ package com.sugarcoat.support.dict.domain;
 
 import com.sugarcoat.api.dict.DictionaryGroup;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -25,7 +25,7 @@ public interface DictionaryCacheManager {
      * 保存缓存
      * @param dictionaryGroups 字典组列表
      */
-    void put(List<DictionaryGroup> dictionaryGroups);
+    void put(Collection<DictionaryGroup> dictionaryGroups);
 
     /**
      * 获取字典
@@ -34,5 +34,10 @@ public interface DictionaryCacheManager {
      * @return 字典名称
      */
     Optional<String> get(String groupCode, String dictionaryCode);
+
+    /**
+     * 清空字典缓存
+     */
+    void clean();
 
 }

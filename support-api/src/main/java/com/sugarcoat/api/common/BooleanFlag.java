@@ -11,13 +11,13 @@ package com.sugarcoat.api.common;
 public enum BooleanFlag implements Flag<String> {
 
     /**
-     * 是
-     */
-    TRUE("1"),
-    /**
      * 否
      */
-    FALSE("0");
+    FALSE("0"),
+    /**
+     * 是
+     */
+    TRUE("1");
 
     @Override
     public String getCode() {

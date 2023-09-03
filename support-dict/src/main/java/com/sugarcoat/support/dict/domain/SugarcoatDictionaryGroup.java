@@ -1,5 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
+import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.Dictionary;
 import com.sugarcoat.api.dict.DictionaryGroup;
 import com.sugarcoat.orm.EntityExt;
@@ -35,6 +36,13 @@ public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGro
 
 	@Column(length = 32)
 	private String groupName;
+
+	/**
+	 * 是否系统内置
+	 */
+	@Column(length = 1)
+	@Enumerated(EnumType.ORDINAL)
+	private BooleanFlag innerFlag;
 
 	@OneToMany(mappedBy = "dictionaryId", cascade = CascadeType.ALL)
 	@ToString.Exclude

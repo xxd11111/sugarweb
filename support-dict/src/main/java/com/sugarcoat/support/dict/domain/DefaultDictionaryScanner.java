@@ -33,6 +33,7 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
         String scanPackage = properties.getScanPackage();
         if (StrUtil.isEmpty(scanPackage)) {
             //todo 为null或者empty获取当前应用启动路径
+            throw new FrameworkException("not setting properties dictionary.scanPackage!");
         }
         this.scanPackage = scanPackage;
     }
@@ -53,6 +54,7 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
             }
             //字典组对象创建
             SugarcoatDictionaryGroup dictGroup = new SugarcoatDictionaryGroup();
+            dictGroup.setInnerFlag(BooleanFlag.TRUE);
             dictGroup.setGroupCode(name);
             dictGroup.setGroupName(name);
             //解析枚举获取field信息
@@ -75,13 +77,13 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
                             dictName = (String) field.get(enumConstant);
                         }
                     } catch (IllegalAccessException e) {
-                        throw new FrameworkException(String.format("字典项数据获取异常,请检查字典枚举配置，class:{}", clazz.getName()));
+                        throw new FrameworkException(StrUtil.format("字典项数据获取异常,请检查字典枚举配置，class:{}", clazz.getName()));
                     }
 
                 }
                 //缺省设置，字典编码缺失抛异常
                 if (dictCode == null || dictCode.isEmpty()) {
-                    throw new FrameworkException(String.format("字典编码缺失,请检查字典枚举配置，class:{}", clazz.getName()));
+                    throw new FrameworkException(StrUtil.format("字典编码缺失,请检查字典枚举配置，class:{}", clazz.getName()));
                 }
                 //缺省设置，字典编码缺失抛异常
                 if (dictName == null || dictName.isEmpty()) {
@@ -89,7 +91,6 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
                 }
                 //字典项对象创建
                 SugarcoatDictionary dict = new SugarcoatDictionary();
-                dict.setInnerFlag(BooleanFlag.TRUE);
                 dict.setName(dictName);
                 dict.setCode(dictCode);
                 dicts.add(dict);
@@ -121,9 +122,10 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
     }
 
     /**
+     * 将驼峰转为下划线
+     *
      * @param str 字符串
-     * @return java.lang.String
-     * @Description 将驼峰转为下划线
+     * @return 下划线字符串
      */
     public static String humpToUnderline(String str) {
         //匹配 A-Z

@@ -8,6 +8,6 @@ import org.springframework.boot.ApplicationRunner;
  * @author xxd
  * @since 2023/9/2 18:40
  */
-public interface DictionaryInit extends ApplicationRunner {
+public interface DictionaryRunner extends ApplicationRunner {
 
 }

@@ -1,15 +1,16 @@
 package com.sugarcoat.support.dict.domain;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.Dictionary;
 import com.sugarcoat.api.dict.DictionaryGroup;
 import com.sugarcoat.api.dict.DictionaryManager;
 import com.sugarcoat.api.exception.FrameworkException;
 import com.sugarcoat.api.exception.ServiceException;
+import com.sugarcoat.orm.ExpressionWrapper;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -69,10 +70,7 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
 
     @Override
     public Collection<DictionaryGroup> getAll() {
-        Iterable<SugarcoatDictionaryGroup> dictionaryGroups = dictionaryGroupRepository.findAll();
-        ArrayList<DictionaryGroup> result = new ArrayList<>();
-        dictionaryGroups.forEach(result::add);
-        return result;
+        return getAll(null);
     }
 
     @Override
@@ -95,6 +93,18 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
         return dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode))
                 .map(sugarcoatDictionaryGroup -> sugarcoatDictionaryGroup.existDictionary(dictionaryCode))
                 .orElse(false);
+    }
+
+    public Collection<DictionaryGroup> getAll(BooleanFlag innerFlag) {
+        QSugarcoatDictionaryGroup sugarcoatDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
+        BooleanExpression expression =  Expressions.TRUE;
+        if (Objects.nonNull(innerFlag)){
+            expression.and(sugarcoatDictionaryGroup.innerFlag.eq(innerFlag));
+        }
+        Iterable<SugarcoatDictionaryGroup> dictionaryGroups = dictionaryGroupRepository.findAll(expression);
+        ArrayList<DictionaryGroup> result = new ArrayList<>();
+        dictionaryGroups.forEach(result::add);
+        return result;
     }
 
 }

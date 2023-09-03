@@ -124,6 +124,13 @@ sugarcoat:
     email: ""
     license: MIT
     license-url: ""
+  dictionary:
+    enable: true
+    scanPackage: com.sugarcoat.uims
+    registerStrategy: OVERRIDE
+    enableCache: true
+    cachePrefix: "sugarcoat:dict:"
+
 
 
 

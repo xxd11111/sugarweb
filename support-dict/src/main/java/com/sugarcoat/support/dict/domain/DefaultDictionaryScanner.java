@@ -32,7 +32,6 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
     public DefaultDictionaryScanner(DictionaryProperties properties) {
         String scanPackage = properties.getScanPackage();
         if (StrUtil.isEmpty(scanPackage)) {
-            //todo 为null或者empty获取当前应用启动路径
             throw new FrameworkException("not setting properties dictionary.scanPackage!");
         }
         this.scanPackage = scanPackage;

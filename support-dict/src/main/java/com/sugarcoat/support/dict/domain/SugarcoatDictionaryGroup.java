@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * 字典组 todo 补充是否系统内置
+ * 字典组
  *
  * @author xxd
  * @since 2023/4/19 23:04

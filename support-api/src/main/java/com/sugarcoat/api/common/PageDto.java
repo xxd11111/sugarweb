@@ -8,7 +8,7 @@ import lombok.Data;
  * 分页查询条件
  *
  * @author xxd
- * @date 2022-11-13
+ * @since 2022-11-13
  */
 @Data
 public class PageDto {

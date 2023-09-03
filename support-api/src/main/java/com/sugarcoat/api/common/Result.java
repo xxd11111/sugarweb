@@ -4,7 +4,7 @@ package com.sugarcoat.api.common;
  * 响应对象
  *
  * @author xxd
- * @date 2022-10-27
+ * @since 2022-10-27
  */
 public class Result<T> {
 

@@ -12,26 +12,26 @@ import java.util.Optional;
  * 字典帮助类
  *
  * @author xxd
- * @date 2022-11-18
+ * @since 2022-11-18
  */
 public class DictHelper {
 
 	private DictHelper() {
 	}
 
-	private static DictionaryManager<DictionaryGroup<Dictionary>, Dictionary> getInstance() {
+	private static DictionaryManager getInstance() {
 		return DictHelperInner.DICTIONARY_CLIENT;
 	}
 
-	public static Optional<? extends Dictionary> getDictionary(String groupCode, String dictionaryCode) {
+	public static Optional<Dictionary> getDictionary(String groupCode, String dictionaryCode) {
 		return getInstance().getDictionary(groupCode, dictionaryCode);
 	}
 
-	public static Collection<? extends Dictionary> getDictionary(String groupCode) {
-		return getInstance().getDictionary(groupCode);
+	public static Optional<DictionaryGroup> getDictionary(String groupCode) {
+		return getInstance().getDictionaryGroup(groupCode);
 	}
 
-	public static Optional<DictionaryGroup<Dictionary>> getDictionaryGroup(String groupCode) {
+	public static Optional<DictionaryGroup> getDictionaryGroup(String groupCode) {
 		return getInstance().getDictionaryGroup(groupCode);
 	}
 
@@ -45,7 +45,7 @@ public class DictHelper {
 
 	private static class DictHelperInner {
 
-		private final static DictionaryManager<DictionaryGroup<Dictionary>, Dictionary> DICTIONARY_CLIENT = BeanUtil.getBean(DictionaryManager.class);
+		private final static DictionaryManager DICTIONARY_CLIENT = BeanUtil.getBean(DictionaryManager.class);
 
 	}
 

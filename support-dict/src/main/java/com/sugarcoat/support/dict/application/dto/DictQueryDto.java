@@ -1,16 +1,16 @@
-package com.sugarcoat.support.dict.application;
+package com.sugarcoat.support.dict.application.dto;
 
 import lombok.Data;
 
 /**
- * TODO
+ * 字典查询对象
  *
  * @author xxd
  * @version 1.0
- * @date 2023/4/26
+ * @since 2023/4/26
  */
 @Data
-public class DictQueryVo {
+public class DictQueryDto {
 
 	private String groupCode;
 

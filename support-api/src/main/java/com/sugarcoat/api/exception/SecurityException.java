@@ -1,12 +1,13 @@
 package com.sugarcoat.api.exception;
 
+import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
 /**
  * 与安全相关异常（安全攻击等问题）
  *
  * @author xxd
- * @date 2022-11-12
+ * @since 2022-11-12
  */
 public class SecurityException extends RuntimeException {
 
@@ -27,7 +28,7 @@ public class SecurityException extends RuntimeException {
     }
 
     public SecurityException(String message, Object... objects) {
-        this.message = String.format(message, objects);
+        this.message = StrUtil.format(message, objects);
     }
 
     public SecurityException(HttpCode httpCode) {

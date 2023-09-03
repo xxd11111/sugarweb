@@ -13,7 +13,7 @@ import java.util.Set;
  * 用户vo
  *
  * @author xxd
- * @date 2023/6/26 21:41
+ * @since 2023/6/26 21:41
  */
 @Data
 public class UserVo {

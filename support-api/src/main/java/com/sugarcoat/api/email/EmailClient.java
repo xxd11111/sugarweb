@@ -5,7 +5,7 @@ package com.sugarcoat.api.email;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/9
+ * @since 2023/6/9
  */
 public interface EmailClient {
 

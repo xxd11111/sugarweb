@@ -6,7 +6,7 @@ import lombok.Data;
  * 密码登录
  *
  * @author xxd
- * @date 2023/6/26 21:53
+ * @since 2023/6/26 21:53
  */
 @Data
 public class PasswordLoginDto {

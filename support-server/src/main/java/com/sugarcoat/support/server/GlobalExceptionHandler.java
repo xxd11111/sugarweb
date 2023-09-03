@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * @author xxd
  * @description 全局异常拦截
- * @date 2022-10-27
+ * @since 2022-10-27
  */
 
 @Slf4j

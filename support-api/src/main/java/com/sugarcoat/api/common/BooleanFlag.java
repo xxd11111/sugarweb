@@ -6,18 +6,18 @@ package com.sugarcoat.api.common;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/4/27
+ * @since 2023/4/27
  */
 public enum BooleanFlag implements Flag<String> {
 
     /**
-     * 是
-     */
-    TRUE("1"),
-    /**
      * 否
      */
-    FALSE("0");
+    FALSE("0"),
+    /**
+     * 是
+     */
+    TRUE("1");
 
     @Override
     public String getCode() {

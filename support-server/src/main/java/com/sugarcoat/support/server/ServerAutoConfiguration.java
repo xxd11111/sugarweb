@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * 自动配置
  *
  * @author xxd
- * @date 2023/5/8 23:28
+ * @since 2023/5/8 23:28
  */
 @Configuration(proxyBeanMethods = false)
 @EntityScan

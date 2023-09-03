@@ -1,5 +1,6 @@
 package com.sugarcoat.api.exception;
 
+import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
 public class IdempotentException extends RuntimeException {
@@ -21,7 +22,7 @@ public class IdempotentException extends RuntimeException {
     }
 
     public IdempotentException(String message, Object... objects) {
-        this.message = String.format(message, objects);
+        this.message = StrUtil.format(message, objects);
     }
 
     public IdempotentException(HttpCode httpCode) {

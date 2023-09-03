@@ -3,25 +3,33 @@ package com.sugarcoat.support.dict;
 import com.sugarcoat.api.dict.DictionaryManager;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.impl.SugarcoatDictionaryServiceImpl;
-import com.sugarcoat.support.dict.domain.SugarcoatDictionaryGroupRepository;
-import com.sugarcoat.support.dict.domain.SugarcoatDictionaryManager;
-import com.sugarcoat.support.dict.domain.SugarcoatDictionaryRepository;
+import com.sugarcoat.support.dict.domain.*;
+import lombok.RequiredArgsConstructor;
+import org.redisson.api.RedissonClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 字典自动配置
  *
  * @author xxd
- * @date 2022-11-21
+ * @since 2022-11-21
  */
 @EntityScan
 @EnableJpaRepositories
-@Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(DictionaryProperties.class)
 public class DictionaryAutoConfiguration {
+
+    @Autowired
+    private DictionaryProperties dictionaryProperties;
 
     @Bean
     @ConditionalOnMissingBean
@@ -32,8 +40,38 @@ public class DictionaryAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DictionaryManager dictionaryClient(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
+    public DictionaryManager dictionaryManager(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
         return new SugarcoatDictionaryManager(sugarcoatDictionaryGroupRepository);
     }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DictionaryScanner dictionaryScanner() {
+        return new DefaultDictionaryScanner(dictionaryProperties);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+//    @ConditionalOnBean({RedissonClient.class})
+    public DictionaryCacheManager dictionaryCacheManager(RedissonClient redissonClient) {
+        return new DefaultDictionaryCacheManager(dictionaryProperties, redissonClient);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+//    @ConditionalOnBean({DictionaryProperties.class, DictionaryScanner.class, DictionaryManager.class, DictionaryCacheManager.class})
+    public DictionaryRunner dictionaryRunner(DictionaryScanner dictionaryScanner,
+                                           DictionaryManager dictionaryManager,
+                                           DictionaryCacheManager dictionaryCacheManager) {
+
+        Map<String, DictionaryRegistry> dictionaryRegistryMap = new HashMap<>();
+        dictionaryRegistryMap.put(DictionaryRegistryStrategy.DISABLE.name(), new DisableDictionaryRegistry());
+        dictionaryRegistryMap.put(DictionaryRegistryStrategy.INSERT.name(), new InsertDictionaryRegistry(dictionaryManager));
+        dictionaryRegistryMap.put(DictionaryRegistryStrategy.MERGE.name(), new MergeDictionaryRegistry(dictionaryManager));
+        dictionaryRegistryMap.put(DictionaryRegistryStrategy.OVERRIDE.name(), new OverrideDictionaryRegistry(dictionaryManager));
+
+        return new DefaultDictionaryRunner(dictionaryProperties, dictionaryScanner, dictionaryRegistryMap, dictionaryManager, dictionaryCacheManager);
+    }
+
 
 }

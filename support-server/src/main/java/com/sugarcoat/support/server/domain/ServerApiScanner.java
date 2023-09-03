@@ -17,7 +17,7 @@ import java.util.Set;
  * 接口扫描者
  *
  * @author xxd
- * @date 2022-11-17
+ * @since 2022-11-17
  */
 @Slf4j
 public class ServerApiScanner {

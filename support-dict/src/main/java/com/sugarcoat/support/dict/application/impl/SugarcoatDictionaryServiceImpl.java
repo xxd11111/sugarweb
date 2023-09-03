@@ -2,9 +2,9 @@ package com.sugarcoat.support.dict.application.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.support.dict.application.DictQueryVo;
-import com.sugarcoat.support.dict.application.DictionaryDTO;
-import com.sugarcoat.support.dict.application.DictionaryGroupDTO;
+import com.sugarcoat.support.dict.application.dto.DictQueryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
@@ -25,7 +25,7 @@ import java.util.Set;
  * 默认实现字典服务
  *
  * @author xxd
- * @date 2023/4/22 10:07
+ * @since 2023/4/22 10:07
  */
 @Service
 @RequiredArgsConstructor
@@ -36,19 +36,19 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	private final SugarcoatDictionaryRepository sugarcoatDictionaryRepository;
 
 	@Override
-	public void save(DictionaryGroupDTO dictionaryGroupDTO) {
-		SugarcoatDictionaryGroup sugarcoatDictionaryGroup = SugarcoatDictionaryFactory.create(dictionaryGroupDTO);
+	public void save(DictionaryGroupDto dictionaryGroupDto) {
+		SugarcoatDictionaryGroup sugarcoatDictionaryGroup = SugarcoatDictionaryFactory.create(dictionaryGroupDto);
 		sugarcoatDictionaryGroupRepository.save(sugarcoatDictionaryGroup);
 	}
 
 	@Override
-	public void save(DictionaryDTO dictionaryDTO) {
+	public void save(DictionaryDto dictionaryDto) {
 		SugarcoatDictionary dictionary = new SugarcoatDictionary();
 		SugarcoatDictionaryGroup sugarcoatDictionaryGroup = sugarcoatDictionaryGroupRepository
-				.findById(dictionaryDTO.getGroupId()).orElseThrow(() -> new ValidateException("dict not find"));
-		dictionary.setDictionaryId(dictionaryDTO.getId());
-		dictionary.setCode(dictionaryDTO.getCode());
-		dictionary.setName(dictionaryDTO.getName());
+				.findById(dictionaryDto.getGroupId()).orElseThrow(() -> new ValidateException("dict not find"));
+		dictionary.setDictionaryId(dictionaryDto.getId());
+		dictionary.setCode(dictionaryDto.getCode());
+		dictionary.setName(dictionaryDto.getName());
 		dictionary.setDictionaryGroup(sugarcoatDictionaryGroup);
 		sugarcoatDictionaryRepository.save(dictionary);
 	}
@@ -64,10 +64,10 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	}
 
 	@Override
-	public DictionaryDTO findByDictionaryId(String dictItemId) {
+	public DictionaryDto findByDictionaryId(String dictItemId) {
 		SugarcoatDictionary sugarcoatDictionary = sugarcoatDictionaryRepository.findById(dictItemId)
 				.orElseThrow(() -> new ValidateException("dictItem not find"));
-		DictionaryDTO dictionaryDTO = new DictionaryDTO();
+		DictionaryDto dictionaryDTO = new DictionaryDto();
 		dictionaryDTO.setId(sugarcoatDictionary.getDictionaryId());
 		dictionaryDTO.setCode(sugarcoatDictionary.getCode());
 		dictionaryDTO.setName(sugarcoatDictionary.getCode());
@@ -75,53 +75,53 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	}
 
 	@Override
-	public DictionaryGroupDTO findByGroupId(String groupId) {
+	public DictionaryGroupDto findByGroupId(String groupId) {
 		SugarcoatDictionaryGroup sugarcoatDictionaryGroup = sugarcoatDictionaryGroupRepository.findById(groupId)
 				.orElseThrow(() -> new ValidateException("dict not find"));
 		return getDictDTO(sugarcoatDictionaryGroup);
 	}
 
 	@Override
-	public DictionaryGroupDTO findByGroupCode(String groupCode) {
+	public DictionaryGroupDto findByGroupCode(String groupCode) {
 		SugarcoatDictionaryGroup sugarcoatDictionaryGroup = sugarcoatDictionaryGroupRepository.findById(groupCode)
 				.orElseThrow(() -> new ValidateException("dict not find"));
 		return getDictDTO(sugarcoatDictionaryGroup);
 	}
 
 	@Override
-	public PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVo queryVO) {
+	public PageData<DictionaryGroupDto> findDictPage(PageDto pageDto, DictQueryDto queryDto) {
 		QSugarcoatDictionaryGroup dictGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
 		// 构造分页，按照创建时间降序
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, dictGroup.groupCode.getMetadata().getName());
 		// 条件查询
 		BooleanExpression expression = Expressions.TRUE;
-		if (queryVO.getGroupName() != null && !queryVO.getGroupName().isEmpty()) {
-			expression.and(dictGroup.groupName.like(queryVO.getGroupName(), '/'));
+		if (queryDto.getGroupName() != null && !queryDto.getGroupName().isEmpty()) {
+			expression.and(dictGroup.groupName.like(queryDto.getGroupName(), '/'));
 		}
-		if (queryVO.getGroupCode() != null && !queryVO.getGroupCode().isEmpty()) {
-			expression.and(dictGroup.groupCode.eq(queryVO.getGroupCode()));
+		if (queryDto.getGroupCode() != null && !queryDto.getGroupCode().isEmpty()) {
+			expression.and(dictGroup.groupCode.eq(queryDto.getGroupCode()));
 		}
-		Page<DictionaryGroupDTO> page = sugarcoatDictionaryGroupRepository.findAll(expression, pageRequest)
+		Page<DictionaryGroupDto> page = sugarcoatDictionaryGroupRepository.findAll(expression, pageRequest)
 				.map(this::getDictDTO);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
 	}
 
-	private DictionaryGroupDTO getDictDTO(SugarcoatDictionaryGroup dict) {
-		Collection<SugarcoatDictionary> sugarcoatDictionaryList = dict.getDictionaries();
-		List<DictionaryDTO> dictionaryDTOList = new ArrayList<>();
+	private DictionaryGroupDto getDictDTO(SugarcoatDictionaryGroup dict) {
+		Collection<SugarcoatDictionary> sugarcoatDictionaryList = dict.getSugarcoatDictionaries();
+		List<DictionaryDto> dictionaryDtoList = new ArrayList<>();
 		for (SugarcoatDictionary sugarcoatDictionary : sugarcoatDictionaryList) {
-			DictionaryDTO dictionaryDTO = new DictionaryDTO();
+			DictionaryDto dictionaryDTO = new DictionaryDto();
 			dictionaryDTO.setId(sugarcoatDictionary.getDictionaryId());
 			dictionaryDTO.setCode(sugarcoatDictionary.getCode());
 			dictionaryDTO.setName(sugarcoatDictionary.getName());
-			dictionaryDTOList.add(dictionaryDTO);
+			dictionaryDtoList.add(dictionaryDTO);
 		}
-		DictionaryGroupDTO dictionaryGroupDTO = new DictionaryGroupDTO();
+		DictionaryGroupDto dictionaryGroupDTO = new DictionaryGroupDto();
 		dictionaryGroupDTO.setId(dict.getGroupId());
 		dictionaryGroupDTO.setGroupCode(dict.getGroupCode());
 		dictionaryGroupDTO.setGroupName(dict.getGroupName());
-		dictionaryGroupDTO.setDictionaryDTOList(dictionaryDTOList);
+		dictionaryGroupDTO.setDictionaryDtoList(dictionaryDtoList);
 		return dictionaryGroupDTO;
 	}
 

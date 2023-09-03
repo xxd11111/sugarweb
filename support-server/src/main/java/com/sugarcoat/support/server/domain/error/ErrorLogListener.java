@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.Async;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/1
+ * @since 2023/6/1
  */
 @Async
 @AllArgsConstructor

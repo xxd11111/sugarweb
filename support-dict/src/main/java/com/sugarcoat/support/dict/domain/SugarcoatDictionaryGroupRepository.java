@@ -4,12 +4,12 @@ import com.sugarcoat.orm.SugarcoatRepository;
 import org.springframework.stereotype.Repository;
 
 /**
+ * 字典组仓库
+ *
  * @author xxd
  * @version 1.0
- * @description: 字典仓库
- * @date 2023/3/20
+ * @since 2023/3/20
  */
 @Repository
 public interface SugarcoatDictionaryGroupRepository extends SugarcoatRepository<SugarcoatDictionaryGroup> {
-
 }

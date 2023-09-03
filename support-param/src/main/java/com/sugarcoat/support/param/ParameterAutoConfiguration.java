@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * 参数自动配置
  *
  * @author xxd
- * @date 2023/5/7 0:00
+ * @since 2023/5/7 0:00
  */
 @Configuration
 @EnableJpaRepositories

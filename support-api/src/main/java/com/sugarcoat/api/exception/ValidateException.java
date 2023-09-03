@@ -1,12 +1,13 @@
 package com.sugarcoat.api.exception;
 
+import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
 /**
  * 校验异常（接口层输入不符合规范，过滤，与业务无关）
  *
  * @author xxd
- * @date 2022-11-12
+ * @since 2022-11-12
  */
 public class ValidateException extends RuntimeException {
 
@@ -27,7 +28,7 @@ public class ValidateException extends RuntimeException {
     }
 
     public ValidateException(String message, Object... objects) {
-        this.message = String.format(message, objects);
+        this.message = StrUtil.format(message, objects);
     }
 
     public ValidateException(HttpCode httpCode) {

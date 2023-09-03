@@ -1,12 +1,13 @@
 package com.sugarcoat.api.exception;
 
+import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
 /**
  * 服务器异常（定时任务，中间件异常，磁盘问题）若细分可补充
  *
  * @author xxd
- * @date 2022-11-12
+ * @since 2022-11-12
  */
 public class ServerException extends RuntimeException {
 
@@ -27,7 +28,7 @@ public class ServerException extends RuntimeException {
 	}
 
 	public ServerException(String message, Object... objects) {
-		this.message = String.format(message, objects);
+		this.message = StrUtil.format(message, objects);
 	}
 
 	public ServerException(HttpCode httpCode) {

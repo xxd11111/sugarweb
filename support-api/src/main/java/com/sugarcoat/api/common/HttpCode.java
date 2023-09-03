@@ -3,7 +3,7 @@ package com.sugarcoat.api.common;
 /**
  * @author xxd
  * @description http常用code
- * @date 2022-11-13
+ * @since 2022-11-13
  */
 public enum HttpCode implements ErrorCode {
     OK(200, "请求成功"),

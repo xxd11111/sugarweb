@@ -9,7 +9,7 @@ import java.util.Collection;
  * 角色详情vo
  *
  * @author xxd
- * @date 2023/6/26 21:58
+ * @since 2023/6/26 21:58
  */
 @Data
 public class RoleVo {

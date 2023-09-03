@@ -1,12 +1,13 @@
 package com.sugarcoat.api.exception;
 
+import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
 /**
  * 用于框架组件抛出异常（框架初始化问题，框架使用异常）
  *
  * @author xxd
- * @date 2022-11-12
+ * @since 2022-11-12
  */
 public class FrameworkException extends RuntimeException {
 
@@ -27,7 +28,7 @@ public class FrameworkException extends RuntimeException {
     }
 
     public FrameworkException(String message, Object... objects) {
-        this.message = String.format(message, objects);
+        this.message = StrUtil.format(message, objects);
     }
 
     public FrameworkException(HttpCode httpCode) {

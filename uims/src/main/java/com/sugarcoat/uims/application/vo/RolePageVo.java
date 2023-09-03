@@ -7,7 +7,7 @@ import lombok.Data;
  * 角色分页vo
  *
  * @author xxd
- * @date 2022-12-29
+ * @since 2022-12-29
  */
 @Data
 public class RolePageVo {

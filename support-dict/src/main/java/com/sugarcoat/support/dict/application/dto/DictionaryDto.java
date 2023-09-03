@@ -1,9 +1,9 @@
-package com.sugarcoat.support.dict.application;
+package com.sugarcoat.support.dict.application.dto;
 
 import lombok.Data;
 
 @Data
-public class DictionaryDTO {
+public class DictionaryDto {
 
 	private String id;
 

@@ -1,5 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
+import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.Dictionary;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,10 +9,11 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
+ * 字典信息
+ *
  * @author xxd
  * @version 1.0
- * @description: 基础字典信息
- * @date 2023/3/20
+ * @since 2023/3/20
  */
 @Entity
 @Getter
@@ -25,17 +27,26 @@ public class SugarcoatDictionary implements Dictionary {
     @Column(length = 32)
     private String dictionaryId;
 
+    /**
+     * 字典编码
+     */
     @Column(length = 32)
     private String code;
 
+    /**
+     * 字典名称
+     */
     @Column(length = 32)
     private String name;
 
-    @Column(length = 32)
-    private String groupCode;
-
+    /**
+     * 组id
+     */
     @Column(length = 32, name = "group_id", insertable = false, updatable = false)
     private String groupId;
+
+    @Column(length = 32)
+    private String groupCode;
 
     @ToString.Exclude
     @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)

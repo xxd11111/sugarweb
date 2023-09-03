@@ -10,7 +10,7 @@ import java.util.Map;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/9
+ * @since 2023/6/9
  */
 @Data
 public class EmailDto {

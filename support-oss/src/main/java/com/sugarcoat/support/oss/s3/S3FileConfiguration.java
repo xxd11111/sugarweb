@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/6
+ * @since 2023/6/6
  */
 //@Configuration
 public class S3FileConfiguration {

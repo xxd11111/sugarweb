@@ -2,6 +2,9 @@ package com.sugarcoat.support.dict.application;
 
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
+import com.sugarcoat.support.dict.application.dto.DictQueryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 
 import java.util.Set;
 
@@ -9,24 +12,24 @@ import java.util.Set;
  * 字典对外服务
  *
  * @author xxd
- * @date 2022-11-21
+ * @since 2022-11-21
  */
 public interface DictionaryService {
 
-	void save(DictionaryGroupDTO dictionaryGroupDTO);
+	void save(DictionaryGroupDto dto);
 
-	void save(DictionaryDTO dictionaryDTO);
+	void save(DictionaryDto dto);
 
 	void removeDictionaryGroup(Set<String> groupIds);
 
 	void removeDictionary(Set<String> dictionaryIds);
 
-	DictionaryDTO findByDictionaryId(String dictionaryId);
+	DictionaryDto findByDictionaryId(String dictionaryId);
 
-	DictionaryGroupDTO findByGroupId(String groupId);
+	DictionaryGroupDto findByGroupId(String groupId);
 
-	DictionaryGroupDTO findByGroupCode(String groupCode);
+	DictionaryGroupDto findByGroupCode(String groupCode);
 
-	PageData<DictionaryGroupDTO> findDictPage(PageDto pageDto, DictQueryVo queryVO);
+	PageData<DictionaryGroupDto> findDictPage(PageDto pageDto, DictQueryDto queryDto);
 
 }

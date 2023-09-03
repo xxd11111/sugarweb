@@ -5,7 +5,7 @@ package com.sugarcoat.api.security;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/3/9
+ * @since 2023/3/9
  */
 public class SecurityHelper {
 

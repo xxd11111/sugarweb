@@ -15,7 +15,7 @@ import java.util.Objects;
  * 参数实体
  *
  * @author xxd
- * @date 2022-11-18
+ * @since 2022-11-18
  */
 @Entity
 @Getter

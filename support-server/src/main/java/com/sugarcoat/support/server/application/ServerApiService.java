@@ -10,7 +10,7 @@ import com.sugarcoat.support.server.application.dto.ServerApiQueryDto;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/3/13
+ * @since 2023/3/13
  */
 public interface ServerApiService {
 

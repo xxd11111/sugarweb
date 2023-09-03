@@ -1,9 +1,9 @@
 package com.sugarcoat.support.dict.controller;
 
 import com.sugarcoat.support.dict.application.DictionaryService;
-import com.sugarcoat.support.dict.application.DictionaryGroupDTO;
-import com.sugarcoat.support.dict.application.DictionaryDTO;
-import com.sugarcoat.support.dict.application.DictQueryVo;
+import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryDto;
+import com.sugarcoat.support.dict.application.dto.DictQueryDto;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
 import com.sugarcoat.api.common.Result;
@@ -17,7 +17,7 @@ import java.util.Set;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/4/26
+ * @since 2023/4/26
  */
 @RestController
 @RequestMapping("dictionary")
@@ -27,14 +27,14 @@ public class DictionaryController {
 	private final DictionaryService dictionaryService;
 
 	@PostMapping("saveDictionaryGroup")
-	public Result<Void> saveDict(@RequestBody DictionaryGroupDTO dictionaryGroupDTO) {
-		dictionaryService.save(dictionaryGroupDTO);
+	public Result<Void> saveDict(@RequestBody DictionaryGroupDto dictionaryGroupDto) {
+		dictionaryService.save(dictionaryGroupDto);
 		return Result.ok();
 	}
 
 	@PostMapping("saveDictionary")
-	public Result<Void> saveDictItem(@RequestBody DictionaryDTO dictionaryDTO) {
-		dictionaryService.save(dictionaryDTO);
+	public Result<Void> saveDictItem(@RequestBody DictionaryDto dictionaryDto) {
+		dictionaryService.save(dictionaryDto);
 		return Result.ok();
 	}
 
@@ -51,23 +51,23 @@ public class DictionaryController {
 	}
 
 	@GetMapping("findDictionaryGroup/{groupId}")
-	public Result<DictionaryGroupDTO> findDictionaryGroup(@PathVariable String groupId) {
+	public Result<DictionaryGroupDto> findDictionaryGroup(@PathVariable String groupId) {
 		return Result.data(dictionaryService.findByGroupId(groupId));
 	}
 
 	@GetMapping("findDictionary/{dictionaryId}")
-	public Result<DictionaryDTO> findDictionary(@PathVariable String dictionaryId) {
+	public Result<DictionaryDto> findDictionary(@PathVariable String dictionaryId) {
 		return Result.data(dictionaryService.findByDictionaryId(dictionaryId));
 	}
 
 	@GetMapping("findByGroupCode/{groupCode}")
-	public Result<DictionaryGroupDTO> findByGroupCode(@PathVariable String groupCode) {
+	public Result<DictionaryGroupDto> findByGroupCode(@PathVariable String groupCode) {
 		return Result.data(dictionaryService.findByGroupCode(groupCode));
 	}
 
 	@GetMapping("findDictionaryPage")
-	public Result<PageData<DictionaryGroupDTO>> findDictPage(PageDto pageDto, DictQueryVo queryVo) {
-		return Result.data(dictionaryService.findDictPage(pageDto, queryVo));
+	public Result<PageData<DictionaryGroupDto>> findDictPage(PageDto pageDto, DictQueryDto queryDto) {
+		return Result.data(dictionaryService.findDictPage(pageDto, queryDto));
 	}
 
 }

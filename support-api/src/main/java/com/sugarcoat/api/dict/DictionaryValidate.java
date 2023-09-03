@@ -1,6 +1,5 @@
 package com.sugarcoat.api.dict;
 
-import com.sugarcoat.api.data.EnumValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -11,7 +10,7 @@ import java.lang.annotation.*;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/5/29
+ * @since 2023/5/29
  */
 @Target({
         ElementType.METHOD,
@@ -24,7 +23,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(
-        validatedBy = EnumValidator.class
+        validatedBy = DictionaryValidator.class
 )
 public @interface DictionaryValidate {
 
@@ -33,6 +32,9 @@ public @interface DictionaryValidate {
      */
     String groupCode();
 
+    /**
+     * 异常时返回的异常消息
+     */
     String message() default "";
 
     Class<?>[] groups() default {};

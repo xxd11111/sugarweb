@@ -5,12 +5,18 @@ package com.sugarcoat.api.dict;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/5/29
+ * @since 2023/5/29
  */
 public interface Dictionary {
 
-	String getCode();
+    /**
+     * 获取字典编码
+     */
+    String getCode();
 
-	String getName();
+    /**
+     * 获取字典名称
+     */
+    String getName();
 
 }

@@ -1,103 +1,47 @@
 package com.sugarcoat.support.dict.domain;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.dict.DictionaryManager;
+import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.InnerDictionary;
 import com.sugarcoat.api.dict.InnerDictionaryGroup;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import com.sugarcoat.api.exception.FrameworkException;
+import com.sugarcoat.support.dict.DictionaryProperties;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 字典对象扫描
+ * 字典扫描
  *
  * @author xxd
- * @since 2023/8/25
+ * @since 2023/8/30 23:03
  */
-@RequiredArgsConstructor
-public class DefaultDictionaryScanner {
+public class DefaultDictionaryScanner implements DictionaryScanner {
 
-    private final DictionaryManager<SugarcoatDictionaryGroup, SugarcoatDictionary> dictionaryManager;
+    /**
+     * 扫描路径 @InnerDictionary
+     */
+    private final String scanPackage;
 
-    public void register(List<DictGroup> dictGroups) {
-
-        //todo
-        List<SugarcoatDictionaryGroup> dbList = new ArrayList<>();
-        List<SugarcoatDictionaryGroup> adddictionaryGroups = new ArrayList<>();
-        List<String> removeIds = new ArrayList<>();
-        for (DictGroup dictGroup : dictGroups) {
-            boolean groupExist = false;
-            for (SugarcoatDictionaryGroup SugarcoatDictionaryGroup : dbList) {
-                if (StrUtil.equals(SugarcoatDictionaryGroup.getGroupCode(), "DICT_TYPE")) {
-                    if (StrUtil.equals(SugarcoatDictionaryGroup.getGroupCode(), dictGroup.getCode())) {
-                        groupExist = true;
-                    }
-                }
-            }
-            if (!groupExist) {
-                //新增字典组
-                SugarcoatDictionaryGroup dictionaryGroup = new SugarcoatDictionaryGroup();
-                adddictionaryGroups.add(dictionaryGroup);
-            }
-
-            List<Dict> dicts = dictGroup.getDicts();
-            int i = 1;
-            //系统内字典
-            for (Dict dict : dicts) {
-                boolean dictExist = false;
-                //数据库字典
-                for (SugarcoatDictionaryGroup SugarcoatDictionaryGroup : dbList) {
-                    if (StrUtil.equals(SugarcoatDictionaryGroup.getGroupCode(), dictGroup.getCode())) {
-                        if (StrUtil.equals(dict.getCode(), SugarcoatDictionaryGroup.getGroupCode())) {
-                            dictExist = true;
-                        }
-                    }
-                }
-
-                if (!groupExist || !dictExist) {
-                    SugarcoatDictionaryGroup SugarcoatDictionaryGroup = new SugarcoatDictionaryGroup();
-
-                    adddictionaryGroups.add(SugarcoatDictionaryGroup);
-                }
-            }
-            if (CollUtil.isNotEmpty(dbList)) {
-                AtomicBoolean exist = new AtomicBoolean(false);
-                //数据库列表
-                dbList.forEach((dictionaryGroup) -> {
-                    //代码中某组字典
-                    if (StrUtil.equals(dictGroup.getCode(), dictionaryGroup.getGroupCode())) {
-                        for (Dict dict : dicts) {
-                            if (StrUtil.equals(dict.getCode(), dictionaryGroup.getGroupCode())) {
-                                exist.set(true);
-                            }
-                        }
-                        if (!exist.get()) {
-                            removeIds.add(dictionaryGroup.getGroupCode());
-                        }
-                    }
-                });
-            }
+    public DefaultDictionaryScanner(DictionaryProperties properties) {
+        String scanPackage = properties.getScanPackage();
+        if (StrUtil.isEmpty(scanPackage)) {
+            throw new FrameworkException("not setting properties dictionary.scanPackage!");
         }
-        //for (SugarcoatDictionaryGroup dictionaryGroup : adddictionaryGroups) {
-        //    dictService.addDict(dictionaryGroup);
-        //}
-        //dictService.removeByIds(removeIds);
-        System.out.println("");
+        this.scanPackage = scanPackage;
     }
 
-    public List<DictGroup> scan() {
-        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation("com.thinvent.catalog", InnerDictionaryGroup.class);
-        List<DictGroup> dictGroups = new ArrayList<>();
+    @Override
+    public List<SugarcoatDictionaryGroup> scan() {
+        //获取包下class
+        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(scanPackage, InnerDictionaryGroup.class);
+        List<SugarcoatDictionaryGroup> dictGroups = new ArrayList<>();
         for (Class<?> clazz : classes) {
             InnerDictionaryGroup annotation = clazz.getAnnotation(InnerDictionaryGroup.class);
             String name;
@@ -107,47 +51,54 @@ public class DefaultDictionaryScanner {
             } else {
                 name = annotation.code();
             }
-            DictGroup dictGroup = new DictGroup();
-            dictGroup.setCode(name);
-            dictGroup.setName(name);
+            //字典组对象创建
+            SugarcoatDictionaryGroup dictGroup = new SugarcoatDictionaryGroup();
+            dictGroup.setInnerFlag(BooleanFlag.TRUE);
+            dictGroup.setGroupCode(name);
+            dictGroup.setGroupName(name);
+            //解析枚举获取field信息
+            List<SugarcoatDictionary> dicts = new ArrayList<>();
             Object[] enumConstants = clazz.getEnumConstants();
             Field[] declaredFields = clazz.getDeclaredFields();
-            List<Dict> dicts = new ArrayList<>();
             for (Object enumConstant : enumConstants) {
                 String dictCode = "";
                 String dictName = "";
                 for (Field field : declaredFields) {
                     field.setAccessible(true);
-                    Annotation dictCode1 = field.getAnnotation(InnerDictionary.class);
+                    Annotation enumDictCode = field.getAnnotation(InnerDictionary.class);
                     try {
-                        if (dictCode1 != null) {
+                        //获取字典编码
+                        if (enumDictCode != null) {
                             dictCode = (String) field.get(enumConstant);
                         }
-                        if (dictCode1 != null) {
+                        //获取字典名称
+                        if (enumDictCode != null) {
                             dictName = (String) field.get(enumConstant);
                         }
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        throw new FrameworkException(StrUtil.format("字典项数据获取异常,请检查字典枚举配置，class:{}", clazz.getName()));
                     }
 
                 }
+                //缺省设置，字典编码缺失抛异常
                 if (dictCode == null || dictCode.isEmpty()) {
-                    dictCode = enumConstant.toString();
+                    throw new FrameworkException(StrUtil.format("字典编码缺失,请检查字典枚举配置，class:{}", clazz.getName()));
                 }
+                //缺省设置，字典编码缺失抛异常
                 if (dictName == null || dictName.isEmpty()) {
                     dictName = enumConstant.toString();
                 }
-                Dict dict = new Dict();
+                //字典项对象创建
+                SugarcoatDictionary dict = new SugarcoatDictionary();
                 dict.setName(dictName);
                 dict.setCode(dictCode);
                 dicts.add(dict);
             }
-            dictGroup.setDicts(dicts);
+            dictGroup.setSugarcoatDictionaries(dicts);
             dictGroups.add(dictGroup);
         }
         return dictGroups;
     }
-
 
     private static final Pattern UNDERLINE_PATTERN = Pattern.compile("_([a-z])");
 
@@ -170,9 +121,10 @@ public class DefaultDictionaryScanner {
     }
 
     /**
+     * 将驼峰转为下划线
+     *
      * @param str 字符串
-     * @return java.lang.String
-     * @Description 将驼峰转为下划线
+     * @return 下划线字符串
      */
     public static String humpToUnderline(String str) {
         //匹配 A-Z
@@ -194,19 +146,4 @@ public class DefaultDictionaryScanner {
         matcher.appendTail(sb);
         return sb.toString().replaceFirst("_", "");
     }
-
-    @Data
-    class DictGroup {
-        private String code;
-        private String name;
-
-        private List<Dict> dicts;
-    }
-
-    @Data
-    class Dict {
-        private String code;
-        private String name;
-    }
-
 }

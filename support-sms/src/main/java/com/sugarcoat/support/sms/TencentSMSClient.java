@@ -13,7 +13,7 @@ import com.tencentcloudapi.sms.v20190711.models.*;
  *
  * @author xxd
  * @version 1.0
- * @date 2023/6/8
+ * @since 2023/6/8
  */
 public class TencentSMSClient implements SMSClient {
 

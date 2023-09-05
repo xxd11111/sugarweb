@@ -3,7 +3,7 @@ package com.sugarcoat.api.param;
 import java.lang.annotation.*;
 
 /**
- * 系统内部参数注解
+ * 扫描入口
  *
  * @author xxd
  * @version 1.0
@@ -12,10 +12,6 @@ import java.lang.annotation.*;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface InnerParameter {
-
-    String code() default "";
-
-    String value() default "";
+public @interface InnerParamGroup {
 
 }

@@ -23,8 +23,8 @@
         </dependency>
 
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-cache</artifactId>
         </dependency>
     </dependencies>
 

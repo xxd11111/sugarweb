@@ -9,7 +9,7 @@ import lombok.Data;
  * @since 2023/5/6 23:45
  */
 @Data
-public class ParamQueryCmd {
+public class ParamQueryDto {
 
 	private String code;
 

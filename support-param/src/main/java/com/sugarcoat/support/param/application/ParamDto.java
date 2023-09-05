@@ -1,5 +1,6 @@
 package com.sugarcoat.support.param.application;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 /**
@@ -10,8 +11,9 @@ import lombok.Data;
  * @since 2023/4/24
  */
 @Data
-public class ParameterDTO {
+public class ParamDto {
 
+	@NotEmpty
 	private String id;
 
 	private String code;

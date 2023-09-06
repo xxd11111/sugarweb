@@ -130,6 +130,12 @@ sugarcoat:
     registerStrategy: OVERRIDE
     enableCache: true
     cachePrefix: "sugarcoat:dict:"
+  param:
+    enable: true
+    enableRegister: true
+    scanPackage: com.sugarcoat.uims
+    enableCache: true
+    cachePrefix: "sugarcoat:param:"
 
 
 

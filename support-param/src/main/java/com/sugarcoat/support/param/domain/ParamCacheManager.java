@@ -42,6 +42,12 @@ public interface ParamCacheManager {
     Optional<String> get(String code);
 
     /**
+     * 删除
+     * @param code 参数编码
+     */
+    void remove(String code);
+
+    /**
      * 清空参数缓存
      */
     void clean();

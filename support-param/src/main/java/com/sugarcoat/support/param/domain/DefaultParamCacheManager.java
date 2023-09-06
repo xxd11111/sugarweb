@@ -47,6 +47,12 @@ public class DefaultParamCacheManager implements ParamCacheManager {
     }
 
     @Override
+    public void remove(String code) {
+        RBucket<String> bucket = redissonClient.getBucket(getCacheKey(code));
+        bucket.delete();
+    }
+
+    @Override
     public void clean() {
         RKeys keys = redissonClient.getKeys();
         keys.deleteByPattern(getKeyPattern());

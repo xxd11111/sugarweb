@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class InsertDictionaryRegistry implements DictionaryRegistry {
 
+    //todo 换成 SugarcoatDictionaryRepository
     private final DictionaryManager dictionaryManager;
 
     public InsertDictionaryRegistry(DictionaryManager dictionaryManager) {

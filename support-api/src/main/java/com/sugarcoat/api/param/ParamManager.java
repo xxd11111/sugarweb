@@ -18,15 +18,14 @@ public interface ParamManager {
      * @param code 参数编码
      * @return 参数值
      */
-    String getValue(String code);
+    Optional<String> getValue(String code);
 
     /**
      * 保存参数
      *
      * @param param 参数
-     * @return 参数code
      */
-    String save(Param param);
+    void save(Param param);
 
     /**
      * 根据参数编码删除参数

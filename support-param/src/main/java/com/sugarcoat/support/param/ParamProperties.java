@@ -14,6 +14,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConditionalOnProperty(prefix = "sugarcoat.param", name = "enable", havingValue = "true")
 @Data
 public class ParamProperties {
+
+    /**
+     * 是否注册系统内置参数
+     */
+    private boolean enableRegister = false;
+
     /**
      * 扫描路径
      * todo 配置一个全局的

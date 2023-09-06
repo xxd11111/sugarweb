@@ -3,6 +3,7 @@ package com.sugarcoat.support.param.domain;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +37,7 @@ public class DefaultParamRegistry implements ParamRegistry {
      * @param innerParams 系统内置参数
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void register(Collection<SugarcoatParam> innerParams) {
         if (CollUtil.isEmpty(innerParams)) {
             paramRepository.deleteAll();

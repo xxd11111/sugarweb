@@ -1,14 +1,15 @@
 package com.sugarcoat.support.param;
 
+import com.sugarcoat.api.param.ParamManager;
 import com.sugarcoat.support.param.application.DefaultParamServiceImpl;
 import com.sugarcoat.support.param.application.ParamService;
-import com.sugarcoat.support.param.domain.SugarcoatParamRepository;
+import com.sugarcoat.support.param.domain.*;
 import jakarta.annotation.Resource;
+import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -27,8 +28,42 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamService getParamService(SugarcoatParamRepository sugarcoatParamRepository) {
+    public ParamService paramService(SugarcoatParamRepository sugarcoatParamRepository) {
         return new DefaultParamServiceImpl(sugarcoatParamRepository);
     }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ParamCacheManager paramCacheManager(RedissonClient redissonClient) {
+        return new DefaultParamCacheManager(paramProperties, redissonClient);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ParamManager paramManager(SugarcoatParamRepository sugarcoatParamRepository, ParamCacheManager paramCacheManager) {
+        return new DefaultParamManager(sugarcoatParamRepository, paramCacheManager);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ParamRegistry paramRegistry(SugarcoatParamRepository sugarcoatParamRepository) {
+        return new DefaultParamRegistry(sugarcoatParamRepository);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ParamRunner paramRunner(ParamScanner paramScanner,
+                                   ParamRegistry paramRegistry,
+                                   ParamCacheManager paramCacheManager,
+                                   SugarcoatParamRepository paramRepository) {
+        return new DefaultParamRunner(paramProperties, paramScanner, paramRegistry, paramCacheManager, paramRepository);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ParamScanner paramScanner() {
+        return new DefaultParamScanner(paramProperties);
+    }
+
 
 }

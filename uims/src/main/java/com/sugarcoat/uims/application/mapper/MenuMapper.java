@@ -19,6 +19,9 @@ public interface MenuMapper {
 
     MenuMapper INSTANCE = Mappers.getMapper(MenuMapper.class);
 
+    @Mapping(source = "id", target = "pid")
+    @Mapping(source = "id", target = "menuCode")
+    @Mapping(source = "id", target = "menuName")
     Menu menuDtoToMenu(MenuDto menuDTO);
 
     void updateMenu(MenuDto menuDTO, @MappingTarget Menu menu);

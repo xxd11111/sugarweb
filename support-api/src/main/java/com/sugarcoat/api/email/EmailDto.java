@@ -43,6 +43,6 @@ public class EmailDto {
 	/**
 	 * 插图
 	 */
-	private Map<String, String> inline;
+	private List<String> inlines;
 
 }

@@ -136,6 +136,17 @@ sugarcoat:
     scanPackage: com.sugarcoat.uims
     enableCache: true
     cachePrefix: "sugarcoat:param:"
+  email:
+    enable: true
+    host: "smtp.qq.com"
+    port: 465
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+  sms:
+    enable: true
+    type: aliyun
+#    type: tencent
+
 
 
 

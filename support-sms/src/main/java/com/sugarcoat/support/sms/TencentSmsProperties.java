@@ -1,5 +1,7 @@
 package com.sugarcoat.support.sms;
 
+import lombok.Data;
+
 /**
  * 腾讯sms属性
  *
@@ -7,10 +9,11 @@ package com.sugarcoat.support.sms;
  * @version 1.0
  * @since 2023/6/8
  */
+@Data
 public class TencentSmsProperties {
 
 	/**
-	 * 配置节点 阿里云 dysmsapi.aliyuncs.com 腾讯云 sms.tencentcloudapi.com
+	 * 配置节点
 	 */
 	private String endpoint = "sms.tencentcloudapi.com";
 
@@ -30,7 +33,7 @@ public class TencentSmsProperties {
 	private String signName;
 
 	/**
-	 * 短信应用ID (腾讯专属)
+	 * 短信应用ID
 	 */
 	private String sdkAppId;
 

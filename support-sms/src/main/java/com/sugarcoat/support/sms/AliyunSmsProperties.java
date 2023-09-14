@@ -1,5 +1,7 @@
 package com.sugarcoat.support.sms;
 
+import lombok.Data;
+
 /**
  * 阿里云sms属性
  *
@@ -7,6 +9,7 @@ package com.sugarcoat.support.sms;
  * @version 1.0
  * @since 2023/6/8
  */
+@Data
 public class AliyunSmsProperties {
 
 	/**

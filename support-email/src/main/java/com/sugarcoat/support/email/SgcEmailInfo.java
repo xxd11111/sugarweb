@@ -1,9 +1,9 @@
-package com.sugarcoat.api.email;
+package com.sugarcoat.support.email;
 
+import com.sugarcoat.api.email.EmailInfo;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 邮件传输对象
@@ -13,7 +13,7 @@ import java.util.Map;
  * @since 2023/6/9
  */
 @Data
-public class EmailDto {
+public class SgcEmailInfo implements EmailInfo {
 
 	/**
 	 * 收件邮箱

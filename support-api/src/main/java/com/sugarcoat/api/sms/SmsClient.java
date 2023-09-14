@@ -7,7 +7,7 @@ package com.sugarcoat.api.sms;
  * @version 1.0
  * @since 2023/6/8
  */
-public interface SMSClient {
+public interface SmsClient {
 
 	void sendMessage(String templateId, String phoneNumber, String[] params);
 

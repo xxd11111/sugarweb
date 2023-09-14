@@ -1,8 +1,8 @@
 package com.sugarcoat.support.sms;
 
 import lombok.Data;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 /**
  * sms属性
@@ -11,12 +11,10 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @since 2023/6/8
  */
+@ConfigurationProperties(prefix = "sugarcoat.sms")
+@ConditionalOnProperty(prefix = "sugarcoat.sms", name = "enable", havingValue = "true")
 @Data
-@Component
-@ConfigurationProperties(prefix = "sms")
 public class SmsProperties {
-
-	private Boolean enabled;
 
 	private String type;
 

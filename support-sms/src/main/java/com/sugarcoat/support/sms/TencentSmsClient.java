@@ -1,11 +1,10 @@
 package com.sugarcoat.support.sms;
 
-import com.sugarcoat.api.sms.SMSClient;
+import com.sugarcoat.api.sms.SmsClient;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
-import com.tencentcloudapi.sms.v20190711.SmsClient;
 import com.tencentcloudapi.sms.v20190711.models.*;
 
 /**
@@ -15,25 +14,23 @@ import com.tencentcloudapi.sms.v20190711.models.*;
  * @version 1.0
  * @since 2023/6/8
  */
-public class TencentSMSClient implements SMSClient {
-
-	private String accessKeyId;
-
-	private String accessKeySecret;
-
-	private String endpoint;
+public class TencentSmsClient implements SmsClient {
 
 	private String signName;
 
-	private SmsClient client;
+	private final com.tencentcloudapi.sms.v20190711.SmsClient client;
 
-	public TencentSMSClient() {
+	public TencentSmsClient(TencentSmsProperties tencentSmsProperties) {
+		String accessKeyId = tencentSmsProperties.getAccessKeyId();
+		String accessKeySecret = tencentSmsProperties.getAccessKeySecret();
+		String endpoint = tencentSmsProperties.getEndpoint();
+		this.signName = tencentSmsProperties.getSignName();
 		Credential credential = new Credential(accessKeyId, accessKeySecret);
 		HttpProfile httpProfile = new HttpProfile();
 		httpProfile.setEndpoint(endpoint);
 		ClientProfile clientProfile = new ClientProfile();
 		clientProfile.setHttpProfile(httpProfile);
-		this.client = new SmsClient(credential, "", clientProfile);
+		this.client = new com.tencentcloudapi.sms.v20190711.SmsClient(credential, "", clientProfile);
 	}
 
 	@Override

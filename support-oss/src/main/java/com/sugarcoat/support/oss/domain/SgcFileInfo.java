@@ -1,13 +1,12 @@
-package com.sugarcoat.support.oss.application;
+package com.sugarcoat.support.oss.domain;
 
 import com.sugarcoat.api.oss.FileInfo;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -20,20 +19,20 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class SugarcoatFileInfo implements FileInfo {
+public class SgcFileInfo implements FileInfo {
 
 	/**
 	 * 主键
 	 */
 	@Size(max = 32)
 	@Id
-	private String fileId;
+	private String id;
 
 	/**
 	 * 路径
 	 */
 	@Size(max = 100)
-	private String filePath;
+	private String key;
 
 	/**
 	 * 文件名
@@ -47,6 +46,11 @@ public class SugarcoatFileInfo implements FileInfo {
 	@Size(max = 1)
 	private String fileType;
 
+    /**
+     * 内容类型
+	 */
+	private String contentType;
+
 	/**
 	 * 文件大小
 	 */
@@ -57,12 +61,6 @@ public class SugarcoatFileInfo implements FileInfo {
 	 * 上传时间
 	 */
 	private LocalDateTime uploadTime;
-
-	/**
-	 * 业务表主键
-	 */
-	@Size(max = 32)
-	private String associationId;
 
 	/**
 	 * 文件组

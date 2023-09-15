@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
  * @since 2023/8/28 22:59
  */
 @ConfigurationProperties(prefix = "sugarcoat.dictionary")
-@ConditionalOnProperty(prefix = "sugarcoat.dictionary", name = "enable", havingValue = "true")
 @Data
 public class DictionaryProperties {
 

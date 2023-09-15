@@ -9,6 +9,7 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +27,7 @@ import java.util.Map;
 @EntityScan
 @EnableJpaRepositories
 @EnableConfigurationProperties(DictionaryProperties.class)
+@ConditionalOnProperty(prefix = "sugarcoat.dictionary", name = "enable", havingValue = "true")
 public class DictionaryAutoConfiguration {
 
     @Autowired
@@ -52,14 +54,12 @@ public class DictionaryAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-//    @ConditionalOnBean({RedissonClient.class})
     public DictionaryCacheManager dictionaryCacheManager(RedissonClient redissonClient) {
         return new DefaultDictionaryCacheManager(dictionaryProperties, redissonClient);
     }
 
     @Bean
     @ConditionalOnMissingBean
-//    @ConditionalOnBean({DictionaryProperties.class, DictionaryScanner.class, DictionaryManager.class, DictionaryCacheManager.class})
     public DictionaryRunner dictionaryRunner(DictionaryScanner dictionaryScanner,
                                            DictionaryManager dictionaryManager,
                                            DictionaryCacheManager dictionaryCacheManager) {

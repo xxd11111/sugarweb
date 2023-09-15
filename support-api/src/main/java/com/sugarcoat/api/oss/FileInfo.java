@@ -1,22 +1,28 @@
 package com.sugarcoat.api.oss;
 
+import java.io.InputStream;
 import java.time.LocalDateTime;
 
 /**
  * 文件信息
+ *
+ * @author 许向东
+ * @date 2023/9/15
  */
 public interface FileInfo {
 
-	String getFileGroup();
+    String getFileGroup();
 
-	String getFilePath();
+    String getKey();
 
-	String getFileName();
+    String getFileName();
 
-	String getFileType();
+    String getFileType();
 
-	long getFileSize();
+    long getFileSize();
 
-	LocalDateTime getUploadTime();
+    LocalDateTime getUploadTime();
+
+    String getContentType();
 
 }

@@ -9,20 +9,16 @@ import java.io.InputStream;
  * @version 1.0
  * @since 2023/6/5
  */
-public interface FileClient {
+public interface FileManager {
 
-	/**
-	 * 创建
-	 */
 	void createBucket();
 
 	void upload(String path, InputStream inputStream, String contentType);
 
-	InputStream getContent(String filePath);
+	InputStream getContent(String key);
 
-	FileObject getFileObject(String filePath);
+	FileInfo getFileObject(String key);
 
-	//todo 批量处理
-	void delete(String filePath);
+	void delete(String key);
 
 }

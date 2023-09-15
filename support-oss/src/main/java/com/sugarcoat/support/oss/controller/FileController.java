@@ -1,14 +1,17 @@
 package com.sugarcoat.support.oss.controller;
 
-import com.sugarcoat.support.oss.application.FileCmd;
+import com.sugarcoat.api.oss.FileInfo;
+import com.sugarcoat.support.oss.application.FileQueryDto;
 import com.sugarcoat.support.oss.application.FileService;
-import com.sugarcoat.support.oss.application.SugarcoatFileInfo;
 import com.sugarcoat.api.common.Result;
+import com.sugarcoat.support.oss.domain.SgcBizFile;
+import com.sugarcoat.support.oss.domain.SgcFileInfo;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
@@ -20,7 +23,7 @@ import java.util.Set;
  * @version 1.0
  * @since 2023/6/5
  */
-//@RestController
+@RestController
 @RequestMapping("file")
 @RequiredArgsConstructor
 public class FileController {
@@ -28,14 +31,12 @@ public class FileController {
 	private final FileService fileService;
 
 	@GetMapping("download")
-	public void download(HttpServletResponse response, FileCmd fileCmd) {
-		// ServletRequestAttributes response = (ServletRequestAttributes)
-		// RequestContextHolder.getRequestAttributes();
-		fileService.download(response, fileCmd.getFileGroup(), fileCmd.getFileId());
+	public void download(HttpServletResponse response, FileQueryDto fileQueryDto) {
+		fileService.download(response, fileQueryDto.getFileGroup(), fileQueryDto.getFileId());
 	}
 
 	@PostMapping("upload")
-	public Result<SugarcoatFileInfo> upload(MultipartFile multipartFile, String fileGroup) {
+	public Result<SgcFileInfo> upload(MultipartFile multipartFile, String fileGroup) {
 		return Result.data(fileService.upload(fileGroup, multipartFile));
 	}
 

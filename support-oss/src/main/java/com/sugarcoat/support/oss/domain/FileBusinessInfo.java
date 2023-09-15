@@ -1,9 +1,9 @@
-package com.sugarcoat.api.oss;
+package com.sugarcoat.support.oss.domain;
 
 import lombok.Data;
 
 /**
- * 文件业务信息 todo 待思考业务绑定存储及上传限制
+ * 文件业务信息
  *
  * @author xxd
  * @version 1.0

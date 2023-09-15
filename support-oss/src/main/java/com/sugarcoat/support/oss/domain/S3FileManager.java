@@ -1,19 +1,16 @@
-package com.sugarcoat.support.oss.s3;
+package com.sugarcoat.support.oss.domain;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.sugarcoat.api.exception.ServerException;
-import com.sugarcoat.api.oss.FileClient;
 import com.sugarcoat.api.exception.FrameworkException;
-import com.sugarcoat.api.oss.FileObject;
-import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Var;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import com.sugarcoat.api.exception.ServerException;
+import com.sugarcoat.api.oss.FileInfo;
+import com.sugarcoat.api.oss.FileManager;
+import com.sugarcoat.api.oss.BizFile;
+import com.sugarcoat.support.oss.OssProperties;
+import com.sugarcoat.support.oss.WebDownloadUtil;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 /**
  * awsS3文件客户端
@@ -22,13 +19,16 @@ import java.util.ArrayList;
  * @version 1.0
  * @since 2023/6/5
  */
-@RequiredArgsConstructor
-public class S3FileClient implements FileClient {
+public class S3FileManager implements FileManager {
 
-    @Value("${sugarcoat.s3.bucketName}")
-    private String bucketName;
+    private final String bucketName;
 
     private final AmazonS3 client;
+
+    public S3FileManager(OssProperties ossProperties, AmazonS3 client) {
+        this.bucketName = ossProperties.getBucketName();
+        this.client = client;
+    }
 
     @Override
     public void createBucket() {
@@ -65,12 +65,12 @@ public class S3FileClient implements FileClient {
     }
 
     @Override
-    public FileObject getFileObject(String filePath) {
+    public FileInfo getFileObject(String filePath) {
         S3Object s3Object = client.getObject(bucketName, filePath);
-        FileObject fileObject = new FileObject();
-        fileObject.setContentLength(s3Object.getObjectMetadata().getContentLength());
-        fileObject.setContentType(s3Object.getObjectMetadata().getContentType());
-        fileObject.setContent(s3Object.getObjectContent());
+        SgcFileInfo fileObject = new SgcFileInfo();
+        ObjectMetadata objectMetadata = s3Object.getObjectMetadata();
+        fileObject.setFileSize(objectMetadata.getContentLength());
+        fileObject.setContentType(objectMetadata.getContentType());
         return fileObject;
     }
 

@@ -1,9 +1,10 @@
 package com.sugarcoat.support.oss.application;
 
-import com.sugarcoat.api.oss.FileBusinessManager;
-import com.sugarcoat.api.oss.FileClient;
 import com.sugarcoat.api.exception.ServerException;
-import com.sugarcoat.api.oss.FileObject;
+import com.sugarcoat.api.oss.BizFileManager;
+import com.sugarcoat.api.oss.FileManager;
+import com.sugarcoat.support.oss.domain.SgcFileInfo;
+import com.sugarcoat.support.oss.domain.SgcFileInfoRepository;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,26 +22,24 @@ import java.util.UUID;
  * @version 1.0
  * @since 2023/6/2
  */
-//@Service
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
 
-    private final FileClient fileClient;
+    private final FileManager fileManager;
+    private final BizFileManager bizFileManager;
 
-    private final FileBusinessManager fileBusinessManager;
-
-    private final FileRepository fileRepository;
+    private final SgcFileInfoRepository fileRepository;
 
     @Override
-    public SugarcoatFileInfo upload(String fileGroup, MultipartFile multipartFile) {
-        String filePath = "/" + fileGroup + "/" + UUID.randomUUID();
+    public SgcFileInfo upload(String fileGroup, MultipartFile multipartFile) {
+        String key = "/" + fileGroup + "/" + UUID.randomUUID();
         try {
-            fileClient.upload(filePath, multipartFile.getInputStream(), multipartFile.getContentType());
-            SugarcoatFileInfo fileInfo = new SugarcoatFileInfo();
+            fileManager.upload(key, multipartFile.getInputStream(), multipartFile.getContentType());
+            SgcFileInfo fileInfo = new SgcFileInfo();
             String originalFilename = multipartFile.getOriginalFilename();
             fileInfo.setFileGroup(fileGroup);
             fileInfo.setFileName(originalFilename);
-            fileInfo.setFilePath(filePath);
+            fileInfo.setKey(key);
             fileInfo.setFileSize(multipartFile.getSize());
             String[] split = originalFilename.split(".");
             //todo 数组越界
@@ -54,15 +53,13 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void download(HttpServletResponse response, String fileGroup, String fileId) {
-        SugarcoatFileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
+        SgcFileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
         try (ServletOutputStream outputStream = response.getOutputStream();
-             FileObject fileObject = fileClient.getFileObject(fileInfo.getFilePath());
-             InputStream inputStream = fileObject.getContent()) {
-            long contentLengthLong = fileObject.getContentLength();
-            int contentLengthInt = Long.valueOf(contentLengthLong).intValue();
-            response.setContentLength(contentLengthInt);
+             InputStream inputStream = fileManager.getContent(fileInfo.getKey())) {
+            long fileSize = fileInfo.getFileSize();
+            response.setContentLengthLong(fileSize);
             response.setHeader("Content-Disposition", "attachment;filename=" + fileInfo.getFileName());
-            response.setContentType(fileObject.getContentType());
+            response.setContentType(fileInfo.getContentType());
 
             byte[] bytes = new byte[1024];
             int len;
@@ -77,18 +74,18 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void remove(String fileGroup, String fileId) {
-        SugarcoatFileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
-        fileClient.delete(fileInfo.getFilePath());
-        fileBusinessManager.separateFileId(fileInfo.getFileId());
+        SgcFileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
+        fileManager.delete(fileInfo.getKey());
+        bizFileManager.separateByFileId(fileInfo.getId());
     }
 
     @Override
     public void remove(String fileGroup, Set<String> fileIds) {
-        Iterable<SugarcoatFileInfo> fileInfos = fileRepository.findAllById(fileIds);
-        for (SugarcoatFileInfo fileInfo : fileInfos) {
-            fileClient.delete(fileInfo.getFilePath());
+        Iterable<SgcFileInfo> fileInfos = fileRepository.findAllById(fileIds);
+        for (SgcFileInfo fileInfo : fileInfos) {
+            fileManager.delete(fileInfo.getKey());
         }
-        fileBusinessManager.separateFileId(fileIds);
+        bizFileManager.separateByFileId(fileIds);
     }
 
 }

@@ -143,10 +143,15 @@ sugarcoat:
     username: ${EMAIL_USERNAME}
     password: ${EMAIL_PASSWORD}
   sms:
-    enable: true
+    enable: false
     type: aliyun
 #    type: tencent
-
+  oss:
+    enable: false
+    bucketName: x
+    endPoint: x
+    accessKey: x
+    secretKey: x
 
 
 

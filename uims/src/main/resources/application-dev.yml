@@ -137,7 +137,7 @@ sugarcoat:
     enableCache: true
     cachePrefix: "sugarcoat:param:"
   email:
-    enable: true
+    enable: false
     host: "smtp.qq.com"
     port: 465
     username: ${EMAIL_USERNAME}

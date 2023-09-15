@@ -1,5 +1,7 @@
 package com.sugarcoat.api.sms;
 
+import java.util.Collection;
+
 /**
  * sms客户端
  *
@@ -9,18 +11,16 @@ package com.sugarcoat.api.sms;
  */
 public interface SmsClient {
 
-	void sendMessage(String templateId, String phoneNumber, String[] params);
+	void sendMessage(SmsInfo smsInfo);
 
-	void sendMessage(String templateId, String[] phoneNumbers, String[] params);
+	void addTemplate(SmsTemplateInfo smsTemplateInfo);
 
-	void addTemplate(String name, String content, int type, String remark);
+	void modifyTemplate(SmsTemplateInfo smsTemplateInfo);
 
-	void modifyTemplate(String code, String name, String content, int type, String remark);
+	void deleteTemplate(String id);
 
-	void deleteTemplate(String code);
+	SmsTemplateInfo getTemplate(String id);
 
-	void getTemplate(String templateId);
-
-	void listTemplate(int pageIndex, int pageSize);
+	Collection<SmsTemplateInfo> listTemplate(int pageIndex, int pageSize);
 
 }

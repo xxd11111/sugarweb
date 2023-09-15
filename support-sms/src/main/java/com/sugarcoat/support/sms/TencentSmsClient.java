@@ -1,14 +1,18 @@
 package com.sugarcoat.support.sms;
 
 import com.sugarcoat.api.sms.SmsClient;
+import com.sugarcoat.api.sms.SmsInfo;
+import com.sugarcoat.api.sms.SmsTemplateInfo;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
 import com.tencentcloudapi.sms.v20190711.models.*;
 
+import java.util.Collection;
+
 /**
- * 腾讯sms客户端
+ * 腾讯sms客户端 todo 暂停，等开通平台做调试
  *
  * @author xxd
  * @version 1.0
@@ -33,7 +37,6 @@ public class TencentSmsClient implements SmsClient {
 		this.client = new com.tencentcloudapi.sms.v20190711.SmsClient(credential, "", clientProfile);
 	}
 
-	@Override
 	public void sendMessage(String templateId, String phoneNumber, String[] params) {
 		SendSmsRequest request = new SendSmsRequest();
 		request.setTemplateID(templateId);
@@ -48,7 +51,6 @@ public class TencentSmsClient implements SmsClient {
 
 	}
 
-	@Override
 	public void sendMessage(String templateId, String[] phoneNumbers, String[] params) {
 		SendSmsRequest request = new SendSmsRequest();
 		request.setTemplateID(templateId);
@@ -62,7 +64,6 @@ public class TencentSmsClient implements SmsClient {
 		}
 	}
 
-	@Override
 	public void addTemplate(String name, String content, int type, String remark) {
 		AddSmsTemplateRequest request = new AddSmsTemplateRequest();
 		request.setInternational(System.currentTimeMillis());
@@ -78,7 +79,6 @@ public class TencentSmsClient implements SmsClient {
 		}
 	}
 
-	@Override
 	public void modifyTemplate(String id, String name, String content, int type, String remark) {
 		ModifySmsTemplateRequest request = new ModifySmsTemplateRequest();
 		request.setInternational(Long.valueOf(id));
@@ -95,6 +95,21 @@ public class TencentSmsClient implements SmsClient {
 	}
 
 	@Override
+	public void sendMessage(SmsInfo smsInfo) {
+
+	}
+
+	@Override
+	public void addTemplate(SmsTemplateInfo smsTemplateInfo) {
+
+	}
+
+	@Override
+	public void modifyTemplate(SmsTemplateInfo smsTemplateInfo) {
+
+	}
+
+	@Override
 	public void deleteTemplate(String id) {
 		DeleteSmsTemplateRequest request = new DeleteSmsTemplateRequest();
 		request.setTemplateId(Long.valueOf(id));
@@ -107,9 +122,10 @@ public class TencentSmsClient implements SmsClient {
 	}
 
 	@Override
-	public void getTemplate(String templateId) {
+	public SmsTemplateInfo getTemplate(String templateId) {
 		DescribeSmsTemplateListRequest request = new DescribeSmsTemplateListRequest();
 		request.setInternational(Long.valueOf(templateId));
+		request.setTemplateIdSet(new Long[]{Long.valueOf(templateId)});
 		DescribeSmsTemplateListResponse response = null;
 		try {
 			response = client.DescribeSmsTemplateList(request);
@@ -119,13 +135,20 @@ public class TencentSmsClient implements SmsClient {
 		}
 		DescribeTemplateListStatus[] describeTemplateStatusSet = response.getDescribeTemplateStatusSet();
 		for (DescribeTemplateListStatus describeTemplateListStatus : describeTemplateStatusSet) {
-
+			ScSmsTemplateInfo scSmsTemplateInfo = new ScSmsTemplateInfo();
 		}
+		return null;
 	}
 
 	@Override
-	public void listTemplate(int pageIndex, int pageSize) {
-
+	public Collection<SmsTemplateInfo> listTemplate(int pageIndex, int pageSize) {
+		DescribeSmsTemplateListRequest req = new DescribeSmsTemplateListRequest();
+		try {
+			DescribeSmsTemplateListResponse describeSmsTemplateListResponse = client.DescribeSmsTemplateList(req);
+		} catch (TencentCloudSDKException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

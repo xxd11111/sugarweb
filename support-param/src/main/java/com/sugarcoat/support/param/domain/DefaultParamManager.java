@@ -1,8 +1,8 @@
 package com.sugarcoat.support.param.domain;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.exception.FrameworkException;
-import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.server.exception.FrameworkException;
+import com.sugarcoat.api.server.exception.ValidateException;
 import com.sugarcoat.api.param.Param;
 import com.sugarcoat.api.param.ParamManager;
 import lombok.RequiredArgsConstructor;

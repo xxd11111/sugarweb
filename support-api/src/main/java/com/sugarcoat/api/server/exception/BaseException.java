@@ -1,9 +1,15 @@
-package com.sugarcoat.api.exception;
+package com.sugarcoat.api.server.exception;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 
-public class RateLimitException extends RuntimeException {
+/**
+ * 基础异常
+ *
+ * @author xxd
+ * @since 2023/9/20 22:54
+ */
+public class BaseException extends RuntimeException{
 
     /**
      * 全局错误码
@@ -18,19 +24,19 @@ public class RateLimitException extends RuntimeException {
     /**
      * 空构造方法，避免反序列化问题
      */
-    public RateLimitException() {
+    public BaseException() {
     }
 
-    public RateLimitException(String message, Object... objects) {
+    public BaseException(String message, Object... objects) {
         this.message = StrUtil.format(message, objects);
     }
 
-    public RateLimitException(HttpCode httpCode) {
+    public BaseException(HttpCode httpCode) {
         this.code = httpCode.getCode();
         this.message = httpCode.getMsg();
     }
 
-    public RateLimitException(Integer code, String message) {
+    public BaseException(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -39,7 +45,7 @@ public class RateLimitException extends RuntimeException {
         return code;
     }
 
-    public RateLimitException setCode(Integer code) {
+    public BaseException setCode(Integer code) {
         this.code = code;
         return this;
     }
@@ -49,9 +55,9 @@ public class RateLimitException extends RuntimeException {
         return message;
     }
 
-    public RateLimitException setMessage(String message) {
+    public BaseException setMessage(String message) {
         this.message = message;
         return this;
     }
-    
+
 }

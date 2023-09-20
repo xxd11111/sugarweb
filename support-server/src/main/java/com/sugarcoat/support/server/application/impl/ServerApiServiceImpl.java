@@ -5,7 +5,7 @@ import com.sugarcoat.orm.PageDataConvert;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.server.exception.ValidateException;
 import com.sugarcoat.support.server.application.dto.ServerApiDto;
 import com.sugarcoat.support.server.application.dto.ServerApiQueryDto;
 import com.sugarcoat.support.server.application.ServerApiService;

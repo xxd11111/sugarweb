@@ -3,7 +3,7 @@ package com.sugarcoat.support.server.application.impl;
 import com.querydsl.core.types.dsl.Expressions;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.server.exception.ValidateException;
 import com.sugarcoat.support.server.application.ErrorLogService;
 import com.sugarcoat.support.server.domain.error.ErrorLog;
 import com.sugarcoat.support.server.application.dto.ErrorLogQueryDto;

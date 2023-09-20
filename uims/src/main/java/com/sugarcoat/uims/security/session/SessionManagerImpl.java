@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.HttpCode;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.exception.SecurityException;
+import com.sugarcoat.api.server.exception.SecurityException;
 import com.sugarcoat.uims.security.SessionInfo;
 import com.sugarcoat.uims.security.TokenInfo;
 import lombok.RequiredArgsConstructor;

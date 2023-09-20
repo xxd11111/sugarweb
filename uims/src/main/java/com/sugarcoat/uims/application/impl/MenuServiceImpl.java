@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.orm.PageDataConvert;
-import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.server.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.support.server.domain.ServerApi;
 import com.sugarcoat.support.server.domain.ServerApiRepository;

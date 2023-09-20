@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.InnerDictionary;
 import com.sugarcoat.api.dict.InnerDictionaryGroup;
-import com.sugarcoat.api.exception.FrameworkException;
+import com.sugarcoat.api.server.exception.FrameworkException;
 import com.sugarcoat.support.dict.DictionaryProperties;
 
 import java.lang.annotation.Annotation;

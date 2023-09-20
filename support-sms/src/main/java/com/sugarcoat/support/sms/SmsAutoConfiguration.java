@@ -1,6 +1,6 @@
 package com.sugarcoat.support.sms;
 
-import com.sugarcoat.api.exception.FrameworkException;
+import com.sugarcoat.api.server.exception.FrameworkException;
 import com.sugarcoat.api.sms.SmsClient;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

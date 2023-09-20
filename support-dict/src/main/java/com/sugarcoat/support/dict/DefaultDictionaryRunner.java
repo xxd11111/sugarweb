@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.api.dict.DictionaryGroup;
 import com.sugarcoat.api.dict.DictionaryManager;
-import com.sugarcoat.api.exception.FrameworkException;
+import com.sugarcoat.api.server.exception.FrameworkException;
 import com.sugarcoat.support.dict.domain.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

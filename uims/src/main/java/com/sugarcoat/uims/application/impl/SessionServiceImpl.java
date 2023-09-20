@@ -2,7 +2,7 @@ package com.sugarcoat.uims.application.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.server.exception.ValidateException;
 import com.sugarcoat.uims.application.SessionService;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
 import com.sugarcoat.uims.application.vo.LoginVo;

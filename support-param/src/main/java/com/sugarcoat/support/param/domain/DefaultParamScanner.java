@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.exception.FrameworkException;
+import com.sugarcoat.api.server.exception.FrameworkException;
 import com.sugarcoat.api.param.InnerParam;
 import com.sugarcoat.api.param.InnerParamGroup;
 import com.sugarcoat.support.param.ParamProperties;

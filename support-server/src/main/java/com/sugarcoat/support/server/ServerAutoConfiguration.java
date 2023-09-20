@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
- * 自动配置
+ * 服务自动配置
  *
  * @author xxd
  * @since 2023/5/8 23:28

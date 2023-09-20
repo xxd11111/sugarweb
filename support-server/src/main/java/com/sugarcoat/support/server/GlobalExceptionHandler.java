@@ -2,8 +2,8 @@ package com.sugarcoat.support.server;
 
 import com.sugarcoat.api.common.HttpCode;
 import com.sugarcoat.api.common.Result;
-import com.sugarcoat.api.exception.SecurityException;
-import com.sugarcoat.api.exception.*;
+import com.sugarcoat.api.server.exception.*;
+import com.sugarcoat.api.server.exception.SecurityException;
 import com.sugarcoat.support.server.domain.error.ErrorLogPublisher;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
+ * 全局异常拦截
+ *
  * @author xxd
- * @description 全局异常拦截
  * @since 2022-10-27
  */
 

@@ -6,9 +6,8 @@ import com.sugarcoat.api.common.BooleanFlag;
 import com.sugarcoat.api.dict.Dictionary;
 import com.sugarcoat.api.dict.DictionaryGroup;
 import com.sugarcoat.api.dict.DictionaryManager;
-import com.sugarcoat.api.exception.FrameworkException;
-import com.sugarcoat.api.exception.ServiceException;
-import com.sugarcoat.orm.ExpressionWrapper;
+import com.sugarcoat.api.server.exception.FrameworkException;
+import com.sugarcoat.api.server.exception.ServiceException;
 
 import java.util.*;
 import java.util.stream.Collectors;

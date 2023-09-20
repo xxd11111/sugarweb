@@ -1,6 +1,6 @@
 package com.sugarcoat.api.common;
 
-import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.server.exception.ValidateException;
 
 import java.io.Serializable;
 import java.util.Arrays;

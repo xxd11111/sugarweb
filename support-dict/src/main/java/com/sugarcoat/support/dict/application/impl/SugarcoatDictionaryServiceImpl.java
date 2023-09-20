@@ -8,7 +8,7 @@ import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.api.common.PageData;
 import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.exception.ValidateException;
+import com.sugarcoat.api.server.exception.ValidateException;
 import com.sugarcoat.support.dict.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

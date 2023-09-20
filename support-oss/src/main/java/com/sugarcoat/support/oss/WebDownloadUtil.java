@@ -1,8 +1,7 @@
 package com.sugarcoat.support.oss;
 
 import cn.hutool.core.util.URLUtil;
-import com.sugarcoat.api.exception.FrameworkException;
-import com.sugarcoat.api.exception.ServerException;
+import com.sugarcoat.api.server.exception.ServerException;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.core.io.ResourceLoader;

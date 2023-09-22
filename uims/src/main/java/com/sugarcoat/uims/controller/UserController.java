@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.controller;
 
-import com.sugarcoat.api.common.Result;
+import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.uims.application.dto.NewPasswordDto;
 import com.sugarcoat.uims.application.dto.UserDto;
 import com.sugarcoat.uims.application.dto.UserQueryDto;

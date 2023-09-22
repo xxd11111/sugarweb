@@ -2,11 +2,11 @@ package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.common.BooleanFlag;
-import com.sugarcoat.api.dict.Dictionary;
-import com.sugarcoat.api.dict.DictionaryGroup;
-import com.sugarcoat.api.dict.DictionaryManager;
-import com.sugarcoat.api.server.exception.FrameworkException;
+import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.dict.Dictionary;
+import com.sugarcoat.protocol.dict.DictionaryGroup;
+import com.sugarcoat.protocol.dict.DictionaryManager;
+import com.sugarcoat.protocol.exception.FrameworkException;
 
 import java.util.ArrayList;
 import java.util.Collection;

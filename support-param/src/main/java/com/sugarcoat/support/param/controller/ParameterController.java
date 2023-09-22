@@ -3,9 +3,9 @@ package com.sugarcoat.support.param.controller;
 import com.sugarcoat.support.param.application.ParamDto;
 import com.sugarcoat.support.param.application.ParamQueryDto;
 import com.sugarcoat.support.param.application.ParamService;
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.common.Result;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDto;
+import com.sugarcoat.protocol.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

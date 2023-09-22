@@ -1,8 +1,8 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.api.common.BooleanFlag;
-import com.sugarcoat.api.dict.Dictionary;
-import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.dict.Dictionary;
+import com.sugarcoat.protocol.dict.DictionaryGroup;
 import com.sugarcoat.orm.EntityExt;
 import jakarta.persistence.*;
 import lombok.Getter;

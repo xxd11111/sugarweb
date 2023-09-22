@@ -1,6 +1,6 @@
 package com.sugarcoat.uims;
 
-import com.sugarcoat.api.protection.EnableRateLimit;
+import com.sugarcoat.protocol.protection.EnableRateLimit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

@@ -1,7 +1,7 @@
 package com.sugarcoat.support.protection.ratelimit.core;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.protection.RateLimit;
+import com.sugarcoat.protocol.protection.RateLimit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;

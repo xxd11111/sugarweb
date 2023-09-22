@@ -1,17 +1,14 @@
 package com.sugarcoat.uims.controller;
 
 
-import com.sugarcoat.api.common.Result;
-import com.sugarcoat.api.protection.Idempotent;
-import com.sugarcoat.api.protection.RateLimit;
+import com.sugarcoat.protocol.common.Result;
+import com.sugarcoat.protocol.protection.Idempotent;
 import com.sugarcoat.uims.application.vo.EmailLoginVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/test")

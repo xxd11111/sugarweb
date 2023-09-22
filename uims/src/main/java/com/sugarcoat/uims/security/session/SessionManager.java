@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.security.session;
 
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDto;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.uims.security.SessionInfo;
 import com.sugarcoat.uims.security.TokenInfo;
 

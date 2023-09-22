@@ -1,7 +1,7 @@
 package com.sugarcoat.support.sms;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.common.HttpCode;
+import com.sugarcoat.protocol.common.HttpCode;
 
 /**
  * 短信异常

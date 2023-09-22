@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.menu;
 
-import com.sugarcoat.api.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanFlag;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;

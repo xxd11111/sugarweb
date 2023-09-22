@@ -1,8 +1,8 @@
 package com.sugarcoat.support.protection.idempotent;
 
-import com.sugarcoat.api.server.exception.IdempotentException;
-import com.sugarcoat.api.protection.Idempotent;
-import com.sugarcoat.api.protection.IdempotentKeyGenerator;
+import com.sugarcoat.protocol.exception.IdempotentException;
+import com.sugarcoat.protocol.protection.Idempotent;
+import com.sugarcoat.protocol.protection.IdempotentKeyGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

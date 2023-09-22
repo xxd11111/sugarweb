@@ -1,6 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.protocol.dict.DictionaryGroup;
 
 import java.util.Collection;
 import java.util.Optional;

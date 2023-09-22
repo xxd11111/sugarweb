@@ -1,13 +1,12 @@
 package com.sugarcoat.support.oss.controller;
 
-import com.sugarcoat.api.oss.FileInfo;
 import com.sugarcoat.support.oss.application.FileQueryDto;
 import com.sugarcoat.support.oss.application.FileService;
-import com.sugarcoat.api.common.Result;
-import com.sugarcoat.support.oss.domain.SgcBizFile;
+import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.support.oss.domain.SgcFileInfo;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +40,7 @@ public class FileController {
 	}
 
 	@PostMapping("batchRemove")
+	@CreatedDate
 	public Result<Void> remove(String fileGroup, Set<String> fileIds) {
 		fileService.remove(fileGroup, fileIds);
 		return Result.ok();

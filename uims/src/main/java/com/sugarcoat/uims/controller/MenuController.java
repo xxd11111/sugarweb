@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.controller;
 
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.Result;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
@@ -9,8 +9,6 @@ import com.sugarcoat.uims.application.MenuService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 菜单控制器

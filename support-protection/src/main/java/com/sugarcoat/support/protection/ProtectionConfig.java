@@ -1,7 +1,7 @@
 package com.sugarcoat.support.protection;
 
 
-import com.sugarcoat.api.protection.IdempotentKeyGenerator;
+import com.sugarcoat.protocol.protection.IdempotentKeyGenerator;
 import com.sugarcoat.support.protection.idempotent.DefaultKeyGenerator;
 import com.sugarcoat.support.protection.idempotent.IdempotentAspect;
 import com.sugarcoat.support.protection.ratelimit.core.RateLimitAspect;

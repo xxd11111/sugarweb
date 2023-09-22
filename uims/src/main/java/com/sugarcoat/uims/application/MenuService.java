@@ -1,11 +1,9 @@
 package com.sugarcoat.uims.application;
 
-import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
-
-import java.util.List;
 
 /**
  * 菜单服务

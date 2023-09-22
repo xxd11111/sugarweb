@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.security;
 
-import com.sugarcoat.api.security.UserHolder;
-import com.sugarcoat.api.security.UserInfo;
+import com.sugarcoat.protocol.security.UserHolder;
+import com.sugarcoat.protocol.security.UserInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

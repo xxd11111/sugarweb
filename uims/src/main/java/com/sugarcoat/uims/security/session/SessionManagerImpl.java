@@ -1,10 +1,10 @@
 package com.sugarcoat.uims.security.session;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.common.HttpCode;
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.server.exception.SecurityException;
+import com.sugarcoat.protocol.common.HttpCode;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDto;
+import com.sugarcoat.protocol.exception.SecurityException;
 import com.sugarcoat.uims.security.SessionInfo;
 import com.sugarcoat.uims.security.TokenInfo;
 import lombok.RequiredArgsConstructor;

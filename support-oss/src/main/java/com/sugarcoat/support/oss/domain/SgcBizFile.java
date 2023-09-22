@@ -1,6 +1,6 @@
 package com.sugarcoat.support.oss.domain;
 
-import com.sugarcoat.api.oss.BizFile;
+import com.sugarcoat.protocol.oss.BizFile;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;

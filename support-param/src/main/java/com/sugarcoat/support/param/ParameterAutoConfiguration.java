@@ -1,6 +1,6 @@
 package com.sugarcoat.support.param;
 
-import com.sugarcoat.api.param.ParamManager;
+import com.sugarcoat.protocol.param.ParamManager;
 import com.sugarcoat.support.param.application.DefaultParamServiceImpl;
 import com.sugarcoat.support.param.application.ParamService;
 import com.sugarcoat.support.param.domain.*;

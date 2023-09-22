@@ -1,8 +1,8 @@
 package com.sugarcoat.support.oss.application;
 
-import com.sugarcoat.api.server.exception.ServerException;
-import com.sugarcoat.api.oss.BizFileManager;
-import com.sugarcoat.api.oss.FileManager;
+import com.sugarcoat.protocol.exception.ServerException;
+import com.sugarcoat.protocol.oss.BizFileManager;
+import com.sugarcoat.protocol.oss.FileManager;
 import com.sugarcoat.support.oss.domain.SgcFileInfo;
 import com.sugarcoat.support.oss.domain.SgcFileInfoRepository;
 import jakarta.servlet.ServletOutputStream;

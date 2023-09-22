@@ -2,10 +2,10 @@ package com.sugarcoat.support.oss.domain;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
-import com.sugarcoat.api.server.exception.FrameworkException;
-import com.sugarcoat.api.server.exception.ServerException;
-import com.sugarcoat.api.oss.FileInfo;
-import com.sugarcoat.api.oss.FileManager;
+import com.sugarcoat.protocol.exception.FrameworkException;
+import com.sugarcoat.protocol.exception.ServerException;
+import com.sugarcoat.protocol.oss.FileInfo;
+import com.sugarcoat.protocol.oss.FileManager;
 import com.sugarcoat.support.oss.OssProperties;
 
 import java.io.InputStream;

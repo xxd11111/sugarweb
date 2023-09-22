@@ -1,7 +1,5 @@
 package com.sugarcoat.support.oss.application;
 
-import com.sugarcoat.api.oss.FileInfo;
-import com.sugarcoat.support.oss.domain.SgcBizFile;
 import com.sugarcoat.support.oss.domain.SgcFileInfo;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.multipart.MultipartFile;

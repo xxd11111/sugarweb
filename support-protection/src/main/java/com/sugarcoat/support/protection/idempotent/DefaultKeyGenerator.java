@@ -2,7 +2,7 @@ package com.sugarcoat.support.protection.idempotent;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
-import com.sugarcoat.api.protection.IdempotentKeyGenerator;
+import com.sugarcoat.protocol.protection.IdempotentKeyGenerator;
 import org.springframework.stereotype.Component;
 
 @Component

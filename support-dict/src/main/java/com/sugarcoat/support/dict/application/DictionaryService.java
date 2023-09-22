@@ -1,7 +1,7 @@
 package com.sugarcoat.support.dict.application;
 
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDto;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.support.dict.application.dto.DictQueryDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;

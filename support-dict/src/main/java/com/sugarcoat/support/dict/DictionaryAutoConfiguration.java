@@ -1,13 +1,11 @@
 package com.sugarcoat.support.dict;
 
-import com.sugarcoat.api.dict.DictionaryManager;
+import com.sugarcoat.protocol.dict.DictionaryManager;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.impl.SugarcoatDictionaryServiceImpl;
 import com.sugarcoat.support.dict.domain.*;
-import lombok.RequiredArgsConstructor;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

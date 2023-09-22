@@ -3,11 +3,11 @@ package com.sugarcoat.support.sms;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.*;
 import com.aliyun.teaopenapi.models.Config;
-import com.sugarcoat.api.server.exception.FrameworkException;
-import com.sugarcoat.api.server.exception.ValidateException;
-import com.sugarcoat.api.sms.SmsClient;
-import com.sugarcoat.api.sms.SmsInfo;
-import com.sugarcoat.api.sms.SmsTemplateInfo;
+import com.sugarcoat.protocol.exception.FrameworkException;
+import com.sugarcoat.protocol.exception.ValidateException;
+import com.sugarcoat.protocol.sms.SmsClient;
+import com.sugarcoat.protocol.sms.SmsInfo;
+import com.sugarcoat.protocol.sms.SmsTemplateInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;

@@ -1,14 +1,10 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.api.BeanUtil;
-import com.sugarcoat.api.dict.DictionaryGroup;
-import com.sugarcoat.api.dict.DictionaryManager;
-import com.sugarcoat.api.dict.DictionaryValidate;
-import com.sugarcoat.api.dict.DictionaryValidator;
-import jakarta.validation.ConstraintValidator;
+import com.sugarcoat.protocol.BeanUtil;
+import com.sugarcoat.protocol.dict.DictionaryManager;
+import com.sugarcoat.protocol.dict.DictionaryValidate;
+import com.sugarcoat.protocol.dict.DictionaryValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
-import java.util.Optional;
 
 /**
  * 枚举校验工具

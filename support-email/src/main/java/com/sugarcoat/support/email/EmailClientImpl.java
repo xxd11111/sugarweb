@@ -1,8 +1,8 @@
 package com.sugarcoat.support.email;
 
 import cn.hutool.core.collection.CollUtil;
-import com.sugarcoat.api.email.EmailClient;
-import com.sugarcoat.api.email.EmailInfo;
+import com.sugarcoat.protocol.email.EmailClient;
+import com.sugarcoat.protocol.email.EmailInfo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

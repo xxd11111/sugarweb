@@ -1,8 +1,8 @@
 package com.sugarcoat.orm;
 
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDataAdapt;
-import com.sugarcoat.api.server.exception.FrameworkException;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDataAdapt;
+import com.sugarcoat.protocol.exception.FrameworkException;
 import org.springframework.data.domain.Page;
 
 /**

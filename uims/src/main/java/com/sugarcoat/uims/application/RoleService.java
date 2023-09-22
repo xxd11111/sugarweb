@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application;
 
-import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.uims.application.dto.RoleDto;
 import com.sugarcoat.uims.application.vo.RoleVo;
 import com.sugarcoat.uims.application.vo.RolePageVo;

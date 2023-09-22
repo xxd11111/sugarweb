@@ -1,6 +1,5 @@
 package com.sugarcoat.support.server.domain;
 
-import com.sugarcoat.support.server.domain.ServerApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.method.HandlerMethod;
@@ -24,36 +23,36 @@ public class ServerApiScanner {
 
 	private RequestMappingHandlerMapping mappingHandlerMapping;
 
-	private Set<ServerApi> serverApis;
+	private Set<SgcApi> sgcApis;
 
-	public Set<ServerApi> scanApi() {
-		Set<ServerApi> urlList = new HashSet<>();
+	public Set<SgcApi> scanApi() {
+		Set<SgcApi> urlList = new HashSet<>();
 		Map<RequestMappingInfo, HandlerMethod> map = mappingHandlerMapping.getHandlerMethods();
 		Set<RequestMappingInfo> requestMappingInfos = map.keySet();
 		for (RequestMappingInfo info : requestMappingInfos) {
-			ServerApi serverApi = new ServerApi();
+			SgcApi sgcApi = new SgcApi();
 			PatternsRequestCondition patternsRequestCondition = info.getPatternsCondition();
 			Set<String> patterns = patternsRequestCondition.getPatterns();
 			log.info("url:{}", patterns);
 			for (String url : patterns) {
-				serverApi.setUrl(url);
+				sgcApi.setUrl(url);
 			}
 			RequestMethodsRequestCondition methodsRequestCondition = info.getMethodsCondition();
 			Set<RequestMethod> methods = methodsRequestCondition.getMethods();
 			log.info("method:{}", methods);
 			for (RequestMethod method : methods) {
 				String type = method.name();
-				serverApi.setMethodType(type);
+				sgcApi.setMethodType(type);
 			}
-			serverApi.setRemark(info.toString());
-			urlList.add(serverApi);
+			sgcApi.setRemark(info.toString());
+			urlList.add(sgcApi);
 		}
 		log.info(String.valueOf(urlList));
 		return urlList;
 	}
 
-	public Set<ServerApi> getApi() {
-		return serverApis;
+	public Set<SgcApi> getApi() {
+		return sgcApis;
 	}
 
 }

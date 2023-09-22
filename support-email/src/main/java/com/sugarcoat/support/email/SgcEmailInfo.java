@@ -1,6 +1,6 @@
 package com.sugarcoat.support.email;
 
-import com.sugarcoat.api.email.EmailInfo;
+import com.sugarcoat.protocol.email.EmailInfo;
 import lombok.Data;
 
 import java.util.List;

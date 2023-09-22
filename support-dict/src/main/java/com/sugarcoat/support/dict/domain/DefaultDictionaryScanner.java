@@ -2,10 +2,10 @@ package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.common.BooleanFlag;
-import com.sugarcoat.api.dict.InnerDictionary;
-import com.sugarcoat.api.dict.InnerDictionaryGroup;
-import com.sugarcoat.api.server.exception.FrameworkException;
+import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.dict.InnerDictionary;
+import com.sugarcoat.protocol.dict.InnerDictionaryGroup;
+import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.support.dict.DictionaryProperties;
 
 import java.lang.annotation.Annotation;

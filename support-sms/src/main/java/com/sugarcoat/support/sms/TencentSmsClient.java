@@ -1,8 +1,8 @@
 package com.sugarcoat.support.sms;
 
-import com.sugarcoat.api.sms.SmsClient;
-import com.sugarcoat.api.sms.SmsInfo;
-import com.sugarcoat.api.sms.SmsTemplateInfo;
+import com.sugarcoat.protocol.sms.SmsClient;
+import com.sugarcoat.protocol.sms.SmsInfo;
+import com.sugarcoat.protocol.sms.SmsTemplateInfo;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;

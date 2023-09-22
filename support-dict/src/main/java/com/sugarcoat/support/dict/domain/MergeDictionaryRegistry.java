@@ -1,13 +1,9 @@
 package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.api.dict.Dictionary;
-import com.sugarcoat.api.dict.DictionaryGroup;
-import com.sugarcoat.api.dict.DictionaryManager;
+import com.sugarcoat.protocol.dict.DictionaryGroup;
+import com.sugarcoat.protocol.dict.DictionaryManager;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**

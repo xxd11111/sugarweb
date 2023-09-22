@@ -4,9 +4,9 @@ import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryDto;
 import com.sugarcoat.support.dict.application.dto.DictQueryDto;
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.common.Result;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDto;
+import com.sugarcoat.protocol.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

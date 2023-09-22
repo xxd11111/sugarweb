@@ -1,8 +1,8 @@
 package com.sugarcoat.support.protection.ratelimit.core;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.sugarcoat.api.server.exception.RateLimitException;
-import com.sugarcoat.api.protection.EnableRateLimit;
+import com.sugarcoat.protocol.exception.RateLimitException;
+import com.sugarcoat.protocol.protection.EnableRateLimit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.Condition;

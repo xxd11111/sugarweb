@@ -2,9 +2,8 @@ package com.sugarcoat.support.server;
 
 import com.sugarcoat.support.server.controller.ServerApiController;
 import com.sugarcoat.support.server.domain.ServerApiRepository;
-import com.sugarcoat.support.server.application.ServerApiService;
-import com.sugarcoat.support.server.application.impl.ServerApiServiceImpl;
-import com.sugarcoat.support.server.domain.error.ErrorLogPublisher;
+import com.sugarcoat.support.server.service.ServerApiService;
+import com.sugarcoat.support.server.service.impl.ServerApiServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationEventPublisher;
@@ -32,11 +31,6 @@ public class ServerAutoConfiguration {
 	@Bean
 	public ServerApiController serverApiController(ServerApiService serverApiService){
 		return new ServerApiController(serverApiService);
-	}
-
-	@Bean
-	public ErrorLogPublisher errorLogPublisher(ApplicationEventPublisher applicationEventPublisher) {
-		return new ErrorLogPublisher(applicationEventPublisher);
 	}
 
 }

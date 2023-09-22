@@ -1,6 +1,6 @@
 package com.sugarcoat.support.param.domain;
 
-import com.sugarcoat.api.param.Param;
+import com.sugarcoat.protocol.param.Param;
 import com.sugarcoat.support.param.ParamProperties;
 import org.redisson.api.RBucket;
 import org.redisson.api.RKeys;

@@ -2,12 +2,12 @@ package com.sugarcoat.support.dict.domain;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.api.common.BooleanFlag;
-import com.sugarcoat.api.dict.Dictionary;
-import com.sugarcoat.api.dict.DictionaryGroup;
-import com.sugarcoat.api.dict.DictionaryManager;
-import com.sugarcoat.api.server.exception.FrameworkException;
-import com.sugarcoat.api.server.exception.ServiceException;
+import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.dict.Dictionary;
+import com.sugarcoat.protocol.dict.DictionaryGroup;
+import com.sugarcoat.protocol.dict.DictionaryManager;
+import com.sugarcoat.protocol.exception.FrameworkException;
+import com.sugarcoat.protocol.exception.ServiceException;
 
 import java.util.*;
 import java.util.stream.Collectors;

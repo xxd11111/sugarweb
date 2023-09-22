@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.vo;
 
-import com.sugarcoat.api.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanFlag;
 import com.sugarcoat.uims.domain.menu.MenuType;
 import com.sugarcoat.uims.domain.menu.MenuUrlType;
 import jakarta.persistence.EnumType;

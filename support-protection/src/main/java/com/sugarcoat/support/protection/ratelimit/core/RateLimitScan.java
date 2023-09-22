@@ -1,15 +1,12 @@
 package com.sugarcoat.support.protection.ratelimit.core;
 
 import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.ClassLoaderUtil;
-import cn.hutool.extra.spring.SpringUtil;
-import com.sugarcoat.api.protection.EnableRateLimit;
+import com.sugarcoat.protocol.protection.EnableRateLimit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
 
 /**
  * @version 1.0

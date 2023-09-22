@@ -2,11 +2,11 @@ package com.sugarcoat.uims.application.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarcoat.api.common.PageData;
+import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.orm.PageDataConvert;
-import com.sugarcoat.api.server.exception.ValidateException;
+import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
-import com.sugarcoat.support.server.domain.ServerApi;
+import com.sugarcoat.support.server.domain.SgcApi;
 import com.sugarcoat.support.server.domain.ServerApiRepository;
 import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
@@ -80,7 +80,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void associateApi(String id, String apiCode) {
         Menu menu = menuRepository.findById(id).orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + id));
-        Set<ServerApi> serverApis = new HashSet<>();
+        Set<SgcApi> sgcApis = new HashSet<>();
         serverApiRepository.findById(apiCode).orElseThrow(()->new ValidateException("菜单不存在,id:{}" + id));
         menu.setApiCode(apiCode);
         menuRepository.save(menu);

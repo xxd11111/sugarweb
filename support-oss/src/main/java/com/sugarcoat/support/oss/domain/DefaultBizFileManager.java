@@ -2,8 +2,8 @@ package com.sugarcoat.support.oss.domain;
 
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarcoat.api.oss.BizFileManager;
-import com.sugarcoat.api.oss.FileInfo;
+import com.sugarcoat.protocol.oss.BizFileManager;
+import com.sugarcoat.protocol.oss.FileInfo;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;

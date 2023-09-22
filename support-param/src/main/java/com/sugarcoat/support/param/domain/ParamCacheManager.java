@@ -1,6 +1,6 @@
 package com.sugarcoat.support.param.domain;
 
-import com.sugarcoat.api.param.Param;
+import com.sugarcoat.protocol.param.Param;
 
 import java.util.Collection;
 import java.util.Optional;

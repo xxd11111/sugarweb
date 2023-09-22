@@ -1,6 +1,6 @@
 package com.sugarcoat.support.sms;
 
-import com.sugarcoat.api.sms.SmsTemplateInfo;
+import com.sugarcoat.protocol.sms.SmsTemplateInfo;
 import lombok.Data;
 
 /**

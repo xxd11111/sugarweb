@@ -1,9 +1,9 @@
 package com.sugarcoat.support.param.application;
 
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.api.common.PageData;
-import com.sugarcoat.api.common.PageDto;
-import com.sugarcoat.api.server.exception.ValidateException;
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDto;
+import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.support.param.domain.QSugarcoatParam;
 import com.sugarcoat.support.param.domain.SugarcoatParam;
 import com.sugarcoat.support.param.domain.SugarcoatParamRepository;

@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.user;
 
-import com.sugarcoat.api.common.Flag;
+import com.sugarcoat.protocol.common.Flag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

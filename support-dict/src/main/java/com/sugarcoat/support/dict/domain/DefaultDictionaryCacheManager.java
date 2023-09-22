@@ -1,8 +1,8 @@
 package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.collection.CollUtil;
-import com.sugarcoat.api.dict.Dictionary;
-import com.sugarcoat.api.dict.DictionaryGroup;
+import com.sugarcoat.protocol.dict.Dictionary;
+import com.sugarcoat.protocol.dict.DictionaryGroup;
 import com.sugarcoat.support.dict.DictionaryProperties;
 import org.redisson.api.RKeys;
 import org.redisson.api.RMap;

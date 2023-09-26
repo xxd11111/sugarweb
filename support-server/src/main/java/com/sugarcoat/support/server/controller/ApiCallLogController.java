@@ -2,7 +2,7 @@ package com.sugarcoat.support.server.controller;
 
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
-import com.sugarcoat.support.server.service.AccessLogService;
+import com.sugarcoat.support.server.service.ApiCallLogService;
 import com.sugarcoat.support.server.domain.SgcApiCallLog;
 import com.sugarcoat.support.server.service.dto.AccessLogQueryDto;
 import lombok.RequiredArgsConstructor;
@@ -20,18 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/server/accessLog")
 @RequiredArgsConstructor
-public class AccessLogController {
+public class ApiCallLogController {
 
-	private final AccessLogService accessLogService;
+	private final ApiCallLogService apiCallLogService;
 
 	@GetMapping("findOne")
 	public SgcApiCallLog findOne(String id) {
-		return accessLogService.findOne(id);
+		return apiCallLogService.findOne(id);
 	}
 
 	@GetMapping("findPage")
 	public PageData<SgcApiCallLog> findPage(PageDto pageDto, AccessLogQueryDto queryDto) {
-		return accessLogService.findPage(pageDto, queryDto);
+		return apiCallLogService.findPage(pageDto, queryDto);
 	}
 
 }

@@ -4,11 +4,10 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.exception.ValidateException;
-import com.sugarcoat.support.server.domain.QSgcApiCallLog;
 import com.sugarcoat.support.server.domain.QSgcApiErrorLog;
-import com.sugarcoat.support.server.service.ErrorLogService;
+import com.sugarcoat.support.server.service.ApiErrorLogService;
 import com.sugarcoat.support.server.domain.SgcApiErrorLog;
-import com.sugarcoat.support.server.service.dto.ErrorLogQueryDto;
+import com.sugarcoat.support.server.service.dto.ApiErrorLogQueryDto;
 import com.sugarcoat.support.server.domain.ApiErrorLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,7 +24,7 @@ import org.springframework.stereotype.Component;
  */
 @AllArgsConstructor
 @Component
-public class ErrorLogServiceImpl implements ErrorLogService {
+public class ApiApiErrorLogServiceImpl implements ApiErrorLogService {
 
 	private final ApiErrorLogRepository apiErrorLogRepository;
 
@@ -35,7 +34,7 @@ public class ErrorLogServiceImpl implements ErrorLogService {
 	}
 
 	@Override
-	public PageData<SgcApiErrorLog> findPage(PageDto pageDto, ErrorLogQueryDto queryDto) {
+	public PageData<SgcApiErrorLog> findPage(PageDto pageDto, ApiErrorLogQueryDto queryDto) {
 		QSgcApiErrorLog apiErrorLog = QSgcApiErrorLog.sgcApiErrorLog;
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, apiErrorLog.getMetadata().getName());

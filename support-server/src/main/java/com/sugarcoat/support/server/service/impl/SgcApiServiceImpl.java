@@ -7,11 +7,11 @@ import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.support.server.domain.QSgcApi;
-import com.sugarcoat.support.server.service.dto.ServerApiDto;
-import com.sugarcoat.support.server.service.dto.ServerApiQueryDto;
-import com.sugarcoat.support.server.service.ServerApiService;
+import com.sugarcoat.support.server.service.dto.SgcApiDto;
+import com.sugarcoat.support.server.service.dto.SgcApiQueryDto;
+import com.sugarcoat.support.server.service.SgcApiService;
 import com.sugarcoat.support.server.domain.SgcApi;
-import com.sugarcoat.support.server.domain.ServerApiRepository;
+import com.sugarcoat.support.server.domain.SgcApiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,26 +25,26 @@ import org.springframework.data.domain.Sort;
  * @since 2023/5/8
  */
 @RequiredArgsConstructor
-public class ServerApiServiceImpl implements ServerApiService {
+public class SgcApiServiceImpl implements SgcApiService {
 
-	private final ServerApiRepository serverApiRepository;
+	private final SgcApiRepository sgcApiRepository;
 
 	@Override
-	public ServerApiDto findOne(String id) {
-		SgcApi sgcApi = serverApiRepository.findById(id)
+	public SgcApiDto findOne(String id) {
+		SgcApi sgcApi = sgcApiRepository.findById(id)
 				.orElseThrow(() -> new ValidateException("serverApi not find"));
-		ServerApiDto serverApiDTO = new ServerApiDto();
-		serverApiDTO.setId(sgcApi.getId());
-		serverApiDTO.setCode(sgcApi.getCode());
-		serverApiDTO.setName(sgcApi.getName());
-		serverApiDTO.setUrl(sgcApi.getUrl());
-		serverApiDTO.setMethodType(sgcApi.getMethodType());
-		serverApiDTO.setRemark(sgcApi.getRemark());
-		return serverApiDTO;
+		SgcApiDto sgcApiDTO = new SgcApiDto();
+		sgcApiDTO.setId(sgcApi.getId());
+		sgcApiDTO.setCode(sgcApi.getCode());
+		sgcApiDTO.setName(sgcApi.getName());
+		sgcApiDTO.setUrl(sgcApi.getUrl());
+		sgcApiDTO.setMethodType(sgcApi.getMethodType());
+		sgcApiDTO.setRemark(sgcApi.getRemark());
+		return sgcApiDTO;
 	}
 
 	@Override
-	public PageData<ServerApiDto> findPage(PageDto pageDto, ServerApiQueryDto queryDto) {
+	public PageData<SgcApiDto> findPage(PageDto pageDto, SgcApiQueryDto queryDto) {
 		QSgcApi sgcApi = QSgcApi.sgcApi;
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, sgcApi.url.getMetadata().getName());
@@ -61,17 +61,17 @@ public class ServerApiServiceImpl implements ServerApiService {
 				// .and(StrUtil.isNotEmpty(queryVO.getMethodType()),
 				// serverApi.methodType.eq(queryVO.getMethodType()))
 				.build();
-		Page<ServerApiDto> page = serverApiRepository.findAll(expression, pageRequest).map(entity -> {
-			ServerApiDto serverApiDTO = new ServerApiDto();
-			serverApiDTO.setId(entity.getId());
-			serverApiDTO.setCode(entity.getCode());
-			serverApiDTO.setName(entity.getName());
-			serverApiDTO.setUrl(entity.getUrl());
-			serverApiDTO.setRemark(entity.getRemark());
-			serverApiDTO.setMethodType(entity.getMethodType());
-			return serverApiDTO;
+		Page<SgcApiDto> page = sgcApiRepository.findAll(expression, pageRequest).map(entity -> {
+			SgcApiDto sgcApiDTO = new SgcApiDto();
+			sgcApiDTO.setId(entity.getId());
+			sgcApiDTO.setCode(entity.getCode());
+			sgcApiDTO.setName(entity.getName());
+			sgcApiDTO.setUrl(entity.getUrl());
+			sgcApiDTO.setRemark(entity.getRemark());
+			sgcApiDTO.setMethodType(entity.getMethodType());
+			return sgcApiDTO;
 		});
-		return PageDataConvert.convert(page, ServerApiDto.class);
+		return PageDataConvert.convert(page, SgcApiDto.class);
 	}
 
 }

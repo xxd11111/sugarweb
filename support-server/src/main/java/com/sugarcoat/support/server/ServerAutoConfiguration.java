@@ -1,12 +1,11 @@
 package com.sugarcoat.support.server;
 
-import com.sugarcoat.support.server.controller.ServerApiController;
-import com.sugarcoat.support.server.domain.ServerApiRepository;
-import com.sugarcoat.support.server.service.ServerApiService;
-import com.sugarcoat.support.server.service.impl.ServerApiServiceImpl;
+import com.sugarcoat.support.server.controller.ApiController;
+import com.sugarcoat.support.server.domain.SgcApiRepository;
+import com.sugarcoat.support.server.service.SgcApiService;
+import com.sugarcoat.support.server.service.impl.SgcApiServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -24,13 +23,18 @@ public class ServerAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public ServerApiService serverApiService(ServerApiRepository serverApiRepository) {
-		return new ServerApiServiceImpl(serverApiRepository);
+	public SgcApiService serverApiService(SgcApiRepository sgcApiRepository) {
+		return new SgcApiServiceImpl(sgcApiRepository);
 	}
 
 	@Bean
-	public ServerApiController serverApiController(ServerApiService serverApiService){
-		return new ServerApiController(serverApiService);
+	public ApiController serverApiController(SgcApiService sgcApiService){
+		return new ApiController(sgcApiService);
 	}
+
+	// @Bean
+	// public GlobalExceptionHandler globalExceptionHandler(){
+	// 	return new GlobalExceptionHandler();
+	// }
 
 }

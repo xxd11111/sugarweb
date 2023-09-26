@@ -3,7 +3,7 @@ package com.sugarcoat.support.server.service;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.support.server.domain.SgcApiErrorLog;
-import com.sugarcoat.support.server.service.dto.ErrorLogQueryDto;
+import com.sugarcoat.support.server.service.dto.ApiErrorLogQueryDto;
 
 /**
  * 异常日志服务
@@ -11,10 +11,10 @@ import com.sugarcoat.support.server.service.dto.ErrorLogQueryDto;
  * @author xxd
  * @since 2022-11-15
  */
-public interface ErrorLogService {
+public interface ApiErrorLogService {
 
 	SgcApiErrorLog findOne(String id);
 
-	PageData<SgcApiErrorLog> findPage(PageDto pageDto, ErrorLogQueryDto queryDto);
+	PageData<SgcApiErrorLog> findPage(PageDto pageDto, ApiErrorLogQueryDto queryDto);
 
 }

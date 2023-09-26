@@ -7,6 +7,6 @@ package com.sugarcoat.support.server.service.dto;
  * @version 1.0
  * @since 2023/6/1
  */
-public class ErrorLogQueryDto {
+public class ApiErrorLogQueryDto {
 
 }

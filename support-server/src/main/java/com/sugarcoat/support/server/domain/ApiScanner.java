@@ -19,13 +19,13 @@ import java.util.Set;
  * @since 2022-11-17
  */
 @Slf4j
-public class ServerApiScanner {
+public class ApiScanner {
 
 	private RequestMappingHandlerMapping mappingHandlerMapping;
 
 	private Set<SgcApi> sgcApis;
 
-	public Set<SgcApi> scanApi() {
+	public Set<SgcApi> scan() {
 		Set<SgcApi> urlList = new HashSet<>();
 		Map<RequestMappingInfo, HandlerMethod> map = mappingHandlerMapping.getHandlerMethods();
 		Set<RequestMappingInfo> requestMappingInfos = map.keySet();

@@ -3,7 +3,7 @@ package com.sugarcoat.support.server.domain;
 import com.sugarcoat.protocol.server.EnvInfo;
 
 /**
- * TODO
+ * 当前环境信息 todo 延期
  *
  * @author 许向东
  * @date 2023/9/22

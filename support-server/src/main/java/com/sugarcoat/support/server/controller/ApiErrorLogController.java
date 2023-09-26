@@ -2,9 +2,9 @@ package com.sugarcoat.support.server.controller;
 
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
-import com.sugarcoat.support.server.service.ErrorLogService;
+import com.sugarcoat.support.server.service.ApiErrorLogService;
 import com.sugarcoat.support.server.domain.SgcApiErrorLog;
-import com.sugarcoat.support.server.service.dto.ErrorLogQueryDto;
+import com.sugarcoat.support.server.service.dto.ApiErrorLogQueryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,18 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/server/errorLog")
 @RequiredArgsConstructor
-public class ErrorLogController {
+public class ApiErrorLogController {
 
-	private final ErrorLogService errorLogService;
+	private final ApiErrorLogService apiErrorLogService;
 
 	@GetMapping("findOne")
 	public SgcApiErrorLog findOne(String id) {
-		return errorLogService.findOne(id);
+		return apiErrorLogService.findOne(id);
 	}
 
 	@GetMapping("findPage")
-	public PageData<SgcApiErrorLog> findPage(PageDto pageDto, ErrorLogQueryDto queryDto) {
-		return errorLogService.findPage(pageDto, queryDto);
+	public PageData<SgcApiErrorLog> findPage(PageDto pageDto, ApiErrorLogQueryDto queryDto) {
+		return apiErrorLogService.findPage(pageDto, queryDto);
 	}
 
 }

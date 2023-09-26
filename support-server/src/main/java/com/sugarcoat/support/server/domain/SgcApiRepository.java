@@ -3,10 +3,11 @@ package com.sugarcoat.support.server.domain;
 import com.sugarcoat.orm.SugarcoatRepository;
 
 /**
+ * api存储层
+ *
  * @author xxd
- * @description TODO
  * @since 2023-01-03
  */
-public interface ServerApiRepository extends SugarcoatRepository<SgcApi> {
+public interface SgcApiRepository extends SugarcoatRepository<SgcApi> {
 
 }

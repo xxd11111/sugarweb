@@ -11,7 +11,7 @@ import com.sugarcoat.support.server.service.dto.AccessLogQueryDto;
  * @author xxd
  * @since 2022-11-15
  */
-public interface AccessLogService {
+public interface ApiCallLogService {
 
 	SgcApiCallLog findOne(String id);
 

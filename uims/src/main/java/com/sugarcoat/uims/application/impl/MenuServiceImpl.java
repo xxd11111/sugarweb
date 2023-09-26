@@ -7,7 +7,7 @@ import com.sugarcoat.orm.PageDataConvert;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
 import com.sugarcoat.support.server.domain.SgcApi;
-import com.sugarcoat.support.server.domain.ServerApiRepository;
+import com.sugarcoat.support.server.domain.SgcApiRepository;
 import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
@@ -36,7 +36,7 @@ public class MenuServiceImpl implements MenuService {
 
     private final MenuRepository menuRepository;
 
-    private final ServerApiRepository serverApiRepository;
+    private final SgcApiRepository sgcApiRepository;
 
     @Override
     public String save(MenuDto menuDto) {
@@ -81,7 +81,7 @@ public class MenuServiceImpl implements MenuService {
     public void associateApi(String id, String apiCode) {
         Menu menu = menuRepository.findById(id).orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + id));
         Set<SgcApi> sgcApis = new HashSet<>();
-        serverApiRepository.findById(apiCode).orElseThrow(()->new ValidateException("菜单不存在,id:{}" + id));
+        sgcApiRepository.findById(apiCode).orElseThrow(()->new ValidateException("菜单不存在,id:{}" + id));
         menu.setApiCode(apiCode);
         menuRepository.save(menu);
     }

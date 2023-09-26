@@ -5,7 +5,7 @@ import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.support.server.domain.QSgcApiCallLog;
-import com.sugarcoat.support.server.service.AccessLogService;
+import com.sugarcoat.support.server.service.ApiCallLogService;
 import com.sugarcoat.support.server.domain.SgcApiCallLog;
 import com.sugarcoat.support.server.service.dto.AccessLogQueryDto;
 import com.sugarcoat.support.server.domain.ApiCallLogRepository;
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @AllArgsConstructor
-public class AccessLogServiceImpl implements AccessLogService {
+public class ApiCallLogServiceImpl implements ApiCallLogService {
 
 	private final ApiCallLogRepository apiCallLogRepository;
 

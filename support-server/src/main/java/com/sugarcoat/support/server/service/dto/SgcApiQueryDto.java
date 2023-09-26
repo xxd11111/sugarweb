@@ -10,19 +10,15 @@ import lombok.Data;
  * @since 2023/5/8
  */
 @Data
-public class ServerApiDto {
-
-	private String id;
-
-	private String name;
+public class SgcApiQueryDto {
 
 	private String code;
+
+	private String name;
 
 	private String url;
 
 	private String methodType;
-
-	private String remark;
 
 	private String status;
 

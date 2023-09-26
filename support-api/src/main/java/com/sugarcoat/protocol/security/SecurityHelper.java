@@ -27,7 +27,7 @@ public class SecurityHelper {
     }
 
     public static String currentSessionId() {
-        return currentAccount().getSessionId();
+        return null;
     }
 
     public static String getUsername() {

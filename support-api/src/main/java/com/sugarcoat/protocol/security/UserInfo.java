@@ -13,8 +13,6 @@ public class UserInfo {
 
     private String id;
 
-    private String sessionId;
-
     private String username;
 
     private String userType;

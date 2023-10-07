@@ -36,7 +36,7 @@ public class ApiCallLogServiceImpl implements ApiCallLogService {
 	public PageData<SgcApiCallLog> findPage(PageDto pageDto, AccessLogQueryDto accessLogQueryDto) {
 		QSgcApiCallLog qSgcApiCallLog = QSgcApiCallLog.sgcApiCallLog;
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
-				.withSort(Sort.Direction.DESC, qSgcApiCallLog.callDate.getMetadata().getName());
+				.withSort(Sort.Direction.DESC, qSgcApiCallLog.requestDate.getMetadata().getName());
 		Page<SgcApiCallLog> page = sgcApiCallLogRepository.findAll(Expressions.TRUE, pageRequest);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
 	}

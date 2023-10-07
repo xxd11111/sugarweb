@@ -30,7 +30,7 @@ public interface ApiCallLog {
 
     String getRequestParams();
 
-    LocalDateTime getRequestDate();
+    LocalDateTime getRequestTime();
 
     String getRequestUserAgent();
 

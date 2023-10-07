@@ -84,7 +84,7 @@ public class SgcApiCallLog implements ApiCallLog {
 	/**
 	 * 开始请求时间
 	 */
-	private LocalDateTime requestDate;
+	private LocalDateTime requestTime;
 
 	/**
 	 * 执行时长，单位：毫秒

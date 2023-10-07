@@ -1,10 +1,20 @@
 package com.sugarcoat.support.server.domain;
 
+import com.sugarcoat.protocol.JsonUtil;
+import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.protocol.security.SecurityHelper;
 import com.sugarcoat.protocol.security.UserInfo;
+import com.sugarcoat.protocol.server.ApiCallLog;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -15,27 +25,64 @@ import java.util.Map;
  */
 public class ApiLogInfoHandler {
 
-    // private static ThreadLocal<SgcApiCallLog>
-
-    public static void loadRequestInfo(HttpServletRequest request) {
-        //todo 思考加入请求信息 还是加入controller参数信息
-        String requestURI = request.getRequestURI();
-        Map<String, String[]> parameterMap = request.getParameterMap();
+    public static void loadRequestInfo(SgcApiCallLog apiCallLog, HttpServletRequest request, LocalDateTime start) {
+        apiCallLog.setRequestMethod(request.getMethod());
+        apiCallLog.setRequestUrl(request.getRequestURI());
+        apiCallLog.setRequestIp(request.getRemoteAddr());
+        apiCallLog.setRequestUserAgent(request.getHeader("User-Agent"));
+        apiCallLog.setRequestTime(start);
     }
 
-    public static void loadResponseInfo(HttpServletResponse response) {
-
+    public static void loadParamsInfo(SgcApiCallLog apiCallLog, ProceedingJoinPoint joinPoint) {
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        String[] argNames = methodSignature.getParameterNames();
+        Object[] argValues = joinPoint.getArgs();
+        // 拼接参数
+        Map<String, Object> args = new HashMap<>(argValues.length);
+        for (int i = 0; i < argNames.length; i++) {
+            String argName = argNames[i];
+            Object argValue = argValues[i];
+            args.put(argName, argValue);
+        }
+        //设置的是java方法的参数
+        apiCallLog.setRequestParams(JsonUtil.toJsonStr(args));
     }
 
-    public static void loadUserInfo() {
+    public static void loadResultInfo(SgcApiCallLog apiCallLog, Object result, LocalDateTime start) {
+        if (result instanceof Result<?> r) {
+            apiCallLog.setResultCode(r.getCode());
+            apiCallLog.setResultData(JsonUtil.toJsonStr(r.getData()));
+            apiCallLog.setResultMsg(r.getMsg());
+        }
+        LocalDateTime end = LocalDateTime.now();
+        Duration between = Duration.between(start, end);
+        long duration = between.toMillis();
+        apiCallLog.setDuration((int) duration);
+    }
+
+    public static void loadUserInfo(SgcApiCallLog apiCallLog) {
         UserInfo userInfo = SecurityHelper.currentAccount();
-        String id = userInfo.getId();
+        String userId = userInfo.getId();
         String username = userInfo.getUsername();
-        String userType = userInfo.getUserType();
+        apiCallLog.setUserId(userId);
+        apiCallLog.setUsername(username);
     }
 
-    public static void loadErrorInfo() {
+    public static void loadErrorInfo(SgcApiErrorLog apiErrorLog, Throwable ex) {
+        apiErrorLog.setExceptionTime(LocalDateTime.now());
+        apiErrorLog.setExceptionMessage(ex.getMessage());
 
+        StackTraceElement[] stackTrace = ex.getStackTrace();
+        apiErrorLog.setExceptionFileName(stackTrace[0].getFileName());
+        apiErrorLog.setExceptionClassName(stackTrace[0].getClassName());
+        apiErrorLog.setExceptionMethodName(stackTrace[0].getMethodName());
+        apiErrorLog.setExceptionLineNumber(stackTrace[0].getLineNumber());
+
+        Class<? extends Throwable> exClass = ex.getClass();
+        apiErrorLog.setExceptionName(exClass.getName());
+
+        // apiErrorLog.setExceptionRootCauseMessage();
+        // apiErrorLog.setExceptionStackTrace();
     }
 
     public static void sendLog(){

@@ -10,8 +10,8 @@ package com.sugarcoat.protocol.server;
 public @interface ApiLog {
 
 	/**
-	 * 所属分组
+	 * 启用
 	 */
-	String group();
+	boolean enable() default true;
 
 }

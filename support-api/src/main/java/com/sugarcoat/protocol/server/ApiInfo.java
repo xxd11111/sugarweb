@@ -8,6 +8,10 @@ package com.sugarcoat.protocol.server;
  */
 public interface ApiInfo {
 
+    String getId();
+
+    String getUrl();
+
     String getCode();
 
     String getName();

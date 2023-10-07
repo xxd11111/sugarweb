@@ -24,7 +24,7 @@ public class SgcApiErrorLog extends SgcApiCallLog implements ApiErrorLog {
     /**
      * 异常时间
      */
-    private LocalDateTime exceptionDate;
+    private LocalDateTime exceptionTime;
     /**
      * 异常名
      */

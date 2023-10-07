@@ -13,7 +13,7 @@ public interface ApiErrorLog extends ApiCallLog {
     /**
      * 异常时间
      */
-    LocalDateTime getExceptionDate();
+    LocalDateTime getExceptionTime();
     /**
      * 异常名
      */

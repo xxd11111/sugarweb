@@ -7,7 +7,7 @@ package com.sugarcoat.protocol.server;
  * @version 1.0
  * @since 2023/6/1
  */
-public @interface ApiRecordable {
+public @interface ApiLog {
 
 	/**
 	 * 所属分组

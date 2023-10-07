@@ -26,41 +26,25 @@ public class SgcApiCallLog implements ApiCallLog {
 	@Id
 	private String id;
 
+	/**
+	 * 接口id
+	 */
 	private String apiId;
 
+	/**
+	 * 接口名
+	 */
+	private String apiName;
+
+	/**
+	 * 应用ip
+	 */
 	private String appIp;
 
+	/**
+	 * 应用端口
+	 */
 	private String appPort;
-
-	/**
-	 * 服务ip
-	 */
-	private String serverIp;
-
-	/**
-	 * 请求url
-	 */
-	private String requestUrl;
-
-	/**
-	 * 请求参数
-	 */
-	private String requestParam;
-
-	/**
-	 * 请求方法
-	 */
-	private String requestMethod;
-
-	/**
-	 * 结果码
-	 */
-	private int resultCode;
-
-	/**
-	 * 结果提示
-	 */
-	private String resultMsg;
 
 	/**
 	 * 用户 id
@@ -70,31 +54,56 @@ public class SgcApiCallLog implements ApiCallLog {
 	/**
 	 * 用户名
 	 */
-	private String userName;
+	private String username;
 
 	/**
-	 * 用户 IP
+	 * 请求ip
 	 */
-	private String userIp;
+	private String requestIp;
 
 	/**
-	 * 浏览器 UA
+	 * 请求url
 	 */
-	private String userAgent;
+	private String requestUrl;
+
+	/**
+	 * 请求方法
+	 */
+	private String requestMethod;
+
+	/**
+	 * 请求参数
+	 */
+	private String requestParams;
+
+	/**
+	 * 请求代理
+	 */
+	private String requestUserAgent;
 
 	/**
 	 * 开始请求时间
 	 */
-	private LocalDateTime callDate;
-
-	/**
-	 * 结束请求时间
-	 */
-	private LocalDateTime callEndDate;
+	private LocalDateTime requestDate;
 
 	/**
 	 * 执行时长，单位：毫秒
 	 */
-	private int duration;
+	private Integer duration;
+
+	/**
+	 * 结果码
+	 */
+	private Integer resultCode;
+
+	/**
+	 * 结果数据
+	 */
+	private String resultData;
+
+	/**
+	 * 结果提示
+	 */
+	private String resultMsg;
 
 }

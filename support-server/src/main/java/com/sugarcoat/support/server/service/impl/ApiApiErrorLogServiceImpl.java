@@ -8,7 +8,7 @@ import com.sugarcoat.support.server.domain.QSgcApiErrorLog;
 import com.sugarcoat.support.server.service.ApiErrorLogService;
 import com.sugarcoat.support.server.domain.SgcApiErrorLog;
 import com.sugarcoat.support.server.service.dto.ApiErrorLogQueryDto;
-import com.sugarcoat.support.server.domain.ApiErrorLogRepository;
+import com.sugarcoat.support.server.domain.SgcApiErrorLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,11 +26,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ApiApiErrorLogServiceImpl implements ApiErrorLogService {
 
-	private final ApiErrorLogRepository apiErrorLogRepository;
+	private final SgcApiErrorLogRepository sgcApiErrorLogRepository;
 
 	@Override
 	public SgcApiErrorLog findOne(String id) {
-		return apiErrorLogRepository.findById(id).orElseThrow(() -> new ValidateException("异常日志不存在,id:{}", id));
+		return sgcApiErrorLogRepository.findById(id).orElseThrow(() -> new ValidateException("异常日志不存在,id:{}", id));
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ApiApiErrorLogServiceImpl implements ApiErrorLogService {
 		QSgcApiErrorLog apiErrorLog = QSgcApiErrorLog.sgcApiErrorLog;
 		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
 				.withSort(Sort.Direction.DESC, apiErrorLog.getMetadata().getName());
-		Page<SgcApiErrorLog> page = apiErrorLogRepository.findAll(Expressions.TRUE, pageRequest);
+		Page<SgcApiErrorLog> page = sgcApiErrorLogRepository.findAll(Expressions.TRUE, pageRequest);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
 	}
 

@@ -9,6 +9,6 @@ import com.sugarcoat.orm.SugarcoatRepository;
  * @version 1.0
  * @since 2023/6/1
  */
-public interface ApiErrorLogRepository extends SugarcoatRepository<SgcApiErrorLog> {
+public interface SgcApiErrorLogRepository extends SugarcoatRepository<SgcApiErrorLog> {
 
 }

@@ -12,32 +12,34 @@ public interface ApiCallLog {
 
     String getApiId();
 
+    String getApiName();
+
     String getAppIp();
 
     String getAppPort();
 
-    String getRequestUrl();
+    String getUserId();
 
-    String getRequestParam();
+    String getUsername();
+
+    String getRequestIp();
 
     String getRequestMethod();
 
-    int getResultCode();
+    String getRequestUrl();
+
+    String getRequestParams();
+
+    LocalDateTime getRequestDate();
+
+    String getRequestUserAgent();
+
+    Integer getDuration();
+
+    String getResultData();
+
+    Integer getResultCode();
 
     String getResultMsg();
-
-    LocalDateTime getCallDate();
-
-    LocalDateTime getCallEndDate();
-
-    int getDuration();
-
-    String getUserId();
-
-    String getUserName();
-
-    String getUserIp();
-
-    String getUserAgent();
 
 }

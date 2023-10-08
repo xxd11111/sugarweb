@@ -37,16 +37,6 @@ public class SgcApiCallLog implements ApiCallLog {
 	private String apiName;
 
 	/**
-	 * 应用ip
-	 */
-	private String appIp;
-
-	/**
-	 * 应用端口
-	 */
-	private String appPort;
-
-	/**
 	 * 用户 id
 	 */
 	private String userId;

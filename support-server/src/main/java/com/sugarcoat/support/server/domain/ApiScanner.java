@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 接口扫描者
+ * 接口扫描者 todo 重写
  *
  * @author xxd
  * @since 2022-11-17
@@ -21,38 +21,40 @@ import java.util.Set;
 @Slf4j
 public class ApiScanner {
 
-	private RequestMappingHandlerMapping mappingHandlerMapping;
+    private RequestMappingHandlerMapping mappingHandlerMapping;
 
-	private Set<SgcApi> sgcApis;
+    private String[] basePackages;
 
-	public Set<SgcApi> scan() {
-		Set<SgcApi> urlList = new HashSet<>();
-		Map<RequestMappingInfo, HandlerMethod> map = mappingHandlerMapping.getHandlerMethods();
-		Set<RequestMappingInfo> requestMappingInfos = map.keySet();
-		for (RequestMappingInfo info : requestMappingInfos) {
-			SgcApi sgcApi = new SgcApi();
-			PatternsRequestCondition patternsRequestCondition = info.getPatternsCondition();
-			Set<String> patterns = patternsRequestCondition.getPatterns();
-			log.info("url:{}", patterns);
-			for (String url : patterns) {
-				sgcApi.setUrl(url);
-			}
-			RequestMethodsRequestCondition methodsRequestCondition = info.getMethodsCondition();
-			Set<RequestMethod> methods = methodsRequestCondition.getMethods();
-			log.info("method:{}", methods);
-			for (RequestMethod method : methods) {
-				String type = method.name();
-				sgcApi.setMethodType(type);
-			}
-			sgcApi.setRemark(info.toString());
-			urlList.add(sgcApi);
-		}
-		log.info(String.valueOf(urlList));
-		return urlList;
-	}
+    public Set<SgcApi> scan() {
+        // 方式1
+		//获取basePackages下存在@Operation注解的接口apis
+		//获取apis的类上@Tag注解信息，缺失则取类名
 
-	public Set<SgcApi> getApi() {
-		return sgcApis;
-	}
+		//方式2 不建议 使用mappingHandlerMapping获取mvc已加载的接口
+
+        Set<SgcApi> urlList = new HashSet<>();
+        Map<RequestMappingInfo, HandlerMethod> map = mappingHandlerMapping.getHandlerMethods();
+        Set<RequestMappingInfo> requestMappingInfos = map.keySet();
+        for (RequestMappingInfo info : requestMappingInfos) {
+            SgcApi sgcApi = new SgcApi();
+            PatternsRequestCondition patternsRequestCondition = info.getPatternsCondition();
+            Set<String> patterns = patternsRequestCondition.getPatterns();
+            log.info("url:{}", patterns);
+            for (String url : patterns) {
+                sgcApi.setUrl(url);
+            }
+            RequestMethodsRequestCondition methodsRequestCondition = info.getMethodsCondition();
+            Set<RequestMethod> methods = methodsRequestCondition.getMethods();
+            log.info("method:{}", methods);
+            for (RequestMethod method : methods) {
+                String type = method.name();
+                sgcApi.setMethodType(type);
+            }
+            sgcApi.setRemark(info.toString());
+            urlList.add(sgcApi);
+        }
+        log.info(String.valueOf(urlList));
+        return urlList;
+    }
 
 }

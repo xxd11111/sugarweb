@@ -41,14 +41,24 @@ public class FileServiceImpl implements FileService {
             fileInfo.setFileName(originalFilename);
             fileInfo.setKey(key);
             fileInfo.setFileSize(multipartFile.getSize());
-            String[] split = originalFilename.split(".");
-            //todo 数组越界
-            fileInfo.setFileType(split[1]);
+            fileInfo.setFileType(getFileType(originalFilename));
             fileRepository.save(fileInfo);
             return fileInfo;
         } catch (IOException e) {
             throw new ServerException("文件上传失败", e);
         }
+    }
+
+    //只判断文件名，不识别文件magic值
+    private String getFileType(String filename) {
+        if (filename == null){
+            return null;
+        }
+        String[] split = filename.split("\\.");
+        if (split.length <= 1) {
+            return null;
+        }
+        return split[1];
     }
 
     @Override

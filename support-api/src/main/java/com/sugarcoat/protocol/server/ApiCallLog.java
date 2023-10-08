@@ -14,10 +14,6 @@ public interface ApiCallLog {
 
     String getApiName();
 
-    String getAppIp();
-
-    String getAppPort();
-
     String getUserId();
 
     String getUsername();

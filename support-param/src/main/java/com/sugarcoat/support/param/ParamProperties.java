@@ -22,7 +22,6 @@ public class ParamProperties {
 
     /**
      * 扫描路径
-     * todo 配置一个全局的
      */
     private String scanPackage;
 

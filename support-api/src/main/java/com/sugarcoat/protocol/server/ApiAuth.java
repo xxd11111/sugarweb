@@ -1,7 +1,7 @@
 package com.sugarcoat.protocol.server;
 
 /**
- * TODO
+ * api权限注解
  *
  * @author xxd
  * @since 2023/10/7 21:07
@@ -13,6 +13,9 @@ public @interface ApiAuth {
      */
     String authType() default "";
 
-    String authCode() default "";
+    /**
+     * 权限编码
+     */
+    String[] authCode() default {};
 
 }

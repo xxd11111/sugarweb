@@ -1,4 +1,4 @@
-package com.sugarcoat.support.server.domain;
+package com.sugarcoat.support.server.domain.later;
 
 import com.sugarcoat.protocol.server.AppInfo;
 
@@ -14,15 +14,14 @@ public class CurrentAppInfo implements AppInfo {
 
     @Override
     public Object getRuntimeInfo() {
-        ClassLoadingMXBean classLoadingMXBean = ManagementFactory.getClassLoadingMXBean();
-        CompilationMXBean compilationMXBean = ManagementFactory.getCompilationMXBean();
-        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
-        ThreadInfo threadInfo = threadMXBean.getThreadInfo(1);
-
         RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
         long startTime = runtimeMXBean.getStartTime();
         long uptime = runtimeMXBean.getUptime();
-        return null;
+
+        RuntimeInfo runtimeInfo = new RuntimeInfo();
+        runtimeInfo.setStartTime(startTime);
+        runtimeInfo.setUptime(uptime);
+        return runtimeInfo;
     }
 
     @Override

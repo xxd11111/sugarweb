@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class OverrideDictionaryRegistry implements DictionaryRegistry {
 
-    //todo 换成 SugarcoatDictionaryRepository
     private final DictionaryManager dictionaryManager;
 
     public OverrideDictionaryRegistry(DictionaryManager dictionaryManager) {

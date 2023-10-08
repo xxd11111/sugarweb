@@ -3,7 +3,7 @@ package com.sugarcoat.support.server.service.dto;
 import lombok.Data;
 
 /**
- * TODO
+ * SgcApiDto
  *
  * @author xxd
  * @version 1.0

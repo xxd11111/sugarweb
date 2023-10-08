@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class MergeDictionaryRegistry implements DictionaryRegistry {
 
-    //todo 换成 SugarcoatDictionaryRepository
     private final DictionaryManager dictionaryManager;
 
     public MergeDictionaryRegistry(DictionaryManager dictionaryManager) {

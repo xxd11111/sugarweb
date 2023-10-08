@@ -1,4 +1,4 @@
-package com.sugarcoat.support.server.domain;
+package com.sugarcoat.support.server.domain.later;
 
 import lombok.Data;
 

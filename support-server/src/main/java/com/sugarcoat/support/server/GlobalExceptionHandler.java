@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
 @RestControllerAdvice
-@AllArgsConstructor
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IdempotentException.class)

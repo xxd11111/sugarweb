@@ -21,5 +21,12 @@
             <artifactId>support-orm</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+<!--         todo 减少依赖 -->
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-doc</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

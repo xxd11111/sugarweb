@@ -1,4 +1,4 @@
-package com.sugarcoat.protocol.oss;
+package com.sugarcoat.support.oss.domain;
 
 import lombok.Data;
 

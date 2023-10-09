@@ -1,11 +1,16 @@
 package com.sugarcoat.protocol.server;
 
+import java.lang.annotation.*;
+
 /**
  * api权限注解
  *
  * @author xxd
  * @since 2023/10/7 21:07
  */
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface ApiAuth {
 
     /**

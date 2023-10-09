@@ -6,8 +6,7 @@ import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.orm.PageDataConvert;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.orm.ExpressionWrapper;
-import com.sugarcoat.support.server.domain.SgcApi;
-import com.sugarcoat.support.server.domain.SgcApiRepository;
+import com.sugarcoat.protocol.server.ApiManager;
 import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
@@ -21,8 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * 菜单服务实现类
@@ -36,7 +33,7 @@ public class MenuServiceImpl implements MenuService {
 
     private final MenuRepository menuRepository;
 
-    private final SgcApiRepository sgcApiRepository;
+    private final ApiManager apiManager;
 
     @Override
     public String save(MenuDto menuDto) {
@@ -80,8 +77,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public void associateApi(String id, String apiCode) {
         Menu menu = menuRepository.findById(id).orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + id));
-        Set<SgcApi> sgcApis = new HashSet<>();
-        sgcApiRepository.findById(apiCode).orElseThrow(()->new ValidateException("菜单不存在,id:{}" + id));
+        apiManager.findApiById(apiCode).orElseThrow(()->new ValidateException("菜单不存在,id:{}" + id));
         menu.setApiCode(apiCode);
         menuRepository.save(menu);
     }

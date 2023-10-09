@@ -152,6 +152,8 @@ sugarcoat:
     endPoint: x
     accessKey: x
     secretKey: x
+  server:
+    enable: true
 
 
 

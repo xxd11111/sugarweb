@@ -1,5 +1,7 @@
 package com.sugarcoat.protocol.server;
 
+import java.lang.annotation.*;
+
 /**
  * 接口记录
  *
@@ -7,6 +9,9 @@ package com.sugarcoat.protocol.server;
  * @version 1.0
  * @since 2023/6/1
  */
+@Target({ ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
 public @interface ApiLog {
 
 	/**

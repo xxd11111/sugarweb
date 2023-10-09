@@ -6,7 +6,7 @@
 
 ## 框架选型:
 
-- 基础环境：jdk17, maven3.6.3, redis6.x, mysql8.x
+- 基础环境：jdk21, maven3.6.3, redis6.x, mysql8.x
 - 基础依赖框架：springboot3.x
 - 默认实现层技术选型： spring-security, spring-data-jpa, quartz, redisson, lombok, mapstruct, hutool
 
@@ -53,7 +53,7 @@ sugarcoat使用说明文档地址：(准备中)
 ## 安装教程
 
 1. 下载或拉取代码
-2. 检测本地环境，建议jdk17，mysql8.x，redis6.x
+2. 检测本地环境，建议jdk21，mysql8.x，redis6.x
 3. 打开application-dev.yml，配置数据库地址，配置redis地址
 4. 项目中使用了querydsl，需要maven执行compile后才能启动
 5. uims为sugarcoat使用案例，启动服务后，打开浏览器输入http://localhost:8889/sugarcoat/doc.html

@@ -6,6 +6,7 @@ import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.support.server.service.dto.SgcApiDto;
 import com.sugarcoat.support.server.service.dto.SgcApiQueryDto;
 import com.sugarcoat.support.server.service.SgcApiService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class ApiController {
 
 	private final SgcApiService sgcApiService;
 
+	@Operation
 	@GetMapping("findOne/{id}")
 	public Result<SgcApiDto> findOne(@PathVariable String id) {
 		return Result.data(sgcApiService.findOne(id));

@@ -23,49 +23,49 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IdempotentException.class)
-    public Result<?> idempotentException(HttpServletRequest req, Throwable ex) {
+    public Result<?> idempotentException(Throwable ex) {
         log.error("[IdempotentException]", ex);
         return Result.error(ex.getMessage());
     }
 
     @ExceptionHandler(RateLimitException.class)
-    public Result<?> rateLimitException(HttpServletRequest req, Throwable ex) {
+    public Result<?> rateLimitException(Throwable ex) {
         log.error("[RateLimitException]", ex);
         return Result.error(ex.getMessage());
     }
 
     @ExceptionHandler(FrameworkException.class)
-    public Result<?> frameworkException(HttpServletRequest req, Throwable ex) {
+    public Result<?> frameworkException(Throwable ex) {
         log.error("[FrameworkException]", ex);
         return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(SecurityException.class)
-    public Result<?> securityException(HttpServletRequest req, Throwable ex) {
+    public Result<?> securityException(Throwable ex) {
         log.error("[SecurityException]", ex);
         return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ServerException.class)
-    public Result<?> serverException(HttpServletRequest req, Throwable ex) {
+    public Result<?> serverException(Throwable ex) {
         log.error("[ServerException]", ex);
         return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ServiceException.class)
-    public Result<?> serviceException(HttpServletRequest req, Throwable ex) {
+    public Result<?> serviceException(Throwable ex) {
         log.error("[ServiceException]", ex);
         return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ValidateException.class)
-    public Result<?> validateException(HttpServletRequest req, Throwable ex) {
+    public Result<?> validateException(Throwable ex) {
         log.error("[ValidateException]", ex);
         return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
-    public Result<?> exceptionHandler(HttpServletRequest req, Throwable ex) {
+    public Result<?> exceptionHandler(Throwable ex) {
         log.error("[Exception]", ex);
         return Result.error(HttpCode.INTERNAL_SERVER_ERROR);
     }

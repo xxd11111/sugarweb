@@ -35,11 +35,10 @@ public class SgcApiServiceImpl implements SgcApiService {
 				.orElseThrow(() -> new ValidateException("serverApi not find"));
 		SgcApiDto sgcApiDTO = new SgcApiDto();
 		sgcApiDTO.setId(sgcApi.getId());
-		sgcApiDTO.setCode(sgcApi.getCode());
-		sgcApiDTO.setName(sgcApi.getName());
+		sgcApiDTO.setCode(sgcApi.getOperationId());
+		sgcApiDTO.setName(sgcApi.getSummary());
 		sgcApiDTO.setUrl(sgcApi.getUrl());
-		sgcApiDTO.setMethodType(sgcApi.getMethodType());
-		sgcApiDTO.setRemark(sgcApi.getRemark());
+		sgcApiDTO.setMethodType(sgcApi.getRequestMethod());
 		return sgcApiDTO;
 	}
 
@@ -63,12 +62,11 @@ public class SgcApiServiceImpl implements SgcApiService {
 				.build();
 		Page<SgcApiDto> page = sgcApiRepository.findAll(expression, pageRequest).map(entity -> {
 			SgcApiDto sgcApiDTO = new SgcApiDto();
-			sgcApiDTO.setId(entity.getId());
-			sgcApiDTO.setCode(entity.getCode());
-			sgcApiDTO.setName(entity.getName());
+			sgcApiDTO.setId(entity.getOperationId());
+			sgcApiDTO.setCode(entity.getSummary());
+			sgcApiDTO.setName(entity.getOperationDescription());
 			sgcApiDTO.setUrl(entity.getUrl());
-			sgcApiDTO.setRemark(entity.getRemark());
-			sgcApiDTO.setMethodType(entity.getMethodType());
+			sgcApiDTO.setMethodType(entity.getRequestMethod());
 			return sgcApiDTO;
 		});
 		return PageDataConvert.convert(page, SgcApiDto.class);

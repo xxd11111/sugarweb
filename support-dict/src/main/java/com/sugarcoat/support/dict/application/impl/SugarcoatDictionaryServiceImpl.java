@@ -44,12 +44,9 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 	@Override
 	public void save(DictionaryDto dictionaryDto) {
 		SugarcoatDictionary dictionary = new SugarcoatDictionary();
-		SugarcoatDictionaryGroup sugarcoatDictionaryGroup = sugarcoatDictionaryGroupRepository
-				.findById(dictionaryDto.getGroupId()).orElseThrow(() -> new ValidateException("dict not find"));
 		dictionary.setDictionaryId(dictionaryDto.getId());
 		dictionary.setCode(dictionaryDto.getCode());
 		dictionary.setName(dictionaryDto.getName());
-		dictionary.setDictionaryGroup(sugarcoatDictionaryGroup);
 		sugarcoatDictionaryRepository.save(dictionary);
 	}
 

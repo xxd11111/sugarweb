@@ -6,6 +6,9 @@ import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
 import com.sugarcoat.uims.application.MenuService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +22,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/menu")
 @RequiredArgsConstructor
+@Tag(name = "菜单管理", description = "这是菜单管理")
 public class MenuController {
 
     private final MenuService menuService;
 
     @GetMapping("{id}")
+    @Operation(operationId = "")
     public Result<MenuDto> findOne(@NotBlank @PathVariable String id) {
         return Result.data(menuService.find(id));
     }

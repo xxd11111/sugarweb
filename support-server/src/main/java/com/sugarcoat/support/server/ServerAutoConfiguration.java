@@ -5,6 +5,7 @@ import com.sugarcoat.support.server.controller.ApiController;
 import com.sugarcoat.support.server.domain.*;
 import com.sugarcoat.support.server.service.SgcApiService;
 import com.sugarcoat.support.server.service.impl.SgcApiServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -12,6 +13,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
  * 服务自动配置
@@ -61,4 +64,8 @@ public class ServerAutoConfiguration {
 		return new SgcApiManager(sgcApiRepository);
 	}
 
+    @Bean
+    public ApiScanner apiScanner(WebApplicationContext applicationContext){
+        return new ApiScanner(applicationContext);
+    }
 }

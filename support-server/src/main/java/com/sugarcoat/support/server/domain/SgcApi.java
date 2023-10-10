@@ -24,15 +24,19 @@ public class SgcApi implements ApiInfo {
 	@Id
 	private String id;
 
-	private String code;
-
-	private String name;
+	private String operationId;
 
 	private String url;
 
-	private String methodType;
+	private String requestMethod;
 
-	private String remark;
+	private String summary;
+
+	private String operationDescription;
+
+	private String tagName;
+
+	private String tagDescription;
 
 	@Override
 	public boolean equals(Object o) {

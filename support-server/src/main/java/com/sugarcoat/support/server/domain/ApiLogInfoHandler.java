@@ -55,8 +55,8 @@ public record ApiLogInfoHandler(SgcApiCallLogRepository apiCallLogRepository,
         ApiInfo apiInfo = apiManager.findApiByUrl(requestURI)
                 //正常情况一定不为null
                 .orElseThrow(() -> new FrameworkException("未加载到ApiInfo"));
-        apiCallLog.setApiId(apiInfo.getId());
-        apiCallLog.setApiName(apiInfo.getName());
+        apiCallLog.setApiId(apiInfo.getOperationId());
+        apiCallLog.setApiName(apiInfo.getSummary());
     }
 
     @SneakyThrows(FrameworkException.class)

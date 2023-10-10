@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 字典组
@@ -46,7 +47,8 @@ public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGro
 
 	@OneToMany(mappedBy = "dictionaryId", cascade = CascadeType.ALL)
 	@ToString.Exclude
-	private Collection<SugarcoatDictionary> sugarcoatDictionaries = new java.util.ArrayList<>();
+	@Transient
+	private List<SugarcoatDictionary> sugarcoatDictionaries = new java.util.ArrayList<>();
 
 	/**
 	 * 将sugarcoatDictionaries与getDictionaries分开处理泛型转型问题

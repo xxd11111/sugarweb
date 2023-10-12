@@ -34,7 +34,7 @@ public class SgcApiServiceImpl implements SgcApiService {
 		SgcApi sgcApi = sgcApiRepository.findById(id)
 				.orElseThrow(() -> new ValidateException("serverApi not find"));
 		SgcApiDto sgcApiDTO = new SgcApiDto();
-		sgcApiDTO.setId(sgcApi.getId());
+		sgcApiDTO.setId(sgcApi.getOperationId());
 		sgcApiDTO.setCode(sgcApi.getOperationId());
 		sgcApiDTO.setName(sgcApi.getSummary());
 		sgcApiDTO.setUrl(sgcApi.getUrl());

@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -27,7 +24,13 @@ public class SgcApiManager implements ApiManager {
 
     private final SgcApiRepository sgcApiRepository;
 
-    private final Map<String, SgcApi> apiInfos = new ConcurrentHashMap<>();
+    private final Map<String, SgcApi> apiInfos;
+
+    public SgcApiManager(SgcApiRepository sgcApiRepository, ApiRegister apiRegister) {
+        this.sgcApiRepository = sgcApiRepository;
+        Map<String, SgcApi> scan = apiRegister.scan();
+        apiInfos = Collections.unmodifiableMap(scan);
+    }
 
     @Override
     public Optional<ApiInfo> findApiByUrl(String url) {
@@ -65,13 +68,13 @@ public class SgcApiManager implements ApiManager {
             SgcApi oldOne = null;
             try {
                 sgcApiRepository.save(sgcApi);
-                oldOne = apiInfos.get(sgcApi.getId());
-                apiInfos.put(sgcApi.getId(), sgcApi);
+                oldOne = apiInfos.get(sgcApi.getOperationId());
+                apiInfos.put(sgcApi.getOperationId(), sgcApi);
             } catch (Throwable ex) {
                 if (oldOne != null) {
-                    apiInfos.put(sgcApi.getId(), oldOne);
+                    apiInfos.put(sgcApi.getOperationId(), oldOne);
                 } else {
-                    apiInfos.remove(sgcApi.getId());
+                    apiInfos.remove(sgcApi.getOperationId());
                 }
                 log.error("ApiInfo保存失败，apiInfo：{}", apiInfo, ex);
                 throw ex;

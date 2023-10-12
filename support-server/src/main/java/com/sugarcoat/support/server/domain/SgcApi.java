@@ -6,6 +6,9 @@ import org.hibernate.Hibernate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -19,11 +22,9 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class SgcApi implements ApiInfo {
+public class SgcApi implements ApiInfo,Cloneable {
 
 	@Id
-	private String id;
-
 	private String operationId;
 
 	private String url;
@@ -45,12 +46,21 @@ public class SgcApi implements ApiInfo {
 		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o))
 			return false;
 		SgcApi sgcApi = (SgcApi) o;
-		return getId() != null && Objects.equals(getId(), sgcApi.getId());
+		return getOperationId() != null && Objects.equals(getOperationId(), sgcApi.getOperationId());
 	}
 
 	@Override
 	public int hashCode() {
 		return getClass().hashCode();
+	}
+
+	@Override
+	public SgcApi clone() {
+		try {
+			return (SgcApi) super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError();
+		}
 	}
 
 }

@@ -116,9 +116,7 @@ public class ApiRegister implements SgcRegister {
      */
     public Map<String, SgcApi> getApiMap() {
         Map<String, SgcApi> result = new HashMap<>();
-        apiMap.forEach((k, v) -> {
-            result.put(k, v.clone());
-        });
+        apiMap.forEach((k, v) -> result.put(k, v.clone()));
         return result;
     }
 

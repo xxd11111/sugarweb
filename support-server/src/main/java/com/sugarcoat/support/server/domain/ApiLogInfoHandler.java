@@ -69,7 +69,9 @@ public record ApiLogInfoHandler(SgcApiCallLogRepository apiCallLogRepository,
         for (int i = 0; i < argNames.length; i++) {
             String argName = argNames[i];
             Object argValue = argValues[i];
-            args.put(argName, argValue);
+            if(!isIgnoreArgs(argValue)){
+                args.put(argName, argValue);
+            }
         }
         //设置的是java方法的参数
         apiCallLog.setRequestParams(JsonUtil.toJsonStr(args));

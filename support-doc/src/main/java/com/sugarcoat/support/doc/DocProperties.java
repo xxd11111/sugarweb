@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties("sugarcoat.swagger")
 @Data
-public class SwaggerProperties {
+public class DocProperties {
 
 	/**
 	 * 标题

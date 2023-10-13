@@ -33,20 +33,22 @@ import java.util.Optional;
  * Swagger 自动配置类
  */
 @ConditionalOnClass({OpenAPI.class})
-@EnableConfigurationProperties(SwaggerProperties.class)
-@ConditionalOnProperty(prefix = "sugarcoat.swagger", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class SwaggerAutoConfiguration {
+@EnableConfigurationProperties(DocProperties.class)
+@ConditionalOnProperty(prefix = "sugarcoat.doc", name = "enabled", havingValue = "true", matchIfMissing = true)
+public class DocAutoConfiguration {
 
     // ========== 全局 OpenAPI 配置 ==========
 
     @Bean
-    public OpenAPI createApi(SwaggerProperties properties) {
+    public OpenAPI createApi(DocProperties properties) {
         Map<String, SecurityScheme> securitySchemas = buildSecuritySchemes();
         OpenAPI openAPI = new OpenAPI()
                 // 接口信息
                 .info(buildInfo(properties))
                 // 接口安全配置
-                .components(new Components().securitySchemes(securitySchemas));
+                .components(new Components()
+                        .securitySchemes(securitySchemas)
+                );
         securitySchemas.keySet().forEach(key -> openAPI.addSecurityItem(new SecurityRequirement().addList(key)));
         return openAPI;
     }
@@ -54,18 +56,18 @@ public class SwaggerAutoConfiguration {
     /**
      * API 摘要信息
      */
-    private Info buildInfo(SwaggerProperties properties) {
+    private Info buildInfo(DocProperties properties) {
         return new Info()
-				.title(properties.getTitle())
-				.description(properties.getDescription())
+                .title(properties.getTitle())
+                .description(properties.getDescription())
                 .version(properties.getVersion())
                 .contact(new Contact()
-						.name(properties.getAuthor())
-						.url(properties.getUrl())
+                        .name(properties.getAuthor())
+                        .url(properties.getUrl())
                         .email(properties.getEmail()))
                 .license(new License()
-						.name(properties.getLicense())
-						.url(properties.getLicenseUrl()));
+                        .name(properties.getLicense())
+                        .url(properties.getLicenseUrl()));
     }
 
     /**
@@ -73,9 +75,11 @@ public class SwaggerAutoConfiguration {
      */
     private Map<String, SecurityScheme> buildSecuritySchemes() {
         Map<String, SecurityScheme> securitySchemes = new HashMap<>();
-        SecurityScheme securityScheme = new SecurityScheme().type(SecurityScheme.Type.APIKEY) // 类型
+        SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.APIKEY) // 类型
                 .name(HttpHeaders.AUTHORIZATION) // 请求头的 name
-                .in(SecurityScheme.In.HEADER); // token 所在位置
+                // token 所在位置
+                .in(SecurityScheme.In.HEADER);
         securitySchemes.put(HttpHeaders.AUTHORIZATION, securityScheme);
         return securitySchemes;
     }
@@ -101,49 +105,49 @@ public class SwaggerAutoConfiguration {
      */
     @Bean
     public GroupedOpenApi allGroupedOpenApi() {
-        return buildGroupedOpenApi("all", "");
+        return buildGroupedOpenApi("全部", "/**");
     }
 
-    public static GroupedOpenApi buildGroupedOpenApi(String group) {
-        return buildGroupedOpenApi(group, group);
-    }
-
-    public static GroupedOpenApi buildGroupedOpenApi(String group, String path) {
-        return GroupedOpenApi.builder().group(group)
-                .pathsToMatch("/admin-api/" + path + "/**", "/app-api/" + path + "/**")
+    public static GroupedOpenApi buildGroupedOpenApi(String groupName, String matchPath) {
+        return GroupedOpenApi.builder()
+                .group(groupName)
+                .pathsToMatch(matchPath)
                 .addOperationCustomizer(
-                        (operation, handlerMethod) -> operation.addParametersItem(buildTenantHeaderParameter())
-                                .addParametersItem(buildSecurityHeaderParameter()))
+                        (operation, handlerMethod) -> operation
+                                .addParametersItem(buildTenantHeaderParameter())
+                                .addParametersItem(buildSecurityHeaderParameter())
+                )
                 .build();
     }
 
     /**
      * 构建 Tenant 租户编号请求头参数
-     *
-     * @return 多租户参数
      */
     private static Parameter buildTenantHeaderParameter() {
-        return new Parameter().name("HEADER_TENANT_ID") // header 名
+        return new Parameter()
+                .name("TENANT_ID") // header名
                 .description("租户编号") // 描述
                 .in(String.valueOf(SecurityScheme.In.HEADER)) // 请求 header
-                .schema(new IntegerSchema()._default(1L).name("HEADER_TENANT_ID").description("租户编号")); // 默认：使用租户编号为
-        // 1
+                .schema(new IntegerSchema()
+                        ._default(1L)
+                        .name("TENANT_ID")
+                        .description("租户编号")
+                );
     }
 
     /**
      * 构建 Authorization 认证请求头参数
-     * <p>
-     * 解决 Knife4j <a href="https://gitee.com/xiaoym/knife4j/issues/I69QBU">Authorize
-     * 未生效，请求header里未包含参数</a>
-     *
-     * @return 认证参数
      */
     private static Parameter buildSecurityHeaderParameter() {
-        return new Parameter().name(HttpHeaders.AUTHORIZATION) // header 名
-                .description("认证 Token") // 描述
+        return new Parameter()
+                .name(HttpHeaders.AUTHORIZATION) // header 名
+                .description("Token") // 描述
                 .in(String.valueOf(SecurityScheme.In.HEADER)) // 请求 header
-                .schema(new StringSchema()._default("Bearer test1").name("HEADER_TENANT_ID").description("认证 Token")); // 默认：使用用户编号为
-        // 1
+                .schema(new StringSchema()
+                        ._default("Bearer test1")
+                        .name("HEADER_TENANT_ID")
+                        .description("Token")
+                );
     }
 
 }

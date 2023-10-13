@@ -36,10 +36,10 @@ spring:
     url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
     username: ${MYSQL_USERNAME:root}
     password: ${MYSQL_PASSWORD:123456}
-#    driver-class-name: org.mariadb.jdbc.Driver
-#    url: jdbc:mariadb://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-#    username: root
-#    password: xxd123456
+  #    driver-class-name: org.mariadb.jdbc.Driver
+  #    url: jdbc:mariadb://localhost:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+  #    username: root
+  #    password: xxd123456
   jpa:
     #    database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
@@ -67,24 +67,19 @@ spring:
       ssl:
         enabled: false
 
-springdoc:
-  #这里定义了两个分组，可定义多个，也可以不定义
-  api-docs:
-    enabled: true
-    path: /v3/api-docs
-  group-configs:
-    - group: 1.演示模块
-      packages-to-scan: com.sugarcoat
-  swagger-ui:
-    enabled: true
-    path: /swagger-ui
-    # 禁止默认路径
-    disable-swagger-default-url: true
-
-knife4j:
-  enable: true
-  setting:
-    language: zh_cn
+#springdoc:
+#  #这里定义了两个分组，可定义多个，也可以不定义
+#  api-docs:
+#    enabled: true
+#    path: /v3/api-docs
+#  group-configs:
+#    - group: 1.演示模块
+#      packages-to-scan: com.sugarcoat
+#  swagger-ui:
+#    enabled: true
+#    path: /swagger-ui
+#    # 禁止默认路径
+#    disable-swagger-default-url: true
 
 # 日志配置
 logging:
@@ -114,28 +109,28 @@ sugarcoat:
       timeout: 3000
       # 发布和订阅连接池大小
       subscriptionConnectionPoolSize: 50
-# redis 单机配置(单机与集群只能开启一个另一个需要注释掉)
-  swagger:
+  # redis 单机配置(单机与集群只能开启一个另一个需要注释掉)
+  doc:
     enable: true
-    title: sugarcoat开发平台
-    description: ""
-    version: 1.0
-    url: ""
-    email: ""
+    title: 用户界面管理系统
+    description: 用户界面管理系统
+    version: V1.0
+    url: http://localhost:${server.port}${server.servlet.context-path}
+    email: sugarcoatx@qq.com
     license: MIT
-    license-url: ""
+    license-url: https://mit-license.org/
   dictionary:
     enable: true
     scanPackage: com.sugarcoat.uims
     registerStrategy: OVERRIDE
     enableCache: true
-    cachePrefix: "sugarcoat:dict:"
+    cachePrefix: 'sugarcoat:dict:'
   param:
     enable: true
     enableRegister: true
     scanPackage: com.sugarcoat.uims
     enableCache: true
-    cachePrefix: "sugarcoat:param:"
+    cachePrefix: 'sugarcoat:param:'
   email:
     enable: false
     host: "smtp.qq.com"
@@ -145,7 +140,7 @@ sugarcoat:
   sms:
     enable: false
     type: aliyun
-#    type: tencent
+  #    type: tencent
   oss:
     enable: false
     bucketName: x

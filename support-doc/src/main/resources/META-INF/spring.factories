@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarcoat.support.doc.SwaggerAutoConfiguration
+  com.sugarcoat.support.doc.DocAutoConfiguration

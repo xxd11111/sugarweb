@@ -88,8 +88,10 @@ public class DocAutoConfiguration {
      * 自定义 OpenAPI 处理器
      */
     @Bean
-    public OpenAPIService openApiBuilder(Optional<OpenAPI> openAPI, SecurityService securityParser,
-                                         SpringDocConfigProperties springDocConfigProperties, PropertyResolverUtils propertyResolverUtils,
+    public OpenAPIService openApiBuilder(Optional<OpenAPI> openAPI,
+                                         SecurityService securityParser,
+                                         SpringDocConfigProperties springDocConfigProperties,
+                                         PropertyResolverUtils propertyResolverUtils,
                                          Optional<List<OpenApiBuilderCustomizer>> openApiBuilderCustomizers,
                                          Optional<List<ServerBaseUrlCustomizer>> serverBaseUrlCustomizers,
                                          Optional<JavadocProvider> javadocProvider) {

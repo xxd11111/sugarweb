@@ -28,7 +28,7 @@ public class MenuController {
     private final MenuService menuService;
 
     @GetMapping("{id}")
-    @Operation(operationId = "")
+    @Operation(operationId = "menu:findOne")
     public Result<MenuDto> findOne(@NotBlank @PathVariable String id) {
         return Result.data(menuService.find(id));
     }

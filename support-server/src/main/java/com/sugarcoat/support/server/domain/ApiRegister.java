@@ -1,6 +1,7 @@
 package com.sugarcoat.support.server.domain;
 
 import com.sugarcoat.protocol.common.SgcRegister;
+import com.sugarcoat.protocol.exception.FrameworkException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 接口注册
@@ -33,7 +37,9 @@ public class ApiRegister implements SgcRegister {
 
     private final SgcApiRepository apiRepository;
 
-    private Map<String, SgcApi> apiMap = new HashMap<>();
+    private final Map<String, SgcApi> apiMap = new HashMap<>();
+
+    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
     //todo 选取包 低优先级
     private final String[] basePackages = null;
@@ -49,21 +55,25 @@ public class ApiRegister implements SgcRegister {
             //二次加载tag,operation接口
             Method method = v.getMethod();
             Class<?> clazz = method.getDeclaringClass();
+            SgcApi sgcApi = new SgcApi();
             Tag tag = clazz.getAnnotation(Tag.class);
             if (tag == null) {
                 return;
+            } else {
+                sgcApi.setTagName(tag.name());
+                sgcApi.setTagDescription(tag.description());
             }
             Operation operation = method.getAnnotation(Operation.class);
             if (operation == null) {
                 return;
+            } else {
+                if (operation.operationId() == null || operation.operationId().isEmpty()) {
+                    throw new FrameworkException("{}#{}:未指定operationId", clazz.getSimpleName(), method.getName());
+                }
+                sgcApi.setOperationId(operation.operationId());
+                sgcApi.setSummary(operation.summary());
+                sgcApi.setOperationDescription(operation.description());
             }
-            SgcApi sgcApi = new SgcApi();
-            sgcApi.setTagName(tag.name());
-            sgcApi.setTagDescription(tag.description());
-            sgcApi.setOperationId(operation.operationId());
-            sgcApi.setSummary(operation.summary());
-            sgcApi.setOperationDescription(operation.description());
-
             PatternsRequestCondition patternsRequestCondition = k.getPatternsCondition();
             if (patternsRequestCondition == null) {
                 return;
@@ -79,15 +89,28 @@ public class ApiRegister implements SgcRegister {
                 log.warn("ApiScanner扫描中发现存在多个RequestMethod:{}", methods);
             }
             methods.forEach(a -> sgcApi.setRequestMethod(a.name()));
-            urlList.put(sgcApi.getOperationId(), sgcApi);
+            if (urlList.containsKey(sgcApi.getOperationId())) {
+                throw new FrameworkException("存在重复operationId,{}", sgcApi.getOperationId());
+            } else {
+                urlList.put(sgcApi.getOperationId(), sgcApi);
+            }
         });
-
         log.info("ApiScanner扫描获取{}个接口信息", urlList.size());
+        urlList.forEach((k, v) -> log.info("ApiScanner扫描接口：{}", v));
         return urlList;
     }
 
     public void load(Map<String, SgcApi> apiMap) {
-        this.apiMap.putAll(apiMap);
+        Lock lock = readWriteLock.writeLock();
+        if (lock.tryLock()) {
+            try {
+                this.apiMap.putAll(apiMap);
+            } finally {
+                lock.unlock();
+            }
+        } else {
+            throw new FrameworkException("ApiRegister:load操作写锁超时");
+        }
     }
 
     public void reload(Map<String, SgcApi> apiMap) {
@@ -116,7 +139,16 @@ public class ApiRegister implements SgcRegister {
      */
     public Map<String, SgcApi> getApiMap() {
         Map<String, SgcApi> result = new HashMap<>();
-        apiMap.forEach((k, v) -> result.put(k, v.clone()));
+        Lock lock = readWriteLock.readLock();
+        if (lock.tryLock()) {
+            try {
+                apiMap.forEach((k, v) -> result.put(k, v.clone()));
+            } finally {
+                lock.unlock();
+            }
+        } else {
+            throw new FrameworkException("ApiRegister#getApiMap操作读锁超时");
+        }
         return result;
     }
 

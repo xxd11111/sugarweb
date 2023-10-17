@@ -4,7 +4,7 @@ import jakarta.annotation.Resource;
 import org.quartz.*;
 
 /**
- * TODO
+ * SchedulerManager 用于管理定时任务
  *
  * @author 许向东
  * @date 2023/10/17
@@ -15,10 +15,10 @@ public class SchedulerManager {
     private Scheduler scheduler;
 
     public void add(SchedulerInfo schedulerInfo) throws SchedulerException {
-        scheduler.checkExists(new JobKey(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup()));
+        JobKey jobKey = new JobKey(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup());
         JobDetail jobDetail = JobBuilder
                 .newJob(SchedulerBean.class)
-                .withIdentity(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup())
+                .withIdentity(jobKey)
                 .build();
         // 构建Cron调度器
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder
@@ -32,6 +32,31 @@ public class SchedulerManager {
                 .build();
         jobDetail.getJobDataMap().put("1", schedulerInfo);
         scheduler.scheduleJob(jobDetail, trigger);
+    }
+
+    public void resume(SchedulerInfo schedulerInfo) throws SchedulerException {
+        JobKey jobKey = new JobKey(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup());
+        scheduler.resumeJob(jobKey);
+    }
+
+    public void pause(SchedulerInfo schedulerInfo) throws SchedulerException {
+        JobKey jobKey = new JobKey(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup());
+        scheduler.pauseJob(jobKey);
+    }
+
+    public void delete(SchedulerInfo schedulerInfo) throws SchedulerException {
+        JobKey jobKey = new JobKey(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup());
+        scheduler.deleteJob(jobKey);
+    }
+
+    public void interrupt(SchedulerInfo schedulerInfo) throws SchedulerException {
+        JobKey jobKey = new JobKey(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup());
+        scheduler.interrupt(jobKey);
+    }
+
+    public boolean exists(SchedulerInfo schedulerInfo) throws SchedulerException {
+        JobKey jobKey = new JobKey(schedulerInfo.getTaskName(), schedulerInfo.getTaskGroup());
+        return scheduler.checkExists(jobKey);
     }
 
 }

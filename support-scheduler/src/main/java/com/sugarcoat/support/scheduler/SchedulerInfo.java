@@ -24,6 +24,8 @@ public interface SchedulerInfo {
 
     Object[] getParams();
 
+    String[] getParamsInfo();
+
     String getLastExecuteTime();
 
     String getNextExecuteTime();

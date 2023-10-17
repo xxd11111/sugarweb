@@ -43,6 +43,10 @@ public class BeanUtil implements BeanFactoryPostProcessor, ApplicationContextAwa
 		return getBeanFactory().getBean(clazz);
 	}
 
+	public static Object getBean(String beanName) {
+		return getBeanFactory().getBean(beanName);
+	}
+
 	public static <T> T getBean(String name, Class<T> clazz) {
 		return getBeanFactory().getBean(name, clazz);
 	}

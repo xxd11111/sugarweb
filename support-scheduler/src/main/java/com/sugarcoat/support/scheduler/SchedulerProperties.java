@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * TODO
+ * 定时任务配置
  *
  * @author xxd
  * @since 2023/10/16 20:48

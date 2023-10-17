@@ -64,8 +64,34 @@ spring:
       # 连接超时时间
       timeout: 10s
       # 是否开启ssl
-      ssl:
-        enabled: false
+      ssl: false
+  quartz:
+    # 使用数据库存储
+    job-store-type: jdbc
+    # 初始化完成后自动启动调度程序
+    autoStartup: true
+    properties:
+      org:
+        quartz:
+          # 调度器配置
+          scheduler:
+            instanceName: bootQuartzScheduler
+            instanceId: AUTO
+          # 存储配置
+          jobStore:
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: qrtz_
+            isClustered: true
+            misfireThreshold: 12000
+            clusterCheckinInterval: 15000
+            useProperties: false
+          # 线程池配置
+          threadPool:
+            threadNamePrefix: Boot_Job_Pool
+            threadPriority: 5
+            threadCount: 10
+            class: org.quartz.simpl.SimpleThreadPool
 
 #springdoc:
 #  #这里定义了两个分组，可定义多个，也可以不定义

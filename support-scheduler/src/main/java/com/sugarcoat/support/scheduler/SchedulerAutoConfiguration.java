@@ -14,6 +14,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @EntityScan
 @EnableConfigurationProperties(SchedulerProperties.class)
-@ConditionalOnProperty(prefix = "sugarcoat.server", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarcoat.scheduler", name = "enable", havingValue = "true")
 public class SchedulerAutoConfiguration {
 }

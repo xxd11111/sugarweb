@@ -6,15 +6,15 @@ package com.sugarcoat.support.scheduler;
  * @author 许向东
  * @date 2023/10/17
  */
-public interface SchedulerInfo {
+public interface SchedulerTask {
 
     String getTaskName();
 
     String getTaskGroup();
 
-    String getTriggerName();
+    String getSchedulerName();
 
-    String getTriggerGroup();
+    String getSchedulerGroup();
 
     String getCron();
 

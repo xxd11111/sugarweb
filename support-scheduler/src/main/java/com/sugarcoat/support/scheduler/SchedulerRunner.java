@@ -11,9 +11,15 @@ import org.springframework.boot.ApplicationArguments;
  */
 public class SchedulerRunner implements SgcRunner {
 
+    private final TaskBeanRegistry taskBeanRegistry;
+
+    public SchedulerRunner(TaskBeanRegistry taskBeanRegistry) {
+        this.taskBeanRegistry = taskBeanRegistry;
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
+        taskBeanRegistry.register();
     }
 
 }

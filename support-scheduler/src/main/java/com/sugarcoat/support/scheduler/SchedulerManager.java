@@ -1,5 +1,7 @@
 package com.sugarcoat.support.scheduler;
 
+import java.util.List;
+
 /**
  * SchedulerManager 用于管理定时任务
  *
@@ -8,20 +10,28 @@ package com.sugarcoat.support.scheduler;
  */
 public interface SchedulerManager {
 
-    public void add(SchedulerTask schedulerTask);
+    void add(SchedulerTask schedulerTask);
 
-    public void update(SchedulerTask schedulerTask);
+    void update(SchedulerTask schedulerTask);
 
-    public void resume(String name, String group);
+    void enable(String name);
 
-    public void pause(String name, String group);
+    void disable(String name);
 
-    public void delete(String name, String group);
+    void resume(String name);
 
-    public void interrupt(String name, String group);
+    void pause(String name);
 
-    public boolean exists(String name, String group);
+    void delete(String name);
 
-    public void run(SchedulerTask schedulerTask);
+    void interrupt(String name);
+
+    boolean exists(String name);
+
+    void run(String name);
+
+    void updateStatus(String name, String status);
+
+    List<SchedulerTask> getAll();
 
 }

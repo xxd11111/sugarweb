@@ -1,8 +1,9 @@
 package com.sugarcoat.support.scheduler;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.quartz.Scheduler;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -14,6 +15,32 @@ import org.springframework.context.annotation.Configuration;
 @Configuration(proxyBeanMethods = false)
 @EntityScan
 @EnableConfigurationProperties(SchedulerProperties.class)
-@ConditionalOnProperty(prefix = "sugarcoat.scheduler", name = "enable", havingValue = "true")
+// @ConditionalOnProperty(prefix = "sugarcoat.scheduler", name = "enable", havingValue = "true")
 public class SchedulerAutoConfiguration {
+
+    @Bean
+    public SgcTaskBeanFactory sgcTaskBeanFactory(SchedulerManager schedulerManager) {
+        return new SgcTaskBeanFactory(schedulerManager);
+    }
+
+    @Bean
+    public SchedulerManager schedulerManager() {
+        return new SgcSchedulerManager();
+    }
+
+    @Bean
+    public SchedulerService schedulerService(SchedulerManager schedulerManager) {
+        return new SchedulerService(schedulerManager);
+    }
+
+    @Bean
+    public SchedulerController schedulerController() {
+        return new SchedulerController();
+    }
+
+    @Bean
+    public SchedulerRunner schedulerRunner(TaskBeanRegistry taskBeanRegistry) {
+        return new SchedulerRunner(taskBeanRegistry);
+    }
+
 }

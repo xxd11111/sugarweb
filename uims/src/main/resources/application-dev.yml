@@ -62,38 +62,45 @@ spring:
       # 是否开启ssl
       ssl: false
   quartz:
-    # 使用数据库存储
+    # 任务存储类型
     job-store-type: jdbc
-    # 初始化完成后自动启动调度程序
-    scheduler-name: uims_scheduler
-    # 应用关闭时需要完成当前执行任务
+    # 关闭时等待任务完成
     wait-for-jobs-to-complete-on-shutdown: true
-    startup-delay: 5s
-    autoStartup: true
+    # 是否覆盖已有的任务
+    overwrite-existing-jobs: true
+    # 是否自动启动计划程序
+    auto-startup: true
+    # 延迟启动
+    startup-delay: 10s
     jdbc:
-      #始化表结构
-      initialize-schema: embedded
+      # 数据库架构初始化模式（never：从不进行初始化；always：每次都清空数据库进行初始化；embedded：只初始化内存数据库（默认值））
+      # 注意：第一次启动后，需要将always改为never，否则后续每次启动都会重新初始化quartz数据库
+      initialize-schema: never
+      # 用于初始化数据库架构的SQL文件的路径
+      # schema: classpath:sql/tables_mysql_innodb.sql
+    # 相关属性配置
     properties:
       org:
         quartz:
-          # 调度器配置
           scheduler:
-            instanceName: bootQuartzScheduler
+            # 调度器实例名称
+            instanceName: UimsScheduler
+            # 分布式节点ID自动生成
             instanceId: AUTO
-          jdbc:
-            initialize-schema: never # 是否自动使用 SQL 初始化 Quartz 表结构。这里设置成 never ，我们手动创建表结构
-          # 存储配置
           jobStore:
-            class: org.quartz.impl.jdbcjobstore.JobStoreTX #持久化配置
-            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate #仅为数据库制作了特定于数据库的代理
-            useProperties: false #以指示JDBCJobStore将JobDataMaps中的所有值都作为字符串，因此可以作为名称 - 值对存储而不是在BLOB列中以其序列化形式存储更多复杂的对象。从长远来看，这是更安全的，因为您避免了将非String类序列化为BLOB的类版本问题。
-            tablePrefix: qrtz_  #数据库表前缀
-            misfireThreshold: 60000 #在被认为“失火”之前，调度程序将“容忍”一个Triggers将其下一个启动时间通过的毫秒数。默认值（如果您在配置中未输入此属性）为60000（60秒）。
-            clusterCheckinInterval: 5000 #设置此实例“检入”*与群集的其他实例的频率（以毫秒为单位）。影响检测失败实例的速度。
-            isClustered: true #打开群集功能
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            # 表前缀
+            tablePrefix: QRTZ_
+            # 是否开启集群
+            isClustered: true
+            # 数据源别名（自定义）
+            dataSource: quartz
+            # 分布式节点有效性检查时间间隔（毫秒）
+            clusterCheckinInterval: 10000
+            useProperties: false
           # 线程池配置
           threadPool:
-            threadNamePrefix: scheduler_pool
             class: org.quartz.simpl.SimpleThreadPool
             threadCount: 10
             threadPriority: 5

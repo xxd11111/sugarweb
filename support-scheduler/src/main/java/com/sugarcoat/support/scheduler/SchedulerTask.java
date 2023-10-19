@@ -10,36 +10,26 @@ public interface SchedulerTask {
 
     String getTaskName();
 
-    String getTaskGroup();
-
-    String getSchedulerName();
-
-    String getSchedulerGroup();
+    String getTriggerName();
 
     String getCron();
 
-    String getBeanName();
-
-    String getMethodName();
-
-    Object[] getParams();
-
-    String[] getParamsInfo();
-
-    String getLastExecuteTime();
-
-    String getNextExecuteTime();
-
-    String getRetryStrategy();
-
-    String getRetryTimes();
-
-    String getDelayStrategy();
-
-    String getDelayTime();
+    // String[] getParamsInfo();
+    //
+    // String getLastExecuteTime();
+    //
+    // String getNextExecuteTime();
+    //
+    // String getRetryStrategy();
+    //
+    // String getRetryTimes();
+    //
+    // String getDelayStrategy();
+    //
+    // String getDelayTime();
 
     String getExecuteStatus();
 
-    String getTaskStatus();
+    String getSchedulerStatus();
 
 }

@@ -21,6 +21,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-orm</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-doc</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

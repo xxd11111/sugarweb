@@ -18,27 +18,27 @@ import java.lang.reflect.Method;
 @Slf4j
 public class SchedulerJobBean extends QuartzJobBean {
 
+    private final TaskBeanFactory taskBeanFactory = BeanUtil.getBean(TaskBeanFactory.class);
+
     @Override
     protected void executeInternal(JobExecutionContext context) {
         JobDataMap mergedJobDataMap = context.getMergedJobDataMap();
-        SchedulerTask schedulerTask = (SchedulerTask) mergedJobDataMap.get("1");
-        String taskStatus = schedulerTask.getTaskStatus();
-        if ("0".equals(taskStatus)){
+        SgcSchedulerTask schedulerTask = (SgcSchedulerTask) mergedJobDataMap.get("1");
+        String taskStatus = schedulerTask.getSchedulerStatus();
+        if ("0".equals(taskStatus)) {
             log.debug("定时任务未启用,不执行:{}", schedulerTask.getTaskName());
             return;
         }
+        log.info("定时任务执行开始：{}", schedulerTask.getTaskName());
         try {
-            Object target = BeanUtil.getBean(schedulerTask.getBeanName());
-            Method method = target.getClass().getDeclaredMethod(schedulerTask.getMethodName(), String.class);
-            method.invoke(target, schedulerTask.getParams());
+            Object taskBean = taskBeanFactory.getBean(schedulerTask.getTaskName());
+            Method method = taskBean.getClass().getDeclaredMethod(schedulerTask.getMethodName());
+            Object[] split = schedulerTask.getParams();
+            method.invoke(taskBean, split);
         } catch (Throwable ex) {
             log.error("定时任务执行异常", ex);
-            //todo 重试处理
-            String retryTimes = schedulerTask.getRetryTimes();
-            String retryStrategy = schedulerTask.getRetryStrategy();
-        } finally {
-
         }
+        log.info("定时任务执行结束：{}", schedulerTask.getTaskName());
 
     }
 

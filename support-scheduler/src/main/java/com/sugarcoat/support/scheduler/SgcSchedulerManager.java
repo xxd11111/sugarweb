@@ -1,5 +1,6 @@
 package com.sugarcoat.support.scheduler;
 
+import com.sugarcoat.protocol.exception.FrameworkException;
 import jakarta.annotation.Resource;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
@@ -58,6 +59,25 @@ public class SgcSchedulerManager implements SchedulerManager {
                     .build();
             trigger.getJobDataMap().put("1", schedulerTask);
             scheduler.rescheduleJob(triggerKey, trigger);
+        } catch (SchedulerException e) {
+            throw new RuntimeException("updateJob Fail", e);
+        }
+    }
+
+    @Override
+    public void updateBean(SchedulerTask schedulerTask) {
+        try {
+            if (schedulerTask instanceof SgcSchedulerTask newSchedulerTask){
+                JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(schedulerTask.getTaskName()));
+                scheduler.deleteJob(JobKey.jobKey(newSchedulerTask.getTaskName()));
+                JobDataMap jobDataMap = jobDetail.getJobDataMap();
+                SgcSchedulerTask sgcSchedulerTask = (SgcSchedulerTask)jobDataMap.get("1");
+                sgcSchedulerTask.setBeanName(newSchedulerTask.getBeanName());
+                sgcSchedulerTask.setMethodName(newSchedulerTask.getMethodName());
+                sgcSchedulerTask.setParams(newSchedulerTask.getParams());
+            }else {
+                throw new FrameworkException("类型异常，schedulerTask不是SgcSchedulerTask");
+            }
         } catch (SchedulerException e) {
             throw new RuntimeException("updateJob Fail", e);
         }
@@ -145,6 +165,16 @@ public class SgcSchedulerManager implements SchedulerManager {
                 sgcSchedulerTasks.add(sgcSchedulerTask);
             }
             return sgcSchedulerTasks;
+        } catch (SchedulerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public SchedulerTask getOne(String name) {
+        try {
+            JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(name));
+            return (SchedulerTask) jobDetail.getJobDataMap().get("1");
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }

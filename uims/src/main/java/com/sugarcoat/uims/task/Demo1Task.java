@@ -1,6 +1,7 @@
 package com.sugarcoat.uims.task;
 
-import com.sugarcoat.support.scheduler.TaskBean;
+import com.sugarcoat.support.scheduler.InnerTaskBean;
+import com.sugarcoat.support.scheduler.InnerTaskMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -12,9 +13,10 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class Demo1Task implements TaskBean {
+@InnerTaskBean
+public class Demo1Task {
 
-    @Override
+    @InnerTaskMethod(cron = "0/5 * * * * ? ")
     public void executeTask() {
         log.info("executeTask:demo1");
     }

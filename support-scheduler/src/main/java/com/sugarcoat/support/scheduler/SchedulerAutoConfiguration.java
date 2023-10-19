@@ -1,6 +1,5 @@
 package com.sugarcoat.support.scheduler;
 
-import org.quartz.Scheduler;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

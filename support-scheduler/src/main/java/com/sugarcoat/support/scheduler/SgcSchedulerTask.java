@@ -1,15 +1,11 @@
 package com.sugarcoat.support.scheduler;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * TODO
+ * SgcSchedulerTask
  *
  * @author 许向东
  * @date 2023/10/18
@@ -26,6 +22,8 @@ public class SgcSchedulerTask implements SchedulerTask, Serializable {
 
     private String cron;
 
+    private String defaultCron;
+
     private String executeStatus;
 
     private String schedulerStatus;
@@ -34,7 +32,11 @@ public class SgcSchedulerTask implements SchedulerTask, Serializable {
 
     private String methodName;
 
+    private String[] paramInfos;
+
     private String[] params;
+
+    private String[] defaultParams;
 
     // private String lastExecuteTime;
     //

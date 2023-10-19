@@ -14,6 +14,8 @@ public interface SchedulerManager {
 
     void update(SchedulerTask schedulerTask);
 
+    void updateBean(SchedulerTask schedulerTask);
+
     void enable(String name);
 
     void disable(String name);
@@ -33,5 +35,7 @@ public interface SchedulerManager {
     void updateStatus(String name, String status);
 
     List<SchedulerTask> getAll();
+
+    SchedulerTask getOne(String name);
 
 }

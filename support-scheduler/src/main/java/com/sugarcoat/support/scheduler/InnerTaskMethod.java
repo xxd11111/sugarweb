@@ -15,7 +15,7 @@ public @interface InnerTaskMethod {
 
     String taskName() default "";
 
-    String cron() default "";
+    String cron();
 
     boolean enable() default true;
 

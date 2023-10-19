@@ -14,7 +14,7 @@ public interface SchedulerTask {
 
     String getCron();
 
-    // String[] getParamsInfo();
+    // String[] getParamInfos();
     //
     // String getLastExecuteTime();
     //

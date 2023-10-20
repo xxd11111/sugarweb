@@ -1,5 +1,8 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.support.scheduler.service;
 
+import com.sugarcoat.protocol.scheduler.SchedulerManager;
+import com.sugarcoat.protocol.scheduler.SchedulerTask;
+import com.sugarcoat.support.scheduler.domain.SgcSchedulerTask;
 import org.quartz.Trigger;
 
 import java.util.List;

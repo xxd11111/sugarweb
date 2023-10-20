@@ -1,4 +1,4 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.support.scheduler.service;
 
 import lombok.Data;
 

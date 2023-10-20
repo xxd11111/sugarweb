@@ -1,4 +1,4 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.support.scheduler.domain;
 
 import com.sugarcoat.protocol.BeanUtil;
 import lombok.extern.slf4j.Slf4j;

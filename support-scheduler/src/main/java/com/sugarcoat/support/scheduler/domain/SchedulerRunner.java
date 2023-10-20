@@ -1,6 +1,7 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.support.scheduler.domain;
 
 import com.sugarcoat.protocol.common.SgcRunner;
+import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import org.springframework.boot.ApplicationArguments;
 
 /**

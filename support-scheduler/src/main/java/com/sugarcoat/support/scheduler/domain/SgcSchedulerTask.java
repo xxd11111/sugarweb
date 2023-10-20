@@ -1,5 +1,6 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.support.scheduler.domain;
 
+import com.sugarcoat.protocol.scheduler.SchedulerTask;
 import lombok.*;
 
 import java.io.Serializable;

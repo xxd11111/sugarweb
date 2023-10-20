@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.task;
 
-import com.sugarcoat.support.scheduler.InnerTaskBean;
-import com.sugarcoat.support.scheduler.InnerTaskMethod;
+import com.sugarcoat.protocol.scheduler.InnerTaskBean;
+import com.sugarcoat.protocol.scheduler.InnerTaskMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

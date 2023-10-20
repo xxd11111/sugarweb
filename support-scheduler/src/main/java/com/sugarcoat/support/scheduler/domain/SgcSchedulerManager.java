@@ -1,5 +1,7 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.support.scheduler.domain;
 
+import com.sugarcoat.protocol.scheduler.SchedulerManager;
+import com.sugarcoat.protocol.scheduler.SchedulerTask;
 import jakarta.annotation.Resource;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;

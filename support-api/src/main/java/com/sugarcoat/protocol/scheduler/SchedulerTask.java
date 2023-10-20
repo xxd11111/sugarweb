@@ -1,4 +1,4 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.protocol.scheduler;
 
 /**
  * 定时任务信息

@@ -1,4 +1,4 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.protocol.scheduler;
 
 import java.lang.annotation.*;
 

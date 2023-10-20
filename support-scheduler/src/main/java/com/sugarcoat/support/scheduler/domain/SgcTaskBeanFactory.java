@@ -1,7 +1,8 @@
-package com.sugarcoat.support.scheduler;
+package com.sugarcoat.support.scheduler.domain;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
+import com.sugarcoat.protocol.scheduler.*;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Trigger;
 import org.springframework.beans.BeansException;

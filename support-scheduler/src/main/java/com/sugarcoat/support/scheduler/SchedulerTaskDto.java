@@ -17,8 +17,18 @@ public class SchedulerTaskDto {
 
     private String cron;
 
+    private String defaultCron;
+
     private String executeStatus;
 
-    private String schedulerStatus;
+    private String beanName;
+
+    private String methodName;
+
+    private Integer paramsLength;
+
+    private String params;
+
+    private String defaultParams;
 
 }

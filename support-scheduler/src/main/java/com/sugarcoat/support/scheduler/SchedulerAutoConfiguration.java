@@ -38,8 +38,8 @@ public class SchedulerAutoConfiguration {
     }
 
     @Bean
-    public SchedulerRunner schedulerRunner(TaskBeanRegistry taskBeanRegistry) {
-        return new SchedulerRunner(taskBeanRegistry);
+    public SchedulerRunner schedulerRunner(TaskBeanRegistry taskBeanRegistry, SchedulerManager schedulerManager) {
+        return new SchedulerRunner(taskBeanRegistry, schedulerManager);
     }
 
 }

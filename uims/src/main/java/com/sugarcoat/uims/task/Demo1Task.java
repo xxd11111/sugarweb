@@ -16,9 +16,10 @@ import org.springframework.stereotype.Component;
 @InnerTaskBean
 public class Demo1Task {
 
-    @InnerTaskMethod(cron = "0/5 * * * * ? ")
-    public void executeTask() {
-        log.info("executeTask:demo1");
+    @InnerTaskMethod(cron = "0/20 * * * * ? ", params = "123")
+    public void executeTask(String params) throws InterruptedException {
+        Thread.sleep(10000);
+        log.info("executeTask:demo1," + params);
     }
 
 }

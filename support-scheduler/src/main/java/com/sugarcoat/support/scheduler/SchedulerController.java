@@ -28,29 +28,15 @@ public class SchedulerController {
 
     @PostMapping("add")
     @Operation(operationId = "scheduler:add", summary = "add")
-    public Result add(SchedulerTaskDto dto){
+    public Result add(@RequestBody SchedulerTaskDto dto){
         schedulerService.add(dto);
         return Result.ok();
     }
 
     @PostMapping("update")
     @Operation(operationId = "scheduler:update", summary = "update")
-    public Result update(SchedulerTaskDto dto){
+    public Result update(@RequestBody SchedulerTaskDto dto){
         schedulerService.update(dto);
-        return Result.ok();
-    }
-
-    @PostMapping("enable/{name}")
-    @Operation(operationId = "scheduler:enable", summary = "enable")
-    public Result enable(@PathVariable String name){
-        schedulerService.enable(name);
-        return Result.ok();
-    }
-
-    @PostMapping("disable/{name}")
-    @Operation(operationId = "scheduler:disable", summary = "disable")
-    public Result disable(@PathVariable String name){
-        schedulerService.disable(name);
         return Result.ok();
     }
 
@@ -75,17 +61,10 @@ public class SchedulerController {
         return Result.ok();
     }
 
-    @PostMapping("interrupt/{name}")
-    @Operation(operationId = "scheduler:interrupt", summary = "interrupt")
-    public Result interrupt(@PathVariable String name){
-        schedulerService.interrupt(name);
-        return Result.ok();
-    }
-
-    @PostMapping("run/{name}")
+    @PostMapping("run")
     @Operation(operationId = "scheduler:run", summary = "run")
-    public Result run(@PathVariable String name){
-        schedulerService.run(name);
+    public Result run(@RequestBody SchedulerTaskDto dto){
+        schedulerService.run(dto);
         return Result.ok();
     }
 

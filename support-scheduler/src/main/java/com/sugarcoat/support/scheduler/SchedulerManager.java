@@ -14,28 +14,20 @@ public interface SchedulerManager {
 
     void update(SchedulerTask schedulerTask);
 
-    void updateBean(SchedulerTask schedulerTask);
-
-    void enable(String name);
-
-    void disable(String name);
-
     void resume(String name);
 
     void pause(String name);
 
     void delete(String name);
 
-    void interrupt(String name);
-
     boolean exists(String name);
 
-    void run(String name);
-
-    void updateStatus(String name, String status);
+    void run(SchedulerTask schedulerTask);
 
     List<SchedulerTask> getAll();
 
     SchedulerTask getOne(String name);
+
+    void start();
 
 }

@@ -24,22 +24,21 @@ public class SchedulerJobBean extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext context) {
         JobDataMap mergedJobDataMap = context.getMergedJobDataMap();
         SgcSchedulerTask schedulerTask = (SgcSchedulerTask) mergedJobDataMap.get("1");
-        String taskStatus = schedulerTask.getSchedulerStatus();
-        if ("0".equals(taskStatus)) {
-            log.debug("定时任务未启用,不执行:{}", schedulerTask.getTaskName());
-            return;
-        }
         log.info("定时任务执行开始：{}", schedulerTask.getTaskName());
         try {
-            Object taskBean = taskBeanFactory.getBean(schedulerTask.getTaskName());
-            Method method = taskBean.getClass().getDeclaredMethod(schedulerTask.getMethodName());
-            Object[] split = schedulerTask.getParams();
-            method.invoke(taskBean, split);
+            Object taskBean = taskBeanFactory.getBean(schedulerTask.getBeanName());
+            if (schedulerTask.getParamsLength() == 1) {
+                Method method = taskBean.getClass().getDeclaredMethod(schedulerTask.getMethodName(), String.class);
+                String params = schedulerTask.getParams();
+                method.invoke(taskBean, params);
+            } else {
+                Method method = taskBean.getClass().getDeclaredMethod(schedulerTask.getMethodName());
+                method.invoke(taskBean);
+            }
         } catch (Throwable ex) {
             log.error("定时任务执行异常", ex);
         }
         log.info("定时任务执行结束：{}", schedulerTask.getTaskName());
-
     }
 
 }

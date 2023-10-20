@@ -14,8 +14,8 @@ public interface SchedulerTask {
 
     String getCron();
 
-    // String[] getParamInfos();
-    //
+    String getParams();
+
     // String getLastExecuteTime();
     //
     // String getNextExecuteTime();
@@ -23,13 +23,7 @@ public interface SchedulerTask {
     // String getRetryStrategy();
     //
     // String getRetryTimes();
-    //
-    // String getDelayStrategy();
-    //
-    // String getDelayTime();
 
     String getExecuteStatus();
-
-    String getSchedulerStatus();
 
 }

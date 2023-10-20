@@ -20,23 +20,31 @@ public class SgcSchedulerTask implements SchedulerTask, Serializable {
 
     private String triggerName;
 
-    private String cron;
+    private String customCron;
 
     private String defaultCron;
 
     private String executeStatus;
 
-    private String schedulerStatus;
-
     private String beanName;
 
     private String methodName;
 
-    private String[] paramInfos;
+    private Integer paramsLength;
 
-    private String[] params;
+    private String customParams;
 
-    private String[] defaultParams;
+    private String defaultParams;
+
+    @Override
+    public String getCron() {
+        return customCron;
+    }
+
+    @Override
+    public String getParams() {
+        return customParams;
+    }
 
     // private String lastExecuteTime;
     //

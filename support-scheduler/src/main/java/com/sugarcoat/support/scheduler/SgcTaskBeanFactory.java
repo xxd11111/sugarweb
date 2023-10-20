@@ -2,10 +2,13 @@ package com.sugarcoat.support.scheduler;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
+import lombok.extern.slf4j.Slf4j;
+import org.quartz.Trigger;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.lang.NonNull;
+import org.springframework.scheduling.support.CronExpression;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
@@ -19,6 +22,7 @@ import java.util.Map;
  * @author 许向东
  * @date 2023/10/19
  */
+@Slf4j
 public class SgcTaskBeanFactory implements TaskBeanFactory, TaskBeanRegistry, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
@@ -50,11 +54,10 @@ public class SgcTaskBeanFactory implements TaskBeanFactory, TaskBeanRegistry, Ap
             Method[] methods = beanInstance.getClass().getMethods();
             for (Method method : methods) {
                 InnerTaskMethod annotation = method.getAnnotation(InnerTaskMethod.class);
-                if (annotation == null){
+                if (annotation == null) {
                     continue;
                 }
-                boolean enable = annotation.enable();
-                String[] params = annotation.params();
+                String params = annotation.params();
                 String taskName = annotation.taskName();
                 if (taskName == null || taskName.isEmpty()) {
                     taskName = beanName + "." + method.getName();
@@ -64,9 +67,10 @@ public class SgcTaskBeanFactory implements TaskBeanFactory, TaskBeanRegistry, Ap
                     throw new FrameworkException("cron表达式错误，请检查{}注解中的cron是否正确", beanName + "." + method.getName());
                 }
                 Parameter[] parameters = method.getParameters();
-                if (!isParamsMatch(parameters, params)) {
-                    throw new FrameworkException("schedulerTask方法与预设参数不符合，请检查{}的参数与注解预设params是否匹配", beanName + "." + method.getName());
+                if (!isParameterStringOrNull(parameters)) {
+                    throw new FrameworkException("schedulerTask方法不符合要求，只允许无参数或者一个String参数");
                 }
+                int paramsLength = parameters.length;
                 if (schedulerTaskMap.containsKey(taskName)) {
                     SgcSchedulerTask old = schedulerTaskMap.get(taskName);
                     throw new FrameworkException("存在同名taskName:{}, fist:{}, second:{}", old.getBeanName() + "." + old.getMethodName(), beanName + "." + method.getName());
@@ -76,68 +80,50 @@ public class SgcTaskBeanFactory implements TaskBeanFactory, TaskBeanRegistry, Ap
                 schedulerTask.setTaskName(taskName);
                 schedulerTask.setBeanName(beanName);
                 schedulerTask.setMethodName(method.getName());
-                schedulerTask.setCron(cron);
+                schedulerTask.setParamsLength(paramsLength);
+                schedulerTask.setCustomParams(params);
+                schedulerTask.setDefaultParams(params);
+                schedulerTask.setCustomCron(cron);
                 schedulerTask.setDefaultCron(cron);
                 schedulerTask.setTriggerName(taskName);
-                schedulerTask.setSchedulerStatus(enable ? "1" : "0");
-                schedulerTask.setParams(params);
-                schedulerTask.setDefaultParams(params);
                 schedulerTaskMap.put(taskName, schedulerTask);
 
-                //如果想强制全部更新，建议定时任务代码变动时更新taskName（此方案是为了重新部署防止改动数据还原）
+                //如果想强制全部更新，建议定时任务代码变动时更新taskName（此方案是为了重新部署防止自定义数据还原）
                 if (schedulerManager.exists(taskName)) {
-                    SgcSchedulerTask old = (SgcSchedulerTask) schedulerManager.getOne(taskName);
+                    SgcSchedulerTask old = (SgcSchedulerTask)schedulerManager.getOne(taskName);
                     //保留旧的参数方法情况，修改过
-                    if (!isSameArray(old.getParams(), old.getDefaultParams())) {
-                        if (isParamsMatch(parameters, old.getParams())) {
-                            schedulerTask.setParams(old.getParams());
-                        }
+                    if (!StrUtil.equals(old.getCustomCron(), old.getDefaultCron())) {
+                        schedulerTask.setCustomCron(old.getParams());
                     }
                     //保留旧的cron方法情况，修改过
                     if (!StrUtil.equals(old.getCron(), old.getDefaultCron())) {
-                        schedulerTask.setCron(old.getCron());
+                        schedulerTask.setCustomCron(old.getCustomCron());
                     }
                     schedulerManager.update(schedulerTask);
+                    if (Trigger.TriggerState.PAUSED.name().equals(old.getExecuteStatus())){
+                        schedulerManager.pause(old.getTaskName());
+                    }
                 } else {
                     schedulerManager.add(schedulerTask);
                 }
             }
         }
-
+        log.info("已加载{}个定时任务", schedulerTaskMap.size());
+        schedulerTaskMap.forEach((k, v) -> log.info("定时任务，taskName：{}，{}", k, v));
     }
 
-    private boolean isValidCron(String cron){
-        //todo 验证cron是否有效
-        return true;
+    private boolean isValidCron(String cron) {
+        return CronExpression.isValidExpression(cron);
     }
 
-    private boolean isParamsMatch(Parameter[] parameters, String[] params) {
-
-        if (parameters.length == params.length) {
-            for (int i = 0; i < parameters.length; i++) {
-                Parameter parameter = parameters[i];
-                String name = parameter.getName();
-                //todo 验证参数类型 允许基本类型装箱类型及String
-            }
-        } else {
-            return false;
+    private boolean isParameterStringOrNull(Parameter[] parameters) {
+        if (parameters.length == 0) {
+            return true;
         }
-        return true;
-    }
-
-    private boolean isSameArray(String[] fist, String[] second) {
-        if (fist == null) {
-            return second == null || second.length == 0;
+        if (parameters.length == 1) {
+            return parameters[0].getType().getName().equals("java.lang.String");
         }
-        if (fist.length != second.length) {
-            return false;
-        }
-        for (int i = 0; i < fist.length; i++) {
-            if (!StrUtil.equals(fist[i], second[i])) {
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
 

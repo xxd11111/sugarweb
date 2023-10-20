@@ -1,13 +1,10 @@
 package com.sugarcoat.support.scheduler;
 
-import com.sugarcoat.protocol.exception.FrameworkException;
 import jakarta.annotation.Resource;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * SchedulerManager 用于管理定时任务
@@ -32,12 +29,14 @@ public class SgcSchedulerManager implements SchedulerManager {
         // 任务触发器
         CronTrigger trigger = TriggerBuilder
                 .newTrigger()
+                .forJob(jobDetail)
                 .withIdentity(schedulerTask.getTriggerName())
                 .withSchedule(scheduleBuilder)
                 .build();
-        jobDetail.getJobDataMap().put("1", schedulerTask);
+        trigger.getJobDataMap().put("1", schedulerTask);
         try {
             scheduler.scheduleJob(jobDetail, trigger);
+            scheduler.start();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }
@@ -64,35 +63,6 @@ public class SgcSchedulerManager implements SchedulerManager {
         }
     }
 
-    @Override
-    public void updateBean(SchedulerTask schedulerTask) {
-        try {
-            if (schedulerTask instanceof SgcSchedulerTask newSchedulerTask){
-                JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(schedulerTask.getTaskName()));
-                scheduler.deleteJob(JobKey.jobKey(newSchedulerTask.getTaskName()));
-                JobDataMap jobDataMap = jobDetail.getJobDataMap();
-                SgcSchedulerTask sgcSchedulerTask = (SgcSchedulerTask)jobDataMap.get("1");
-                sgcSchedulerTask.setBeanName(newSchedulerTask.getBeanName());
-                sgcSchedulerTask.setMethodName(newSchedulerTask.getMethodName());
-                sgcSchedulerTask.setParams(newSchedulerTask.getParams());
-            }else {
-                throw new FrameworkException("类型异常，schedulerTask不是SgcSchedulerTask");
-            }
-        } catch (SchedulerException e) {
-            throw new RuntimeException("updateJob Fail", e);
-        }
-    }
-
-    @Override
-    public void enable(String name) {
-        updateStatus(name, "1");
-    }
-
-    @Override
-    public void disable(String name) {
-        updateStatus(name, "0");
-    }
-
     public void resume(String name) {
         try {
             scheduler.resumeJob(JobKey.jobKey(name));
@@ -111,16 +81,10 @@ public class SgcSchedulerManager implements SchedulerManager {
 
     public void delete(String name) {
         try {
+            scheduler.pauseTrigger(TriggerKey.triggerKey(name));
+            scheduler.unscheduleJob(TriggerKey.triggerKey(name));
             scheduler.deleteJob(JobKey.jobKey(name));
         } catch (SchedulerException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void interrupt(String name) {
-        try {
-            scheduler.interrupt(JobKey.jobKey(name));
-        } catch (UnableToInterruptJobException e) {
             throw new RuntimeException(e);
         }
     }
@@ -133,24 +97,13 @@ public class SgcSchedulerManager implements SchedulerManager {
         }
     }
 
-    public void run(String name) {
+    public void run(SchedulerTask schedulerTask) {
         try {
-            scheduler.triggerJob(JobKey.jobKey(name), null);
+            JobDataMap jobDataMap = new JobDataMap();
+            jobDataMap.put("1", schedulerTask);
+            scheduler.triggerJob(JobKey.jobKey(schedulerTask.getTaskName()), jobDataMap);
         } catch (SchedulerException e) {
             throw new RuntimeException("run Fail", e);
-        }
-    }
-
-    @Override
-    public void updateStatus(String name, String status) {
-        try {
-            JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(name));
-            JobDataMap jobDataMap = jobDetail.getJobDataMap();
-            SgcSchedulerTask schedulerTask = (SgcSchedulerTask) jobDataMap.get("1");
-            schedulerTask.setSchedulerStatus(status);
-            jobDataMap.put("1", schedulerTask);
-        } catch (SchedulerException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -158,10 +111,12 @@ public class SgcSchedulerManager implements SchedulerManager {
     public List<SchedulerTask> getAll() {
         List<SchedulerTask> sgcSchedulerTasks = new ArrayList<>();
         try {
-            Set<JobKey> jobKeys = scheduler.getJobKeys(GroupMatcher.anyGroup());
-            for (JobKey jobKey : jobKeys) {
-                JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-                SgcSchedulerTask sgcSchedulerTask = (SgcSchedulerTask) jobDetail.getJobDataMap().get("1");
+            Set<TriggerKey> triggerKeys = scheduler.getTriggerKeys(GroupMatcher.anyGroup());
+            for (TriggerKey triggerKey : triggerKeys) {
+                Trigger trigger = scheduler.getTrigger(triggerKey);
+                SgcSchedulerTask sgcSchedulerTask = (SgcSchedulerTask) trigger.getJobDataMap().get("1");
+                Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
+                sgcSchedulerTask.setExecuteStatus(triggerState.name());
                 sgcSchedulerTasks.add(sgcSchedulerTask);
             }
             return sgcSchedulerTasks;
@@ -173,8 +128,21 @@ public class SgcSchedulerManager implements SchedulerManager {
     @Override
     public SchedulerTask getOne(String name) {
         try {
-            JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(name));
-            return (SchedulerTask) jobDetail.getJobDataMap().get("1");
+            TriggerKey triggerKey = TriggerKey.triggerKey(name);
+            Trigger trigger = scheduler.getTrigger(triggerKey);
+            SgcSchedulerTask sgcSchedulerTask = (SgcSchedulerTask) trigger.getJobDataMap().get("1");
+            Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
+            sgcSchedulerTask.setExecuteStatus(triggerState.name());
+            return sgcSchedulerTask;
+        } catch (SchedulerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void start() {
+        try {
+            scheduler.start();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }

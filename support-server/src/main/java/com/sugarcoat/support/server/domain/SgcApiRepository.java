@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server.domain;
 
-import com.sugarcoat.orm.SugarcoatRepository;
+import com.sugarcoat.orm.SgcRepository;
 
 /**
  * api存储层
@@ -8,6 +8,6 @@ import com.sugarcoat.orm.SugarcoatRepository;
  * @author xxd
  * @since 2023-01-03
  */
-public interface SgcApiRepository extends SugarcoatRepository<SgcApi> {
+public interface SgcApiRepository extends SgcRepository<SgcApi> {
 
 }

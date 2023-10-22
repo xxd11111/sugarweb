@@ -28,7 +28,7 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamService paramService(SugarcoatParamRepository sugarcoatParamRepository) {
+    public ParamService paramService(SgcParamRepository sugarcoatParamRepository) {
         return new DefaultParamServiceImpl(sugarcoatParamRepository);
     }
 
@@ -40,13 +40,13 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamManager paramManager(SugarcoatParamRepository sugarcoatParamRepository, ParamCacheManager paramCacheManager) {
+    public ParamManager paramManager(SgcParamRepository sugarcoatParamRepository, ParamCacheManager paramCacheManager) {
         return new DefaultParamManager(sugarcoatParamRepository, paramCacheManager);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamRegistry paramRegistry(SugarcoatParamRepository sugarcoatParamRepository) {
+    public ParamRegistry paramRegistry(SgcParamRepository sugarcoatParamRepository) {
         return new DefaultParamRegistry(sugarcoatParamRepository);
     }
 
@@ -55,7 +55,7 @@ public class ParameterAutoConfiguration {
     public ParamRunner paramRunner(ParamScanner paramScanner,
                                    ParamRegistry paramRegistry,
                                    ParamCacheManager paramCacheManager,
-                                   SugarcoatParamRepository paramRepository) {
+                                   SgcParamRepository paramRepository) {
         return new DefaultParamRunner(paramProperties, paramScanner, paramRegistry, paramCacheManager, paramRepository);
     }
 

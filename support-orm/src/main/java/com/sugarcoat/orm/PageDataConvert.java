@@ -5,6 +5,8 @@ import com.sugarcoat.protocol.common.PageDataAdapt;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 /**
  * 分页适配器管理者
  *
@@ -17,8 +19,7 @@ public class PageDataConvert {
     private static final PageDataAdapt pageDataAdapt = new PageDataAdapt() {
         @Override
         public <T> PageData<T> convert(Object t, Class<T> clazz) {
-            if (t instanceof Page) {
-                Page<T> page = (Page<T>) t;
+            if (t instanceof Page page) {
                 PageData<T> pageData = new PageData<>();
                 pageData.setPage(page.getNumber());
                 pageData.setContent(page.getContent());

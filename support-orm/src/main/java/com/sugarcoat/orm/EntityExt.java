@@ -1,6 +1,8 @@
 package com.sugarcoat.orm;
 
 import lombok.*;
+import org.hibernate.annotations.DialectOverride;
+import org.hibernate.annotations.TenantId;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -23,6 +25,8 @@ public class EntityExt {
 
 	@CreatedBy
 	@Column(length = 32)
+	@Version
+	@TenantId
 	private String createBy;
 
 	@CreatedDate
@@ -30,10 +34,10 @@ public class EntityExt {
 
 	@LastModifiedBy
 	@Column(length = 32)
-	private String updateBy;
+	private String lastModifiedBy;
 
 	@LastModifiedDate
-	private LocalDateTime updateDate;
+	private LocalDateTime lastModifiedDate;
 
 	@Override
 	public int hashCode() {

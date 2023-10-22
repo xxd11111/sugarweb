@@ -33,14 +33,14 @@ public class DictionaryAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DictionaryService dictService(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository,
-                                         SugarcoatDictionaryRepository sugarcoatDictionaryRepository) {
+    public DictionaryService dictService(SgcDictionaryGroupRepository sugarcoatDictionaryGroupRepository,
+                                         SgcDictionaryRepository sugarcoatDictionaryRepository) {
         return new SugarcoatDictionaryServiceImpl(sugarcoatDictionaryGroupRepository, sugarcoatDictionaryRepository);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public DictionaryManager dictionaryManager(SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
+    public DictionaryManager dictionaryManager(SgcDictionaryGroupRepository sugarcoatDictionaryGroupRepository) {
         return new SugarcoatDictionaryManager(sugarcoatDictionaryGroupRepository);
     }
 

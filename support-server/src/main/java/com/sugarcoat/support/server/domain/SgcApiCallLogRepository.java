@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server.domain;
 
-import com.sugarcoat.orm.SugarcoatRepository;
+import com.sugarcoat.orm.SgcRepository;
 
 /**
  * 访问日志仓库
@@ -9,6 +9,6 @@ import com.sugarcoat.orm.SugarcoatRepository;
  * @version 1.0
  * @since 2023/6/1
  */
-public interface SgcApiCallLogRepository extends SugarcoatRepository<SgcApiCallLog> {
+public interface SgcApiCallLogRepository extends SgcRepository<SgcApiCallLog> {
 
 }

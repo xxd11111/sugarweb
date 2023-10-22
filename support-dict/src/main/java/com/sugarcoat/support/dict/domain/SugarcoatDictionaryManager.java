@@ -21,9 +21,9 @@ import java.util.stream.Collectors;
  */
 public class SugarcoatDictionaryManager implements DictionaryManager {
 
-    private final SugarcoatDictionaryGroupRepository dictionaryGroupRepository;
+    private final SgcDictionaryGroupRepository dictionaryGroupRepository;
 
-    public SugarcoatDictionaryManager(SugarcoatDictionaryGroupRepository dictionaryGroupRepository) {
+    public SugarcoatDictionaryManager(SgcDictionaryGroupRepository dictionaryGroupRepository) {
         this.dictionaryGroupRepository = dictionaryGroupRepository;
     }
 

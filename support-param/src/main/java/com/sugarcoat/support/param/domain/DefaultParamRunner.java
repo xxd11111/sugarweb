@@ -25,7 +25,7 @@ public class DefaultParamRunner implements ParamRunner {
 
     private final ParamCacheManager paramCacheManager;
 
-    private final SugarcoatParamRepository paramRepository;
+    private final SgcParamRepository paramRepository;
 
     @Override
     public void run(ApplicationArguments args) {

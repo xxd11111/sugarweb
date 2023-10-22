@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DefaultParamRegistry implements ParamRegistry {
 
-    private final SugarcoatParamRepository paramRepository;
+    private final SgcParamRepository paramRepository;
 
     /**
      * 注册系统参数，执行规则如下

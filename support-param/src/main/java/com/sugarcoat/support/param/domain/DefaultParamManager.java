@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DefaultParamManager implements ParamManager {
 
-    private final SugarcoatParamRepository paramRepository;
+    private final SgcParamRepository paramRepository;
 
     private final ParamCacheManager paramCacheManager;
 

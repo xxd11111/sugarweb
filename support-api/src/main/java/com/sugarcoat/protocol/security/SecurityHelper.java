@@ -1,5 +1,7 @@
 package com.sugarcoat.protocol.security;
 
+import java.util.Map;
+
 /**
  * 用户helper
  *
@@ -40,6 +42,19 @@ public class SecurityHelper {
 
     public static String getId() {
         return currentAccount().getId();
+    }
+
+    public static Map<String, String> getUserDataMap() {
+        return userHolder.getUserInfo().getUserDataMap();
+    }
+
+    public static String getUserData(String dataId) {
+        return getUserDataMap().get(dataId);
+    }
+
+    public static boolean isSystemCall() {
+        //todo
+        return false;
     }
 
 }

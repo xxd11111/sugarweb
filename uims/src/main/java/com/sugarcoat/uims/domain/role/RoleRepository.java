@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.role;
 
-import com.sugarcoat.orm.SugarcoatRepository;
+import com.sugarcoat.orm.SgcRepository;
 
 /**
  * 角色仓库
@@ -8,6 +8,6 @@ import com.sugarcoat.orm.SugarcoatRepository;
  * @author xxd
  * @since 2023/3/27 20:56
  */
-public interface RoleRepository extends SugarcoatRepository<Role> {
+public interface RoleRepository extends SgcRepository<Role> {
 
 }

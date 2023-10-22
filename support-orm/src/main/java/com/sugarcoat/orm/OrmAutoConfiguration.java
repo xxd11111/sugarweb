@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.persistence.EntityManager;
+import org.springframework.data.domain.AuditorAware;
 
 /**
  * querydsl配置
@@ -12,7 +13,12 @@ import jakarta.persistence.EntityManager;
  * @author xxd
  */
 @Configuration
-public class QueryDslConfiguration {
+public class OrmAutoConfiguration {
+
+	@Bean
+	public SgcAuditorAware auditorAware(){
+		return new SgcAuditorAware();
+	}
 
 	@Bean
 	public JPAQueryFactory jpaQueryFactory(EntityManager em) {

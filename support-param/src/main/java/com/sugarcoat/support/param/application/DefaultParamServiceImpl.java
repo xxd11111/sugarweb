@@ -5,8 +5,8 @@ import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.support.param.domain.QSugarcoatParam;
+import com.sugarcoat.support.param.domain.SgcParamRepository;
 import com.sugarcoat.support.param.domain.SugarcoatParam;
-import com.sugarcoat.support.param.domain.SugarcoatParamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +21,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class DefaultParamServiceImpl implements ParamService {
 
-    private final SugarcoatParamRepository sugarcoatParamRepository;
+    private final SgcParamRepository sugarcoatParamRepository;
 
     @Override
     public void save(ParamDto paramDto) {

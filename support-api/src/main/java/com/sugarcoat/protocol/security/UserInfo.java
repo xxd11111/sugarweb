@@ -2,6 +2,8 @@ package com.sugarcoat.protocol.security;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * 用户信息
  *
@@ -16,5 +18,7 @@ public class UserInfo {
     private String username;
 
     private String userType;
+
+    private Map<String, String> userDataMap;
 
 }

@@ -1,6 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.orm.SugarcoatRepository;
+import com.sugarcoat.orm.SgcRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  * @since 2023/4/25
  */
 @Repository
-public interface SugarcoatDictionaryRepository extends SugarcoatRepository<SugarcoatDictionary> {
+public interface SgcDictionaryRepository extends SgcRepository<SugarcoatDictionary> {
 
 }

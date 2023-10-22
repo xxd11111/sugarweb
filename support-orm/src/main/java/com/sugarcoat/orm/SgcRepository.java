@@ -11,6 +11,6 @@ import org.springframework.data.repository.NoRepositoryBean;
  * @since 2023/3/27 20:42
  */
 @NoRepositoryBean
-public interface SugarcoatRepository<T> extends CrudRepository<T, String>, QuerydslPredicateExecutor<T> {
+public interface SgcRepository<T> extends CrudRepository<T, String>, QuerydslPredicateExecutor<T> {
 
 }

@@ -31,9 +31,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SugarcoatDictionaryServiceImpl implements DictionaryService {
 
-	private final SugarcoatDictionaryGroupRepository sugarcoatDictionaryGroupRepository;
+	private final SgcDictionaryGroupRepository sugarcoatDictionaryGroupRepository;
 
-	private final SugarcoatDictionaryRepository sugarcoatDictionaryRepository;
+	private final SgcDictionaryRepository sugarcoatDictionaryRepository;
 
 	@Override
 	public void save(DictionaryGroupDto dictionaryGroupDto) {

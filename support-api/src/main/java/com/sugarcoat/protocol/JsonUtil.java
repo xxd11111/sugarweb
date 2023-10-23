@@ -20,4 +20,12 @@ public class JsonUtil {
         }
     }
 
+    public static <T> T toObject(String str, Class<T> clazz) {
+        try {
+            return new ObjectMapper().readValue(str, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

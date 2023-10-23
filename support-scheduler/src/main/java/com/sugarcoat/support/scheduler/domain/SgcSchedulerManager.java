@@ -1,5 +1,6 @@
 package com.sugarcoat.support.scheduler.domain;
 
+import com.sugarcoat.protocol.JsonUtil;
 import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import com.sugarcoat.protocol.scheduler.SchedulerTask;
 import jakarta.annotation.Resource;
@@ -35,7 +36,8 @@ public class SgcSchedulerManager implements SchedulerManager {
                 .withIdentity(schedulerTask.getTriggerName())
                 .withSchedule(scheduleBuilder)
                 .build();
-        trigger.getJobDataMap().put("1", schedulerTask);
+
+        trigger.getJobDataMap().put("1", JsonUtil.toJsonStr(schedulerTask));
         try {
             scheduler.scheduleJob(jobDetail, trigger);
             scheduler.start();
@@ -58,7 +60,7 @@ public class SgcSchedulerManager implements SchedulerManager {
                     .withIdentity(triggerKey)
                     .withSchedule(scheduleBuilder)
                     .build();
-            trigger.getJobDataMap().put("1", schedulerTask);
+            trigger.getJobDataMap().put("1", JsonUtil.toJsonStr(schedulerTask));
             scheduler.rescheduleJob(triggerKey, trigger);
         } catch (SchedulerException e) {
             throw new RuntimeException("updateJob Fail", e);
@@ -93,7 +95,7 @@ public class SgcSchedulerManager implements SchedulerManager {
 
     public boolean exists(String name) {
         try {
-            return scheduler.checkExists(JobKey.jobKey(name));
+            return scheduler.checkExists(TriggerKey.triggerKey(name));
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }
@@ -102,7 +104,7 @@ public class SgcSchedulerManager implements SchedulerManager {
     public void run(SchedulerTask schedulerTask) {
         try {
             JobDataMap jobDataMap = new JobDataMap();
-            jobDataMap.put("1", schedulerTask);
+            jobDataMap.put("1", JsonUtil.toJsonStr(schedulerTask));
             scheduler.triggerJob(JobKey.jobKey(schedulerTask.getTaskName()), jobDataMap);
         } catch (SchedulerException e) {
             throw new RuntimeException("run Fail", e);
@@ -116,8 +118,8 @@ public class SgcSchedulerManager implements SchedulerManager {
             Set<TriggerKey> triggerKeys = scheduler.getTriggerKeys(GroupMatcher.anyGroup());
             for (TriggerKey triggerKey : triggerKeys) {
                 Trigger trigger = scheduler.getTrigger(triggerKey);
-                SgcSchedulerTask sgcSchedulerTask = (SgcSchedulerTask) trigger.getJobDataMap().get("1");
-                Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
+                String sgcSchedulerTaskString = (String) trigger.getJobDataMap().get("1");
+                SgcSchedulerTask sgcSchedulerTask = JsonUtil.toObject(sgcSchedulerTaskString, SgcSchedulerTask.class);                Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
                 sgcSchedulerTask.setExecuteStatus(triggerState.name());
                 sgcSchedulerTasks.add(sgcSchedulerTask);
             }
@@ -132,7 +134,8 @@ public class SgcSchedulerManager implements SchedulerManager {
         try {
             TriggerKey triggerKey = TriggerKey.triggerKey(name);
             Trigger trigger = scheduler.getTrigger(triggerKey);
-            SgcSchedulerTask sgcSchedulerTask = (SgcSchedulerTask) trigger.getJobDataMap().get("1");
+            String sgcSchedulerTaskString = (String) trigger.getJobDataMap().get("1");
+            SgcSchedulerTask sgcSchedulerTask = JsonUtil.toObject(sgcSchedulerTaskString, SgcSchedulerTask.class);
             Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
             sgcSchedulerTask.setExecuteStatus(triggerState.name());
             return sgcSchedulerTask;

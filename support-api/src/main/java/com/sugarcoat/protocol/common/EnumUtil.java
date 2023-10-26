@@ -14,19 +14,19 @@ import java.util.function.Supplier;
  */
 public class EnumUtil {
 
-    public static <T extends Serializable, K extends Flag<T>> Flag<T> getByCode(Class<K> clazz, T code) {
+    public static <T extends Serializable, K extends Flag<T>> K getByCode(Class<K> clazz, T code) {
         K[] flags = clazz.getEnumConstants();
         return Arrays.stream(flags).filter(flag -> Objects.equals(flag.getCode(), code)).findFirst()
                 .orElseThrow(() -> new ValidateException("枚举转换异常"));
     }
 
-    public static <T extends Serializable, K extends Flag<T>> Flag<T> checkByCode(Class<K> clazz, T code) {
+    public static <T extends Serializable, K extends Flag<T>> K checkByCode(Class<K> clazz, T code) {
         return checkByCode(clazz, code, () -> new ValidateException("枚举转换异常"));
     }
 
-    public static <T extends Serializable, E extends RuntimeException, K extends Flag<T>> Flag<T> checkByCode(
+    public static <T extends Serializable, E extends RuntimeException, K extends Flag<T>> K checkByCode(
             Class<K> clazz, T code, Supplier<E> errorSupplier) {
-        Flag<T> flag = getByCode(clazz, code);
+        K flag = getByCode(clazz, code);
         if (null == flag) {
             throw errorSupplier.get();
         }

@@ -1,5 +1,6 @@
 package com.sugarcoat.support.scheduler.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sugarcoat.protocol.scheduler.SchedulerTask;
 import lombok.*;
 

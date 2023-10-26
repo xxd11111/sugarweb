@@ -53,6 +53,7 @@ public class User {
     @ToString.Exclude
     private Set<Role> roles;
 
+    @Enumerated(EnumType.STRING)
     private BooleanFlag enable;
 
     public Set<String> listRoles() {

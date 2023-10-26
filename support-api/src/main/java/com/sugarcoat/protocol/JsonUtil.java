@@ -1,6 +1,7 @@
 package com.sugarcoat.protocol;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
@@ -22,7 +23,9 @@ public class JsonUtil {
 
     public static <T> T toObject(String str, Class<T> clazz) {
         try {
-            return new ObjectMapper().readValue(str, clazz);
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            return objectMapper.readValue(str, clazz);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

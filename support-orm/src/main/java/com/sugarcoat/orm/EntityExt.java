@@ -26,7 +26,6 @@ public class EntityExt {
 	@CreatedBy
 	@Column(length = 32)
 	@Version
-	@TenantId
 	private String createBy;
 
 	@CreatedDate

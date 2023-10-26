@@ -10,6 +10,6 @@ import java.io.Serializable;
  */
 public interface Flag<T extends Serializable> {
 
-    String getCode();
+    T getCode();
 
 }

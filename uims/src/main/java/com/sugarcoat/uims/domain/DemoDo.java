@@ -6,6 +6,7 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.hibernate.annotations.TenantId;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -30,6 +31,9 @@ public class DemoDo {
 
     @Convert(converter = BooleanEnum.Convert.class)
     private BooleanEnum status;
+
+    @TenantId
+    private String tenantId;
 
     @Override
     public final boolean equals(Object o) {

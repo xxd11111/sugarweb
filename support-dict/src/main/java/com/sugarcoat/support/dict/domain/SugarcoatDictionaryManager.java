@@ -2,7 +2,7 @@ package com.sugarcoat.support.dict.domain;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.protocol.dict.Dictionary;
 import com.sugarcoat.protocol.dict.DictionaryGroup;
 import com.sugarcoat.protocol.dict.DictionaryManager;
@@ -94,7 +94,7 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
                 .orElse(false);
     }
 
-    public Collection<DictionaryGroup> getAll(BooleanFlag innerFlag) {
+    public Collection<DictionaryGroup> getAll(BooleanEnum innerFlag) {
         QSugarcoatDictionaryGroup sugarcoatDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
         BooleanExpression expression =  Expressions.TRUE;
         if (Objects.nonNull(innerFlag)){

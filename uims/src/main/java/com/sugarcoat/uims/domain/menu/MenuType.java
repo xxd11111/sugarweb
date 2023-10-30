@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.menu;
 
-import com.sugarcoat.protocol.common.Flag;
+import com.sugarcoat.protocol.common.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,7 +12,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum MenuType implements Flag<String> {
+public enum MenuType implements EnumValue<String> {
 
     DIR("1"), // 目录
 
@@ -21,6 +21,6 @@ public enum MenuType implements Flag<String> {
     /**
      * 类型
      */
-    private final String code;
+    private final String value;
 
 }

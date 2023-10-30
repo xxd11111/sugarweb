@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
@@ -28,6 +28,6 @@ public class MenuQueryDto {
      * 状态
      */
     @Enumerated(EnumType.STRING)
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 
 }

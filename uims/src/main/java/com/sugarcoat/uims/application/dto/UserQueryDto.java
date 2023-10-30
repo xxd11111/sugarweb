@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.uims.domain.user.AccountType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -26,5 +26,5 @@ public class UserQueryDto {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 }

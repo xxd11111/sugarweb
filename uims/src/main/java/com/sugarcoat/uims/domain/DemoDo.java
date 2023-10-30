@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.domain;
 
-import com.sugarcoat.orm.FlagConvert;
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
+import com.sugarcoat.protocol.common.EnumConvert;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -28,8 +28,8 @@ public class DemoDo {
 
     private String name;
 
-    @Convert(converter = FlagConvert.class)
-    private BooleanFlag status;
+    @Convert(converter = BooleanEnum.Convert.class)
+    private BooleanEnum status;
 
     @Override
     public final boolean equals(Object o) {

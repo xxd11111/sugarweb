@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.MenuType;
 import com.sugarcoat.uims.domain.menu.MenuUrlType;
 import lombok.Data;
@@ -68,5 +68,5 @@ public class MenuDto {
     /**
      * 状态
      */
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 }

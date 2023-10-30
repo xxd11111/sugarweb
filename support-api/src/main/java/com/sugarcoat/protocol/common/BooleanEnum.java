@@ -8,7 +8,7 @@ package com.sugarcoat.protocol.common;
  * @version 1.0
  * @since 2023/4/27
  */
-public enum BooleanFlag implements Flag<String> {
+public enum BooleanEnum implements EnumValue<String> {
 
     /**
      * 否
@@ -20,14 +20,16 @@ public enum BooleanFlag implements Flag<String> {
     TRUE("1");
 
     @Override
-    public String getCode() {
+    public String getValue() {
         return code;
     }
 
-    BooleanFlag(String code) {
+    BooleanEnum(String code) {
         this.code = code;
     }
 
     private final String code;
+
+    public static class Convert extends EnumConvert<BooleanEnum, String>{}
 
 }

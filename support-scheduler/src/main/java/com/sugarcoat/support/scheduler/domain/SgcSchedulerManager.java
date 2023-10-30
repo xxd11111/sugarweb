@@ -40,7 +40,6 @@ public class SgcSchedulerManager implements SchedulerManager {
         trigger.getJobDataMap().put("1", JsonUtil.toJsonStr(schedulerTask));
         try {
             scheduler.scheduleJob(jobDetail, trigger);
-            scheduler.start();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }

@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.vo;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import lombok.Data;
 
 import java.util.Collection;
@@ -22,5 +22,5 @@ public class RoleVo {
 
     private Collection<MenuTreeVo> menus;
 
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 }

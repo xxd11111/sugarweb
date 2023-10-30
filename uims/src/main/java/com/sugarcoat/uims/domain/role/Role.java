@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.role;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.Menu;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -33,7 +33,7 @@ public class Role {
 	private Collection<Menu> menus;
 
 	@Enumerated(EnumType.STRING)
-	private BooleanFlag enable;
+	private BooleanEnum enable;
 
 	@Override
 	public boolean equals(Object o) {

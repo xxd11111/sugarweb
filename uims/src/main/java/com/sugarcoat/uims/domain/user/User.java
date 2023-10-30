@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.domain.user;
 
 import cn.hutool.core.collection.CollUtil;
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.role.Role;
 import lombok.Getter;
@@ -54,7 +54,7 @@ public class User {
     private Set<Role> roles;
 
     @Enumerated(EnumType.STRING)
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 
     public Set<String> listRoles() {
         if (CollUtil.isEmpty(roles)) {
@@ -94,7 +94,7 @@ public class User {
     }
 
     public String getUserType() {
-        return accountType.getCode();
+        return accountType.getValue();
     }
 
     public boolean isAdmin() {

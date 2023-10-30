@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import lombok.Data;
 
 import java.util.Collection;
@@ -21,5 +21,5 @@ public class RoleDto {
 
     private Collection<String> menus;
 
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 }

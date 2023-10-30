@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.protocol.common.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +34,7 @@ public class DemoController {
         DemoDo demoDo = new DemoDo();
         demoDo.setId(UUID.randomUUID().toString().replace("-",""));
         demoDo.setName("name");
-        demoDo.setStatus(BooleanFlag.TRUE);
+        demoDo.setStatus(BooleanEnum.TRUE);
         demoRepo.save(demoDo);
         return Result.ok();
     }

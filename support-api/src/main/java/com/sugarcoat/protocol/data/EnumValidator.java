@@ -1,6 +1,6 @@
 package com.sugarcoat.protocol.data;
 
-import com.sugarcoat.protocol.common.Flag;
+import com.sugarcoat.protocol.common.EnumValue;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -23,10 +23,10 @@ public class EnumValidator implements ConstraintValidator<EnumValidate, String> 
     @Override
     public void initialize(EnumValidate annotation) {
         this.fieldName = annotation.fieldName();
-        Flag<?>[] values = annotation.value().getEnumConstants();
+        EnumValue<?>[] values = annotation.value().getEnumConstants();
         if (values.length > 0) {
-            for (Flag<?> value : values) {
-                enumCodes.add(value.getCode());
+            for (EnumValue<?> value : values) {
+                enumCodes.add(value.getValue());
             }
         }
     }

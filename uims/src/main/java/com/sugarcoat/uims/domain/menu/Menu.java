@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.menu;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -77,7 +77,7 @@ public class Menu {
 	 * 状态
 	 */
 	@Enumerated(EnumType.STRING)
-	private BooleanFlag enable;
+	private BooleanEnum enable;
 
 	@Override
 	public boolean equals(Object o) {

@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.vo;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.uims.domain.user.AccountType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,5 +28,5 @@ public class UserPageVo {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 }

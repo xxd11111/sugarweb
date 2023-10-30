@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.vo;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import lombok.Data;
 
 /**
@@ -18,5 +18,5 @@ public class RolePageVo {
 
     private String roleCode;
 
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 }

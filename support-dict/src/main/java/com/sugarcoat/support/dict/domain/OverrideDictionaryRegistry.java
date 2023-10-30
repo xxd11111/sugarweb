@@ -2,7 +2,7 @@ package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.protocol.dict.DictionaryGroup;
 import com.sugarcoat.protocol.dict.DictionaryManager;
 import com.sugarcoat.protocol.exception.FrameworkException;
@@ -41,7 +41,7 @@ public class OverrideDictionaryRegistry implements DictionaryRegistry {
         }
         Collection<DictionaryGroup> dbDictionaryGroups;
         if (dictionaryManager instanceof SugarcoatDictionaryManager sdm) {
-            dbDictionaryGroups = sdm.getAll(BooleanFlag.TRUE);
+            dbDictionaryGroups = sdm.getAll(BooleanEnum.TRUE);
         }else {
             throw new FrameworkException("cast exception,dictionaryManager is not SugarcoatDictionaryManager");
         }

@@ -8,8 +8,8 @@ import java.io.Serializable;
  * @author xxd
  * @since 2023/6/28 22:48
  */
-public interface Flag<T extends Serializable> {
+public interface EnumValue<T extends Serializable> {
 
-    T getCode();
+    T getValue();
 
 }

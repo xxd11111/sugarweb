@@ -2,7 +2,7 @@ package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.protocol.dict.InnerDictionary;
 import com.sugarcoat.protocol.dict.InnerDictionaryGroup;
 import com.sugarcoat.protocol.exception.FrameworkException;
@@ -53,7 +53,7 @@ public class DefaultDictionaryScanner implements DictionaryScanner {
             }
             //字典组对象创建
             SugarcoatDictionaryGroup dictGroup = new SugarcoatDictionaryGroup();
-            dictGroup.setInnerFlag(BooleanFlag.TRUE);
+            dictGroup.setInnerFlag(BooleanEnum.TRUE);
             dictGroup.setGroupCode(name);
             dictGroup.setGroupName(name);
             //解析枚举获取field信息

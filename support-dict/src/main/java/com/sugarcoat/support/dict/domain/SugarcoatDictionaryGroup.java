@@ -1,6 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.protocol.dict.Dictionary;
 import com.sugarcoat.protocol.dict.DictionaryGroup;
 import com.sugarcoat.orm.EntityExt;
@@ -43,7 +43,7 @@ public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGro
 	 */
 	@Column(length = 1)
 	@Enumerated(EnumType.ORDINAL)
-	private BooleanFlag innerFlag;
+	private BooleanEnum innerFlag;
 
 	@OneToMany(mappedBy = "dictionaryId", cascade = CascadeType.ALL)
 	@ToString.Exclude

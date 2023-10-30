@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.protocol.common.BooleanFlag;
+import com.sugarcoat.protocol.common.BooleanEnum;
 import lombok.Data;
 
 /**
@@ -16,6 +16,6 @@ public class RoleQueryDto {
 
     private String roleCode;
 
-    private BooleanFlag enable;
+    private BooleanEnum enable;
 
 }

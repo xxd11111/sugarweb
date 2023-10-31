@@ -1,4 +1,4 @@
-package com.sugarcoat.orm;
+package com.sugarcoat.support.orm;
 
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDataAdapt;

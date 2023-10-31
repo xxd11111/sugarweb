@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server.domain;
 
-import com.sugarcoat.orm.SgcRepository;
+import com.sugarcoat.support.orm.SgcRepository;
 
 /**
  * 异常日志仓库

@@ -4,6 +4,7 @@ import com.sugarcoat.protocol.common.BooleanEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.TenantId;
 
 import java.util.Objects;
 

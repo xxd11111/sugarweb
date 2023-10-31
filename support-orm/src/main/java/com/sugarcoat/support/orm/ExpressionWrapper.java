@@ -1,4 +1,4 @@
-package com.sugarcoat.orm;
+package com.sugarcoat.support.orm;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;

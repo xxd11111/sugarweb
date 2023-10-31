@@ -1,4 +1,4 @@
-package com.sugarcoat.orm;
+package com.sugarcoat.support.orm;
 
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;

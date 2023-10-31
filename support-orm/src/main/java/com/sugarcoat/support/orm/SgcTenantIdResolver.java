@@ -1,4 +1,4 @@
-package com.sugarcoat.orm;
+package com.sugarcoat.support.orm;
 
 import com.sugarcoat.protocol.security.SecurityHelper;
 import org.hibernate.cfg.AvailableSettings;
@@ -16,8 +16,9 @@ import java.util.Map;
 public class SgcTenantIdResolver implements CurrentTenantIdentifierResolver, HibernatePropertiesCustomizer {
     @Override
     public boolean isRoot(String tenantId) {
-        String userType = SecurityHelper.getUserType();
-        return "supperAdmin".equals(userType);
+        // String userType = SecurityHelper.getUserType();
+        // return "supperAdmin".equals(userType);
+        return false;
     }
 
     @Override

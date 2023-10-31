@@ -1,4 +1,4 @@
-package com.sugarcoat.orm;
+package com.sugarcoat.support.orm;
 
 import lombok.*;
 import org.hibernate.annotations.DialectOverride;

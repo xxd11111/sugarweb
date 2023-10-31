@@ -1,7 +1,6 @@
 package com.sugarcoat.uims.domain;
 
 import com.sugarcoat.protocol.common.BooleanEnum;
-import com.sugarcoat.protocol.common.EnumConvert;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,25 +1,32 @@
-package com.sugarcoat.orm;
+package com.sugarcoat.support.orm;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.persistence.EntityManager;
-import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * querydsl配置
  *
  * @author xxd
  */
-@Configuration
+@EntityScan
+@EnableJpaRepositories
 public class OrmAutoConfiguration {
 
+	// @Bean
+	// public HibernatePropertiesCustomizer hibernatePropertiesCustomizer1(){
+	// 	return new SgcAuditorAware();
+	// }
+
 	@Bean
-	public SgcAuditorAware auditorAware(){
-		return new SgcAuditorAware();
+	public HibernatePropertiesCustomizer hibernatePropertiesCustomizer2(){
+		return new SgcTenantIdResolver();
 	}
 
 	@Bean

@@ -3,7 +3,7 @@ package com.sugarcoat.support.dict.domain;
 import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.protocol.dict.Dictionary;
 import com.sugarcoat.protocol.dict.DictionaryGroup;
-import com.sugarcoat.orm.EntityExt;
+import com.sugarcoat.support.orm.EntityExt;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

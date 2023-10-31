@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.role;
 
-import com.sugarcoat.orm.SgcRepository;
+import com.sugarcoat.support.orm.SgcRepository;
 
 /**
  * 角色仓库

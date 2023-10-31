@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-@InnerTaskBean
+// @InnerTaskBean
 public class Demo1Task {
 
     @InnerTaskMethod(cron = "0/20 * * * * ? ", params = "123")

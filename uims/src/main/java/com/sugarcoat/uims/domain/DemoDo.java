@@ -7,7 +7,12 @@ import jakarta.persistence.Id;
 import lombok.*;
 import org.hibernate.annotations.TenantId;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -33,6 +38,18 @@ public class DemoDo {
 
     @TenantId
     private String tenantId;
+
+    @CreatedBy
+    private String createBy;
+
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    @LastModifiedBy
+    private String lastModifiedBy;
+
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
 
     @Override
     public final boolean equals(Object o) {

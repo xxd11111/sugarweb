@@ -29,10 +29,10 @@ public class OrmAutoConfiguration {
 		return new SgcTenantIdResolver();
 	}
 
-	@Bean
-	public CurrentTenantIdentifierResolver tenantIdResolver(){
-		return new SgcTenantIdResolver();
-	}
+	// @Bean
+	// public CurrentTenantIdentifierResolver tenantIdResolver(){
+	// 	return new SgcTenantIdResolver();
+	// }
 
 	@Bean
 	public JPAQueryFactory jpaQueryFactory(EntityManager em) {

@@ -2,6 +2,7 @@ package com.sugarcoat.uims.domain;
 
 import com.sugarcoat.protocol.common.BooleanEnum;
 import com.sugarcoat.protocol.common.Result;
+import com.sugarcoat.support.orm.TenantContext;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,9 +25,12 @@ public class DemoController {
     private DemoRepo demoRepo;
 
     @GetMapping("/list")
-    public Result list(){
-        Iterable<DemoDo> all = demoRepo.findAll();
-        return Result.data(all);
+    public Result list(Boolean ignore){
+        TenantContext.setTenantId(true);
+        Iterable<DemoDo> all1 = demoRepo.findAll();
+        TenantContext.setTenantId(false);
+        Iterable<DemoDo> all2 = demoRepo.findAll();
+        return Result.data(all1);
     }
 
     @PostMapping("/save")

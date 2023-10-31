@@ -1,6 +1,7 @@
 package com.sugarcoat.support.orm;
 
 import com.sugarcoat.protocol.security.SecurityHelper;
+import jakarta.persistence.GenerationType;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
@@ -18,7 +19,7 @@ public class SgcTenantIdResolver implements CurrentTenantIdentifierResolver, Hib
     public boolean isRoot(String tenantId) {
         // String userType = SecurityHelper.getUserType();
         // return "supperAdmin".equals(userType);
-        return false;
+        return TenantContext.isIgnore();
     }
 
     @Override
@@ -30,7 +31,7 @@ public class SgcTenantIdResolver implements CurrentTenantIdentifierResolver, Hib
     @Override
     public boolean validateExistingCurrentSessions() {
         // return !SecurityHelper.isSystemCall();
-        return false;
+        return true;
     }
 
     @Override

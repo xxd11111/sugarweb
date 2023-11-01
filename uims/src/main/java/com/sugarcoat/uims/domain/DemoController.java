@@ -34,9 +34,9 @@ public class DemoController {
     }
 
     @PostMapping("/save")
-    public Result save(){
+    public Result save() {
         DemoDo demoDo = new DemoDo();
-        demoDo.setId(UUID.randomUUID().toString().replace("-",""));
+        demoDo.setId(UUID.randomUUID().toString().replace("-", ""));
         demoDo.setName("name");
         demoDo.setStatus(BooleanEnum.TRUE);
         demoRepo.save(demoDo);

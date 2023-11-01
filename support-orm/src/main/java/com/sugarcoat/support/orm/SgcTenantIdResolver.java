@@ -1,7 +1,5 @@
 package com.sugarcoat.support.orm;
 
-import com.sugarcoat.protocol.security.SecurityHelper;
-import jakarta.persistence.GenerationType;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;

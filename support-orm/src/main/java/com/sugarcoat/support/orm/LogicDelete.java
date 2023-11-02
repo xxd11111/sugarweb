@@ -1,7 +1,7 @@
 package com.sugarcoat.support.orm;
 
 /**
- * TODO
+ * LogicDelete
  *
  * @author xxd
  * @since 2023/10/22 23:02

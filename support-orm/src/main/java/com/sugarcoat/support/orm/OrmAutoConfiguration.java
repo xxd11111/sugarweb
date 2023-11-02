@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import jakarta.persistence.EntityManager;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -17,26 +19,24 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  */
 @EntityScan
 @EnableJpaRepositories
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class OrmAutoConfiguration {
 
-	// @Bean
-	// public HibernatePropertiesCustomizer hibernatePropertiesCustomizer1(){
-	// 	return new SgcAuditorAware();
-	// }
-
 	@Bean
-	public HibernatePropertiesCustomizer hibernatePropertiesCustomizer2(){
-		return new SgcTenantIdResolver();
+	public AuditorAware<String> auditorAware(){
+		return new SgcAuditorAware();
 	}
 
-	// @Bean
-	// public CurrentTenantIdentifierResolver tenantIdResolver(){
-	// 	return new SgcTenantIdResolver();
-	// }
+	@Bean
+	public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(){
+		return new SgcTenantIdResolver();
+	}
 
 	@Bean
 	public JPAQueryFactory jpaQueryFactory(EntityManager em) {
 		return new JPAQueryFactory(em);
 	}
+
+
 
 }

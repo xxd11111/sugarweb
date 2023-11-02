@@ -1,6 +1,5 @@
 package com.sugarcoat.support.orm;
 
-import com.sugarcoat.protocol.security.SecurityHelper;
 import org.springframework.data.domain.AuditorAware;
 
 import java.util.Optional;
@@ -15,7 +14,8 @@ public class SgcAuditorAware implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.of(SecurityHelper.currentUserId());
+        return Optional.of("1");
+        // return Optional.ofNullable(SecurityHelper.currentUserId());
     }
 
 }

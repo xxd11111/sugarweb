@@ -1,5 +1,8 @@
 package com.sugarcoat.support.orm;
 
+import jakarta.annotation.Resource;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import java.util.HashMap;
@@ -27,6 +30,7 @@ public class SgcTenantRoutingDatasource extends AbstractRoutingDataSource {
 
     @Override
     protected String determineCurrentLookupKey() {
+        //todo 判断是否是公共库
         return tenantIdResolver.resolveCurrentTenantIdentifier();
     }
 

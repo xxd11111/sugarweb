@@ -12,6 +12,8 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import javax.sql.DataSource;
+
 /**
  * querydsl配置
  *
@@ -27,9 +29,14 @@ public class OrmAutoConfiguration {
 		return new SgcAuditorAware();
 	}
 
-	@Bean
-	public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(){
+	@Bean(name = "sgcTenantIdResolver")
+	public HibernatePropertiesCustomizer sgcTenantIdResolver(){
 		return new SgcTenantIdResolver();
+	}
+
+	@Bean(name = "sgcTenantSchemaConnectionProvider")
+	public HibernatePropertiesCustomizer sgcTenantSchemaConnectionProvider(DataSource dataSource){
+		return new SgcTenantSchemaConnectionProvider(dataSource);
 	}
 
 	@Bean

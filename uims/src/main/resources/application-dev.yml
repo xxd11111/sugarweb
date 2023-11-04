@@ -10,31 +10,31 @@ spring:
     name: uims
   jackson:
     time-zone: GMT+8
-
-#    #    mysql数据库
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-#    username: ${MYSQL_USERNAME:root}
-#    password: ${MYSQL_PASSWORD:123456}
-#    # 连接池设置
-#    type: com.zaxxer.hikari.HikariDataSource
-#    hikari:
-#      # 最大连接池数量
-#      maximum-pool-size: 30
-#      # 最小空闲线程数量
-#      minimum-idle: 5
-#      # 配置获取连接等待超时的时间
-#      connectionTimeout: 30000
-#      # 校验超时时间
-#      validationTimeout: 5000
-#      # 空闲连接存活最大时间，默认10分钟
-#      idleTimeout: 600000
-#      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
-#      maxLifetime: 1800000
-#      # 连接测试query（配置检测连接是否有效）
-#      connectionTestQuery: SELECT 1
-#      # 多久检查一次连接的活性
-#      keepaliveTime: 30000
+  datasource:
+    #    mysql数据库
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:123456}
+    # 连接池设置
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      # 最大连接池数量
+      maximum-pool-size: 30
+      # 最小空闲线程数量
+      minimum-idle: 5
+      # 配置获取连接等待超时的时间
+      connectionTimeout: 30000
+      # 校验超时时间
+      validationTimeout: 5000
+      # 空闲连接存活最大时间，默认10分钟
+      idleTimeout: 600000
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+      maxLifetime: 1800000
+      # 连接测试query（配置检测连接是否有效）
+      connectionTestQuery: SELECT 1
+      # 多久检查一次连接的活性
+      keepaliveTime: 30000
   jpa:
     #    database-platform: org.hibernate.dialect.MySQLDialect
     show-sql: true
@@ -44,7 +44,7 @@ spring:
     hibernate:
       ddl-auto: update
   mvc:
-    pathmatch:
+    path-match:
       matching-strategy: ant_path_matcher
   data:
     redis:
@@ -113,76 +113,74 @@ logging:
 
 sugarcoat:
   # 连接数据库
-  orm:
-    datasource:
-      #    mysql数据库
-      master: master
-      dynamic:
-        master:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          jdbcUrl: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-          username: ${MYSQL_USERNAME:root}
-          password: ${MYSQL_PASSWORD:123456}
-          # 最大连接池数量
-          maximum-pool-size: 30
-          # 最小空闲线程数量
-          minimum-idle: 5
-          # 配置获取连接等待超时的时间
-          connectionTimeout: 30000
-          # 校验超时时间
-          validationTimeout: 5000
-          # 空闲连接存活最大时间，默认10分钟
-          idleTimeout: 600000
-          # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
-          maxLifetime: 1800000
-          # 连接测试query（配置检测连接是否有效）
-          connectionTestQuery: SELECT 1
-          # 多久检查一次连接的活性
-          keepaliveTime: 30000
-        slave:
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          jdbcUrl: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-          username: ${MYSQL_USERNAME:root}
-          password: ${MYSQL_PASSWORD:123456}
-          # 最大连接池数量
-          maximum-pool-size: 30
-          # 最小空闲线程数量
-          minimum-idle: 5
-          # 配置获取连接等待超时的时间
-          connectionTimeout: 30000
-          # 校验超时时间
-          validationTimeout: 5000
-          # 空闲连接存活最大时间，默认10分钟
-          idleTimeout: 600000
-          # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
-          maxLifetime: 1800000
-          # 连接测试query（配置检测连接是否有效）
-          connectionTestQuery: SELECT 1
-          # 多久检查一次连接的活性
-          keepaliveTime: 30000
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbcUrl: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-      username: ${MYSQL_USERNAME:root}
-      password: ${MYSQL_PASSWORD:123456}
-      # 最大连接池数量
-      maximum-pool-size: 30
-      # 最小空闲线程数量
-      minimum-idle: 5
-      # 配置获取连接等待超时的时间
-      connectionTimeout: 30000
-      # 校验超时时间
-      validationTimeout: 5000
-      # 空闲连接存活最大时间，默认10分钟
-      idleTimeout: 600000
-      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
-      maxLifetime: 1800000
-      # 连接测试query（配置检测连接是否有效）
-      connectionTestQuery: SELECT 1
-      # 多久检查一次连接的活性
-      keepaliveTime: 30000
+  datasource:
+    # mysql数据库
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:123456}
+    # 最大连接池数量
+    maximum-pool-size: 30
+    # 最小空闲线程数量
+    minimum-idle: 5
+    # 配置获取连接等待超时的时间
+    connectionTimeout: 30000
+    # 校验超时时间
+    validationTimeout: 5000
+    # 空闲连接存活最大时间，默认10分钟
+    idleTimeout: 600000
+    # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+    maxLifetime: 1800000
+    # 连接测试query（配置检测连接是否有效）
+    connectionTestQuery: SELECT 1
+    # 多久检查一次连接的活性
+    keepaliveTime: 30000
+    dynamic:
+      ds1:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbcUrl: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+        username: ${MYSQL_USERNAME:root}
+        password: ${MYSQL_PASSWORD:123456}
+        # 最大连接池数量
+        maximum-pool-size: 30
+        # 最小空闲线程数量
+        minimum-idle: 5
+        # 配置获取连接等待超时的时间
+        connectionTimeout: 30000
+        # 校验超时时间
+        validationTimeout: 5000
+        # 空闲连接存活最大时间，默认10分钟
+        idleTimeout: 600000
+        # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+        maxLifetime: 1800000
+        # 连接测试query（配置检测连接是否有效）
+        connectionTestQuery: SELECT 1
+        # 多久检查一次连接的活性
+        keepaliveTime: 30000
+      ds2:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbcUrl: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+        username: ${MYSQL_USERNAME:root}
+        password: ${MYSQL_PASSWORD:123456}
+        # 最大连接池数量
+        maximum-pool-size: 30
+        # 最小空闲线程数量
+        minimum-idle: 5
+        # 配置获取连接等待超时的时间
+        connectionTimeout: 30000
+        # 校验超时时间
+        validationTimeout: 5000
+        # 空闲连接存活最大时间，默认10分钟
+        idleTimeout: 600000
+        # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认30分钟
+        maxLifetime: 1800000
+        # 连接测试query（配置检测连接是否有效）
+        connectionTestQuery: SELECT 1
+        # 多久检查一次连接的活性
+        keepaliveTime: 30000
   cache:
     # redis key前缀
-    keyPrefix: sugarcoat
+    keyPrefix: uims
     # 线程池数量
     threads: 4
     # Netty线程池数量

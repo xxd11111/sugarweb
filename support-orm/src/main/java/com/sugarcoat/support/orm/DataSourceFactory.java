@@ -11,7 +11,7 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class DataSourceFactory {
 
-    public static HikariDataSource create(SgcTenantDataSourceInfo sgcDsInfo){
+    public static HikariDataSource create(SgcDataSourceProperties sgcDsInfo){
         HikariConfig hikariConfig = new HikariConfig();
 
         hikariConfig.setDriverClassName(sgcDsInfo.getDriverClassName());
@@ -20,8 +20,6 @@ public class DataSourceFactory {
         hikariConfig.setPassword(sgcDsInfo.getPassword());
 
         hikariConfig.setPoolName(sgcDsInfo.getPoolName());
-        hikariConfig.setConnectionTestQuery(sgcDsInfo.getConnectionTestQuery());
-
         hikariConfig.setMaximumPoolSize(sgcDsInfo.getMaximumPoolSize());
         hikariConfig.setMinimumIdle(sgcDsInfo.getMinimumIdle());
 

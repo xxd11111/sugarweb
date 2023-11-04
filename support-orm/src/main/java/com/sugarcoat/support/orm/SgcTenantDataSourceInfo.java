@@ -31,7 +31,7 @@ public class SgcTenantDataSourceInfo {
     //  连接池的用户定义名称，主要出现在日志记录和JMX管理控制台中以识别池和池配置 HikariPool-1
     private String poolName;
     //  该属性为支持模式概念的数据库设置默认模式 driver default
-    private String schema;
+    private String schemaName;
     //  该属性设置一个SQL语句，在将每个新连接创建后，将其添加到池中之前执行该语句.如果此查询失败，它将被视为连接尝试失败。 null
     private String connectionInitSql;
     //  设置要执行的 SQL 查询以测试连接的有效性。

@@ -1,12 +1,10 @@
 package com.sugarcoat.support.orm;
 
-import jakarta.annotation.Resource;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.zaxxer.hikari.HikariDataSource;
+import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * SgcTenantRoutingDatasource
@@ -16,17 +14,17 @@ import java.util.Map;
  */
 public class SgcTenantRoutingDatasource extends AbstractRoutingDataSource {
 
-    private final SgcTenantIdResolver tenantIdResolver;
+    private final CurrentTenantIdentifierResolver tenantIdResolver;
 
-
-    public SgcTenantRoutingDatasource(SgcTenantIdResolver tenantIdResolver, SgcTenantDataSourceRepository tenantDataSourceRepository, PropertiesLoadDataSource propertiesLoadDataSource) {
+    public SgcTenantRoutingDatasource(CurrentTenantIdentifierResolver tenantIdResolver, DynamicDataSourceProperties dynamicDataSourceProperties) {
         this.tenantIdResolver = tenantIdResolver;
-        Iterable<SgcTenantDataSourceInfo> all = tenantDataSourceRepository.findAll();
-        // setDefaultTargetDataSource();
-        Map<Object, Object> targetDataSources = new HashMap<>();
+        SgcTenantDataSourceInfo master = dynamicDataSourceProperties.getDynamic().get("master");
+        HikariDataSource hikariDataSource = DataSourceFactory.create(master);
+        hikariDataSource.validate();
+        setDefaultTargetDataSource(hikariDataSource);
+        HashMap<Object, Object> targetDataSources = new HashMap<>();
         setTargetDataSources(targetDataSources);
     }
-
 
     @Override
     protected String determineCurrentLookupKey() {

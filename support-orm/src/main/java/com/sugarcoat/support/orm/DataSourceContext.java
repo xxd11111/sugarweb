@@ -8,7 +8,14 @@ package com.sugarcoat.support.orm;
  */
 public class DataSourceContext {
 
+    private static final ThreadLocal<String> dsId = ThreadLocal.withInitial(()->"master");
+
     public static String getDsId(){
-        return "";
+        return dsId.get();
     }
+
+    public static void setDsId(String dsId){
+        DataSourceContext.dsId.set(dsId);
+    }
+
 }

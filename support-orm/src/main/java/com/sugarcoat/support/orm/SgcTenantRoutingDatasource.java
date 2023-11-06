@@ -35,8 +35,7 @@ public class SgcTenantRoutingDatasource extends AbstractRoutingDataSource {
 
     @Override
     protected String determineCurrentLookupKey() {
-        //todo 判断是否是公共库
-        return tenantIdResolver.resolveCurrentTenantIdentifier();
+        return DataSourceContext.getDsId();
     }
 
 }

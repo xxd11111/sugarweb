@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.tenant;
 
 /**
  * TenantDataSource
@@ -6,5 +6,5 @@ package com.sugarcoat.support.orm;
  * @author xxd
  * @since 2023/11/2 22:36
  */
-public @interface TenantDataSource {
+public @interface TenantTable {
 }

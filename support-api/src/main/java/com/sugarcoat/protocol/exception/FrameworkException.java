@@ -13,6 +13,10 @@ public class FrameworkException extends BaseException {
     public FrameworkException() {
     }
 
+    public FrameworkException(String message, Throwable e) {
+        super(message, e);
+    }
+
     public FrameworkException(String message, Object... objects) {
         super(message, objects);
     }

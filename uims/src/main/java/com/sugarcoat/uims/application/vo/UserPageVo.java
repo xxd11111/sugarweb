@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.vo;
 
-import com.sugarcoat.protocol.common.BooleanEnum;
+import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.uims.domain.user.AccountType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

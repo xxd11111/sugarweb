@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.datasource;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import java.util.Map;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @ConfigurationProperties(prefix = "sugarcoat.datasource")
-public class DynamicDataSourceProperties extends SgcDataSourceProperties{
+public class DynamicDataSourceProperties extends SgcDataSourceProperties {
 
     private Map<String, SgcDataSourceProperties> dynamic = new HashMap<>();
 

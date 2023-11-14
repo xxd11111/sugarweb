@@ -1,9 +1,9 @@
 package com.sugarcoat.uims.domain;
 
-import com.sugarcoat.protocol.common.BooleanEnum;
+import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.protocol.common.Result;
-import com.sugarcoat.support.orm.DataSourceContext;
-import com.sugarcoat.support.orm.TenantContext;
+import com.sugarcoat.support.orm.datasource.DataSourceContext;
+import com.sugarcoat.support.orm.tenant.TenantContext;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +28,7 @@ public class DemoController {
     @GetMapping("/list")
     public Result list(Boolean tenantIgnore, String dsId){
         DataSourceContext.setDsId(dsId);
-        TenantContext.setTenantId(tenantIgnore);
+        TenantContext.setTenantIgnore(tenantIgnore);
         Iterable<DemoDo> all = demoRepo.findAll();
         return Result.data(all);
     }

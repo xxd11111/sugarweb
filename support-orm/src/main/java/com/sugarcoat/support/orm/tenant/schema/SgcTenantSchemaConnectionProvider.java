@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.tenant.schema;
 
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;

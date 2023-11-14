@@ -1,5 +1,6 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.tenant.database;
 
+import com.sugarcoat.support.orm.datasource.SgcDataSourceProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -18,19 +19,12 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class SgcTenantDataSourceInfo extends SgcDataSourceProperties{
+public class SgcTenantDataSourceInfo extends SgcDataSourceProperties {
 
     @Id
     private String id;
 
     private String tenantId;
-
-    // //  是否注册JMX管理Bean（MBeans） FALSE
-    // private String registerMbeans;
-    // //  控制池是否可以通过JMX暂停和恢复 FALSE
-    // private String allowPoolSuspension;
-    // //  记录消息之前连接可能离开池的时间量，表示可能的连接泄漏 	0 如果大于0且不是单元测试，则进一步判断：(leakDetectionThreshold < SECONDS.toMillis(2) or (leakDetectionThreshold > maxLifetime && maxLifetime > 0)，会被重置为0 . 即如果要生效则必须>0，而且不能小于2秒，而且当maxLifetime > 0时不能大于maxLifetime
-    // private String leakDetectionThreshold;
 
     @Override
     public boolean equals(Object o) {

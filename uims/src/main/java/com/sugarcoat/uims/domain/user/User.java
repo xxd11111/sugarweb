@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.domain.user;
 
 import cn.hutool.core.collection.CollUtil;
-import com.sugarcoat.protocol.common.BooleanEnum;
+import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.role.Role;
 import lombok.Getter;

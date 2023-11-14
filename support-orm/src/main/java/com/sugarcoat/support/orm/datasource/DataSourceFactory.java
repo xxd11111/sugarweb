@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

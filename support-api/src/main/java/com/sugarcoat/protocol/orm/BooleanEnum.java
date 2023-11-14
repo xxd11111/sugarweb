@@ -1,5 +1,6 @@
-package com.sugarcoat.protocol.common;
+package com.sugarcoat.protocol.orm;
 
+import com.sugarcoat.protocol.common.EnumValue;
 
 /**
  * 标识枚举
@@ -30,6 +31,6 @@ public enum BooleanEnum implements EnumValue<String> {
 
     private final String code;
 
-    public static class Convert extends EnumConvert<BooleanEnum, String>{}
+    public static class Convert extends EnumConvert<BooleanEnum, String> {}
 
 }

@@ -1,4 +1,7 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.tenant.database;
+
+import com.sugarcoat.support.orm.SgcRepository;
+import com.sugarcoat.support.orm.tenant.database.SgcTenantDataSourceInfo;
 
 /**
  * SgcTenantDataSourceRepository

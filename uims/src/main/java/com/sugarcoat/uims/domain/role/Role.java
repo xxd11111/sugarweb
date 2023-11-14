@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.role;
 
-import com.sugarcoat.protocol.common.BooleanEnum;
+import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.Menu;
 import lombok.*;
 import org.hibernate.Hibernate;

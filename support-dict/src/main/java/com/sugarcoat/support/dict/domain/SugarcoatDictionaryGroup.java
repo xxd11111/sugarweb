@@ -1,6 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.protocol.common.BooleanEnum;
+import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.protocol.dict.Dictionary;
 import com.sugarcoat.protocol.dict.DictionaryGroup;
 import com.sugarcoat.support.orm.EntityExt;

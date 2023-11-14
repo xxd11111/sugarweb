@@ -25,7 +25,6 @@ public class EntityExt {
 
 	@CreatedBy
 	@Column(length = 32)
-	@Version
 	private String createBy;
 
 	@CreatedDate

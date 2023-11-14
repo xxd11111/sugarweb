@@ -1,5 +1,7 @@
-package com.sugarcoat.protocol.common;
+package com.sugarcoat.protocol.orm;
 
+import com.sugarcoat.protocol.common.EnumUtil;
+import com.sugarcoat.protocol.common.EnumValue;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

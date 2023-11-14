@@ -2,7 +2,7 @@ package com.sugarcoat.support.dict.domain;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.protocol.common.BooleanEnum;
+import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.protocol.dict.DictionaryGroup;
 import com.sugarcoat.protocol.dict.DictionaryManager;
 import com.sugarcoat.protocol.exception.FrameworkException;

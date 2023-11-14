@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.tenant;
 
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
@@ -15,20 +15,16 @@ import java.util.Map;
 public class SgcTenantIdResolver implements CurrentTenantIdentifierResolver, HibernatePropertiesCustomizer {
     @Override
     public boolean isRoot(String tenantId) {
-        // String userType = SecurityHelper.getUserType();
-        // return "supperAdmin".equals(userType);
         return TenantContext.isIgnore();
     }
 
     @Override
     public String resolveCurrentTenantIdentifier() {
-        // return SecurityHelper.getUserData("tenantId");
-        return "1";
+        return TenantContext.getTenantId();
     }
 
     @Override
     public boolean validateExistingCurrentSessions() {
-        // return !SecurityHelper.isSystemCall();
         return true;
     }
 

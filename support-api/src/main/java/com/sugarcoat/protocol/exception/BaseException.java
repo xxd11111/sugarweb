@@ -27,6 +27,10 @@ public class BaseException extends RuntimeException{
     public BaseException() {
     }
 
+    public BaseException(String message, Throwable e) {
+        super(message, e);
+    }
+
     public BaseException(String message, Object... objects) {
         this.message = StrUtil.format(message, objects);
     }

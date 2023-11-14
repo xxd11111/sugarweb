@@ -39,7 +39,7 @@ public class DemoDo {
     @Convert(converter = BooleanEnum.Convert.class)
     private BooleanEnum status;
 
-    @TenantId
+    // @TenantId
     private String tenantId;
 
     @CreatedBy

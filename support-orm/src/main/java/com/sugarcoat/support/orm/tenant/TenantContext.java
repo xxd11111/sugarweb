@@ -10,7 +10,10 @@ public class TenantContext {
 
     private static final ThreadLocal<Boolean> tenantIgnore = ThreadLocal.withInitial(() -> false);
 
-    private static final ThreadLocal<String> tenantId = ThreadLocal.withInitial(() -> "slave_1");
+    /**
+     * 为空时抛异常
+     */
+    private static final ThreadLocal<String> tenantId = ThreadLocal.withInitial(() -> "");
 
     public static boolean isIgnore() {
         return tenantIgnore.get();
@@ -28,7 +31,7 @@ public class TenantContext {
         TenantContext.tenantId.set(tenantId);
     }
 
-    public static void remove(){
+    public static void remove() {
         tenantIgnore.remove();
         tenantId.remove();
     }

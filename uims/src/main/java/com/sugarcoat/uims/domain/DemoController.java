@@ -4,6 +4,7 @@ import com.baomidou.dynamic.datasource.annotation.DS;
 import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.support.orm.tenant.TenantContext;
+import com.sugarcoat.support.orm.tenant.TenantDS;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,9 @@ public class DemoController {
         Iterable<DemoDo> all = demoRepo.findAll();
         return Result.data(all);
     }
+// @8809
+// @154xx
+
 
     @PostMapping("/save")
     public Result save() {
@@ -43,7 +47,7 @@ public class DemoController {
     }
 
     @GetMapping("/list2")
-    @DS("#tenant")
+    @DS("#tenantId")
     public Result list2(Boolean tenantIgnore, String dsId){
         TenantContext.setTenantIgnore(tenantIgnore);
         Iterable<DemoDo> all = demoRepo.findAll();
@@ -51,7 +55,7 @@ public class DemoController {
     }
 
     @PostMapping("/save2")
-    @DS("#tenant")
+    @TenantDS
     public Result save2() {
         DemoDo demoDo = new DemoDo();
         demoDo.setId(UUID.randomUUID().toString().replace("-", ""));

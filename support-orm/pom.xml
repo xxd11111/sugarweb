@@ -23,6 +23,11 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+<!--         <dependency> -->
+<!--             <groupId>com.github.jsqlparser</groupId> -->
+<!--             <artifactId>jsqlparser</artifactId> -->
+<!--         </dependency> -->
+
         <dependency>
             <groupId>com.querydsl</groupId>
             <artifactId>querydsl-jpa</artifactId>

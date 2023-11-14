@@ -1,8 +1,6 @@
 package com.sugarcoat.support.orm;
 
 import lombok.*;
-import org.hibernate.annotations.DialectOverride;
-import org.hibernate.annotations.TenantId;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;

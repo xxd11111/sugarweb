@@ -1,6 +1,5 @@
 package com.sugarcoat.support.orm.tenant.database;
 
-import com.sugarcoat.support.orm.datasource.SgcDataSourceProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
@@ -19,7 +18,7 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class SgcTenantDataSourceInfo extends SgcDataSourceProperties {
+public class SgcTenantDataSource extends SgcDataSourceProperties {
 
     @Id
     private String id;
@@ -30,7 +29,7 @@ public class SgcTenantDataSourceInfo extends SgcDataSourceProperties {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SgcTenantDataSourceInfo that = (SgcTenantDataSourceInfo) o;
+        SgcTenantDataSource that = (SgcTenantDataSource) o;
         return id != null && Objects.equals(id, that.id);
     }
 

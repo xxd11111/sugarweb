@@ -1,23 +1,17 @@
 package com.sugarcoat.support.orm;
 
+import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
+import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sugarcoat.support.orm.datasource.DynamicDataSourceProperties;
 import com.sugarcoat.support.orm.tenant.SgcTenantIdResolver;
-import com.sugarcoat.support.orm.datasource.SgcDynamicDatasource;
-import com.sugarcoat.support.orm.tenant.schema.SgcTenantSchemaConnectionProvider;
-import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
-import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
-import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-import javax.sql.DataSource;
 
 /**
  * querydsl配置
@@ -28,11 +22,7 @@ import javax.sql.DataSource;
 @EnableJpaRepositories
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @Configuration
-@EnableConfigurationProperties(DynamicDataSourceProperties.class)
 public class OrmAutoConfiguration {
-
-	// @Resource
-	// private DynamicDataSourceProperties dynamicDataSourceProperties;
 
 	@Bean
 	public AuditorAware<String> auditorAware(){
@@ -40,13 +30,8 @@ public class OrmAutoConfiguration {
 	}
 
 	@Bean(name = "sgcTenantIdResolver")
-	public CurrentTenantIdentifierResolver sgcTenantIdResolver(){
+	public HibernatePropertiesCustomizer sgcTenantIdResolver(){
 		return new SgcTenantIdResolver();
-	}
-
-	@Bean(name = "sgcTenantSchemaConnectionProvider")
-	public MultiTenantConnectionProvider sgcTenantSchemaConnectionProvider(DataSource dataSource){
-		return new SgcTenantSchemaConnectionProvider(dataSource);
 	}
 
 	@Bean
@@ -54,9 +39,8 @@ public class OrmAutoConfiguration {
 		return new JPAQueryFactory(em);
 	}
 
-	// @Bean
-	// public DataSource dataSource(){
-	// 	return new SgcDynamicDatasource(dynamicDataSourceProperties);
-	// }
+	// DynamicDataSourceContextHolder;
+	// DynamicRoutingDataSource;
+	// DynamicDataSourceAopConfiguration
 
 }

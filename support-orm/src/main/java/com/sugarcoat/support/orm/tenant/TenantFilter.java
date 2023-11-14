@@ -1,5 +1,6 @@
 package com.sugarcoat.support.orm.tenant;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,7 +10,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 /**
- * 租户过滤器
+ * 租户拦截器
  *
  * @author 许向东
  * @date 2023/11/14

@@ -10,7 +10,7 @@ public class TenantContext {
 
     private static final ThreadLocal<Boolean> tenantIgnore = ThreadLocal.withInitial(() -> false);
 
-    private static final ThreadLocal<String> tenantId = ThreadLocal.withInitial(() -> "NULL");
+    private static final ThreadLocal<String> tenantId = ThreadLocal.withInitial(() -> "slave_1");
 
     public static boolean isIgnore() {
         return tenantIgnore.get();

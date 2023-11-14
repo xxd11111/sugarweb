@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm.datasource;
+package com.sugarcoat.support.orm.tenant.database;
 
 import lombok.Data;
 

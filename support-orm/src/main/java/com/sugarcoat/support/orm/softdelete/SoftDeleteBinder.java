@@ -16,11 +16,16 @@ import org.hibernate.tuple.AttributeBinder;
  */
 public class SoftDeleteBinder implements AttributeBinder<SoftDelete> {
 
-    public static final String FILTER_NAME = "_deleteFlag";
-    public static final String PARAMETER_NAME = "deleteFlag";
-    private String sqlDeleteTemplate = "UPDATE {} SET {} WHERE {} = ? ";
-    private String deleteValue = "1";
-    private String unDeleteValue = "0";
+    public SoftDeleteBinder() {
+        //todo 设置标识数值
+        this.deleteValue = "1";
+        this.unDeleteValue = "0";
+        this.sqlDeleteTemplate = "UPDATE {} SET {} WHERE {} = ? ";
+    }
+
+    private final String sqlDeleteTemplate;
+    private final String deleteValue;
+    private final String unDeleteValue;
 
     @Override
     public void bind(

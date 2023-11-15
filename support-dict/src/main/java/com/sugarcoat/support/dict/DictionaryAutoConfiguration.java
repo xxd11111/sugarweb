@@ -4,6 +4,7 @@ import com.sugarcoat.protocol.dict.DictionaryManager;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.impl.SugarcoatDictionaryServiceImpl;
 import com.sugarcoat.support.dict.domain.*;
+import jakarta.annotation.Resource;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -28,7 +29,7 @@ import java.util.Map;
 @ConditionalOnProperty(prefix = "sugarcoat.dictionary", name = "enable", havingValue = "true")
 public class DictionaryAutoConfiguration {
 
-    @Autowired
+    @Resource
     private DictionaryProperties dictionaryProperties;
 
     @Bean

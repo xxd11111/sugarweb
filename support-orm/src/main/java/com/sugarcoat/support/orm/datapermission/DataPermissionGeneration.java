@@ -1,7 +1,6 @@
 package com.sugarcoat.support.orm.datapermission;
 
-import cn.hutool.core.util.StrUtil;
-import com.sugarcoat.support.orm.softdelete.SoftDelete;
+import org.hibernate.PropertyValueException;
 import org.hibernate.Session;
 import org.hibernate.tuple.AnnotationValueGeneration;
 import org.hibernate.tuple.GenerationTiming;
@@ -13,19 +12,19 @@ import org.hibernate.tuple.ValueGenerator;
  * @author 许向东
  * @date 2023/11/15
  */
-public class DataPermissionGeneration implements AnnotationValueGeneration<SoftDelete>, ValueGenerator<Object> {
+public class DataPermissionGeneration implements AnnotationValueGeneration<DataPermission>, ValueGenerator<Object> {
 
     private String entityName;
     private String propertyName;
 
     @Override
-    public void initialize(SoftDelete annotation, Class<?> propertyType, String entityName, String propertyName) {
+    public void initialize(DataPermission annotation, Class<?> propertyType, String entityName, String propertyName) {
         this.entityName = entityName;
         this.propertyName = propertyName;
     }
 
     @Override
-    public void initialize(SoftDelete annotation, Class<?> propertyType) {
+    public void initialize(DataPermission annotation, Class<?> propertyType) {
         throw new UnsupportedOperationException();
     }
 
@@ -41,10 +40,21 @@ public class DataPermissionGeneration implements AnnotationValueGeneration<SoftD
 
     @Override
     public Object generateValue(Session session, Object owner, Object currentValue) {
-        if (StrUtil.isEmpty((String) currentValue)) {
-            return "0";
+        String currentOrgId = DataPermissionContext.getCurrentOrgId();
+        if ( currentValue != null ) {
+            if (DataPermissionContext.isRoot()) {
+                // the "root" orgId is allowed to set the org id explicitly
+                return currentValue;
+            }
+            if ( !currentValue.equals(currentOrgId) ) {
+                throw new PropertyValueException(
+                        "assigned org id differs from current org id: "
+                                + currentValue + "!=" + currentOrgId,
+                        entityName, propertyName
+                );
+            }
         }
-        return currentValue;
+        return currentOrgId;
     }
 
     @Override

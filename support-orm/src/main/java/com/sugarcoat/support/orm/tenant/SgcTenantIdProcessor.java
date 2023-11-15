@@ -17,7 +17,6 @@ public class SgcTenantIdProcessor extends DsProcessor {
 
     @Override
     public String doDetermineDatasource(MethodInvocation invocation, String key) {
-        String tenantId = TenantContext.getTenantId();
-        return tenantId;
+        return TenantContext.getTenantId();
     }
 }

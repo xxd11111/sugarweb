@@ -1,6 +1,7 @@
 package com.sugarcoat.uims.domain;
 
 import com.sugarcoat.protocol.orm.BooleanEnum;
+import com.sugarcoat.support.orm.softdelete.SoftDelete;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -39,8 +40,11 @@ public class DemoDo {
     @Convert(converter = BooleanEnum.Convert.class)
     private BooleanEnum status;
 
-    // @TenantId
+    @TenantId
     private String tenantId;
+
+    @SoftDelete
+    private String deleteFlag;
 
     @CreatedBy
     private String createBy;

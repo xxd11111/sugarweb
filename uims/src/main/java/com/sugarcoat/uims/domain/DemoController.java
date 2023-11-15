@@ -32,9 +32,6 @@ public class DemoController {
         Iterable<DemoDo> all = demoRepo.findAll();
         return Result.data(all);
     }
-// @8809
-// @154xx
-
 
     @PostMapping("/save")
     public Result save() {

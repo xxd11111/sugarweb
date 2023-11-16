@@ -1,7 +1,10 @@
 package com.sugarcoat.support.orm.datapermission;
 
-import java.util.Collection;
-import java.util.Map;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.dynamic.datasource.toolkit.DsStrUtils;
+import com.sugarcoat.protocol.exception.FrameworkException;
+
+import java.util.*;
 
 /**
  * TODO
@@ -11,7 +14,9 @@ import java.util.Map;
  */
 public class DataPermissionContext {
 
-    private static final ThreadLocal<String> sessionCustomKey = new ThreadLocal<>();
+    public static final String all = "0";
+    public static final String currentAndSubOrg = "1";
+    public static final String currentOrg = "2";
 
     private static final ThreadLocal<Collection<String>> allowOrgIds = new ThreadLocal<>();
 
@@ -19,11 +24,31 @@ public class DataPermissionContext {
 
     private static final ThreadLocal<String> userId = new ThreadLocal<>();
 
-    private static final ThreadLocal<Map<String, String>> customStrategy = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, String>> customStrategy = ThreadLocal.withInitial(HashMap::new);
 
     private static final ThreadLocal<String> globalStrategy = new ThreadLocal<>();
 
-    private static final ThreadLocal<Boolean> isRoot = new ThreadLocal<>();
+    private static final ThreadLocal<Boolean> isRoot = ThreadLocal.withInitial(() -> false);
+
+    private static final ThreadLocal<Deque<String>> sessionCustomKey = ThreadLocal.withInitial(ArrayDeque::new);
+
+    public static String peekSessionCustomKey() {
+        return sessionCustomKey.get().peek();
+    }
+
+    public static String pushSessionCustomKey(String ds) {
+        String dataSourceStr = DsStrUtils.isEmpty(ds) ? "" : ds;
+        sessionCustomKey.get().push(dataSourceStr);
+        return dataSourceStr;
+    }
+
+    public static void pollSessionCustomKey() {
+        Deque<String> deque = sessionCustomKey.get();
+        deque.poll();
+        if (deque.isEmpty()) {
+            sessionCustomKey.remove();
+        }
+    }
 
     public static void setAllowOrgIds(Collection<String> allowOrgIds) {
         DataPermissionContext.allowOrgIds.set(allowOrgIds);
@@ -80,7 +105,29 @@ public class DataPermissionContext {
         DataPermissionContext.customStrategy.remove();
         DataPermissionContext.globalStrategy.remove();
         DataPermissionContext.isRoot.remove();
+        DataPermissionContext.sessionCustomKey.remove();
     }
 
+    public static String getStrategy(String customKey) {
+        String strategy;
+        if (StrUtil.isNotEmpty(customKey)) {
+            strategy = DataPermissionContext.getCustomStrategy().get(customKey);
+        } else {
+            strategy = DataPermissionContext.getGlobalStrategy();
+        }
+        if (StrUtil.isEmpty(strategy)) {
+            strategy = currentOrg;
+        }
+        return strategy;
+    }
 
+    public static Object getValue(String strategy) {
+        if (StrUtil.equals(currentOrg, strategy)) {
+            return DataPermissionContext.getCurrentOrgId();
+        } else if (StrUtil.equals(currentAndSubOrg, strategy)) {
+            return DataPermissionContext.getAllowOrgIds();
+        } else {
+            return currentAndSubOrg;
+        }
+    }
 }

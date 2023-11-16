@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public class DataPermissionContext {
 
+    private static final ThreadLocal<String> sessionCustomKey = new ThreadLocal<>();
+
     private static final ThreadLocal<Collection<String>> allowOrgIds = new ThreadLocal<>();
 
     private static final ThreadLocal<String> currentOrgId = new ThreadLocal<>();

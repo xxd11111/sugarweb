@@ -1,6 +1,7 @@
 package com.sugarcoat.uims.domain;
 
 import com.sugarcoat.protocol.orm.BooleanEnum;
+import com.sugarcoat.support.orm.datapermission.DataPermission;
 import com.sugarcoat.support.orm.softdelete.SoftDelete;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -42,6 +43,9 @@ public class DemoDo {
 
     @TenantId
     private String tenantId;
+
+    @DataPermission
+    private String orgId;
 
     @SoftDelete
     private String deleteFlag;

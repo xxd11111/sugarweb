@@ -1,8 +1,9 @@
 package com.sugarcoat.uims.domain;
 
-import com.baomidou.dynamic.datasource.annotation.DS;
 import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.protocol.common.Result;
+import com.sugarcoat.support.orm.datapermission.DataPermissionContext;
+import com.sugarcoat.support.orm.datapermission.DataPermissionFilter;
 import com.sugarcoat.support.orm.tenant.TenantContext;
 import com.sugarcoat.support.orm.tenant.TenantDS;
 import jakarta.annotation.Resource;
@@ -21,6 +22,8 @@ import java.util.UUID;
  */
 @RestController
 @RequestMapping("/demotest")
+@TenantDS
+@DataPermissionFilter
 public class DemoController {
 
     @Resource
@@ -30,11 +33,13 @@ public class DemoController {
     public Result list(Boolean tenantIgnore, String dsId){
         TenantContext.setTenantIgnore(tenantIgnore);
         Iterable<DemoDo> all = demoRepo.findAll();
+        Iterable<DemoDo> all2 = demoRepo.findAll();
         return Result.data(all);
     }
 
     @PostMapping("/save")
     public Result save() {
+        DataPermissionContext.setCurrentOrgId("1");
         DemoDo demoDo = new DemoDo();
         demoDo.setId(UUID.randomUUID().toString().replace("-", ""));
         demoDo.setName("name");
@@ -44,7 +49,6 @@ public class DemoController {
     }
 
     @GetMapping("/list2")
-    @DS("#tenantId")
     public Result list2(Boolean tenantIgnore, String dsId){
         TenantContext.setTenantIgnore(tenantIgnore);
         Iterable<DemoDo> all = demoRepo.findAll();
@@ -52,7 +56,6 @@ public class DemoController {
     }
 
     @PostMapping("/save2")
-    @TenantDS
     public Result save2() {
         DemoDo demoDo = new DemoDo();
         demoDo.setId(UUID.randomUUID().toString().replace("-", ""));

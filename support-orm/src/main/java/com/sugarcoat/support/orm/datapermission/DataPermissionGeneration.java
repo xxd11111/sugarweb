@@ -40,9 +40,9 @@ public class DataPermissionGeneration implements AnnotationValueGeneration<DataP
 
     @Override
     public Object generateValue(Session session, Object owner, Object currentValue) {
-        String currentOrgId = DataPermissionContext.getCurrentOrgId();
+        String currentOrgId = DataPermissionContext.getDataPermissionInfo().getOrgId();
         if ( currentValue != null ) {
-            if (DataPermissionContext.isRoot()) {
+            if (DataPermissionContext.getDataPermissionInfo().isRoot()) {
                 // the "root" orgId is allowed to set the org id explicitly
                 return currentValue;
             }

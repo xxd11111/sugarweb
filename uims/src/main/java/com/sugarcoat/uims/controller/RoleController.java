@@ -32,7 +32,7 @@ public class RoleController {
     }
 
     @GetMapping("page")
-    public Result<PageData<RolePageVo>> page(@RequestParam RoleQueryDto roleQueryDTO) {
+    public Result<PageData<RolePageVo>> page(RoleQueryDto roleQueryDTO) {
         return Result.data(roleService.page(roleQueryDTO));
     }
 

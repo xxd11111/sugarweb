@@ -1,7 +1,6 @@
 package com.sugarcoat.uims.domain;
 
 import com.sugarcoat.support.orm.SgcRepository;
-import com.sugarcoat.support.orm.datapermission.DataPermissionFilter;
 
 /**
  * TODO
@@ -9,7 +8,7 @@ import com.sugarcoat.support.orm.datapermission.DataPermissionFilter;
  * @author 许向东
  * @date 2023/10/26
  */
-@DataPermissionFilter
+// @DataPermissionFilter
 public interface DemoRepo extends SgcRepository<DemoDo> {
 
 }

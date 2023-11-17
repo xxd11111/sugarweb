@@ -3,7 +3,7 @@ package com.sugarcoat.uims.domain;
 import com.sugarcoat.protocol.orm.BooleanEnum;
 import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.support.orm.datapermission.DataPermissionContext;
-import com.sugarcoat.support.orm.datapermission.DataPermissionFilter;
+import com.sugarcoat.support.orm.datapermission.DataPermissionInfo;
 import com.sugarcoat.support.orm.tenant.TenantContext;
 import com.sugarcoat.support.orm.tenant.TenantDS;
 import jakarta.annotation.Resource;
@@ -23,7 +23,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/demotest")
 @TenantDS
-@DataPermissionFilter
 public class DemoController {
 
     @Resource
@@ -31,15 +30,16 @@ public class DemoController {
 
     @GetMapping("/list")
     public Result list(Boolean tenantIgnore, String dsId){
+        DataPermissionInfo dataPermissionInfo = new DataPermissionInfo();
+        dataPermissionInfo.setOrgId("1");
+        DataPermissionContext.setDataPermissionInfo(dataPermissionInfo);
         TenantContext.setTenantIgnore(tenantIgnore);
         Iterable<DemoDo> all = demoRepo.findAll();
-        Iterable<DemoDo> all2 = demoRepo.findAll();
         return Result.data(all);
     }
 
     @PostMapping("/save")
     public Result save() {
-        DataPermissionContext.setCurrentOrgId("1");
         DemoDo demoDo = new DemoDo();
         demoDo.setId(UUID.randomUUID().toString().replace("-", ""));
         demoDo.setName("name");

@@ -9,6 +9,7 @@ import com.sugarcoat.support.orm.tenant.SgcTenantIdResolver;
 import com.sugarcoat.support.orm.tenant.TenantInterceptor;
 import jakarta.persistence.EntityManager;
 import org.hibernate.engine.spi.LoadQueryInfluencers;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.internal.SessionImpl;
 import org.springframework.aop.Advisor;
 import org.springframework.beans.BeansException;
@@ -23,6 +24,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.function.Consumer;
 
 /**
  * querydsl配置
@@ -60,33 +63,41 @@ public class OrmAutoConfiguration implements WebMvcConfigurer, BeanPostProcessor
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new TenantInterceptor());
+        registry.addInterceptor(new DataPermissionInterceptor());
     }
 
     @Bean
     public Advisor dataPermissionFilterAdvisor() {
         DataPermissionMethodInterceptor interceptor = new DataPermissionMethodInterceptor();
-        return new DataPermissionFilterAdvisor(interceptor, DataPermissionFilter.class);
+        return new DataPermissionFilterAdvisor(interceptor, DataPermissionIgnore.class);
     }
 
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         if (bean instanceof LocalContainerEntityManagerFactoryBean entityManagerFactory) {
-            entityManagerFactory.setEntityManagerInitializer(entityManager -> {
-                if (entityManager instanceof SessionImpl session) {
-
-                    String customKey = DataPermissionContext.peekSessionCustomKey();
-                    String strategy = DataPermissionContext.getCustomStrategy().get(customKey);
-
-                    if (DataPermissionContext.isRoot() || StrUtil.equals(DataPermissionContext.all, strategy)) {
+            Consumer<EntityManager> entityManagerConsumer = entityManager -> {
+                SessionImpl session = (SessionImpl) entityManager;
+                SessionFactoryImplementor factory = session.getFactory();
+                //  数据权限
+                if (factory.getDefinedFilterNames().contains(DataPermissionBinder.FILTER_NAME)) {
+                    DataPermissionInfo dataPermissionInfo = DataPermissionContext.getDataPermissionInfo();
+                    if (dataPermissionInfo == null){
                         return;
                     }
-                    Object value = DataPermissionContext.getValue(strategy);
+                    String strategy = dataPermissionInfo.getStrategy();
+                    if (DataPermissionContext.isIgnore() ||
+                            dataPermissionInfo.isRoot() ||
+                            StrUtil.equals(DataPermissionStrategy.all.getValue(), strategy)) {
+                        return;
+                    }
+                    Object value = dataPermissionInfo.getValue(strategy);
                     LoadQueryInfluencers loadQueryInfluencers = session.getLoadQueryInfluencers();
                     loadQueryInfluencers.enableFilter(DataPermissionBinder.FILTER_NAME)
                             .setParameter(DataPermissionBinder.PARAMETER_NAME, value);
                 }
-            });
+            };
+            entityManagerFactory.setEntityManagerInitializer(entityManagerConsumer);
         }
         return bean;
     }

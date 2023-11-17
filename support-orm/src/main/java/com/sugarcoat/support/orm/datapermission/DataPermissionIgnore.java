@@ -13,8 +13,6 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DataPermissionFilter {
-
-    String customStrategy() default "";
+public @interface DataPermissionIgnore {
 
 }

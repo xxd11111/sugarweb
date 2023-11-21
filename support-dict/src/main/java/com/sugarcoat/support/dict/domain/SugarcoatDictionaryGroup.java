@@ -1,9 +1,9 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.protocol.orm.BooleanEnum;
+import com.sugarcoat.support.orm.BooleanEnum;
 import com.sugarcoat.protocol.dict.Dictionary;
 import com.sugarcoat.protocol.dict.DictionaryGroup;
-import com.sugarcoat.support.orm.EntityExt;
+import com.sugarcoat.support.orm.AuditEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +24,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class SugarcoatDictionaryGroup extends EntityExt implements DictionaryGroup {
+public class SugarcoatDictionaryGroup extends AuditEntity implements DictionaryGroup {
 
 	@Id
 	@GeneratedValue(generator = "system-uuid")

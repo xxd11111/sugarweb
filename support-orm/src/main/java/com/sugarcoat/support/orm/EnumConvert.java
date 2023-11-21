@@ -1,4 +1,4 @@
-package com.sugarcoat.protocol.orm;
+package com.sugarcoat.support.orm;
 
 import com.sugarcoat.protocol.common.EnumUtil;
 import com.sugarcoat.protocol.common.EnumValue;

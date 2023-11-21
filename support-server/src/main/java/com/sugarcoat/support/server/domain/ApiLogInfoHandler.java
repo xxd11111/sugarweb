@@ -114,7 +114,7 @@ public record ApiLogInfoHandler(SgcApiCallLogRepository apiCallLogRepository,
 
     @SneakyThrows(FrameworkException.class)
     public void loadUserInfo(SgcApiCallLog apiCallLog) {
-        UserInfo userInfo = SecurityHelper.currentAccount();
+        UserInfo userInfo = SecurityHelper.getUserInfo();
         String userId = userInfo.getId();
         String username = userInfo.getUsername();
         apiCallLog.setUserId(userId);

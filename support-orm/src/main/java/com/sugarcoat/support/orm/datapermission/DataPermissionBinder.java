@@ -1,10 +1,6 @@
 package com.sugarcoat.support.orm.datapermission;
 
-import com.sugarcoat.support.orm.softdelete.SoftDeleteBinder;
-import com.sugarcoat.support.orm.softdelete.SoftDeleteGeneration;
 import org.hibernate.MappingException;
-import org.hibernate.annotations.AttributeBinderType;
-import org.hibernate.annotations.ValueGenerationType;
 import org.hibernate.boot.spi.InFlightMetadataCollector;
 import org.hibernate.boot.spi.MetadataBuildingContext;
 import org.hibernate.engine.spi.FilterDefinition;

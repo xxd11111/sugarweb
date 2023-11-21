@@ -1,4 +1,4 @@
-package com.sugarcoat.support.protection.ratelimit.core;
+package com.sugarcoat.support.protection.ratelimit;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.protocol.protection.RateLimit;
@@ -13,8 +13,7 @@ import org.redisson.api.*;
  *
  * 限流注解 aop 拦截
  *
- * @Author lmh
- * @Description TODO 限流注解 aop 拦截
+ * @author lmh
  * @CreateTime 2023-08-23 15:31
  */
 @Slf4j
@@ -33,15 +32,18 @@ public class RateLimitAspect {
         RLock lock = client.getLock(REDIS_LOCK);
         lock.lock();
         try {
-            // 判断模式
-
             String mark = rateLimit.mark();
             if (StrUtil.isBlank(mark)) {
                 return;
             }
 
             RRateLimiter ra = client.getRateLimiter(PREFIX_REDIS_KEY + mark);
-            log.info("get ra: {}", mark);
+            ra.trySetRate(RateType.OVERALL, rateLimit.rate(), rateLimit.rateCycle(), RateIntervalUnit.SECONDS);
+            //需要1个令牌
+            if(ra.tryAcquire(1)){
+                log.info("get ra: {}", mark);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

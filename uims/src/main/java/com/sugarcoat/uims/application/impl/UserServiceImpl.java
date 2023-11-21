@@ -1,5 +1,6 @@
 package com.sugarcoat.uims.application.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.common.PageData;
@@ -8,7 +9,6 @@ import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.protocol.security.SecurityHelper;
 import com.sugarcoat.support.orm.ExpressionWrapper;
 import com.sugarcoat.uims.application.dto.*;
-import com.sugarcoat.uims.application.mapper.UserMapper;
 import com.sugarcoat.uims.application.UserService;
 import com.sugarcoat.uims.application.vo.UserPageVo;
 import com.sugarcoat.uims.application.vo.UserVo;
@@ -34,7 +34,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String save(UserDto userDto) {
-        User user = UserMapper.INSTANCE.userDtoToUser(userDto);
+        User user = new User();
+        BeanUtil.copyProperties(user, userDto);
         userRepository.save(user);
         return user.getId();
     }
@@ -42,7 +43,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVo find(String id) {
         User user = userRepository.findById(id).orElseThrow(() -> new ValidateException("not find user"));
-        return UserMapper.INSTANCE.userToUserVo(user);
+        UserVo target = new UserVo();
+        BeanUtil.copyProperties(user, target);
+        return target;
     }
 
     @Override
@@ -58,13 +61,17 @@ public class UserServiceImpl implements UserService {
 
         PageRequest pageRequest = PageRequest.of(1, 10);
         Page<UserPageVo> page = userRepository.findAll(expression, pageRequest)
-                .map(UserMapper.INSTANCE::userToUserPageVo);
+                .map(a->{
+                    UserPageVo userPageVo = new UserPageVo();
+                    BeanUtil.copyProperties(a, userPageVo);
+                    return userPageVo;
+                });
         return PageDataConvert.convert(page, UserPageVo.class);
     }
 
     @Override
     public void modifyPassword(NewPasswordDto newPasswordDto) {
-        String id = SecurityHelper.getId();
+        String id = SecurityHelper.getUserInfo().getId();
         User user = userRepository.findById(id).orElseThrow(() -> new ValidateException("not dind user"));
         String oldPassword = newPasswordDto.getOldPassword();
         user.checkCertificate(oldPassword);

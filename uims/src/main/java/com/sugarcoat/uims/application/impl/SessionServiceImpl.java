@@ -74,8 +74,8 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void logout() {
-        String userId = SecurityHelper.currentUserId();
-        String sessionId = SecurityHelper.currentSessionId();
+        String userId = SecurityHelper.getUserInfo().getId();
+        String sessionId = "SecurityHelper.getUserInfo()";
         sessionManager.delete(userId, sessionId);
     }
 

@@ -9,7 +9,7 @@ import org.hibernate.mapping.*;
 import org.hibernate.tuple.AttributeBinder;
 
 /**
- * TODO
+ * SoftDelete逻辑绑定
  *
  * @author 许向东
  * @date 2023/11/15
@@ -17,7 +17,6 @@ import org.hibernate.tuple.AttributeBinder;
 public class SoftDeleteBinder implements AttributeBinder<SoftDelete> {
 
     public SoftDeleteBinder() {
-        //todo 设置标识数值
         this.deleteValue = "1";
         this.unDeleteValue = "0";
         this.sqlDeleteTemplate = "UPDATE {} SET {} WHERE {} = ? ";

@@ -1,6 +1,10 @@
 package com.sugarcoat.support.orm.tenant.database;
 
+import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 数据源配置
@@ -8,7 +12,10 @@ import lombok.Data;
  * @author 许向东
  * @date 2023/11/4
  */
-@Data
+@Getter
+@Setter
+@ToString
+@MappedSuperclass
 public class SgcDataSourceProperties {
 
     private String driverClassName;

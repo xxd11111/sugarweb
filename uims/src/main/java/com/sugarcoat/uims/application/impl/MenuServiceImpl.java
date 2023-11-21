@@ -1,5 +1,6 @@
 package com.sugarcoat.uims.application.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.common.PageData;
@@ -10,7 +11,6 @@ import com.sugarcoat.protocol.server.ApiManager;
 import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
-import com.sugarcoat.uims.application.mapper.MenuMapper;
 import com.sugarcoat.uims.application.MenuService;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.menu.MenuRepository;
@@ -37,7 +37,8 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public String save(MenuDto menuDto) {
-        Menu menu = MenuMapper.INSTANCE.menuDtoToMenu(menuDto);
+        Menu menu = new Menu();
+        BeanUtil.copyProperties(menuDto, menu);
         menuRepository.save(menu);
         return menu.getId();
     }
@@ -46,7 +47,7 @@ public class MenuServiceImpl implements MenuService {
     public void modify(MenuDto menuDto) {
         Menu menu = menuRepository.findById(menuDto.getId())
                 .orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + menuDto.getId()));
-        MenuMapper.INSTANCE.updateMenu(menuDto, menu);
+        BeanUtil.copyProperties(menuDto, menu);
         menuRepository.save(menu);
     }
 
@@ -64,14 +65,20 @@ public class MenuServiceImpl implements MenuService {
                 .build();
 
         Page<MenuTreeVo> page = menuRepository.findAll(booleanExpression, PageRequest.of(1, 10))
-                .map(MenuMapper.INSTANCE::menuToMenuTreeVo);
+                .map(a->{
+                    MenuTreeVo target = new MenuTreeVo();
+                    BeanUtil.copyProperties(a, target);
+                    return target;
+                });
         return PageDataConvert.convert(page, MenuTreeVo.class);
     }
 
     @Override
     public MenuDto find(String id) {
         Menu menu = menuRepository.findById(id).orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + id));
-        return MenuMapper.INSTANCE.menuToMenuDto(menu);
+        MenuDto target = new MenuDto();
+        BeanUtil.copyProperties(menu, target);
+        return target;
     }
 
     @Override

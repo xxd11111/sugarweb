@@ -1,7 +1,7 @@
 package com.sugarcoat.protocol.common;
 
 /**
- * todo 分页结果适配器
+ * 分页结果适配器
  *
  * @author xxd
  * @version 1.0

@@ -1,5 +1,6 @@
 package com.sugarcoat.uims.application.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.common.PageData;
@@ -10,7 +11,6 @@ import com.sugarcoat.uims.application.dto.RoleDto;
 import com.sugarcoat.uims.application.vo.RoleVo;
 import com.sugarcoat.uims.application.vo.RolePageVo;
 import com.sugarcoat.uims.application.dto.RoleQueryDto;
-import com.sugarcoat.uims.application.mapper.RoleMapper;
 import com.sugarcoat.uims.application.RoleService;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.menu.MenuRepository;
@@ -40,7 +40,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public String save(RoleDto roleDto) {
-        Role role = RoleMapper.INSTANCE.roleDtoToRole(roleDto);
+        Role role = new Role();
+        BeanUtil.copyProperties(roleDto, role);
         roleRepository.save(role);
         return role.getId();
     }
@@ -48,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void modify(RoleDto roleDto) {
         Role role = roleRepository.findById(roleDto.getId()).orElseThrow(() -> new ValidateException("not find role"));
-        RoleMapper.INSTANCE.updateRole(roleDto, role);
+        BeanUtil.copyProperties(roleDto, role);
         roleRepository.save(role);
     }
 
@@ -76,13 +77,19 @@ public class RoleServiceImpl implements RoleService {
 
         PageRequest pageable = PageRequest.of(1, 10);
         Page<RolePageVo> page = roleRepository.findAll(expression, pageable)
-                .map(RoleMapper.INSTANCE::roleToRolePageVo);
+                .map(a->{
+                    RolePageVo rolePageVo = new RolePageVo();
+                    BeanUtil.copyProperties(a, rolePageVo);
+                    return rolePageVo;
+                });
         return PageDataConvert.convert(page, RolePageVo.class);
     }
 
     @Override
     public RoleVo find(String id) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new ValidateException("not find role"));
-        return RoleMapper.INSTANCE.roleToRoleVo(role);
+        RoleVo roleVo = new RoleVo();
+        BeanUtil.copyProperties(role, roleVo);
+        return roleVo;
     }
 }

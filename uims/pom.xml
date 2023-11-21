@@ -16,11 +16,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
@@ -76,12 +71,6 @@
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-server</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xxd</groupId>
-            <artifactId>support-sms</artifactId>
             <version>1.0.0</version>
         </dependency>
 

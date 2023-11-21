@@ -24,7 +24,7 @@ public class DataPermissionInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         DataPermissionInfo dataPermissionInfo = new DataPermissionInfo();
-        // dataPermissionInfo.setOrgId("1");
+        dataPermissionInfo.setOrgId("1");
         dataPermissionInfo.setRoot(false);
         dataPermissionInfo.setAllowOrgIds(new HashSet<>());
         dataPermissionInfo.setStrategy(DataPermissionStrategy.currentOrg.getValue());

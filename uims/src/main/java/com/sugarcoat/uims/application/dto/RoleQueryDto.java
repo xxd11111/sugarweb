@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.protocol.orm.BooleanEnum;
+import com.sugarcoat.support.orm.BooleanEnum;
 import lombok.Data;
 
 /**

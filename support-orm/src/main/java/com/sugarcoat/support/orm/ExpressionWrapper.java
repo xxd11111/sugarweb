@@ -29,6 +29,10 @@ public class ExpressionWrapper {
 		return this;
 	}
 
+	public ExpressionWrapper and(BooleanExpression booleanExpression) {
+		return and(true, booleanExpression);
+	}
+
 	public ExpressionWrapper or(boolean flag, BooleanExpression booleanExpression) {
 		if (flag) {
 			expression.or(booleanExpression);

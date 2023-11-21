@@ -1,8 +1,9 @@
 package com.sugarcoat.protocol.common;
 
 /**
+ * http常用code
+ *
  * @author xxd
- * @description http常用code
  * @since 2022-11-13
  */
 public enum HttpCode implements ErrorCode {

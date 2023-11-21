@@ -9,25 +9,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.redisson.api.RLock;
+import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.time.Duration;
 
 @Slf4j
 @Aspect
 @RequiredArgsConstructor
 public class IdempotentAspect {
 
-    private final RedisTemplate<String, Object> redisTemplate;
-
     private final IdempotentKeyGenerator idempotentKeyGenerator;
 
     private final RedissonClient client;
-
-    private static final String REDIS_LOCK = "idempotent:redis-lock";
 
     /**
      * 前置通知
@@ -40,17 +37,14 @@ public class IdempotentAspect {
      */
     @Before("@annotation(idempotent)")
     public void aspect(JoinPoint point, Idempotent idempotent) {
-        RLock lock = client.getLock(REDIS_LOCK);
-        lock.lock();
-
         try {
             ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
             Assert.notNull(requestAttributes, "error request context");
             HttpServletRequest request = requestAttributes.getRequest();
             String requestURI = request.getRequestURI();
             String generator = idempotentKeyGenerator.generator(requestURI, point.getArgs());
-
-            Boolean flag = redisTemplate.opsForValue().setIfAbsent(generator, "", idempotent.expire(), idempotent.unit());
+            RBucket<String> bucket = client.getBucket(generator);
+            boolean flag = bucket.setIfAbsent("", Duration.ofSeconds(idempotent.expire()));
             if (Boolean.TRUE.equals(flag)) {
                 return;
             }
@@ -58,8 +52,6 @@ public class IdempotentAspect {
         } catch (Exception e) {
             e.printStackTrace();
             throw new IdempotentException(e.getMessage());
-        } finally {
-            lock.unlock();
         }
     }
 

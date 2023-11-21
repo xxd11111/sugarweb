@@ -1,4 +1,4 @@
-package com.sugarcoat.support.protection.ratelimit.core;
+package com.sugarcoat.support.protection.ratelimit;
 
 import cn.hutool.core.util.ArrayUtil;
 import com.sugarcoat.protocol.exception.RateLimitException;
@@ -11,8 +11,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.util.Assert;
 
 /**
- * @Author lmh
- * @Description
+ * @author lmh
  * @CreateTime 2023-08-23 17:09
  */
 

@@ -4,7 +4,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 幂等
@@ -20,12 +19,6 @@ public @interface Idempotent {
      * @return 有效期
      */
     long expire() default 1L;
-
-    /**
-     * 时间单位，默认：s
-     * @return TimeUnit
-     */
-    TimeUnit unit() default TimeUnit.SECONDS;
 
     /**
      * 提示信息，可自定义

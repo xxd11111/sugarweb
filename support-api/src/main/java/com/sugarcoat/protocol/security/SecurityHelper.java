@@ -1,7 +1,5 @@
 package com.sugarcoat.protocol.security;
 
-import java.util.Map;
-
 /**
  * 用户helper
  *
@@ -11,50 +9,14 @@ import java.util.Map;
  */
 public class SecurityHelper {
 
-    private static UserHolder userHolder;
+    private static final ThreadLocal<UserInfo> userInfo = new ThreadLocal<>();
 
-    public static void setUserHolder(UserHolder userHolder){
-        SecurityHelper.userHolder = userHolder;
+    public static void setUserInfo(UserInfo userInfo){
+        SecurityHelper.userInfo.set(userInfo);
     }
 
-    private SecurityHelper() {
-    }
-
-    public static UserInfo currentAccount() {
-        return userHolder.getUserInfo();
-    }
-
-    public static String currentUserId() {
-        return currentAccount().getId();
-    }
-
-    public static String currentSessionId() {
-        return null;
-    }
-
-    public static String getUsername() {
-        return currentAccount().getUsername();
-    }
-
-    public static String getUserType() {
-        return currentAccount().getUserType();
-    }
-
-    public static String getId() {
-        return currentAccount().getId();
-    }
-
-    public static Map<String, String> getUserDataMap() {
-        return userHolder.getUserInfo().getUserDataMap();
-    }
-
-    public static String getUserData(String dataId) {
-        return getUserDataMap().get(dataId);
-    }
-
-    public static boolean isSystemCall() {
-        //todo
-        return false;
+    public static UserInfo getUserInfo() {
+        return userInfo.get();
     }
 
 }

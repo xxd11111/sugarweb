@@ -18,8 +18,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-// @MappedSuperclass
-public class EntityExt {
+@MappedSuperclass
+public class AuditEntity {
 
 	@CreatedBy
 	@Column(length = 32)

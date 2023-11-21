@@ -16,14 +16,6 @@ public interface SchedulerTask {
 
     String getParams();
 
-    // String getLastExecuteTime();
-    //
-    // String getNextExecuteTime();
-    //
-    // String getRetryStrategy();
-    //
-    // String getRetryTimes();
-
     String getExecuteStatus();
 
 }

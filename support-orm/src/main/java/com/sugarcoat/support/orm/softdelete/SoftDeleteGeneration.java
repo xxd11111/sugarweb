@@ -7,15 +7,14 @@ import org.hibernate.tuple.GenerationTiming;
 import org.hibernate.tuple.ValueGenerator;
 
 /**
- * TODO
+ * softDelete自动生成
  *
  * @author 许向东
  * @date 2023/11/15
  */
 public class SoftDeleteGeneration implements AnnotationValueGeneration<SoftDelete>, ValueGenerator<Object> {
 
-    private String unDeleteValue = "0";
-
+    private final String unDeleteValue = "0";
 
     @Override
     public void initialize(SoftDelete annotation, Class<?> propertyType, String entityName, String propertyName) {

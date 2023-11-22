@@ -85,7 +85,7 @@ public class DefaultDictionaryRunner implements DictionaryRunner {
             throw new FrameworkException("not find dictionaryRegistry, check your setting!");
         }
         //注册字典
-        dictionaryRegistry.register(dictionaryGroups);
+        dictionaryRegistry.save(dictionaryGroups);
         log.info("系统内置字典注册成功");
     }
 

@@ -40,7 +40,7 @@ public class InsertDictionaryRegistry implements DictionaryRegistry {
      * @param dictionaryGroups 系统内置字典
      */
     @Override
-    public void register(List<SugarcoatDictionaryGroup> dictionaryGroups) {
+    public void save(List<SugarcoatDictionaryGroup> dictionaryGroups) {
         if (CollUtil.isEmpty(dictionaryGroups)) {
             return;
         }

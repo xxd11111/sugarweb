@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface DictionaryRegistry {
 
-    void register(List<SugarcoatDictionaryGroup> dictionaryGroups);
+    void save(List<SugarcoatDictionaryGroup> dictionaryGroups);
 
 }

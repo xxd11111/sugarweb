@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DisableDictionaryRegistry implements DictionaryRegistry {
 
-    public void register(List<SugarcoatDictionaryGroup> dictGroups) {
+    public void save(List<SugarcoatDictionaryGroup> dictGroups) {
         //关闭
     }
 

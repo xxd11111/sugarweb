@@ -8,36 +8,28 @@ import java.util.Collection;
  * @author xxd
  * @since 2023/8/25
  */
-public class SimpleAutoRegistry extends AbstractAutoRegistry {
+public class SimpleAutoRegistry<T> extends AbstractAutoRegistry<T> {
 
-    private final String deleteLevel;
+    private final RegistryHandler<T> registryHandler;
 
-    private final String updateLevel;
-
-    private final RegistryHandler registryHandler;
-
-    protected SimpleAutoRegistry(Scanner scanner, String deleteLevel, String updateLevel, RegistryHandler registryHandler) {
+    protected SimpleAutoRegistry(Scanner<T> scanner, String deleteLevel, String updateLevel, RegistryHandler<T> registryHandler) {
         super(scanner);
-        this.deleteLevel = deleteLevel;
-        this.updateLevel = updateLevel;
         this.registryHandler = registryHandler;
     }
 
     @Override
-    public void doSave(Collection<Object> objects) {
-        if ("all".equals(deleteLevel)) {
+    public void doSave(Collection<T> objects) {
+        if ("all".equals(registryHandler.getDeleteStrategy())) {
             registryHandler.deleteAll();
-        } else if ("condition".equals(deleteLevel)) {
-            registryHandler.deleteByCondition(objects);
         }
-        for (Object object : objects) {
-            Object exist = registryHandler.selectOne(object);
+        for (T object : objects) {
+            T exist = registryHandler.selectOne(object);
             if (exist == null) {
                 registryHandler.insert(object);
             } else {
-                if ("update".equals(updateLevel)) {
+                if ("update".equals(registryHandler.getUpdateStrategy())) {
                     registryHandler.modify(exist, object);
-                } else if ("override".equals(updateLevel)) {
+                } else if ("override".equals(registryHandler.getUpdateStrategy())) {
                     registryHandler.override(exist, object);
                 }
             }

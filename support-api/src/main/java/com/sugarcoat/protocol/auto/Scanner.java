@@ -8,8 +8,8 @@ import java.util.Collection;
  * @author 许向东
  * @date 2023/11/22
  */
-public interface Scanner {
+public interface Scanner<T> {
 
-    Collection<Object> scan();
+    Collection<T> scan();
 
 }

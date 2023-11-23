@@ -12,7 +12,7 @@ import java.util.Set;
  * @author 许向东
  * @date 2023/11/22
  */
-public abstract class AnnotationScanner implements Scanner {
+public abstract class AnnotationScanner<T> implements Scanner<T> {
 
     private final String packagePath;
 
@@ -24,7 +24,7 @@ public abstract class AnnotationScanner implements Scanner {
     }
 
     @Override
-    public Collection<Object> scan() {
+    public Collection<T> scan() {
         Set<Class<?>> scan = ClassUtil.scanPackageByAnnotation(packagePath, scanAnnotation);
         scan.forEach(this::resolver);
         return getResult();
@@ -32,6 +32,6 @@ public abstract class AnnotationScanner implements Scanner {
 
     public abstract void resolver(Class<?> clazz);
 
-    public abstract Collection<Object> getResult();
+    public abstract Collection<T> getResult();
 
 }

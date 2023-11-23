@@ -1,25 +1,25 @@
 package com.sugarcoat.protocol.auto;
 
-import java.util.Collection;
-
 /**
  * 注册处理
  *
  * @author 许向东
  * @date 2023/11/22
  */
-public interface RegistryHandler {
+public interface RegistryHandler<T> {
 
-    void insert(Object o);
+    void insert(T o);
 
-    void override(Object db, Object scan);
+    void override(T db, T scan);
 
-    void modify(Object db, Object scan);
-
-    void deleteByCondition(Collection<Object> objects);
+    void modify(T db, T scan);
 
     void deleteAll();
 
-    Object selectOne(Object o);
+    T selectOne(T o);
+
+    String getUpdateStrategy();
+
+    String getDeleteStrategy();
 
 }

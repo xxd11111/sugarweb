@@ -11,11 +11,11 @@ import java.util.Optional;
  * @version 1.0
  * @since 2023/5/29
  */
-public interface DictionaryManager {
+public interface DictionaryManager<T extends Dictionary> {
 
-    void put(Dictionary dictionary);
+    void put(T dictionary);
 
-    void put(Collection<Dictionary> dictionaries);
+    void put(Collection<T> dictionaries);
 
     /**
      * 删除字典项
@@ -24,6 +24,8 @@ public interface DictionaryManager {
      * @param code  字典编码
      */
     void remove(String group, String code);
+    
+    void removeAll();
 
     /**
      * 删除字典组
@@ -43,18 +45,18 @@ public interface DictionaryManager {
      * @param code  字典编码
      * @return 字典
      */
-    Optional<Dictionary> get(String group, String code);
+    Optional<T> get(String group, String code);
 
-    Collection<Dictionary> getByGroup(String group);
+    Collection<T> getByGroup(String group);
 
-    Optional<Dictionary> getById(String group);
+    Optional<T> getById(String group);
 
     /**
      * 获取所有字典组字典
      *
      * @return 字典组集合
      */
-    Collection<Dictionary> getAll();
+    Collection<T> getAll();
 
     /**
      * 获取字典名称
@@ -63,7 +65,7 @@ public interface DictionaryManager {
      * @param name 字典编码
      * @return 字典名称
      */
-    Optional<Dictionary> getByName(String code, String name);
+    Optional<T> getByName(String code, String name);
 
     /**
      * 是否存在该字典

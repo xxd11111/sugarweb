@@ -10,23 +10,23 @@ import java.util.Collection;
  * @author xxd
  * @since 2023/8/25
  */
-public abstract class AbstractAutoRegistry implements Registry {
+public abstract class AbstractAutoRegistry<T> implements Registry {
 
-    private final Scanner scanner;
+    private final Scanner<T> scanner;
 
-    protected AbstractAutoRegistry(Scanner scanner) {
+    protected AbstractAutoRegistry(Scanner<T> scanner) {
         this.scanner = scanner;
     }
 
     @Override
     public void register() {
-        Collection<Object> scan = scanner.scan();
+        Collection<T> scan = scanner.scan();
         if (CollUtil.isEmpty(scan)) {
             return;
         }
         doSave(scan);
     }
 
-    public abstract void doSave(Collection<Object> objects);
+    public abstract void doSave(Collection<T> objects);
 
 }

@@ -1,8 +1,9 @@
 package com.sugarcoat.support.dict.auto;
 
 import com.sugarcoat.protocol.auto.RegistryHandler;
-
-import java.util.Collection;
+import com.sugarcoat.protocol.dictionary.DictionaryManager;
+import com.sugarcoat.support.dict.domain.SugarcoatDictionary;
+import com.sugarcoat.support.dict.domain.SugarcoatDictionaryManager;
 
 /**
  * TODO
@@ -10,36 +11,54 @@ import java.util.Collection;
  * @author 许向东
  * @date 2023/11/23
  */
-public class DictionaryRegistryHandler implements RegistryHandler {
+public class DictionaryRegistryHandler implements RegistryHandler<SugarcoatDictionary> {
 
-    @Override
-    public void insert(Object o) {
+    private final String deleteLevel;
 
+    private final String updateLevel;
+
+    private final DictionaryManager<SugarcoatDictionary> dictionaryManager;
+
+    public DictionaryRegistryHandler(String deleteLevel, String updateLevel, SugarcoatDictionaryManager dictionaryManager) {
+        this.deleteLevel = deleteLevel;
+        this.updateLevel = updateLevel;
+        this.dictionaryManager = dictionaryManager;
     }
 
     @Override
-    public void override(Object db, Object scan) {
-
+    public void insert(SugarcoatDictionary o) {
+        dictionaryManager.put(o);
     }
 
     @Override
-    public void modify(Object db, Object scan) {
-
+    public void override(SugarcoatDictionary db, SugarcoatDictionary scan) {
+        scan.setId(db.getId());
+        dictionaryManager.put(scan);
     }
 
     @Override
-    public void deleteByCondition(Collection<Object> objects) {
-
+    public void modify(SugarcoatDictionary db, SugarcoatDictionary scan) {
+        scan.setId(db.getId());
+        dictionaryManager.put(scan);
     }
 
     @Override
     public void deleteAll() {
-
+        dictionaryManager.removeAll();
     }
 
     @Override
-    public Object selectOne(Object o) {
-        return null;
+    public SugarcoatDictionary selectOne(SugarcoatDictionary o) {
+        return dictionaryManager.get(o.getGroup(), o.getCode()).orElse(null);
     }
 
+    @Override
+    public String getUpdateStrategy() {
+        return updateLevel;
+    }
+
+    @Override
+    public String getDeleteStrategy() {
+        return deleteLevel;
+    }
 }

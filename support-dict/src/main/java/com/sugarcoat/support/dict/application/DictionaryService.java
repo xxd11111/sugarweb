@@ -4,7 +4,6 @@ import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryQueryDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryDto;
-import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 
 import java.util.Set;
 

@@ -34,7 +34,7 @@ public class DefaultParameterManager implements ParameterManager {
         if (cacheValue.isPresent()) {
             return cacheValue;
         } else {
-            return paramRepository.findOne(QSugarcoatParam.sugarcoatParam.code.eq(code))
+            return paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code))
                     .map(SugarcoatParameter::getValue);
         }
     }
@@ -51,7 +51,7 @@ public class DefaultParameterManager implements ParameterManager {
 
     @Override
     public void remove(String code) {
-        SugarcoatParameter param = paramRepository.findOne(QSugarcoatParam.sugarcoatParam.code.eq(code))
+        SugarcoatParameter param = paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code))
                 .orElseThrow(() -> new ValidateException("not find Param"));
         paramRepository.delete(param);
         paramCacheManager.remove(code);
@@ -78,7 +78,7 @@ public class DefaultParameterManager implements ParameterManager {
                 }
             });
         } else {
-            return paramRepository.findOne(QSugarcoatParam.sugarcoatParam.code.eq(code)).map(a -> a);
+            return paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code)).map(a -> a);
         }
     }
 

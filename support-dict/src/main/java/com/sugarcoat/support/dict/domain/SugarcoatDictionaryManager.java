@@ -1,11 +1,11 @@
 package com.sugarcoat.support.dict.domain;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarcoat.protocol.dictionary.Dictionary;
 import com.sugarcoat.protocol.dictionary.DictionaryManager;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * 字典客户端实现类
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 2023/5/30
  */
-public class SugarcoatDictionaryManager implements DictionaryManager {
+public class SugarcoatDictionaryManager implements DictionaryManager<SugarcoatDictionary> {
 
     private final SgcDictionaryRepository dictionaryRepository;
 
@@ -23,18 +23,13 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
     }
 
     @Override
-    public void put(Dictionary dictionary) {
-        if (dictionary instanceof SugarcoatDictionary sugarcoatDictionary) {
-            dictionaryRepository.save(sugarcoatDictionary);
-        }
+    public void put(SugarcoatDictionary dictionary) {
+        dictionaryRepository.save(dictionary);
     }
 
     @Override
-    public void put(Collection<Dictionary> dictionaries) {
-        List<SugarcoatDictionary> collect = dictionaries.stream()
-                .map(a -> (SugarcoatDictionary) a)
-                .collect(Collectors.toList());
-        dictionaryRepository.saveAll(collect);
+    public void put(Collection<SugarcoatDictionary> dictionaries) {
+        dictionaryRepository.saveAll(dictionaries);
     }
 
     @Override
@@ -46,6 +41,11 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
         Collection<String> ids = new ArrayList<>();
         all.forEach(a -> ids.add(a.getId()));
         dictionaryRepository.deleteAllById(ids);
+    }
+
+    @Override
+    public void removeAll() {
+        dictionaryRepository.deleteAll();
     }
 
     @Override
@@ -69,20 +69,19 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
     }
 
     @Override
-    public Optional<Dictionary> get(String group, String code) {
+    public Optional<SugarcoatDictionary> get(String group, String code) {
         QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
         BooleanExpression expression = sugarcoatDictionary.group.eq(group);
         expression.and(sugarcoatDictionary.code.eq(code));
-        Optional<SugarcoatDictionary> dictionary = dictionaryRepository.findOne(expression);
-        return dictionary.map(a->a);
+        return dictionaryRepository.findOne(expression);
     }
 
     @Override
-    public Collection<Dictionary> getByGroup(String group) {
+    public Collection<SugarcoatDictionary> getByGroup(String group) {
         QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
         BooleanExpression expression = sugarcoatDictionary.group.eq(group);
         Iterable<SugarcoatDictionary> all = dictionaryRepository.findAll(expression);
-        Collection<Dictionary> result = new ArrayList<>();
+        Collection<SugarcoatDictionary> result = new ArrayList<>();
         for (SugarcoatDictionary dictionary : all) {
             result.add(dictionary);
         }
@@ -90,15 +89,14 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
     }
 
     @Override
-    public Optional<Dictionary> getById(String id) {
-        Optional<SugarcoatDictionary> dictionary = dictionaryRepository.findById(id);
-        return dictionary.map(a->a);
+    public Optional<SugarcoatDictionary> getById(String id) {
+        return dictionaryRepository.findById(id);
     }
 
     @Override
-    public Collection<Dictionary> getAll() {
+    public Collection<SugarcoatDictionary> getAll() {
         Iterable<SugarcoatDictionary> all = dictionaryRepository.findAll();
-        Collection<Dictionary> result = new ArrayList<>();
+        Collection<SugarcoatDictionary> result = new ArrayList<>();
         for (SugarcoatDictionary dictionary : all) {
             result.add(dictionary);
         }
@@ -106,12 +104,11 @@ public class SugarcoatDictionaryManager implements DictionaryManager {
     }
 
     @Override
-    public Optional<Dictionary> getByName(String group, String name) {
+    public Optional<SugarcoatDictionary> getByName(String group, String name) {
         QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
         BooleanExpression expression = sugarcoatDictionary.group.eq(group);
         expression.and(sugarcoatDictionary.name.eq(name));
-        Optional<SugarcoatDictionary> dictionary = dictionaryRepository.findOne(expression);
-        return dictionary.map(a->a);
+        return dictionaryRepository.findOne(expression);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.sugarcoat.support.server.domain;
 
+import com.sugarcoat.protocol.auto.SimpleAutoRegistry;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +31,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class ApiRegister implements SgcRegister {
+public class ApiRegister {
 
     private final WebApplicationContext applicationContext;
 
@@ -117,7 +118,6 @@ public class ApiRegister implements SgcRegister {
         load(apiMap);
     }
 
-    @Override
     public void register() {
 
         // 接口辅助功能是需要持久化的

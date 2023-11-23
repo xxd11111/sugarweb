@@ -4,7 +4,7 @@ import com.querydsl.core.types.dsl.Expressions;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.exception.ValidateException;
-import com.sugarcoat.support.param.domain.QSugarcoatParam;
+import com.sugarcoat.support.param.domain.QSugarcoatParameter;
 import com.sugarcoat.support.param.domain.SgcParamRepository;
 import com.sugarcoat.support.param.domain.SugarcoatParameter;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class DefaultParamServiceImpl implements ParamService {
     @Override
     public ParamDto findByCode(String code) {
         SugarcoatParameter sugarcoatParam = sugarcoatParamRepository
-                .findOne(QSugarcoatParam.sugarcoatParam.code.eq(code))
+                .findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code))
                 .orElseThrow(() -> new ValidateException("param not find"));
         return ParamConvert.getParamDTO(sugarcoatParam);
     }

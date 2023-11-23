@@ -38,23 +38,23 @@ public class DefaultParamRegistry implements ParamRegistry {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void register(Collection<SugarcoatParam> innerParams) {
+    public void register(Collection<SugarcoatParameter> innerParams) {
         if (CollUtil.isEmpty(innerParams)) {
             paramRepository.deleteAll();
             return;
         }
         // 获取全部
-        Iterable<SugarcoatParam> dbParams = paramRepository.findAll();
+        Iterable<SugarcoatParameter> dbParams = paramRepository.findAll();
         Collection<String> removeIds = new ArrayList<>();
-        Collection<SugarcoatParam> updateParams = new ArrayList<>();
-        for (SugarcoatParam dbParam : dbParams) {
-            Optional<SugarcoatParam> innerParamOptional = innerParams.stream()
+        Collection<SugarcoatParameter> updateParams = new ArrayList<>();
+        for (SugarcoatParameter dbParam : dbParams) {
+            Optional<SugarcoatParameter> innerParamOptional = innerParams.stream()
                     .filter(param -> StrUtil.equals(dbParam.getCode(), param.getCode()))
                     .findAny();
             boolean exist = innerParamOptional.isPresent();
             // 相同的参数 只更新默认值
             if (exist) {
-                SugarcoatParam innerParam = innerParamOptional.get();
+                SugarcoatParameter innerParam = innerParamOptional.get();
                 //当inner默认值与db默认值不相同时，执行以下操作；相同时，跳过
                 if (!StrUtil.equals(innerParam.getDefaultValue(), dbParam.getDefaultValue())) {
                     //若db默认值与value相同时，额外更新value

@@ -5,8 +5,8 @@ import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
-import com.sugarcoat.protocol.param.InnerParam;
-import com.sugarcoat.protocol.param.InnerParamGroup;
+import com.sugarcoat.protocol.parameter.ParameterCode;
+import com.sugarcoat.protocol.parameter.InnerParameter;
 import com.sugarcoat.support.param.ParamProperties;
 
 import java.lang.reflect.Field;
@@ -35,21 +35,21 @@ public class DefaultParamScanner implements ParamScanner {
     }
 
     @Override
-    public Collection<SugarcoatParam> scan() {
+    public Collection<SugarcoatParameter> scan() {
         //获取包下class
-        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(scanPackage, InnerParamGroup.class);
-        List<SugarcoatParam> dictGroups = new ArrayList<>();
+        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(scanPackage, InnerParameter.class);
+        List<SugarcoatParameter> dictGroups = new ArrayList<>();
         if (CollUtil.isEmpty(classes)) {
             return dictGroups;
         }
         //遍历class
-        Collection<SugarcoatParam> sugarcoatParams = new ArrayList<>();
+        Collection<SugarcoatParameter> sugarcoatParams = new ArrayList<>();
 
         for (Class<?> clazz : classes) {
             Field[] declaredFields = clazz.getDeclaredFields();
             if (ArrayUtil.isNotEmpty(declaredFields)) {
                 for (Field field : declaredFields) {
-                    InnerParam annotation = field.getAnnotation(InnerParam.class);
+                    ParameterCode annotation = field.getAnnotation(ParameterCode.class);
                     String code = annotation.code();
                     String name = annotation.name();
                     String value = annotation.value();
@@ -66,7 +66,7 @@ public class DefaultParamScanner implements ParamScanner {
                         value = humpToUnderline(field.getName());
                     }
                     //创建参数对象
-                    SugarcoatParam sugarcoatParam = new SugarcoatParam();
+                    SugarcoatParameter sugarcoatParam = new SugarcoatParameter();
                     // sugarcoatParam.setId();
                     sugarcoatParam.setCode(code);
                     sugarcoatParam.setName(name);

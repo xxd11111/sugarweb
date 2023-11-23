@@ -1,6 +1,6 @@
 package com.sugarcoat.support.dict.domain;
 
-import com.sugarcoat.protocol.dict.Dictionary;
+import com.sugarcoat.protocol.dictionary.Dictionary;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,33 +24,16 @@ public class SugarcoatDictionary implements Dictionary {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(length = 32)
-    private String dictionaryId;
+    private String id;
 
-    /**
-     * 字典编码
-     */
+    @Column(length = 32)
+    private String group;
+
     @Column(length = 32)
     private String code;
 
-    /**
-     * 字典名称
-     */
     @Column(length = 32)
     private String name;
-
-    /**
-     * 组id
-     */
-    @Column(length = 32, name = "group_id", insertable = false, updatable = false)
-    private String groupId;
-
-    @Column(length = 32)
-    private String groupCode;
-
-    @ToString.Exclude
-    @ManyToOne(fetch = jakarta.persistence.FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    private SugarcoatDictionaryGroup dictionaryGroup;
 
     @Override
     public int hashCode() {

@@ -10,6 +10,6 @@ import java.util.Collection;
  */
 public interface ParamRegistry {
 
-    void register(Collection<SugarcoatParam> sugarcoatParams);
+    void register(Collection<SugarcoatParameter> sugarcoatParams);
 
 }

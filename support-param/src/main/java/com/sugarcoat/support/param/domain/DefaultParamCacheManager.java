@@ -1,6 +1,6 @@
 package com.sugarcoat.support.param.domain;
 
-import com.sugarcoat.protocol.param.Param;
+import com.sugarcoat.protocol.parameter.Parameter;
 import com.sugarcoat.support.param.ParamProperties;
 import org.redisson.api.RBucket;
 import org.redisson.api.RKeys;
@@ -33,10 +33,10 @@ public class DefaultParamCacheManager implements ParamCacheManager {
     }
 
     @Override
-    public void put(Collection<Param> params) {
-        for (Param param : params) {
-            RBucket<String> bucket = redissonClient.getBucket(getCacheKey(param.getCode()));
-            bucket.set(param.getValue());
+    public void put(Collection<Parameter> parameters) {
+        for (Parameter parameter : parameters) {
+            RBucket<String> bucket = redissonClient.getBucket(getCacheKey(parameter.getCode()));
+            bucket.set(parameter.getValue());
         }
     }
 

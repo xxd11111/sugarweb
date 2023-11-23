@@ -1,10 +1,8 @@
 package com.sugarcoat.support.dict;
 
-import com.sugarcoat.support.dict.domain.DictionaryRegistryStrategy;
+import com.sugarcoat.support.dict.auto.DictionaryRegistryStrategy;
 import lombok.Data;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 字典配置类

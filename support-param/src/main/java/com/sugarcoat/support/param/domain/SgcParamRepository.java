@@ -8,6 +8,6 @@ import com.sugarcoat.support.orm.SgcRepository;
  * @author xxd
  * @since 2023/5/6 23:54
  */
-public interface SgcParamRepository extends SgcRepository<SugarcoatParam> {
+public interface SgcParamRepository extends SgcRepository<SugarcoatParameter> {
 
 }

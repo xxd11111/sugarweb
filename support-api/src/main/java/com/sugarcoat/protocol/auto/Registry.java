@@ -1,7 +1,7 @@
 package com.sugarcoat.protocol.auto;
 
 /**
- * TODO
+ * 注册者
  *
  * @author 许向东
  * @date 2023/11/22

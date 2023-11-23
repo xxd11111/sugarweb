@@ -1,6 +1,6 @@
 package com.sugarcoat.support.param.domain;
 
-import com.sugarcoat.protocol.param.Param;
+import com.sugarcoat.protocol.parameter.Parameter;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -22,17 +22,17 @@ public interface ParamCacheManager {
 
     /**
      * 保存缓存
-     * @param param 参数
+     * @param parameter 参数
      */
-    default void put(Param param) {
-        put(param.getCode(), param.getValue());
+    default void put(Parameter parameter) {
+        put(parameter.getCode(), parameter.getValue());
     }
 
     /**
      * 保存缓存
-     * @param params 参数列表
+     * @param parameters 参数列表
      */
-    void put(Collection<Param> params);
+    void put(Collection<Parameter> parameters);
 
     /**
      * 获取参数值

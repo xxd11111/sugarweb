@@ -10,6 +10,6 @@ import java.util.Collection;
  */
 public interface ParamScanner {
 
-    Collection<SugarcoatParam> scan();
+    Collection<SugarcoatParameter> scan();
 
 }

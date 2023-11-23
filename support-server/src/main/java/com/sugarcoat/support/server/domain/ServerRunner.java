@@ -1,7 +1,7 @@
 package com.sugarcoat.support.server.domain;
 
-import com.sugarcoat.protocol.common.SgcRunner;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 
 /**
  * ServerRunner
@@ -9,7 +9,7 @@ import org.springframework.boot.ApplicationArguments;
  * @author xxd
  * @since 2023/10/12 22:12
  */
-public record ServerRunner(ApiRegister apiRegister) implements SgcRunner {
+public record ServerRunner(ApiRegister apiRegister) implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {

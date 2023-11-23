@@ -3,7 +3,7 @@ package com.sugarcoat.support.dict.controller;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryDto;
-import com.sugarcoat.support.dict.application.dto.DictQueryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryQueryDto;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.common.Result;
@@ -26,48 +26,42 @@ public class DictionaryController {
 
 	private final DictionaryService dictionaryService;
 
-	@PostMapping("saveDictionaryGroup")
-	public Result<Void> saveDict(@RequestBody DictionaryGroupDto dictionaryGroupDto) {
-		dictionaryService.save(dictionaryGroupDto);
+	@PostMapping("save")
+	public Result<Void> save(@RequestBody DictionaryDto dto) {
+		dictionaryService.save(dto);
 		return Result.ok();
 	}
 
-	@PostMapping("saveDictionary")
-	public Result<Void> saveDictItem(@RequestBody DictionaryDto dictionaryDto) {
-		dictionaryService.save(dictionaryDto);
+	@DeleteMapping("remove/{ids}")
+	public Result<Void> remove(@PathVariable Set<String> ids) {
+		dictionaryService.remove(ids);
 		return Result.ok();
 	}
 
-	@DeleteMapping("removeDictionaryGroup/{groupIds}")
-	public Result<Void> removeDict(@PathVariable Set<String> groupIds) {
-		dictionaryService.removeDictionaryGroup(groupIds);
+	@DeleteMapping("removeGroup/{group}")
+	public Result<Void> removeGroup(@PathVariable String group) {
+		dictionaryService.removeGroup(group);
 		return Result.ok();
 	}
 
-	@DeleteMapping("removeDictionary/{dictionaryIds}")
-	public Result<Void> removeDictionary(@PathVariable Set<String> dictionaryIds) {
-		dictionaryService.removeDictionary(dictionaryIds);
-		return Result.ok();
-	}
-
-	@GetMapping("findDictionaryGroup/{groupId}")
-	public Result<DictionaryGroupDto> findDictionaryGroup(@PathVariable String groupId) {
-		return Result.data(dictionaryService.findByGroupId(groupId));
+	@GetMapping("findOne/{id}")
+	public Result<DictionaryDto> findOne(@PathVariable String id) {
+		return Result.data(dictionaryService.findOne(id));
 	}
 
 	@GetMapping("findDictionary/{dictionaryId}")
 	public Result<DictionaryDto> findDictionary(@PathVariable String dictionaryId) {
-		return Result.data(dictionaryService.findByDictionaryId(dictionaryId));
+		return Result.data(dictionaryService.findOne(dictionaryId));
 	}
 
-	@GetMapping("findByGroupCode/{groupCode}")
-	public Result<DictionaryGroupDto> findByGroupCode(@PathVariable String groupCode) {
-		return Result.data(dictionaryService.findByGroupCode(groupCode));
+	@GetMapping("findPage")
+	public Result<PageData<DictionaryDto>> findPage(PageDto pageDto, DictionaryQueryDto queryDto) {
+		return Result.data(dictionaryService.findPage(pageDto, queryDto));
 	}
 
 	@GetMapping("findDictionaryPage")
-	public Result<PageData<DictionaryGroupDto>> findDictPage(PageDto pageDto, DictQueryDto queryDto) {
-		return Result.data(dictionaryService.findDictPage(pageDto, queryDto));
+	public Result<PageData<DictionaryGroupDto>> findDictPage(PageDto pageDto, DictionaryQueryDto queryDto) {
+		return Result.data(dictionaryService.findPage(pageDto, queryDto));
 	}
 
 }

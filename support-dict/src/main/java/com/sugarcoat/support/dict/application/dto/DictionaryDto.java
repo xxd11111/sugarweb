@@ -11,6 +11,6 @@ public class DictionaryDto {
 
 	private String name;
 
-	private String groupId;
+	private String group;
 
 }

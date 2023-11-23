@@ -6,7 +6,7 @@ import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.support.param.domain.QSugarcoatParam;
 import com.sugarcoat.support.param.domain.SgcParamRepository;
-import com.sugarcoat.support.param.domain.SugarcoatParam;
+import com.sugarcoat.support.param.domain.SugarcoatParameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +25,7 @@ public class DefaultParamServiceImpl implements ParamService {
 
     @Override
     public void save(ParamDto paramDto) {
-        SugarcoatParam param = sugarcoatParamRepository.findById(paramDto.getId())
+        SugarcoatParameter param = sugarcoatParamRepository.findById(paramDto.getId())
                 .orElseThrow(() -> new ValidateException("not find param"));
         //更新
         param.setName(paramDto.getName());
@@ -36,7 +36,7 @@ public class DefaultParamServiceImpl implements ParamService {
 
     @Override
     public ParamDto findByCode(String code) {
-        SugarcoatParam sugarcoatParam = sugarcoatParamRepository
+        SugarcoatParameter sugarcoatParam = sugarcoatParamRepository
                 .findOne(QSugarcoatParam.sugarcoatParam.code.eq(code))
                 .orElseThrow(() -> new ValidateException("param not find"));
         return ParamConvert.getParamDTO(sugarcoatParam);
@@ -44,7 +44,7 @@ public class DefaultParamServiceImpl implements ParamService {
 
     @Override
     public ParamDto findById(String id) {
-        SugarcoatParam sugarcoatParam = sugarcoatParamRepository.findById(id)
+        SugarcoatParameter sugarcoatParam = sugarcoatParamRepository.findById(id)
                 .orElseThrow(() -> new ValidateException("param not find"));
         return ParamConvert.getParamDTO(sugarcoatParam);
     }
@@ -59,8 +59,8 @@ public class DefaultParamServiceImpl implements ParamService {
 
     @Override
     public void reset(Set<String> ids) {
-        Iterable<SugarcoatParam> params = sugarcoatParamRepository.findAllById(ids);
-        params.forEach(SugarcoatParam::resetValue);
+        Iterable<SugarcoatParameter> params = sugarcoatParamRepository.findAllById(ids);
+        params.forEach(SugarcoatParameter::resetValue);
         sugarcoatParamRepository.saveAll(params);
     }
 

@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 分页数据
+ *
  * @author xxd
- * @description 分页数据
  * @since 2022-11-13
  */
 @Getter

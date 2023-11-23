@@ -2,7 +2,7 @@ package com.sugarcoat.support.dict.application;
 
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
-import com.sugarcoat.support.dict.application.dto.DictQueryDto;
+import com.sugarcoat.support.dict.application.dto.DictionaryQueryDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryGroupDto;
 
@@ -16,20 +16,14 @@ import java.util.Set;
  */
 public interface DictionaryService {
 
-	void save(DictionaryGroupDto dto);
-
 	void save(DictionaryDto dto);
 
-	void removeDictionaryGroup(Set<String> groupIds);
+	void remove(Set<String> ids);
 
-	void removeDictionary(Set<String> dictionaryIds);
+	void removeGroup(String group);
 
-	DictionaryDto findByDictionaryId(String dictionaryId);
+	DictionaryDto findOne(String id);
 
-	DictionaryGroupDto findByGroupId(String groupId);
-
-	DictionaryGroupDto findByGroupCode(String groupCode);
-
-	PageData<DictionaryGroupDto> findDictPage(PageDto pageDto, DictQueryDto queryDto);
+	PageData<DictionaryDto> findPage(PageDto pageDto, DictionaryQueryDto queryDto);
 
 }

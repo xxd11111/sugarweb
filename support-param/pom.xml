@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>support-param</artifactId>
+    <artifactId>support-parameter</artifactId>
 
     <dependencies>
         <dependency>

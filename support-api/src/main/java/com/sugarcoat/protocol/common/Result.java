@@ -8,6 +8,12 @@ package com.sugarcoat.protocol.common;
  */
 public class Result<T> {
 
+    private Integer code;
+
+    private String msg;
+
+    private T data;
+
     public Integer getCode() {
         return code;
     }
@@ -31,12 +37,6 @@ public class Result<T> {
     public void setData(T data) {
         this.data = data;
     }
-
-    private Integer code;
-
-    private String msg;
-
-    private T data;
 
     public static <T> Result<T> ok() {
         return build(HttpCode.OK);

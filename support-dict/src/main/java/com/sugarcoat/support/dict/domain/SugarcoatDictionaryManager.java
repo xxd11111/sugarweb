@@ -1,13 +1,8 @@
 package com.sugarcoat.support.dict.domain;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
-import com.sugarcoat.support.orm.BooleanEnum;
-import com.sugarcoat.protocol.dict.Dictionary;
-import com.sugarcoat.protocol.dict.DictionaryGroup;
-import com.sugarcoat.protocol.dict.DictionaryManager;
-import com.sugarcoat.protocol.exception.FrameworkException;
-import com.sugarcoat.protocol.exception.ServiceException;
+import com.sugarcoat.protocol.dictionary.Dictionary;
+import com.sugarcoat.protocol.dictionary.DictionaryManager;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -21,89 +16,116 @@ import java.util.stream.Collectors;
  */
 public class SugarcoatDictionaryManager implements DictionaryManager {
 
-    private final SgcDictionaryGroupRepository dictionaryGroupRepository;
+    private final SgcDictionaryRepository dictionaryRepository;
 
-    public SugarcoatDictionaryManager(SgcDictionaryGroupRepository dictionaryGroupRepository) {
-        this.dictionaryGroupRepository = dictionaryGroupRepository;
+    public SugarcoatDictionaryManager(SgcDictionaryRepository dictionaryRepository) {
+        this.dictionaryRepository = dictionaryRepository;
     }
 
     @Override
-    public void save(DictionaryGroup dictionaryGroup) {
-        if (dictionaryGroup instanceof SugarcoatDictionaryGroup sdg) {
-            dictionaryGroupRepository.save(sdg);
-        } else {
-            throw new FrameworkException("DictionaryGroup class convert error!");
+    public void put(Dictionary dictionary) {
+        if (dictionary instanceof SugarcoatDictionary sugarcoatDictionary) {
+            dictionaryRepository.save(sugarcoatDictionary);
         }
     }
 
     @Override
-    public void remove(String groupCode, String dictionaryCode) {
-        if (groupCode == null || groupCode.isEmpty() || dictionaryCode == null || dictionaryCode.isEmpty()) {
-            return;
-        }
-        QSugarcoatDictionaryGroup qDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
-        SugarcoatDictionaryGroup sugarcoatDictionaryGroup = dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode))
-                .orElseThrow(() -> new ServiceException("dictGroup not find!"));
-        Collection<SugarcoatDictionary> dictionaries = sugarcoatDictionaryGroup.getSugarcoatDictionaries();
+    public void put(Collection<Dictionary> dictionaries) {
         List<SugarcoatDictionary> collect = dictionaries.stream()
-                .filter(a -> dictionaryCode.equals(a.getCode()))
+                .map(a -> (SugarcoatDictionary) a)
                 .collect(Collectors.toList());
-        sugarcoatDictionaryGroup.setSugarcoatDictionaries(collect);
-        dictionaryGroupRepository.save(sugarcoatDictionaryGroup);
+        dictionaryRepository.saveAll(collect);
     }
 
     @Override
-    public void remove(String groupCode) {
-        QSugarcoatDictionaryGroup qDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
-        SugarcoatDictionaryGroup sugarcoatDictionaryGroup = dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode))
-                .orElseThrow(() -> new ServiceException("dictGroup not find!"));
-        dictionaryGroupRepository.delete(sugarcoatDictionaryGroup);
+    public void remove(String group, String code) {
+        QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
+        BooleanExpression expression = sugarcoatDictionary.group.eq(group);
+        expression.and(sugarcoatDictionary.code.eq(code));
+        Iterable<SugarcoatDictionary> all = dictionaryRepository.findAll(expression);
+        Collection<String> ids = new ArrayList<>();
+        all.forEach(a -> ids.add(a.getId()));
+        dictionaryRepository.deleteAllById(ids);
     }
 
     @Override
-    public Optional<Dictionary> getDictionary(String groupCode, String dictionaryCode) {
-        QSugarcoatDictionaryGroup qDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
-        return dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode))
-                .map(sugarcoatDictionaryGroup -> sugarcoatDictionaryGroup.getDictionary(dictionaryCode));
+    public void removeByGroup(String group) {
+        QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
+        BooleanExpression expression = sugarcoatDictionary.group.eq(group);
+        Iterable<SugarcoatDictionary> all = dictionaryRepository.findAll(expression);
+        Collection<String> ids = new ArrayList<>();
+        all.forEach(a -> ids.add(a.getId()));
+        dictionaryRepository.deleteAllById(ids);
     }
 
     @Override
-    public Collection<DictionaryGroup> getAll() {
-        return getAll(null);
+    public void removeById(String id) {
+        dictionaryRepository.deleteById(id);
     }
 
     @Override
-    public Optional<DictionaryGroup> getDictionaryGroup(String groupCode) {
-        QSugarcoatDictionaryGroup qDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
-        Optional<SugarcoatDictionaryGroup> sugarcoatDictionaryGroup = dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode));
-        return sugarcoatDictionaryGroup.map(a -> a);
+    public void removeByIds(Collection<String> ids) {
+        dictionaryRepository.deleteAllById(ids);
     }
 
     @Override
-    public Optional<String> getDictionaryName(String groupCode, String dictionaryCode) {
-        QSugarcoatDictionaryGroup qDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
-        return dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode))
-                .map(sugarcoatDictionaryGroup -> sugarcoatDictionaryGroup.getDictionaryName(dictionaryCode));
+    public Optional<Dictionary> get(String group, String code) {
+        QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
+        BooleanExpression expression = sugarcoatDictionary.group.eq(group);
+        expression.and(sugarcoatDictionary.code.eq(code));
+        Optional<SugarcoatDictionary> dictionary = dictionaryRepository.findOne(expression);
+        return dictionary.map(a->a);
     }
 
     @Override
-    public boolean existDictionary(String groupCode, String dictionaryCode) {
-        QSugarcoatDictionaryGroup qDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
-        return dictionaryGroupRepository.findOne(qDictionaryGroup.groupCode.eq(groupCode))
-                .map(sugarcoatDictionaryGroup -> sugarcoatDictionaryGroup.existDictionary(dictionaryCode))
-                .orElse(false);
-    }
-
-    public Collection<DictionaryGroup> getAll(BooleanEnum innerFlag) {
-        QSugarcoatDictionaryGroup sugarcoatDictionaryGroup = QSugarcoatDictionaryGroup.sugarcoatDictionaryGroup;
-        BooleanExpression expression =  Expressions.TRUE;
-        if (Objects.nonNull(innerFlag)){
-            expression.and(sugarcoatDictionaryGroup.innerFlag.eq(innerFlag));
+    public Collection<Dictionary> getByGroup(String group) {
+        QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
+        BooleanExpression expression = sugarcoatDictionary.group.eq(group);
+        Iterable<SugarcoatDictionary> all = dictionaryRepository.findAll(expression);
+        Collection<Dictionary> result = new ArrayList<>();
+        for (SugarcoatDictionary dictionary : all) {
+            result.add(dictionary);
         }
-        Iterable<SugarcoatDictionaryGroup> dictionaryGroups = dictionaryGroupRepository.findAll(expression);
-        ArrayList<DictionaryGroup> result = new ArrayList<>();
-        dictionaryGroups.forEach(result::add);
         return result;
     }
 
+    @Override
+    public Optional<Dictionary> getById(String id) {
+        Optional<SugarcoatDictionary> dictionary = dictionaryRepository.findById(id);
+        return dictionary.map(a->a);
+    }
+
+    @Override
+    public Collection<Dictionary> getAll() {
+        Iterable<SugarcoatDictionary> all = dictionaryRepository.findAll();
+        Collection<Dictionary> result = new ArrayList<>();
+        for (SugarcoatDictionary dictionary : all) {
+            result.add(dictionary);
+        }
+        return result;
+    }
+
+    @Override
+    public Optional<Dictionary> getByName(String group, String name) {
+        QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
+        BooleanExpression expression = sugarcoatDictionary.group.eq(group);
+        expression.and(sugarcoatDictionary.name.eq(name));
+        Optional<SugarcoatDictionary> dictionary = dictionaryRepository.findOne(expression);
+        return dictionary.map(a->a);
+    }
+
+    @Override
+    public boolean exist(String group, String code) {
+        QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
+        BooleanExpression expression = sugarcoatDictionary.group.eq(group);
+        expression.and(sugarcoatDictionary.code.eq(code));
+        return dictionaryRepository.exists(expression);
+    }
+
+    @Override
+    public boolean exist(String group) {
+        QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
+        BooleanExpression expression = sugarcoatDictionary.group.eq(group);
+        return dictionaryRepository.exists(expression);
+    }
 }

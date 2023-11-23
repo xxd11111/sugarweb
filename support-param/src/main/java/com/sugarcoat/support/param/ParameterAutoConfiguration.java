@@ -1,6 +1,6 @@
 package com.sugarcoat.support.param;
 
-import com.sugarcoat.protocol.param.ParamManager;
+import com.sugarcoat.protocol.parameter.ParameterManager;
 import com.sugarcoat.support.param.application.DefaultParamServiceImpl;
 import com.sugarcoat.support.param.application.ParamService;
 import com.sugarcoat.support.param.domain.*;
@@ -40,8 +40,8 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamManager paramManager(SgcParamRepository sugarcoatParamRepository, ParamCacheManager paramCacheManager) {
-        return new DefaultParamManager(sugarcoatParamRepository, paramCacheManager);
+    public ParameterManager paramManager(SgcParamRepository sugarcoatParamRepository, ParamCacheManager paramCacheManager) {
+        return new DefaultParameterManager(sugarcoatParamRepository, paramCacheManager);
     }
 
     @Bean

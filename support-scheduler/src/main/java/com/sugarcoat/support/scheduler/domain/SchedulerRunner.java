@@ -1,8 +1,8 @@
 package com.sugarcoat.support.scheduler.domain;
 
-import com.sugarcoat.protocol.common.SgcRunner;
 import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 
 /**
  * 定时任务初始化
@@ -10,7 +10,7 @@ import org.springframework.boot.ApplicationArguments;
  * @author 许向东
  * @date 2023/10/18
  */
-public class SchedulerRunner implements SgcRunner {
+public class SchedulerRunner implements ApplicationRunner {
 
     private final TaskBeanRegistry taskBeanRegistry;
     private final SchedulerManager schedulerManager;

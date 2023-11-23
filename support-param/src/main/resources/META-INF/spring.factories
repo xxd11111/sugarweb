@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarcoat.support.param.ParameterAutoConfiguration
+  com.sugarcoat.support.parameter.ParameterAutoConfiguration

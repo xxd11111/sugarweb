@@ -23,7 +23,7 @@
 | support-scheduler  | 定时任务实现，使用quartz           | support-api             | 未开始  |
 | support-orm        | 持久化实现，使用spring-data-jpa实现 | support-api             | 进行中  |
 | support-dict       | 数据字典通用功能                  | support-api,support-orm | 进行中  |
-| support-param      | 系统参数通用功能                  | support-api,support-orm | 进行中  |
+| support-parameter      | 系统参数通用功能                  | support-api,support-orm | 进行中  |
 | support-server     | 服务端通用功能                   | support-api,support-orm | 进行中  |
 | support-protection | 接口防护功能，限流，幂等              | support-api,support-orm | 进行中  |
 | uims               | 用户管理实现(sugarcoat使用案例)     | sugarcoat               | 进行中  |
@@ -41,7 +41,7 @@
 - protection：系统防护规范，幂等，限流，限流策略
 - scheduler：定时任务规范，定时任务管理
 - dict：数据字典规范，字典组对象，字典项对象，字典编码转化，字典管理，字典校验，内部字典导入
-- param：参数规范，参数对象，参数管理
+- parameter：参数规范，参数对象，参数管理
 - server：服务端规范，接口标识，接口日志，接口对象，接口管理
 
 sugarcoat规范详细说明文档地址：(准备中)

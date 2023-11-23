@@ -1,6 +1,6 @@
 package com.sugarcoat.support.param.application;
 
-import com.sugarcoat.support.param.domain.SugarcoatParam;
+import com.sugarcoat.support.param.domain.SugarcoatParameter;
 
 /**
  * 参数转换类
@@ -11,7 +11,7 @@ import com.sugarcoat.support.param.domain.SugarcoatParam;
  */
 public class ParamConvert {
 
-	public static ParamDto getParamDTO(SugarcoatParam sugarcoatParam) {
+	public static ParamDto getParamDTO(SugarcoatParameter sugarcoatParam) {
 		ParamDto paramDTO = new ParamDto();
 		paramDTO.setId(sugarcoatParam.getId());
 		paramDTO.setCode(sugarcoatParam.getCode());

@@ -5,7 +5,7 @@ import cn.hutool.core.collection.CollUtil;
 import java.util.Collection;
 
 /**
- * 字典对象注册策略，只新增
+ * 自动注册
  *
  * @author xxd
  * @since 2023/8/25

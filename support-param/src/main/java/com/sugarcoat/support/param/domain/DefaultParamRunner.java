@@ -39,16 +39,16 @@ public class DefaultParamRunner implements ParamRunner {
 
     private void doRegister() {
         log.info("系统参数加载---开始");
-        Collection<SugarcoatParam> scan = paramScanner.scan();
+        Collection<SugarcoatParameter> scan = paramScanner.scan();
         paramRegistry.register(scan);
         log.info("系统参数加载---结束");
     }
 
     private void cacheReload() {
         log.info("系统参数缓存加载---开始");
-        Iterable<SugarcoatParam> params = paramRepository.findAll();
+        Iterable<SugarcoatParameter> params = paramRepository.findAll();
         paramCacheManager.clean();
-        for (SugarcoatParam param : params) {
+        for (SugarcoatParameter param : params) {
             paramCacheManager.put(param);
         }
         log.info("系统参数缓存加载---结束");

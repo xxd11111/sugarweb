@@ -15,7 +15,7 @@
         <module>support-server</module>
         <module>support-orm</module>
         <module>support-doc</module>
-        <module>support-param</module>
+        <module>support-parameter</module>
         <module>support-api</module>
         <module>support-oss</module>
         <module>support-email</module>

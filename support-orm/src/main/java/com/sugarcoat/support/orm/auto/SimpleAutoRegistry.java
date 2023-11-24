@@ -1,9 +1,9 @@
-package com.sugarcoat.protocol.auto;
+package com.sugarcoat.support.orm.auto;
 
 import java.util.Collection;
 
 /**
- * 字典对象扫描  覆盖（允许新增，允许更新，允许删除）
+ * 对象自动注册
  *
  * @author xxd
  * @since 2023/8/25

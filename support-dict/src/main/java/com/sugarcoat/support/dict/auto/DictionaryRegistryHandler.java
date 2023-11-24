@@ -1,6 +1,6 @@
 package com.sugarcoat.support.dict.auto;
 
-import com.sugarcoat.protocol.auto.RegistryHandler;
+import com.sugarcoat.support.orm.auto.RegistryHandler;
 import com.sugarcoat.protocol.dictionary.DictionaryManager;
 import com.sugarcoat.support.dict.domain.SugarcoatDictionary;
 import com.sugarcoat.support.dict.domain.SugarcoatDictionaryManager;

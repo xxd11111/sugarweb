@@ -1,4 +1,4 @@
-package com.sugarcoat.protocol.auto;
+package com.sugarcoat.support.orm.auto;
 
 /**
  * 注册处理

@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.audit;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;

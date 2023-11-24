@@ -1,4 +1,4 @@
-package com.sugarcoat.protocol.auto;
+package com.sugarcoat.support.orm.auto;
 
 import java.util.Collection;
 

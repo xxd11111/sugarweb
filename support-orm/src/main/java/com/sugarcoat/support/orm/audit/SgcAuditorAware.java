@@ -1,4 +1,4 @@
-package com.sugarcoat.support.orm;
+package com.sugarcoat.support.orm.audit;
 
 import org.springframework.data.domain.AuditorAware;
 

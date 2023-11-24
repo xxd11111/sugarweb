@@ -1,6 +1,5 @@
 package com.sugarcoat.support.server.domain;
 
-import com.sugarcoat.protocol.auto.SimpleAutoRegistry;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

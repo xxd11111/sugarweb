@@ -3,6 +3,7 @@ package com.sugarcoat.support.orm;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sugarcoat.support.orm.audit.SgcAuditorAware;
 import com.sugarcoat.support.orm.datapermission.*;
 import com.sugarcoat.support.orm.tenant.SgcTenantIdProcessor;
 import com.sugarcoat.support.orm.tenant.SgcTenantIdResolver;

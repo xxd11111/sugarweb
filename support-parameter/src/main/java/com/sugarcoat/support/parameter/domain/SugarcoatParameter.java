@@ -1,4 +1,4 @@
-package com.sugarcoat.support.param.domain;
+package com.sugarcoat.support.parameter.domain;
 
 import com.sugarcoat.protocol.parameter.Parameter;
 import jakarta.persistence.Entity;

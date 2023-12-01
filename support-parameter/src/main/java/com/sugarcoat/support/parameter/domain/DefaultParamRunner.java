@@ -1,6 +1,6 @@
-package com.sugarcoat.support.param.domain;
+package com.sugarcoat.support.parameter.domain;
 
-import com.sugarcoat.support.param.ParamProperties;
+import com.sugarcoat.support.parameter.ParamProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

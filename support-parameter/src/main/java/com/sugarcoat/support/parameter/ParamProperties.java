@@ -1,4 +1,4 @@
-package com.sugarcoat.support.param;
+package com.sugarcoat.support.parameter;
 
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

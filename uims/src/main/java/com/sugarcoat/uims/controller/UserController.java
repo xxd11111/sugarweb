@@ -24,6 +24,9 @@ public class UserController {
 
     @GetMapping("{id}")
     public Result findOne(@NotBlank @PathVariable String id) {
+
+
+
         return Result.data(userService.find(id));
     }
 

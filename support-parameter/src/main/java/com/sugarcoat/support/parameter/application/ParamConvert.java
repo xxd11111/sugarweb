@@ -1,6 +1,6 @@
-package com.sugarcoat.support.param.application;
+package com.sugarcoat.support.parameter.application;
 
-import com.sugarcoat.support.param.domain.SugarcoatParameter;
+import com.sugarcoat.support.parameter.domain.SugarcoatParameter;
 
 /**
  * 参数转换类

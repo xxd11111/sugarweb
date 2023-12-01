@@ -1,4 +1,4 @@
-package com.sugarcoat.support.param.domain;
+package com.sugarcoat.support.parameter.domain;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.parameter.ParameterCode;
 import com.sugarcoat.protocol.parameter.InnerParameter;
-import com.sugarcoat.support.param.ParamProperties;
+import com.sugarcoat.support.parameter.ParamProperties;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

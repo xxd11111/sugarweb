@@ -1,7 +1,6 @@
 package com.sugarcoat.uims.domain;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.sugarcoat.support.orm.BooleanEnum;
 import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.support.orm.ExpressionWrapper;

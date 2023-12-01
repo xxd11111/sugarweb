@@ -1,4 +1,4 @@
-package com.sugarcoat.support.param.application;
+package com.sugarcoat.support.parameter.application;
 
 import lombok.Data;
 

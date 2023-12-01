@@ -1,7 +1,7 @@
-package com.sugarcoat.support.param.domain;
+package com.sugarcoat.support.parameter.domain;
 
 import com.sugarcoat.protocol.parameter.Parameter;
-import com.sugarcoat.support.param.ParamProperties;
+import com.sugarcoat.support.parameter.ParamProperties;
 import org.redisson.api.RBucket;
 import org.redisson.api.RKeys;
 import org.redisson.api.RedissonClient;

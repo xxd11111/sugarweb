@@ -1,4 +1,4 @@
-package com.sugarcoat.support.param.domain;
+package com.sugarcoat.support.parameter.domain;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;

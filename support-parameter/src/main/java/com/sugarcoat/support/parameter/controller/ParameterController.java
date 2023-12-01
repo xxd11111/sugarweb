@@ -1,8 +1,8 @@
-package com.sugarcoat.support.param.controller;
+package com.sugarcoat.support.parameter.controller;
 
-import com.sugarcoat.support.param.application.ParamDto;
-import com.sugarcoat.support.param.application.ParamQueryDto;
-import com.sugarcoat.support.param.application.ParamService;
+import com.sugarcoat.support.parameter.application.ParamDto;
+import com.sugarcoat.support.parameter.application.ParamQueryDto;
+import com.sugarcoat.support.parameter.application.ParamService;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.common.Result;

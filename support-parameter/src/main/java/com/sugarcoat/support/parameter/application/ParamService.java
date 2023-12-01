@@ -1,4 +1,4 @@
-package com.sugarcoat.support.param.application;
+package com.sugarcoat.support.parameter.application;
 
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;

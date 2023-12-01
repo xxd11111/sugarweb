@@ -1,9 +1,9 @@
-package com.sugarcoat.support.param;
+package com.sugarcoat.support.parameter;
 
 import com.sugarcoat.protocol.parameter.ParameterManager;
-import com.sugarcoat.support.param.application.DefaultParamServiceImpl;
-import com.sugarcoat.support.param.application.ParamService;
-import com.sugarcoat.support.param.domain.*;
+import com.sugarcoat.support.parameter.application.DefaultParamServiceImpl;
+import com.sugarcoat.support.parameter.application.ParamService;
+import com.sugarcoat.support.parameter.domain.*;
 import jakarta.annotation.Resource;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

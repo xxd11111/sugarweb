@@ -37,9 +37,9 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
     public void save(DictionaryDto dictionaryDto) {
         SugarcoatDictionary sugarcoatDictionary = new SugarcoatDictionary();
         sugarcoatDictionary.setId(dictionaryDto.getId());
-        sugarcoatDictionary.setCode(dictionaryDto.getCode());
-        sugarcoatDictionary.setName(dictionaryDto.getName());
-        sugarcoatDictionary.setGroup(dictionaryDto.getGroup());
+        sugarcoatDictionary.setDictCode(dictionaryDto.getCode());
+        sugarcoatDictionary.setDictName(dictionaryDto.getName());
+        sugarcoatDictionary.setDictGroup(dictionaryDto.getGroup());
         dictionaryManager.put(sugarcoatDictionary);
     }
 
@@ -59,9 +59,9 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
                 .orElseThrow(() -> new ValidateException("dictItem not find"));
         DictionaryDto dictionaryDto = new DictionaryDto();
         dictionaryDto.setId(dictionary.getId());
-        dictionaryDto.setCode(dictionary.getCode());
-        dictionaryDto.setName(dictionary.getName());
-        dictionaryDto.setGroup(dictionary.getGroup());
+        dictionaryDto.setCode(dictionary.getDictCode());
+        dictionaryDto.setName(dictionary.getDictName());
+        dictionaryDto.setGroup(dictionary.getDictGroup());
         return dictionaryDto;
     }
 
@@ -70,14 +70,14 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
         QSugarcoatDictionary dictionary = QSugarcoatDictionary.sugarcoatDictionary;
         // 构造分页，按照创建时间降序
         PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
-                .withSort(Sort.Direction.DESC, dictionary.group.getMetadata().getName());
+                .withSort(Sort.Direction.DESC, dictionary.dictGroup.getMetadata().getName());
         // 条件查询
         BooleanExpression expression = Expressions.TRUE;
         if (queryDto.getGroupName() != null && !queryDto.getGroupName().isEmpty()) {
-            expression.and(dictionary.name.like(queryDto.getGroupName(), '/'));
+            expression.and(dictionary.dictName.like(queryDto.getGroupName(), '/'));
         }
         if (queryDto.getGroupCode() != null && !queryDto.getGroupCode().isEmpty()) {
-            expression.and(dictionary.code.eq(queryDto.getGroupCode()));
+            expression.and(dictionary.dictCode.eq(queryDto.getGroupCode()));
         }
         Page<DictionaryDto> page = sgcDictionaryRepository.findAll(expression, pageRequest)
                 .map(this::getDictDTO);
@@ -87,9 +87,9 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
     private DictionaryDto getDictDTO(SugarcoatDictionary dict) {
         DictionaryDto dictionaryDto = new DictionaryDto();
         dictionaryDto.setId(dict.getId());
-        dictionaryDto.setCode(dict.getCode());
-        dictionaryDto.setName(dict.getName());
-        dictionaryDto.setGroup(dict.getGroup());
+        dictionaryDto.setCode(dict.getDictCode());
+        dictionaryDto.setName(dict.getDictName());
+        dictionaryDto.setGroup(dict.getDictGroup());
         return dictionaryDto;
     }
 

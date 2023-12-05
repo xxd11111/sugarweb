@@ -14,16 +14,16 @@ public interface Dictionary {
     /**
      * 获取字典组
      */
-    String getGroup();
+    String getDictGroup();
 
     /**
      * 获取字典编码
      */
-    String getCode();
+    String getDictCode();
 
     /**
      * 获取字典名称
      */
-    String getName();
+    String getDictName();
 
 }

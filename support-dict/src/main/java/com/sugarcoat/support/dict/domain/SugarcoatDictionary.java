@@ -27,13 +27,16 @@ public class SugarcoatDictionary implements Dictionary {
     private String id;
 
     @Column(length = 32)
-    private String group;
+    private String dictGroup;
 
     @Column(length = 32)
-    private String code;
+    private String dictCode;
 
     @Column(length = 32)
-    private String name;
+    private String dictName;
+
+    @Column(length = 1)
+    private String dictType;
 
     @Override
     public int hashCode() {

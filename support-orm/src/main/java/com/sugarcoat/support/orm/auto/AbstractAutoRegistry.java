@@ -1,32 +1,43 @@
 package com.sugarcoat.support.orm.auto;
 
+
 import cn.hutool.core.collection.CollUtil;
+import jakarta.annotation.PostConstruct;
 
 import java.util.Collection;
 
 /**
- * 自动注册
+ * ScanRegisterHandler
  *
- * @author xxd
- * @since 2023/8/25
+ * @author 许向东
+ * @date 2023/12/5
  */
-public abstract class AbstractAutoRegistry<T> implements Registry {
-
-    private final Scanner<T> scanner;
-
-    protected AbstractAutoRegistry(Scanner<T> scanner) {
-        this.scanner = scanner;
-    }
+public abstract class AbstractAutoRegistry<T> implements Registry, Scanner<T> {
 
     @Override
+    @PostConstruct
     public void register() {
-        Collection<T> scan = scanner.scan();
-        if (CollUtil.isEmpty(scan)) {
+        Collection<T> scans = this.scan();
+        if (CollUtil.isEmpty(scans)) {
             return;
         }
-        doSave(scan);
+        this.deleteByCondition(scans);
+        for (T object : scans) {
+            T exist = this.selectOne(object);
+            if (exist == null) {
+                this.insert(object);
+            } else {
+                this.merge(exist, object);
+            }
+        }
     }
 
-    public abstract void doSave(Collection<T> objects);
+    protected abstract void insert(T o);
+
+    protected abstract void merge(T db, T scan);
+
+    protected abstract void deleteByCondition(Collection<T> collection);
+
+    protected abstract T selectOne(T o);
 
 }

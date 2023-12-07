@@ -13,6 +13,10 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface DictionaryCode {
+public @interface DictionaryItem {
+
+    String value() default "";
+
+    String code() default "";
 
 }

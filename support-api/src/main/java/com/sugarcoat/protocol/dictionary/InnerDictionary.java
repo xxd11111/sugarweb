@@ -19,6 +19,6 @@ public @interface InnerDictionary {
     /**
      * 字典组编码 为空时使用类名
      */
-    String group() default "";
+    String value() default "";
 
 }

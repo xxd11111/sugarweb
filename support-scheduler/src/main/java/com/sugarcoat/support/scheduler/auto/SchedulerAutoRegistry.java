@@ -1,53 +1,71 @@
-package com.sugarcoat.support.scheduler.domain;
+package com.sugarcoat.support.scheduler.auto;
 
-import cn.hutool.core.util.StrUtil;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.sugarcoat.protocol.BeanUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
-import com.sugarcoat.protocol.scheduler.*;
-import lombok.extern.slf4j.Slf4j;
-import org.quartz.Trigger;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.lang.NonNull;
+import com.sugarcoat.protocol.scheduler.InnerTaskBean;
+import com.sugarcoat.protocol.scheduler.InnerTaskMethod;
+import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
+import com.sugarcoat.support.scheduler.domain.QSgcSchedulerTask;
+import com.sugarcoat.support.scheduler.domain.SgcSchedulerTask;
+import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
+import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.support.CronExpression;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
- * TaskBeanFactory 实现类，交由spring管理
+ * SchedulerAutoRegistry
  *
  * @author 许向东
- * @date 2023/10/19
+ * @date 2023/12/15
  */
-@Slf4j
-public class SgcTaskBeanFactory implements TaskBeanFactory, TaskBeanRegistry, ApplicationContextAware {
+public class SchedulerAutoRegistry extends AbstractAutoRegistry<SgcSchedulerTask> {
 
-    private ApplicationContext applicationContext;
+    private final SgcSchedulerTaskRepository sgcSchedulerTaskRepository;
 
-    private final SchedulerManager schedulerManager;
-
-    public SgcTaskBeanFactory(SchedulerManager schedulerManager) {
-        this.schedulerManager = schedulerManager;
+    public SchedulerAutoRegistry(SgcSchedulerTaskRepository sgcSchedulerTaskRepository) {
+        this.sgcSchedulerTaskRepository = sgcSchedulerTaskRepository;
     }
 
     @Override
-    public void setApplicationContext(@NonNull ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
+    protected void insert(SgcSchedulerTask o) {
+        sgcSchedulerTaskRepository.save(o);
     }
 
     @Override
-    public Object getBean(String taskName) {
-        return applicationContext.getBean(taskName);
+    protected void merge(SgcSchedulerTask db, SgcSchedulerTask scan) {
+        db.setDefaultCron(scan.getDefaultCron());
+        db.setDefaultParams(scan.getDefaultParams());
+        db.setBeanName(scan.getDefaultParams());
+        db.setMethodName(scan.getDefaultParams());
+        sgcSchedulerTaskRepository.save(db);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void register() {
-        Map<String, Object> beansWithAnnotation = applicationContext.getBeansWithAnnotation(InnerTaskBean.class);
+    protected void deleteByCondition(Collection<SgcSchedulerTask> collection) {
+        List<String> removeTaskName = new ArrayList<>();
+        Iterable<SgcSchedulerTask> all = sgcSchedulerTaskRepository.findAll();
+        for (SgcSchedulerTask schedulerTask : all) {
+            if (collection.stream().noneMatch(a -> schedulerTask.getTaskName().equals(a.getTaskName()))) {
+                removeTaskName.add(schedulerTask.getTaskName());
+            }
+        }
+        sgcSchedulerTaskRepository.deleteAllById(removeTaskName);
+    }
+
+    @Override
+    protected SgcSchedulerTask selectOne(SgcSchedulerTask o) {
+        QSgcSchedulerTask sgcSchedulerTask = QSgcSchedulerTask.sgcSchedulerTask;
+        BooleanExpression eq = sgcSchedulerTask.taskName.eq(o.getTaskName());
+        return sgcSchedulerTaskRepository.findOne(eq).orElse(null);
+    }
+
+    @Override
+    public Collection<SgcSchedulerTask> scan() {
+        Map<String, Object> beansWithAnnotation = BeanUtil.getBeansWithAnnotation(InnerTaskBean.class);
         Map<String, SgcSchedulerTask> schedulerTaskMap = new HashMap<>();
         for (Map.Entry<String, Object> stringObjectEntry : beansWithAnnotation.entrySet()) {
             String beanName = stringObjectEntry.getKey();
@@ -82,35 +100,14 @@ public class SgcTaskBeanFactory implements TaskBeanFactory, TaskBeanRegistry, Ap
                 schedulerTask.setBeanName(beanName);
                 schedulerTask.setMethodName(method.getName());
                 schedulerTask.setParamsLength(paramsLength);
-                schedulerTask.setCustomParams(params);
+                schedulerTask.setParams(params);
                 schedulerTask.setDefaultParams(params);
-                schedulerTask.setCustomCron(cron);
+                schedulerTask.setCron(cron);
                 schedulerTask.setDefaultCron(cron);
-                schedulerTask.setTriggerName(taskName);
                 schedulerTaskMap.put(taskName, schedulerTask);
-
-                //如果想强制全部更新，建议定时任务代码变动时更新taskName（此方案是为了重新部署防止自定义数据还原）
-                if (schedulerManager.exists(taskName)) {
-                    SgcSchedulerTask old = (SgcSchedulerTask)schedulerManager.getOne(taskName);
-                    //保留旧的参数方法情况，修改过
-                    if (!StrUtil.equals(old.getCustomCron(), old.getDefaultCron())) {
-                        schedulerTask.setCustomCron(old.getParams());
-                    }
-                    //保留旧的cron方法情况，修改过
-                    if (!StrUtil.equals(old.getCron(), old.getDefaultCron())) {
-                        schedulerTask.setCustomCron(old.getCustomCron());
-                    }
-                    schedulerManager.update(schedulerTask);
-                    if (Trigger.TriggerState.PAUSED.name().equals(old.getExecuteStatus())){
-                        schedulerManager.pause(old.getTaskName());
-                    }
-                } else {
-                    schedulerManager.add(schedulerTask);
-                }
             }
         }
-        log.info("已加载{}个定时任务", schedulerTaskMap.size());
-        schedulerTaskMap.forEach((k, v) -> log.info("定时任务，taskName：{}，{}", k, v));
+        return schedulerTaskMap.values();
     }
 
     private boolean isValidCron(String cron) {
@@ -126,6 +123,4 @@ public class SgcTaskBeanFactory implements TaskBeanFactory, TaskBeanRegistry, Ap
         }
         return false;
     }
-
-
 }

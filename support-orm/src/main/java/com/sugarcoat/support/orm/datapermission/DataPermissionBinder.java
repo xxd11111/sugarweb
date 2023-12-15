@@ -1,11 +1,12 @@
 package com.sugarcoat.support.orm.datapermission;
 
 import org.hibernate.MappingException;
+import org.hibernate.annotations.TenantId;
+import org.hibernate.binder.AttributeBinder;
 import org.hibernate.boot.spi.InFlightMetadataCollector;
 import org.hibernate.boot.spi.MetadataBuildingContext;
 import org.hibernate.engine.spi.FilterDefinition;
 import org.hibernate.mapping.*;
-import org.hibernate.tuple.AttributeBinder;
 import org.hibernate.type.BasicType;
 import org.hibernate.type.descriptor.java.JavaType;
 import org.hibernate.type.spi.TypeConfiguration;

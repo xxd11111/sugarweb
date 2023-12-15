@@ -1,5 +1,6 @@
 package com.sugarcoat.protocol;
 
+import java.lang.annotation.Annotation;
 import java.util.Map;
 
 import org.springframework.beans.BeansException;
@@ -33,6 +34,10 @@ public class BeanUtil implements BeanFactoryPostProcessor, ApplicationContextAwa
 
 	public static ApplicationContext getApplicationContext() {
 		return applicationContext;
+	}
+
+	public static Map<String, Object> getBeansWithAnnotation(Class<? extends Annotation> annotationType){
+		return applicationContext.getBeansWithAnnotation(annotationType);
 	}
 
 	public static ListableBeanFactory getBeanFactory() {

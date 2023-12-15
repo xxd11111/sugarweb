@@ -1,37 +1,72 @@
-package com.sugarcoat.support.parameter.domain;
+package com.sugarcoat.support.parameter.auto;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.exception.FrameworkException;
-import com.sugarcoat.protocol.parameter.ParameterCode;
 import com.sugarcoat.protocol.parameter.InnerParameter;
+import com.sugarcoat.protocol.parameter.ParameterItem;
+import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
 import com.sugarcoat.support.parameter.ParamProperties;
+import com.sugarcoat.support.parameter.domain.QSugarcoatParameter;
+import com.sugarcoat.support.parameter.domain.SgcParamRepository;
+import com.sugarcoat.support.parameter.domain.SugarcoatParameter;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
- * 内置参数扫描
+ * TODO
  *
- * @author xxd
- * @since 2023/9/5 22:14
+ * @author 许向东
+ * @date 2023/12/15
  */
-public class DefaultParamScanner implements ParamScanner {
+public class ParameterAutoRegistry extends AbstractAutoRegistry<SugarcoatParameter> {
 
     /**
      * 扫描路径
      */
     private final String scanPackage;
 
-    public DefaultParamScanner(ParamProperties paramProperties) {
+    private final SgcParamRepository paramRepository;
+
+    public ParameterAutoRegistry(ParamProperties paramProperties, SgcParamRepository paramRepository) {
         this.scanPackage = paramProperties.getScanPackage();
+        this.paramRepository = paramRepository;
+    }
+
+    @Override
+    protected void insert(SugarcoatParameter o) {
+        paramRepository.save(o);
+    }
+
+    @Override
+    protected void merge(SugarcoatParameter db, SugarcoatParameter scan) {
+        //ignore
+    }
+
+    @Override
+    protected void deleteByCondition(Collection<SugarcoatParameter> collection) {
+        Iterable<SugarcoatParameter> all = paramRepository.findAll();
+        List<String> removeIds = new ArrayList<>();
+        for (SugarcoatParameter sugarcoatParameter : all) {
+            if (!collection.contains(sugarcoatParameter)) {
+                removeIds.add(sugarcoatParameter.getId());
+            }
+        }
+        paramRepository.deleteAllById(removeIds);
+    }
+
+    @Override
+    protected SugarcoatParameter selectOne(SugarcoatParameter o) {
+        QSugarcoatParameter query = QSugarcoatParameter.sugarcoatParameter;
+        BooleanExpression eq = query.code.eq(o.getCode());
+        return paramRepository.findOne(eq).orElse(null);
     }
 
     @Override
@@ -49,7 +84,10 @@ public class DefaultParamScanner implements ParamScanner {
             Field[] declaredFields = clazz.getDeclaredFields();
             if (ArrayUtil.isNotEmpty(declaredFields)) {
                 for (Field field : declaredFields) {
-                    ParameterCode annotation = field.getAnnotation(ParameterCode.class);
+                    ParameterItem annotation = field.getAnnotation(ParameterItem.class);
+                    if (annotation == null){
+                        continue;
+                    }
                     String code = annotation.code();
                     String name = annotation.name();
                     String value = annotation.value();
@@ -59,51 +97,22 @@ public class DefaultParamScanner implements ParamScanner {
                     }
                     //为空时候取字段名称
                     if (StrUtil.isEmpty(code)) {
-                        code = humpToUnderline(field.getName());
+                        code = field.getName();
                     }
                     //为空时候取字段名称
                     if (StrUtil.isEmpty(name)) {
-                        value = humpToUnderline(field.getName());
+                        value = field.getName();
                     }
                     //创建参数对象
                     SugarcoatParameter sugarcoatParam = new SugarcoatParameter();
-                    // sugarcoatParam.setId();
                     sugarcoatParam.setCode(code);
                     sugarcoatParam.setName(name);
                     sugarcoatParam.setValue(value);
-                    sugarcoatParam.setDefaultValue(value);
                     sugarcoatParam.setComment(name);
                     sugarcoatParams.add(sugarcoatParam);
                 }
             }
         }
         return sugarcoatParams;
-    }
-
-    /**
-     * 将驼峰转为下划线
-     *
-     * @param str 字符串
-     * @return 下划线字符串
-     */
-    public static String humpToUnderline(String str) {
-        //匹配 A-Z
-        Pattern compile = Pattern.compile("[A-Z]");
-
-        //进行匹配，结果存入 匹配器
-        Matcher matcher = compile.matcher(str);
-
-        StringBuilder sb = new StringBuilder();
-
-        //如果匹配中存在
-        while (matcher.find()) {
-            //加入下换线，并且转为 小写。
-
-            //如果是首字符，这里 应该直接转为小写。比如截取 字符串的第一个，判断是不是 [A-Z] 之间的
-            matcher.appendReplacement(sb, "_" + matcher.group(0).toLowerCase());
-        }
-        //添加到 sb中
-        matcher.appendTail(sb);
-        return sb.toString().replaceFirst("_", "");
     }
 }

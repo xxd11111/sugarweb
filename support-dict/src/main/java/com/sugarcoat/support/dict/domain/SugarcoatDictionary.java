@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UuidGenerator;
 
 /**
  * 字典信息
@@ -19,11 +20,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @ToString
 public class SugarcoatDictionary implements Dictionary {
-
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(length = 32)
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    @Column(length = 40)
     private String id;
 
     @Column(length = 32)

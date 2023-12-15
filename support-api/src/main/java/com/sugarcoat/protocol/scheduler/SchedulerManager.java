@@ -30,4 +30,6 @@ public interface SchedulerManager {
 
     void start();
 
+    void clear();
+
 }

@@ -72,8 +72,8 @@ public class SugarcoatDictionaryManager implements DictionaryManager<SugarcoatDi
     public Optional<SugarcoatDictionary> get(String group, String code) {
         QSugarcoatDictionary sugarcoatDictionary = QSugarcoatDictionary.sugarcoatDictionary;
         BooleanExpression expression = sugarcoatDictionary.dictGroup.eq(group);
-        expression.and(sugarcoatDictionary.dictCode.eq(code));
-        return dictionaryRepository.findOne(expression);
+        BooleanExpression and = expression.and(sugarcoatDictionary.dictCode.eq(code));
+        return dictionaryRepository.findOne(and);
     }
 
     @Override

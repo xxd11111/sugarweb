@@ -19,8 +19,6 @@ import java.lang.reflect.Method;
 @Slf4j
 public class SchedulerJobBean extends QuartzJobBean {
 
-    private final TaskBeanFactory taskBeanFactory = BeanUtil.getBean(TaskBeanFactory.class);
-
     @Override
     protected void executeInternal(JobExecutionContext context) {
         JobDataMap mergedJobDataMap = context.getMergedJobDataMap();
@@ -28,7 +26,7 @@ public class SchedulerJobBean extends QuartzJobBean {
         SgcSchedulerTask schedulerTask = JsonUtil.toObject(sgcSchedulerTaskString, SgcSchedulerTask.class);
         log.info("定时任务执行开始：{}", schedulerTask.getTaskName());
         try {
-            Object taskBean = taskBeanFactory.getBean(schedulerTask.getBeanName());
+            Object taskBean = BeanUtil.getBean(schedulerTask.getBeanName());
             if (schedulerTask.getParamsLength() == 1) {
                 Method method = taskBean.getClass().getDeclaredMethod(schedulerTask.getMethodName(), String.class);
                 String params = schedulerTask.getParams();

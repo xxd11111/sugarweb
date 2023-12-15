@@ -3,6 +3,7 @@ package com.sugarcoat.support.dict;
 import com.sugarcoat.protocol.dictionary.DictionaryManager;
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.impl.SugarcoatDictionaryServiceImpl;
+import com.sugarcoat.support.dict.auto.DictionaryAutoRegistry;
 import com.sugarcoat.support.dict.domain.*;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -37,6 +38,12 @@ public class DictionaryAutoConfiguration {
     @ConditionalOnMissingBean
     public DictionaryManager<SugarcoatDictionary> dictionaryManager(SgcDictionaryRepository sgcDictionaryRepository) {
         return new SugarcoatDictionaryManager(sgcDictionaryRepository);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DictionaryAutoRegistry dictionaryAutoRegistry(DictionaryManager<SugarcoatDictionary> dictionaryManager) {
+        return new DictionaryAutoRegistry(dictionaryManager);
     }
 
 }

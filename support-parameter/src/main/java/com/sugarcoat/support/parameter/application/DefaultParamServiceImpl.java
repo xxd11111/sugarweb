@@ -60,7 +60,6 @@ public class DefaultParamServiceImpl implements ParamService {
     @Override
     public void reset(Set<String> ids) {
         Iterable<SugarcoatParameter> params = sugarcoatParamRepository.findAllById(ids);
-        params.forEach(SugarcoatParameter::resetValue);
         sugarcoatParamRepository.saveAll(params);
     }
 

@@ -2,7 +2,8 @@ package com.sugarcoat.support.orm.auto;
 
 
 import cn.hutool.core.collection.CollUtil;
-import jakarta.annotation.PostConstruct;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 
 import java.util.Collection;
 
@@ -12,10 +13,14 @@ import java.util.Collection;
  * @author 许向东
  * @date 2023/12/5
  */
-public abstract class AbstractAutoRegistry<T> implements Registry, Scanner<T> {
+public abstract class AbstractAutoRegistry<T> implements Registry, Scanner<T>, ApplicationRunner {
 
     @Override
-    @PostConstruct
+    public void run(ApplicationArguments args) throws Exception {
+        register();
+    }
+
+    @Override
     public void register() {
         Collection<T> scans = this.scan();
         if (CollUtil.isEmpty(scans)) {

@@ -1,8 +1,9 @@
 package com.sugarcoat.support.scheduler.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sugarcoat.protocol.scheduler.SchedulerTask;
+import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.io.Serializable;
 
@@ -15,38 +16,34 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@Entity
 public class SgcSchedulerTask implements SchedulerTask, Serializable {
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
+    @Column(length = 40)
+    private String id;
 
     private String taskName;
-
-    private String triggerName;
-
-    private String customCron;
-
-    private String defaultCron;
-
-    private String executeStatus;
 
     private String beanName;
 
     private String methodName;
 
+    private String cron;
+
+    private String defaultCron;
+
+    private String executeStatus;
+
+    private String status;
+
     private Integer paramsLength;
 
-    private String customParams;
+    private String params;
 
     private String defaultParams;
 
-    @Override
-    public String getCron() {
-        return customCron;
-    }
-
-    @Override
-    public String getParams() {
-        return customParams;
-    }
+    private String taskData;
 
     // private String lastExecuteTime;
     //

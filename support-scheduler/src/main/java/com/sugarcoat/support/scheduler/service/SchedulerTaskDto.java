@@ -13,8 +13,6 @@ public class SchedulerTaskDto {
 
     private String taskName;
 
-    private String triggerName;
-
     private String cron;
 
     private String defaultCron;

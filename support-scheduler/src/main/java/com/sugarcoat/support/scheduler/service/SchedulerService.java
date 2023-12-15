@@ -28,10 +28,9 @@ public class SchedulerService {
         schedulerTask.setBeanName(dto.getBeanName());
         schedulerTask.setMethodName(dto.getMethodName());
         schedulerTask.setParamsLength(dto.getParamsLength());
-        schedulerTask.setTriggerName(dto.getTriggerName());
-        schedulerTask.setCustomCron(dto.getCron());
+        schedulerTask.setCron(dto.getCron());
         schedulerTask.setDefaultCron(dto.getDefaultCron());
-        schedulerTask.setCustomParams(dto.getParams());
+        schedulerTask.setParams(dto.getParams());
         schedulerTask.setDefaultParams(dto.getDefaultParams());
         schedulerTask.setExecuteStatus(Trigger.TriggerState.NORMAL.name());
         schedulerManager.add(schedulerTask);
@@ -43,9 +42,8 @@ public class SchedulerService {
         schedulerTask.setBeanName(dto.getBeanName());
         schedulerTask.setMethodName(dto.getMethodName());
         schedulerTask.setParamsLength(dto.getParamsLength());
-        schedulerTask.setTriggerName(dto.getTriggerName());
-        schedulerTask.setCustomCron(dto.getCron());
-        schedulerTask.setCustomParams(dto.getParams());
+        schedulerTask.setCron(dto.getCron());
+        schedulerTask.setParams(dto.getParams());
         schedulerManager.update(schedulerTask);
     }
 
@@ -67,10 +65,9 @@ public class SchedulerService {
         schedulerTask.setBeanName(dto.getBeanName());
         schedulerTask.setMethodName(dto.getMethodName());
         schedulerTask.setParamsLength(dto.getParamsLength());
-        schedulerTask.setTriggerName(dto.getTriggerName());
-        schedulerTask.setCustomCron(dto.getCron());
+        schedulerTask.setCron(dto.getCron());
         schedulerTask.setDefaultCron(dto.getDefaultCron());
-        schedulerTask.setCustomParams(dto.getParams());
+        schedulerTask.setParams(dto.getParams());
         schedulerTask.setDefaultParams(dto.getDefaultParams());
         schedulerManager.run(schedulerTask);
     }
@@ -85,10 +82,9 @@ public class SchedulerService {
                     schedulerTaskDto.setBeanName(sst.getBeanName());
                     schedulerTaskDto.setMethodName(sst.getMethodName());
                     schedulerTaskDto.setParamsLength(sst.getParamsLength());
-                    schedulerTaskDto.setTriggerName(sst.getTriggerName());
-                    schedulerTaskDto.setCron(sst.getCustomCron());
+                    schedulerTaskDto.setCron(sst.getCron());
                     schedulerTaskDto.setDefaultCron(sst.getDefaultCron());
-                    schedulerTaskDto.setParams(sst.getCustomParams());
+                    schedulerTaskDto.setParams(sst.getParams());
                     schedulerTaskDto.setDefaultParams(sst.getDefaultParams());
                     schedulerTaskDto.setExecuteStatus(sst.getExecuteStatus());
                     return schedulerTaskDto;

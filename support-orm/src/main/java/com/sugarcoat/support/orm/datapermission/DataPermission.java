@@ -16,8 +16,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * @author xxd
  * @since 2023/10/21 15:59
  */
-@ValueGenerationType(generatedBy = DataPermissionGeneration.class)
-@AttributeBinderType(binder = DataPermissionBinder.class)
+// @ValueGenerationType(generatedBy = DataPermissionGeneration.class)
+// @AttributeBinderType(binder = DataPermissionBinder.class)
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface DataPermission {

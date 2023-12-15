@@ -2,11 +2,11 @@ package com.sugarcoat.support.orm.softdelete;
 
 import cn.hutool.core.util.StrUtil;
 import org.hibernate.MappingException;
+import org.hibernate.binder.AttributeBinder;
 import org.hibernate.boot.model.CustomSql;
 import org.hibernate.boot.spi.MetadataBuildingContext;
 import org.hibernate.engine.spi.ExecuteUpdateResultCheckStyle;
 import org.hibernate.mapping.*;
-import org.hibernate.tuple.AttributeBinder;
 
 /**
  * SoftDelete逻辑绑定

@@ -4,8 +4,7 @@ import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import com.sugarcoat.support.scheduler.controller.SchedulerController;
 import com.sugarcoat.support.scheduler.domain.SchedulerRunner;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerManager;
-import com.sugarcoat.support.scheduler.domain.SgcTaskBeanFactory;
-import com.sugarcoat.support.scheduler.domain.TaskBeanRegistry;
+import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
 import com.sugarcoat.support.scheduler.service.SchedulerService;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -25,11 +24,6 @@ import org.springframework.context.annotation.Configuration;
 public class SchedulerAutoConfiguration {
 
     @Bean
-    public SgcTaskBeanFactory sgcTaskBeanFactory(SchedulerManager schedulerManager) {
-        return new SgcTaskBeanFactory(schedulerManager);
-    }
-
-    @Bean
     public SchedulerManager schedulerManager() {
         return new SgcSchedulerManager();
     }
@@ -45,8 +39,8 @@ public class SchedulerAutoConfiguration {
     }
 
     @Bean
-    public SchedulerRunner schedulerRunner(TaskBeanRegistry taskBeanRegistry, SchedulerManager schedulerManager) {
-        return new SchedulerRunner(taskBeanRegistry, schedulerManager);
+    public SchedulerRunner schedulerRunner(SchedulerManager schedulerManager, SgcSchedulerTaskRepository sgcSchedulerTaskRepository) {
+        return new SchedulerRunner(schedulerManager, sgcSchedulerTaskRepository);
     }
 
 }

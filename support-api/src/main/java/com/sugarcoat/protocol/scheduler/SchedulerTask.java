@@ -10,8 +10,6 @@ public interface SchedulerTask {
 
     String getTaskName();
 
-    String getTriggerName();
-
     String getCron();
 
     String getParams();

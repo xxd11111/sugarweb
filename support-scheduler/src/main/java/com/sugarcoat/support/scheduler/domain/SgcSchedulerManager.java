@@ -33,7 +33,7 @@ public class SgcSchedulerManager implements SchedulerManager {
         CronTrigger trigger = TriggerBuilder
                 .newTrigger()
                 .forJob(jobDetail)
-                .withIdentity(schedulerTask.getTriggerName())
+                .withIdentity(schedulerTask.getTaskName())
                 .withSchedule(scheduleBuilder)
                 .build();
 
@@ -48,7 +48,7 @@ public class SgcSchedulerManager implements SchedulerManager {
     public void update(SchedulerTask schedulerTask) {
         try {
             // 查询触发器Key
-            TriggerKey triggerKey = new TriggerKey(schedulerTask.getTriggerName());
+            TriggerKey triggerKey = new TriggerKey(schedulerTask.getTaskName());
             // 构建Cron调度器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder
                     .cronSchedule(schedulerTask.getCron())
@@ -84,8 +84,6 @@ public class SgcSchedulerManager implements SchedulerManager {
 
     public void delete(String name) {
         try {
-            scheduler.pauseTrigger(TriggerKey.triggerKey(name));
-            scheduler.unscheduleJob(TriggerKey.triggerKey(name));
             scheduler.deleteJob(JobKey.jobKey(name));
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
@@ -147,6 +145,15 @@ public class SgcSchedulerManager implements SchedulerManager {
     public void start() {
         try {
             scheduler.start();
+        } catch (SchedulerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void clear() {
+        try {
+            scheduler.clear();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
         }

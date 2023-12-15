@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface ParameterCode {
+public @interface ParameterItem {
 
     /**
      * 参数编码

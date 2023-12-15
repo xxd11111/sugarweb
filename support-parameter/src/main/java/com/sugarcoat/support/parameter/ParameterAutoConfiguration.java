@@ -3,6 +3,7 @@ package com.sugarcoat.support.parameter;
 import com.sugarcoat.protocol.parameter.ParameterManager;
 import com.sugarcoat.support.parameter.application.DefaultParamServiceImpl;
 import com.sugarcoat.support.parameter.application.ParamService;
+import com.sugarcoat.support.parameter.auto.ParameterAutoRegistry;
 import com.sugarcoat.support.parameter.domain.*;
 import jakarta.annotation.Resource;
 import org.redisson.api.RedissonClient;
@@ -46,23 +47,8 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamRegistry paramRegistry(SgcParamRepository sugarcoatParamRepository) {
-        return new DefaultParamRegistry(sugarcoatParamRepository);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ParamRunner paramRunner(ParamScanner paramScanner,
-                                   ParamRegistry paramRegistry,
-                                   ParamCacheManager paramCacheManager,
-                                   SgcParamRepository paramRepository) {
-        return new DefaultParamRunner(paramProperties, paramScanner, paramRegistry, paramCacheManager, paramRepository);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ParamScanner paramScanner() {
-        return new DefaultParamScanner(paramProperties);
+    public ParameterAutoRegistry parameterAutoRegistry(SgcParamRepository sgcParamRepository) {
+        return new ParameterAutoRegistry(paramProperties, sgcParamRepository);
     }
 
 

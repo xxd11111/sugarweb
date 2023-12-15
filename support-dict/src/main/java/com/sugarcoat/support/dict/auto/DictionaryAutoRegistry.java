@@ -9,7 +9,6 @@ import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
 import com.sugarcoat.protocol.dictionary.DictionaryManager;
 import com.sugarcoat.support.dict.domain.SugarcoatDictionary;
-import com.sugarcoat.support.dict.domain.SugarcoatDictionaryManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -26,7 +25,7 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<SugarcoatDictio
 
     private final DictionaryManager<SugarcoatDictionary> dictionaryManager;
 
-    public DictionaryAutoRegistry(SugarcoatDictionaryManager dictionaryManager) {
+    public DictionaryAutoRegistry(DictionaryManager<SugarcoatDictionary> dictionaryManager) {
         this.dictionaryManager = dictionaryManager;
     }
 
@@ -73,7 +72,7 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<SugarcoatDictio
             InnerDictionary innerDictionary = clazz.getAnnotation(InnerDictionary.class);
             String group;
             if (innerDictionary.value() == null || innerDictionary.value().isEmpty()) {
-                group = clazz.getName();
+                group = clazz.getSimpleName();
             } else {
                 group = innerDictionary.value();
             }
@@ -95,10 +94,10 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<SugarcoatDictio
 
                 Object[] enumConstants = clazz.getEnumConstants();
                 Field[] enumInstances = clazz.getFields();
-                Map<Enum, Field> objectObjectHashMap = new HashMap<>();
+                Map<Enum<?>, Field> objectObjectHashMap = new HashMap<>();
 
                 for (Object enumConstant : enumConstants) {
-                    if (enumConstant instanceof Enum e) {
+                    if (enumConstant instanceof Enum<?> e) {
                         String name = e.name();
                         for (Field enumInstance : enumInstances) {
                             if (name.equals(enumInstance.getName())) {

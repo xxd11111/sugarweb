@@ -17,7 +17,6 @@ public class ParamConvert {
 		paramDTO.setCode(sugarcoatParam.getCode());
 		paramDTO.setName(sugarcoatParam.getName());
 		paramDTO.setValue(sugarcoatParam.getValue());
-		paramDTO.setDefaultValue(sugarcoatParam.getDefaultValue());
 		paramDTO.setComment(sugarcoatParam.getComment());
 		return paramDTO;
 	}

@@ -19,6 +19,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -55,6 +56,7 @@ public class OrmAutoConfiguration implements WebMvcConfigurer, BeanPostProcessor
     }
 
     @Bean
+    @Primary
     public DsProcessor sgcDsProcessor(DsProcessor dsProcessor) {
         DsProcessor sgcTenantIdProcessor = new SgcTenantIdProcessor();
         dsProcessor.setNextProcessor(sgcTenantIdProcessor);

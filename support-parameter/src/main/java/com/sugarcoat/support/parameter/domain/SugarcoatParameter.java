@@ -43,11 +43,6 @@ public class SugarcoatParameter implements Parameter {
     private String value;
 
     /**
-     * 默认值
-     */
-    private String defaultValue;
-
-    /**
      * 备注
      */
     private String comment;
@@ -65,10 +60,6 @@ public class SugarcoatParameter implements Parameter {
     @Override
     public int hashCode() {
         return getClass().hashCode();
-    }
-
-    public void resetValue() {
-        value = defaultValue;
     }
 
 }

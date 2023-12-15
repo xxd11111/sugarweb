@@ -2,9 +2,14 @@ package com.sugarcoat.support.orm.softdelete;
 
 import cn.hutool.core.util.StrUtil;
 import org.hibernate.Session;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.generator.BeforeExecutionGenerator;
+import org.hibernate.generator.EventType;
 import org.hibernate.tuple.AnnotationValueGeneration;
 import org.hibernate.tuple.GenerationTiming;
 import org.hibernate.tuple.ValueGenerator;
+
+import java.util.EnumSet;
 
 /**
  * softDelete自动生成
@@ -12,49 +17,21 @@ import org.hibernate.tuple.ValueGenerator;
  * @author 许向东
  * @date 2023/11/15
  */
-public class SoftDeleteGeneration implements AnnotationValueGeneration<SoftDelete>, ValueGenerator<Object> {
+public class SoftDeleteGeneration implements BeforeExecutionGenerator {
 
     private final String unDeleteValue = "0";
 
     @Override
-    public void initialize(SoftDelete annotation, Class<?> propertyType, String entityName, String propertyName) {
-    }
-
-    @Override
-    public void initialize(SoftDelete annotation, Class<?> propertyType) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public GenerationTiming getGenerationTiming() {
-        return GenerationTiming.INSERT;
-    }
-
-    @Override
-    public ValueGenerator<?> getValueGenerator() {
-        return this;
-    }
-
-    @Override
-    public Object generateValue(Session session, Object owner, Object currentValue) {
-        if (StrUtil.isEmpty((String) currentValue)) {
+    public Object generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o, Object o1, EventType eventType) {
+        if (StrUtil.isEmpty((String) o)) {
             return unDeleteValue;
         }
-        return currentValue;
+        return o;
     }
 
     @Override
-    public Object generateValue(Session session, Object owner) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public boolean referenceColumnInSql() {
-        return false;
-    }
-
-    @Override
-    public String getDatabaseGeneratedReferencedColumnValue() {
+    public EnumSet<EventType> getEventTypes() {
         return null;
     }
+
 }

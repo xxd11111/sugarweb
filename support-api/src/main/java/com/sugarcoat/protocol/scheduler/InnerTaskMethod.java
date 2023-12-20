@@ -13,9 +13,11 @@ import java.lang.annotation.*;
 @Documented
 public @interface InnerTaskMethod {
 
-    String taskName() default "";
+    String id();
 
     String cron();
+
+    String taskName() default "";
 
     String params() default "";
 

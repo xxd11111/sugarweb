@@ -11,13 +11,13 @@ import lombok.Data;
 @Data
 public class SchedulerTaskDto {
 
+    private String id;
+
     private String taskName;
 
     private String cron;
 
     private String defaultCron;
-
-    private String executeStatus;
 
     private String beanName;
 
@@ -28,5 +28,7 @@ public class SchedulerTaskDto {
     private String params;
 
     private String defaultParams;
+
+    private String status;
 
 }

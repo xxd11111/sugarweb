@@ -14,6 +14,4 @@ public interface SchedulerTask {
 
     String getParams();
 
-    String getExecuteStatus();
-
 }

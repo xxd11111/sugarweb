@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @Entity
-public class SgcSchedulerTask implements SchedulerTask, Serializable {
+public class SgcSchedulerTask implements SchedulerTask {
     @Id
     @UuidGenerator(style = UuidGenerator.Style.RANDOM)
     @Column(length = 40)
@@ -32,8 +32,6 @@ public class SgcSchedulerTask implements SchedulerTask, Serializable {
     private String cron;
 
     private String defaultCron;
-
-    private String executeStatus;
 
     private String status;
 

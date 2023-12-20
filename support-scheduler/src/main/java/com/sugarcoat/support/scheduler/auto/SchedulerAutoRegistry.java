@@ -5,11 +5,11 @@ import com.sugarcoat.protocol.BeanUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.scheduler.InnerTaskBean;
 import com.sugarcoat.protocol.scheduler.InnerTaskMethod;
+import com.sugarcoat.support.orm.BooleanEnum;
 import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
 import com.sugarcoat.support.scheduler.domain.QSgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.support.CronExpression;
 
 import java.lang.reflect.Method;
@@ -104,6 +104,7 @@ public class SchedulerAutoRegistry extends AbstractAutoRegistry<SgcSchedulerTask
                 schedulerTask.setDefaultParams(params);
                 schedulerTask.setCron(cron);
                 schedulerTask.setDefaultCron(cron);
+                schedulerTask.setStatus(BooleanEnum.TRUE.getValue());
                 schedulerTaskMap.put(taskName, schedulerTask);
             }
         }

@@ -2,6 +2,7 @@ package com.sugarcoat.support.scheduler.domain;
 
 import com.sugarcoat.protocol.BeanUtil;
 import com.sugarcoat.protocol.JsonUtil;
+import com.sugarcoat.protocol.exception.FrameworkException;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -21,9 +22,10 @@ public class SchedulerJobBean extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext context) {
-        JobDataMap mergedJobDataMap = context.getMergedJobDataMap();
-        String sgcSchedulerTaskString = (String) mergedJobDataMap.get("1");
-        SgcSchedulerTask schedulerTask = JsonUtil.toObject(sgcSchedulerTaskString, SgcSchedulerTask.class);
+        String id = context.getJobDetail().getKey().getName();
+        SgcSchedulerTaskRepository sgcSchedulerTaskRepository = BeanUtil.getBean(SgcSchedulerTaskRepository.class);
+        SgcSchedulerTask schedulerTask = sgcSchedulerTaskRepository.findById(id)
+                .orElseThrow(() -> new FrameworkException("定时任务异常：未根据id找到指定任务，id:{}", id));
         log.info("定时任务执行开始：{}", schedulerTask.getTaskName());
         try {
             Object taskBean = BeanUtil.getBean(schedulerTask.getBeanName());

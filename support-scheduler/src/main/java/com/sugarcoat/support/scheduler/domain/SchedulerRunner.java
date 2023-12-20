@@ -13,21 +13,14 @@ import org.springframework.boot.ApplicationRunner;
 public class SchedulerRunner implements ApplicationRunner {
 
     private final SchedulerManager schedulerManager;
-    private final SgcSchedulerTaskRepository sgcSchedulerTaskRepository;
 
-    public SchedulerRunner(SchedulerManager schedulerManager, SgcSchedulerTaskRepository sgcSchedulerTaskRepository) {
+    public SchedulerRunner(SchedulerManager schedulerManager) {
         this.schedulerManager = schedulerManager;
-        this.sgcSchedulerTaskRepository = sgcSchedulerTaskRepository;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        schedulerManager.clear();
-        Iterable<SgcSchedulerTask> all = sgcSchedulerTaskRepository.findAll();
-        for (SgcSchedulerTask sgcSchedulerTask : all) {
-            schedulerManager.add(sgcSchedulerTask);
-        }
-        schedulerManager.start();
+        schedulerManager.reset();
     }
 
 }

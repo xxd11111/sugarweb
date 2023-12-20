@@ -12,6 +12,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "sugarcoat.scheduler")
 @ConditionalOnProperty(prefix = "sugarcoat.scheduler", name = "enable", havingValue = "true")
-@Data
 public class SchedulerProperties {
 }

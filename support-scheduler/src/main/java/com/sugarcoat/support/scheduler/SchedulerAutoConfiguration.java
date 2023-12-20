@@ -3,13 +3,13 @@ package com.sugarcoat.support.scheduler;
 import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import com.sugarcoat.support.scheduler.controller.SchedulerController;
 import com.sugarcoat.support.scheduler.domain.SchedulerRunner;
-import com.sugarcoat.support.scheduler.domain.SgcSchedulerManager;
-import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
-import com.sugarcoat.support.scheduler.service.SchedulerService;
+import com.sugarcoat.support.scheduler.domain.SgcQuartzSchedulerManager;
+import com.sugarcoat.support.scheduler.service.SchedulerServiceImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * 定时任务自动注入
@@ -19,18 +19,19 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration(proxyBeanMethods = false)
 @EntityScan
+@EnableJpaRepositories
 @EnableConfigurationProperties(SchedulerProperties.class)
 // @ConditionalOnProperty(prefix = "sugarcoat.scheduler", name = "enable", havingValue = "true")
 public class SchedulerAutoConfiguration {
 
     @Bean
     public SchedulerManager schedulerManager() {
-        return new SgcSchedulerManager();
+        return new SgcQuartzSchedulerManager();
     }
 
     @Bean
-    public SchedulerService schedulerService(SchedulerManager schedulerManager) {
-        return new SchedulerService(schedulerManager);
+    public SchedulerServiceImpl schedulerService(SchedulerManager schedulerManager) {
+        return new SchedulerServiceImpl(schedulerManager);
     }
 
     @Bean
@@ -39,8 +40,8 @@ public class SchedulerAutoConfiguration {
     }
 
     @Bean
-    public SchedulerRunner schedulerRunner(SchedulerManager schedulerManager, SgcSchedulerTaskRepository sgcSchedulerTaskRepository) {
-        return new SchedulerRunner(schedulerManager, sgcSchedulerTaskRepository);
+    public SchedulerRunner schedulerRunner(SchedulerManager schedulerManager) {
+        return new SchedulerRunner(schedulerManager);
     }
 
 }

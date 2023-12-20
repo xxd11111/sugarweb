@@ -1,7 +1,7 @@
 package com.sugarcoat.support.scheduler.controller;
 
 import com.sugarcoat.protocol.common.Result;
-import com.sugarcoat.support.scheduler.service.SchedulerService;
+import com.sugarcoat.support.scheduler.service.SchedulerServiceImpl;
 import com.sugarcoat.support.scheduler.service.SchedulerTaskDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,53 +20,53 @@ import org.springframework.web.bind.annotation.*;
 public class SchedulerController {
 
     @Resource
-    public SchedulerService schedulerService;
+    public SchedulerServiceImpl schedulerServiceImpl;
 
     @GetMapping("findAll")
     @Operation(operationId = "scheduler:findAll", summary = "findAll")
     public Result findAll() {
-        return Result.data(schedulerService.getAll());
+        return Result.data(schedulerServiceImpl.getAll());
     }
 
     @PostMapping("add")
     @Operation(operationId = "scheduler:add", summary = "add")
     public Result add(@RequestBody SchedulerTaskDto dto) {
-        schedulerService.add(dto);
+        schedulerServiceImpl.add(dto);
         return Result.ok();
     }
 
     @PostMapping("update")
     @Operation(operationId = "scheduler:update", summary = "update")
     public Result update(@RequestBody SchedulerTaskDto dto) {
-        schedulerService.update(dto);
+        schedulerServiceImpl.update(dto);
         return Result.ok();
     }
 
-    @PostMapping("delete/{name}")
+    @PostMapping("delete/{id}")
     @Operation(operationId = "scheduler:delete", summary = "delete")
-    public Result delete(@PathVariable String name) {
-        schedulerService.delete(name);
+    public Result delete(@PathVariable String id) {
+        schedulerServiceImpl.delete(id);
         return Result.ok();
     }
 
-    @PostMapping("pause/{name}")
+    @PostMapping("pause/{id}")
     @Operation(operationId = "scheduler:pause", summary = "pause")
-    public Result pause(@PathVariable String name) {
-        schedulerService.pause(name);
+    public Result pause(@PathVariable String id) {
+        schedulerServiceImpl.pause(id);
         return Result.ok();
     }
 
-    @PostMapping("resume/{name}")
+    @PostMapping("resume/{id}")
     @Operation(operationId = "scheduler:resume", summary = "resume")
-    public Result resume(@PathVariable String name) {
-        schedulerService.resume(name);
+    public Result resume(@PathVariable String id) {
+        schedulerServiceImpl.resume(id);
         return Result.ok();
     }
 
-    @PostMapping("run")
+    @PostMapping("run/{id}")
     @Operation(operationId = "scheduler:run", summary = "run")
-    public Result run(@RequestBody SchedulerTaskDto dto) {
-        schedulerService.run(dto);
+    public Result run(@PathVariable String id) {
+        schedulerServiceImpl.run(id);
         return Result.ok();
     }
 

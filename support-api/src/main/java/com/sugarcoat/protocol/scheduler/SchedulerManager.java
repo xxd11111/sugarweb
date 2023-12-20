@@ -14,22 +14,20 @@ public interface SchedulerManager {
 
     void update(SchedulerTask schedulerTask);
 
-    void resume(String name);
+    void resume(String id);
 
-    void pause(String name);
+    void pause(String id);
 
-    void delete(String name);
+    void delete(String id);
 
-    boolean exists(String name);
+    boolean exists(String id);
 
-    void run(SchedulerTask schedulerTask);
+    void run(String id);
 
     List<SchedulerTask> getAll();
 
-    SchedulerTask getOne(String name);
+    SchedulerTask getOne(String id);
 
-    void start();
-
-    void clear();
+    void reset();
 
 }

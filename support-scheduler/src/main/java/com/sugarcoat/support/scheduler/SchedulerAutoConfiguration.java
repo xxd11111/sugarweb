@@ -4,6 +4,7 @@ import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import com.sugarcoat.support.scheduler.controller.SchedulerController;
 import com.sugarcoat.support.scheduler.domain.SchedulerRunner;
 import com.sugarcoat.support.scheduler.domain.SgcQuartzSchedulerManager;
+import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
 import com.sugarcoat.support.scheduler.service.SchedulerServiceImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,8 +31,8 @@ public class SchedulerAutoConfiguration {
     }
 
     @Bean
-    public SchedulerServiceImpl schedulerService(SchedulerManager schedulerManager) {
-        return new SchedulerServiceImpl(schedulerManager);
+    public SchedulerServiceImpl schedulerService(SchedulerManager schedulerManager, SgcSchedulerTaskRepository sgcSchedulerTaskRepository) {
+        return new SchedulerServiceImpl(schedulerManager, sgcSchedulerTaskRepository);
     }
 
     @Bean

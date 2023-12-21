@@ -78,12 +78,12 @@ public class SessionManagerImpl implements SessionManager {
         String allKeyPattern = allKeyPattern();
         RKeys keys = redissonClient.getKeys();
         Iterable<String> keysByPattern = keys.getKeysByPattern(allKeyPattern);
-        List<String> keyResult = new ArrayList<>(pageDto.getSize());
+        List<String> keyResult = new ArrayList<>(pageDto.getPageSize());
         int i = 1;
         for (String key : keysByPattern) {
-            if (pageDto.getStart() >= i && pageDto.getEnd() <= i) {
+            if (pageDto.startIndex() >= i && pageDto.endIndex() <= i) {
                 keyResult.add(key);
-            } else if (pageDto.getEnd() > i) {
+            } else if (pageDto.endIndex() > i) {
                 break;
             }
             i++;
@@ -95,8 +95,8 @@ public class SessionManagerImpl implements SessionManager {
             records.add(sessionInfo);
         }
         PageData<SessionInfo> page = new PageData<>();
-        page.setSize(pageDto.getSize());
-        page.setPage(pageDto.getPage());
+        page.setSize(pageDto.getPageSize());
+        page.setPage(pageDto.getPageNumber());
         page.setContent(records);
         return page;
     }

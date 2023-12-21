@@ -18,19 +18,19 @@ public class PageDto {
     private static final Integer DEFAULT_SIZE = 10;
 
     @Min(value = 1, message = "页码最小值为 1")
-    private Integer page = DEFAULT_PAGE;
+    private Integer pageNumber = DEFAULT_PAGE;
 
     @Min(value = 1, message = "每页条数最小值为 1")
     @Max(value = 100, message = "每页条数最大值为 100")
-    private Integer size = DEFAULT_SIZE;
+    private Integer pageSize = DEFAULT_SIZE;
 
 
-    public int getStart() {
-        return (page - 1) * size + 1;
+    public int startIndex() {
+        return (pageNumber - 1) * pageSize + 1;
     }
 
-    public int getEnd() {
-        return page * size;
+    public int endIndex() {
+        return pageNumber * pageSize;
     }
 
 }

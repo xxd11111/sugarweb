@@ -1,5 +1,6 @@
 package com.sugarcoat.support.scheduler.controller;
 
+import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.support.scheduler.service.SchedulerServiceImpl;
 import com.sugarcoat.support.scheduler.service.SchedulerTaskDto;
@@ -22,49 +23,49 @@ public class SchedulerController {
     @Resource
     public SchedulerServiceImpl schedulerServiceImpl;
 
-    @GetMapping("findAll")
-    @Operation(operationId = "scheduler:findAll", summary = "findAll")
-    public Result findAll() {
-        return Result.data(schedulerServiceImpl.getAll());
+    @GetMapping("page")
+    @Operation(operationId = "scheduler:findAll", summary = "分页查询")
+    public Result page(PageDto pageDto, SchedulerQueryDto queryDto) {
+        return Result.data(schedulerServiceImpl.page(pageDto, queryDto));
     }
 
     @PostMapping("add")
-    @Operation(operationId = "scheduler:add", summary = "add")
+    @Operation(operationId = "scheduler:add", summary = "新增")
     public Result add(@RequestBody SchedulerTaskDto dto) {
         schedulerServiceImpl.add(dto);
         return Result.ok();
     }
 
     @PostMapping("update")
-    @Operation(operationId = "scheduler:update", summary = "update")
+    @Operation(operationId = "scheduler:update", summary = "更新")
     public Result update(@RequestBody SchedulerTaskDto dto) {
         schedulerServiceImpl.update(dto);
         return Result.ok();
     }
 
     @PostMapping("delete/{id}")
-    @Operation(operationId = "scheduler:delete", summary = "delete")
+    @Operation(operationId = "scheduler:delete", summary = "删除")
     public Result delete(@PathVariable String id) {
         schedulerServiceImpl.delete(id);
         return Result.ok();
     }
 
     @PostMapping("pause/{id}")
-    @Operation(operationId = "scheduler:pause", summary = "pause")
+    @Operation(operationId = "scheduler:pause", summary = "停用")
     public Result pause(@PathVariable String id) {
         schedulerServiceImpl.pause(id);
         return Result.ok();
     }
 
     @PostMapping("resume/{id}")
-    @Operation(operationId = "scheduler:resume", summary = "resume")
+    @Operation(operationId = "scheduler:resume", summary = "启用")
     public Result resume(@PathVariable String id) {
         schedulerServiceImpl.resume(id);
         return Result.ok();
     }
 
     @PostMapping("run/{id}")
-    @Operation(operationId = "scheduler:run", summary = "run")
+    @Operation(operationId = "scheduler:run", summary = "执行一次")
     public Result run(@PathVariable String id) {
         schedulerServiceImpl.run(id);
         return Result.ok();

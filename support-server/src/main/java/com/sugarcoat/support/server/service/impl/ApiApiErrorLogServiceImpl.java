@@ -36,7 +36,7 @@ public class ApiApiErrorLogServiceImpl implements ApiErrorLogService {
 	@Override
 	public PageData<SgcApiErrorLog> findPage(PageDto pageDto, ApiErrorLogQueryDto queryDto) {
 		QSgcApiErrorLog apiErrorLog = QSgcApiErrorLog.sgcApiErrorLog;
-		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
+		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
 				.withSort(Sort.Direction.DESC, apiErrorLog.getMetadata().getName());
 		Page<SgcApiErrorLog> page = sgcApiErrorLogRepository.findAll(Expressions.TRUE, pageRequest);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());

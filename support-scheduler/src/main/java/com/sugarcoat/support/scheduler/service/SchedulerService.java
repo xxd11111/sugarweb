@@ -1,5 +1,9 @@
 package com.sugarcoat.support.scheduler.service;
 
+import com.sugarcoat.protocol.common.PageData;
+import com.sugarcoat.protocol.common.PageDto;
+import com.sugarcoat.support.scheduler.controller.SchedulerQueryDto;
+
 import java.util.List;
 
 /**
@@ -22,6 +26,6 @@ public interface SchedulerService {
 
     void run(String id);
 
-    List<SchedulerTaskDto> getAll();
+    PageData<SchedulerTaskDto> page(PageDto pageDto, SchedulerQueryDto queryDto);
 
 }

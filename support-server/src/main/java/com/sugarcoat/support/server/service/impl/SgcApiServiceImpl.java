@@ -45,7 +45,7 @@ public class SgcApiServiceImpl implements SgcApiService {
 	@Override
 	public PageData<SgcApiDto> findPage(PageDto pageDto, SgcApiQueryDto queryDto) {
 		QSgcApi sgcApi = QSgcApi.sgcApi;
-		PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
+		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
 				.withSort(Sort.Direction.DESC, sgcApi.url.getMetadata().getName());
 
 		BooleanExpression expression = ExpressionWrapper.of()

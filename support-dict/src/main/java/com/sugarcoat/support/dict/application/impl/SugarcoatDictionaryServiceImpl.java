@@ -69,7 +69,7 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
     public PageData<DictionaryDto> findPage(PageDto pageDto, DictionaryQueryDto queryDto) {
         QSugarcoatDictionary dictionary = QSugarcoatDictionary.sugarcoatDictionary;
         // 构造分页，按照创建时间降序
-        PageRequest pageRequest = PageRequest.of(pageDto.getPage(), pageDto.getSize())
+        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
                 .withSort(Sort.Direction.DESC, dictionary.dictGroup.getMetadata().getName());
         // 条件查询
         BooleanExpression expression = Expressions.TRUE;

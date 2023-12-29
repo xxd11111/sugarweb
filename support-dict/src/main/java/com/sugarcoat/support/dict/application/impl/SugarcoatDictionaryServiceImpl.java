@@ -74,10 +74,10 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
         // 条件查询
         BooleanExpression expression = Expressions.TRUE;
         if (queryDto.getGroupName() != null && !queryDto.getGroupName().isEmpty()) {
-            expression.and(dictionary.dictName.like(queryDto.getGroupName(), '/'));
+            expression = expression.and(dictionary.dictName.like(queryDto.getGroupName(), '/'));
         }
         if (queryDto.getGroupCode() != null && !queryDto.getGroupCode().isEmpty()) {
-            expression.and(dictionary.dictCode.eq(queryDto.getGroupCode()));
+            expression = expression.and(dictionary.dictCode.eq(queryDto.getGroupCode()));
         }
         Page<DictionaryDto> page = sgcDictionaryRepository.findAll(expression, pageRequest)
                 .map(this::getDictDTO);

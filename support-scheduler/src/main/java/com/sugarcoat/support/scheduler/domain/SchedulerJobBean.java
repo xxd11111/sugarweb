@@ -1,12 +1,14 @@
 package com.sugarcoat.support.scheduler.domain;
 
 import com.sugarcoat.protocol.BeanUtil;
-import com.sugarcoat.protocol.JsonUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
+import com.sugarcoat.protocol.exception.ValidateException;
+import com.sugarcoat.protocol.scheduler.InnerTaskBean;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -29,6 +31,10 @@ public class SchedulerJobBean extends QuartzJobBean {
         log.info("定时任务执行开始：{}", schedulerTask.getTaskName());
         try {
             Object taskBean = BeanUtil.getBean(schedulerTask.getBeanName());
+            Annotation annotation = taskBean.getClass().getAnnotation(InnerTaskBean.class);
+            if (annotation == null) {
+                throw new ValidateException("非定时任务bean禁止启用，{}", schedulerTask);
+            }
             if (schedulerTask.getParamsLength() == 1) {
                 Method method = taskBean.getClass().getDeclaredMethod(schedulerTask.getMethodName(), String.class);
                 String params = schedulerTask.getParams();

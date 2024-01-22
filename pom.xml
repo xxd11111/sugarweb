@@ -20,6 +20,7 @@
         <module>support-framework</module>
         <module>common-application</module>
         <module>uims</module>
+        <module>support-server</module>
     </modules>
 
     <name>${project.artifactId}</name>

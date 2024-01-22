@@ -45,6 +45,11 @@ public class SecurityAutoConfiguration {
     }
 
     @Bean
+    public AuthenticateFilter authenticateFilter(AuthenticateService authenticateService) {
+        return new AuthenticateFilter(authenticateService);
+    }
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticateFilter authenticateFilter) throws Exception {
 
         List<String> ignoreUrls = new ArrayList<>();

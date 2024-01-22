@@ -1,5 +1,3 @@
-com.sugarcoat.support.email.EmailAutoConfiguration
 com.xxd.cache.CacheAutoConfiguration
 com.xxd.orm.OrmAutoConfiguration
 com.xxd.security.SecurityAutoConfiguration
-com.xxd.server.ServerAutoConfiguration

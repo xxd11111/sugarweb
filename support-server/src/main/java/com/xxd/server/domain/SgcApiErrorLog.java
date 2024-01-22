@@ -4,7 +4,6 @@ import com.sugarcoat.protocol.server.ApiErrorLog;
 import lombok.*;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 

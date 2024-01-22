@@ -1,6 +1,7 @@
 package com.sugarcoat.support.parameter.domain;
 
-import com.sugarcoat.support.orm.SgcRepository;
+
+import com.xxd.orm.SgcRepository;
 
 /**
  * 参数仓库

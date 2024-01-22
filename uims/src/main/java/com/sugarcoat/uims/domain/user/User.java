@@ -2,9 +2,9 @@ package com.sugarcoat.uims.domain.user;
 
 import com.google.common.collect.Iterables;
 import com.sugarcoat.protocol.security.UserInfo;
-import com.sugarcoat.support.orm.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.role.Role;
+import com.xxd.orm.BooleanEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

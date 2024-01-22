@@ -27,11 +27,6 @@
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-security</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xxd</groupId>
             <artifactId>support-doc</artifactId>
         </dependency>
 
@@ -46,11 +41,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.xxd</groupId>
-            <artifactId>support-orm</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.sugarcoat</groupId>
             <artifactId>support-oss</artifactId>
         </dependency>
@@ -62,7 +52,7 @@
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-web</artifactId>
+            <artifactId>support-framework</artifactId>
         </dependency>
 
     </dependencies>

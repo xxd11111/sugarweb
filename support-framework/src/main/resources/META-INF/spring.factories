@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.xxd.cache.CacheAutoConfiguration\
+  com.xxd.orm.OrmAutoConfiguration\
+  com.xxd.security.SecurityAutoConfiguration\
+  com.xxd.server.ServerAutoConfiguration

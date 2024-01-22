@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.user;
 
-import com.sugarcoat.support.orm.SgcRepository;
+import com.xxd.orm.SgcRepository;
 
 /**
  * 用户仓库

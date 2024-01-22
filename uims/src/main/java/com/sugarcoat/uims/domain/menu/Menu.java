@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.menu;
 
-import com.sugarcoat.support.orm.BooleanEnum;
+import com.xxd.orm.BooleanEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;

@@ -7,7 +7,7 @@ import com.sugarcoat.protocol.dictionary.DictionaryItem;
 import com.sugarcoat.protocol.dictionary.InnerDictionary;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.parameter.InnerParameter;
-import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
+import com.sugarcoat.protocol.auto.AbstractAutoRegistry;
 import com.sugarcoat.protocol.dictionary.DictionaryManager;
 import com.sugarcoat.support.dict.domain.SugarcoatDictionary;
 

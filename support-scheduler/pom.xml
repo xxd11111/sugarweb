@@ -24,13 +24,13 @@
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-orm</artifactId>
+            <artifactId>support-doc</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-doc</artifactId>
-            <version>1.0.0</version>
+            <artifactId>support-framework</artifactId>
         </dependency>
     </dependencies>
 

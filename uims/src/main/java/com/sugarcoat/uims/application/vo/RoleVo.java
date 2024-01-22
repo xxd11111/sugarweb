@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.vo;
 
-import com.sugarcoat.support.orm.BooleanEnum;
+import com.xxd.orm.BooleanEnum;
 import lombok.Data;
 
 import java.util.Collection;

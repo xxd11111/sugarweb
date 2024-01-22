@@ -5,11 +5,11 @@ import com.sugarcoat.protocol.BeanUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.scheduler.InnerTaskBean;
 import com.sugarcoat.protocol.scheduler.InnerTaskMethod;
-import com.sugarcoat.support.orm.BooleanEnum;
-import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
+import com.sugarcoat.protocol.auto.AbstractAutoRegistry;
 import com.sugarcoat.support.scheduler.domain.QSgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
+import com.xxd.orm.BooleanEnum;
 import org.springframework.scheduling.support.CronExpression;
 
 import java.lang.reflect.Method;

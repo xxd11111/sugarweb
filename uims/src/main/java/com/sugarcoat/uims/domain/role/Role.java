@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.domain.role;
 
-import com.sugarcoat.support.orm.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.Menu;
+import com.xxd.orm.BooleanEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
 

@@ -1,6 +1,7 @@
 package com.sugarcoat.support.scheduler.domain;
 
-import com.sugarcoat.support.orm.SgcRepository;
+
+import com.xxd.orm.SgcRepository;
 
 /**
  * SgcSchedulerTaskRepository

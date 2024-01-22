@@ -1,6 +1,6 @@
 package com.sugarcoat.support.oss.domain;
 
-import com.sugarcoat.support.orm.SgcRepository;
+import com.xxd.orm.SgcRepository;
 
 /**
  * 文件信息仓库

@@ -14,22 +14,17 @@
     <dependencies>
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-orm</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xxd</groupId>
             <artifactId>support-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-cache</artifactId>
+            <artifactId>support-framework</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-web</artifactId>
+            <artifactId>support-cache</artifactId>
         </dependency>
 
     </dependencies>

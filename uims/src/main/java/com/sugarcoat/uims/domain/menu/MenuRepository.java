@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.domain.menu;
 
-import com.sugarcoat.support.orm.SgcRepository;
+import com.xxd.orm.SgcRepository;
 
 /**
  * 菜单仓库

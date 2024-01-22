@@ -18,6 +18,7 @@
             <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
             <version>2.2.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-api</artifactId>

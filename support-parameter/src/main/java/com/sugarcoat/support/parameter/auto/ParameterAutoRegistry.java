@@ -8,7 +8,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.parameter.InnerParameter;
 import com.sugarcoat.protocol.parameter.ParameterItem;
-import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
+import com.sugarcoat.protocol.auto.AbstractAutoRegistry;
 import com.sugarcoat.support.parameter.ParamProperties;
 import com.sugarcoat.support.parameter.domain.QSugarcoatParameter;
 import com.sugarcoat.support.parameter.domain.SgcParamRepository;

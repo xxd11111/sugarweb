@@ -1,8 +1,8 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.support.orm.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.MenuType;
 import com.sugarcoat.uims.domain.menu.MenuUrlType;
+import com.xxd.orm.BooleanEnum;
 import lombok.Data;
 
 import java.util.Set;

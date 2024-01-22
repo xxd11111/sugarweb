@@ -1,6 +1,6 @@
 package com.sugarcoat.uims.application.dto;
 
-import com.sugarcoat.support.orm.BooleanEnum;
+import com.xxd.orm.BooleanEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;

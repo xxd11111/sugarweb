@@ -5,11 +5,11 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.scheduler.SchedulerManager;
-import com.sugarcoat.support.orm.ExpressionWrapper;
-import com.sugarcoat.support.orm.PageDataConvert;
 import com.sugarcoat.support.scheduler.domain.QSgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
+import com.xxd.orm.ExpressionWrapper;
+import com.xxd.orm.PageDataConvert;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 

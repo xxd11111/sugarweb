@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-orm</artifactId>
+            <artifactId>support-framework</artifactId>
             <version>1.0.0</version>
         </dependency>
 
@@ -31,8 +31,9 @@
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-web</artifactId>
+            <artifactId>support-framework</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

@@ -10,7 +10,7 @@ import com.sugarcoat.uims.application.vo.LoginVo;
 import com.sugarcoat.uims.domain.user.QUser;
 import com.sugarcoat.uims.domain.user.User;
 import com.sugarcoat.uims.domain.user.UserRepository;
-import com.sugarcoat.security.TokenRepository;
+import com.xxd.security.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

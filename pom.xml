@@ -11,17 +11,15 @@
     <modules>
         <module>support-cache</module>
         <module>support-dict</module>
-        <module>support-web</module>
-        <module>support-orm</module>
         <module>support-doc</module>
         <module>support-parameter</module>
         <module>support-api</module>
         <module>support-oss</module>
         <module>support-email</module>
         <module>support-scheduler</module>
-        <module>support-security</module>
-        <module>uims</module>
+        <module>support-framework</module>
         <module>common-application</module>
+        <module>uims</module>
     </modules>
 
     <name>${project.artifactId}</name>
@@ -87,7 +85,7 @@
 
             <dependency>
                 <groupId>com.xxd</groupId>
-                <artifactId>support-orm</artifactId>
+                <artifactId>support-framework</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -106,18 +104,6 @@
             <dependency>
                 <groupId>com.xxd</groupId>
                 <artifactId>support-scheduler</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xxd</groupId>
-                <artifactId>support-security</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.xxd</groupId>
-                <artifactId>support-web</artifactId>
                 <version>1.0.0</version>
             </dependency>
 

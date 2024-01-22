@@ -1,6 +1,7 @@
 package com.sugarcoat.uims.domain.security;
 
-import com.sugarcoat.support.orm.SgcRepository;
+
+import com.xxd.orm.SgcRepository;
 
 /**
  * SecurityLogRepository

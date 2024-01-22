@@ -1,3 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarcoat.support.cache.CacheAutoConfiguration\
-  com.sugarcoat.support.cache.RedisAutoConfiguration
+  com.xxd.cache.CacheAutoConfiguration\
+  com.xxd.cache.RedisAutoConfiguration

@@ -3,7 +3,7 @@ package com.sugarcoat.support.scheduler.domain;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import com.sugarcoat.protocol.scheduler.SchedulerTask;
-import com.sugarcoat.support.orm.BooleanEnum;
+import com.xxd.orm.BooleanEnum;
 import jakarta.annotation.Resource;
 import org.quartz.*;
 

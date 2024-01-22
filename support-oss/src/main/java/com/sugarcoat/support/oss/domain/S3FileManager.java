@@ -6,6 +6,7 @@ import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.exception.ServerException;
 import com.sugarcoat.protocol.oss.FileInfo;
 import com.sugarcoat.protocol.oss.FileManager;
+import com.sugarcoat.protocol.oss.UploadInfo;
 import com.sugarcoat.support.oss.OssProperties;
 
 import java.io.InputStream;
@@ -44,13 +45,18 @@ public class S3FileManager implements FileManager {
     }
 
     @Override
-    public void upload(String path, InputStream inputStream, String contentType) {
+    public UploadInfo upload(String path, InputStream inputStream, String contentType) {
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, path, inputStream, metadata);
             putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
-            client.putObject(putObjectRequest);
+            PutObjectResult putObjectResult = client.putObject(putObjectRequest);
+            //这个s3的api非常优秀
+            long contentLength = putObjectResult.getMetadata().getContentLength();
+            UploadInfo uploadInfo = new UploadInfo();
+            uploadInfo.setFileSize(contentLength);
+            return uploadInfo;
         } catch (Exception e) {
             throw new ServerException("上传文件失败，请检查配置信息:[" + e.getMessage() + "]");
         }

@@ -1,4 +1,4 @@
-package com.sugarcoat.support.oss.controller;
+package com.sugarcoat.support.oss;
 
 import com.sugarcoat.support.oss.application.FileQueryDto;
 import com.sugarcoat.support.oss.application.FileService;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -36,8 +37,12 @@ public class FileController {
 
 	@PostMapping("upload")
 	public Result<SgcFileInfo> upload(MultipartFile multipartFile, String fileGroup) {
-		return Result.data(fileService.upload(fileGroup, multipartFile));
-	}
+        try {
+            return Result.data(fileService.upload(fileGroup, multipartFile.getInputStream(), multipartFile.getContentType(), multipartFile.getOriginalFilename()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	@PostMapping("batchRemove")
 	@CreatedDate

@@ -1,6 +1,8 @@
 package com.sugarcoat.security;
 
+import com.sugarcoat.protocol.security.AuthenticateService;
 import com.sugarcoat.protocol.security.UserHolder;
+import com.sugarcoat.support.server.AuthenticateFilter;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -42,11 +43,6 @@ public class SecurityConfiguration {
     @Bean
     public TokenRepository tokenRepository(RedissonClient redissonClient) {
         return new TokenRepositoryImpl(redissonClient);
-    }
-
-    @Bean
-    public AuthenticateFilter authenticateFilter(AuthenticateService authenticateService) {
-        return new AuthenticateFilter(authenticateService);
     }
 
     @Bean

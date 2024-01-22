@@ -14,7 +14,7 @@ public interface FileInfo {
 
     String getKey();
 
-    String getFileName();
+    String getFilename();
 
     String getFileType();
 

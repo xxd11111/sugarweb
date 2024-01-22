@@ -1,5 +1,6 @@
-package com.sugarcoat.support.orm.tenant;
+package com.sugarcoat.support.server;
 
+import com.sugarcoat.support.orm.tenant.TenantContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;

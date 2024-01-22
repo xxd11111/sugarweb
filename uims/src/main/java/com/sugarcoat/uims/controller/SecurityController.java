@@ -1,7 +1,7 @@
 package com.sugarcoat.uims.controller;
 
 import com.sugarcoat.protocol.common.Result;
-import com.sugarcoat.security.TokenInfo;
+import com.sugarcoat.protocol.security.TokenInfo;
 import com.sugarcoat.uims.application.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

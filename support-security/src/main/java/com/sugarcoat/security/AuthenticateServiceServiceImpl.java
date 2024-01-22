@@ -2,6 +2,8 @@ package com.sugarcoat.security;
 
 import com.sugarcoat.protocol.common.HttpCode;
 import com.sugarcoat.protocol.exception.SecurityException;
+import com.sugarcoat.protocol.security.AuthenticateService;
+import com.sugarcoat.protocol.security.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

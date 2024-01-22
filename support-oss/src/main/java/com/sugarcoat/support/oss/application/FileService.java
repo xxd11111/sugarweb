@@ -2,8 +2,8 @@ package com.sugarcoat.support.oss.application;
 
 import com.sugarcoat.support.oss.domain.SgcFileInfo;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.Set;
 
 /**
@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public interface FileService {
 
-	SgcFileInfo upload(String fileGroup, MultipartFile multipartFile);
+	SgcFileInfo upload(String fileGroup, InputStream inputStream, String contentType, String filename);
 
 	void download(HttpServletResponse response, String fileGroup, String fileId);
 

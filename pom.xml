@@ -11,7 +11,7 @@
     <modules>
         <module>support-cache</module>
         <module>support-dict</module>
-        <module>support-server</module>
+        <module>support-web</module>
         <module>support-orm</module>
         <module>support-doc</module>
         <module>support-parameter</module>
@@ -21,14 +21,16 @@
         <module>support-scheduler</module>
         <module>support-security</module>
         <module>uims</module>
+        <module>common-application</module>
     </modules>
 
     <name>${project.artifactId}</name>
     <description>sugarcoat项目脚手架</description>
 
     <properties>
-        <encoding>UTF-8</encoding>
-        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring-boot.version>3.2.0</spring-boot.version>
         <configuration.version>1.10</configuration.version>
         <spring.checkstyle.plugin>0.0.34</spring.checkstyle.plugin>
@@ -115,7 +117,7 @@
 
             <dependency>
                 <groupId>com.xxd</groupId>
-                <artifactId>support-server</artifactId>
+                <artifactId>support-web</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -143,23 +145,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
             <version>${lombok.version}</version>
-        </dependency>
-
-        <!-- web应用 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
         <!--        <dependency>-->
@@ -211,9 +196,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <encoding>${encoding}</encoding>
+<!--                     <source>${java.version}</source> -->
+<!--                     <target>${java.version}</target> -->
+<!--                     <encoding>${encoding}</encoding> -->
                     <compilerArgs>
                         <arg>-parameters</arg>
                     </compilerArgs>
@@ -285,24 +270,22 @@
     <repositories>
         <repository>
             <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <name>aliyun-repository</name>
+            <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
-        </repository>
-
-        <repository>
-            <id>projectlombok.org</id>
-            <url>https://projectlombok.org/edge-releases</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>public</id>
-            <name>aliyun nexus</name>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <name>aliyun-repository</name>
+            <url>https://maven.aliyun.com/repository/public</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

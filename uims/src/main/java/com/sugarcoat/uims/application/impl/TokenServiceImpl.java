@@ -1,11 +1,9 @@
 package com.sugarcoat.uims.application.impl;
 
-import com.sugarcoat.protocol.common.HttpCode;
 import com.sugarcoat.protocol.common.PageData;
-import com.sugarcoat.protocol.exception.SecurityException;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.protocol.security.SecurityHelper;
-import com.sugarcoat.security.TokenInfo;
+import com.sugarcoat.protocol.security.TokenInfo;
 import com.sugarcoat.uims.application.TokenService;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
 import com.sugarcoat.uims.application.vo.LoginVo;

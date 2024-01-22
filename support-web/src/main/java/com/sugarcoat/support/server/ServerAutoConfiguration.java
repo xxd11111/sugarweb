@@ -1,5 +1,6 @@
 package com.sugarcoat.support.server;
 
+import com.sugarcoat.protocol.security.AuthenticateService;
 import com.sugarcoat.protocol.server.ApiManager;
 import com.sugarcoat.support.server.auto.ApiRegister;
 import com.sugarcoat.support.server.controller.ApiController;
@@ -14,6 +15,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * 服务自动配置
@@ -26,7 +29,13 @@ import org.springframework.web.context.WebApplicationContext;
 @EnableJpaRepositories
 @EnableConfigurationProperties(ServerProperties.class)
 @ConditionalOnProperty(prefix = "sugarcoat.server", name = "enable", havingValue = "true")
-public class ServerAutoConfiguration {
+public class ServerAutoConfiguration implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new TenantInterceptor());
+        registry.addInterceptor(new DataPermissionInterceptor());
+    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -78,4 +87,8 @@ public class ServerAutoConfiguration {
         return new ServerRunner(apiRegister);
     }
 
+    @Bean
+    public AuthenticateFilter authenticateFilter(AuthenticateService authenticateService) {
+        return new AuthenticateFilter(authenticateService);
+    }
 }

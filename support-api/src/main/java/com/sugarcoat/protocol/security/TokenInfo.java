@@ -1,4 +1,4 @@
-package com.sugarcoat.security;
+package com.sugarcoat.protocol.security;
 
 import lombok.Data;
 

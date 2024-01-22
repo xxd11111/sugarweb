@@ -1,6 +1,6 @@
 package com.sugarcoat.support.server.domain;
 
-import com.sugarcoat.protocol.ServletUtil;
+import com.sugarcoat.support.server.ServletUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.server.ApiInfo;
 import com.sugarcoat.protocol.server.ApiManager;

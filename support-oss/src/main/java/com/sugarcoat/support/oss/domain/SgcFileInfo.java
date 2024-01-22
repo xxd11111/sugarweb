@@ -38,7 +38,7 @@ public class SgcFileInfo implements FileInfo {
 	 * 文件名
 	 */
 	@Size(max = 50)
-	private String fileName;
+	private String filename;
 
 	/**
 	 * 文件类型

@@ -1,4 +1,4 @@
-package com.sugarcoat.protocol;
+package com.sugarcoat.support.server;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestAttributes;

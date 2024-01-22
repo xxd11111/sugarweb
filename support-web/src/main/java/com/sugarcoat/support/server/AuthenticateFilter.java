@@ -1,6 +1,7 @@
-package com.sugarcoat.security;
+package com.sugarcoat.support.server;
 
 import com.google.common.base.Strings;
+import com.sugarcoat.protocol.security.AuthenticateService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

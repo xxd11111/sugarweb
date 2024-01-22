@@ -49,7 +49,7 @@ public class EmailClientImpl implements EmailClient {
             if (!Iterables.isEmpty(attachment)) {
                 for (String id : attachment) {
                     FileInfo fileObject = fileManager.getFileObject(id);
-                    String filename = fileObject.getFileName();
+                    String filename = fileObject.getFilename();
                     InputStream content = fileManager.getContent(id);
                     messageHelper.addAttachment(filename, new InputStreamResource(content));
                 }

@@ -1,8 +1,7 @@
 package com.sugarcoat.uims.application;
 
 import com.sugarcoat.protocol.common.PageData;
-import com.sugarcoat.security.AuthenticateService;
-import com.sugarcoat.security.TokenInfo;
+import com.sugarcoat.protocol.security.TokenInfo;
 import com.sugarcoat.uims.application.dto.PasswordLoginDto;
 import com.sugarcoat.uims.application.vo.LoginVo;
 

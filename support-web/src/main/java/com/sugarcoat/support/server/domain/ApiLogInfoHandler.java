@@ -1,8 +1,8 @@
 package com.sugarcoat.support.server.domain;
 
 import com.google.common.base.Strings;
-import com.sugarcoat.protocol.JsonUtil;
-import com.sugarcoat.protocol.ServletUtil;
+import com.sugarcoat.support.server.JsonUtil;
+import com.sugarcoat.support.server.ServletUtil;
 import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.server.ApiInfo;

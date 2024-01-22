@@ -1,5 +1,6 @@
 package com.sugarcoat.security;
 
+import com.sugarcoat.protocol.security.TokenInfo;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;

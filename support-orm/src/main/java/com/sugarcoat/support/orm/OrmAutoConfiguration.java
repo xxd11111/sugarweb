@@ -2,13 +2,11 @@ package com.sugarcoat.support.orm;
 
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import com.google.common.base.Objects;
-import com.google.common.base.Strings;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sugarcoat.support.orm.audit.SgcAuditorAware;
 import com.sugarcoat.support.orm.datapermission.*;
 import com.sugarcoat.support.orm.tenant.SgcTenantIdProcessor;
 import com.sugarcoat.support.orm.tenant.SgcTenantIdResolver;
-import com.sugarcoat.support.orm.tenant.TenantInterceptor;
 import jakarta.persistence.EntityManager;
 import org.hibernate.engine.spi.LoadQueryInfluencers;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -25,8 +23,6 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.function.Consumer;
 
@@ -39,7 +35,7 @@ import java.util.function.Consumer;
 @EnableJpaRepositories
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @Configuration
-public class OrmAutoConfiguration implements WebMvcConfigurer, BeanPostProcessor {
+public class OrmAutoConfiguration implements BeanPostProcessor {
 
     @Bean
     public AuditorAware<String> auditorAware() {
@@ -62,12 +58,6 @@ public class OrmAutoConfiguration implements WebMvcConfigurer, BeanPostProcessor
         DsProcessor sgcTenantIdProcessor = new SgcTenantIdProcessor();
         dsProcessor.setNextProcessor(sgcTenantIdProcessor);
         return dsProcessor;
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new TenantInterceptor());
-        registry.addInterceptor(new DataPermissionInterceptor());
     }
 
     @Bean

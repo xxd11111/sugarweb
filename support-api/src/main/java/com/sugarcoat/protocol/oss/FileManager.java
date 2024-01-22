@@ -13,7 +13,7 @@ public interface FileManager {
 
 	void createBucket();
 
-	void upload(String path, InputStream inputStream, String contentType);
+	UploadInfo upload(String path, InputStream inputStream, String contentType);
 
 	InputStream getContent(String key);
 

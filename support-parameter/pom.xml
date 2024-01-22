@@ -26,6 +26,11 @@
             <groupId>com.xxd</groupId>
             <artifactId>support-cache</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-web</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

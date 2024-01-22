@@ -1,5 +1,7 @@
 package com.sugarcoat.security;
 
+import com.sugarcoat.protocol.security.TokenInfo;
+
 /**
  * 会话管理
  *

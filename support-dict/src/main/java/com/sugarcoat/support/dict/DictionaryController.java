@@ -1,4 +1,4 @@
-package com.sugarcoat.support.dict.controller;
+package com.sugarcoat.support.dict;
 
 import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.dto.DictionaryDto;

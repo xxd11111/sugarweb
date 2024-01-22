@@ -3,12 +3,12 @@ package com.sugarcoat.support.oss.application;
 import com.sugarcoat.protocol.exception.ServerException;
 import com.sugarcoat.protocol.oss.BizFileManager;
 import com.sugarcoat.protocol.oss.FileManager;
+import com.sugarcoat.protocol.oss.UploadInfo;
 import com.sugarcoat.support.oss.domain.SgcFileInfo;
 import com.sugarcoat.support.oss.domain.SgcFileInfoRepository;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,22 +31,17 @@ public class FileServiceImpl implements FileService {
     private final SgcFileInfoRepository fileRepository;
 
     @Override
-    public SgcFileInfo upload(String fileGroup, MultipartFile multipartFile) {
+    public SgcFileInfo upload(String fileGroup, InputStream inputStream, String contentType, String filename) {
         String key = "/" + fileGroup + "/" + UUID.randomUUID();
-        try {
-            fileManager.upload(key, multipartFile.getInputStream(), multipartFile.getContentType());
-            SgcFileInfo fileInfo = new SgcFileInfo();
-            String originalFilename = multipartFile.getOriginalFilename();
-            fileInfo.setFileGroup(fileGroup);
-            fileInfo.setFileName(originalFilename);
-            fileInfo.setKey(key);
-            fileInfo.setFileSize(multipartFile.getSize());
-            fileInfo.setFileType(getFileType(originalFilename));
-            fileRepository.save(fileInfo);
-            return fileInfo;
-        } catch (IOException e) {
-            throw new ServerException("文件上传失败", e);
-        }
+        UploadInfo upload = fileManager.upload(key, inputStream, contentType);
+        SgcFileInfo fileInfo = new SgcFileInfo();
+        fileInfo.setFileGroup(fileGroup);
+        fileInfo.setFilename(filename);
+        fileInfo.setKey(key);
+        fileInfo.setFileSize(upload.getFileSize());
+        fileInfo.setFileType(getFileType(filename));
+        fileRepository.save(fileInfo);
+        return fileInfo;
     }
 
     //只判断文件名，不识别文件magic值
@@ -68,7 +63,7 @@ public class FileServiceImpl implements FileService {
              InputStream inputStream = fileManager.getContent(fileInfo.getKey())) {
             long fileSize = fileInfo.getFileSize();
             response.setContentLengthLong(fileSize);
-            response.setHeader("Content-Disposition", "attachment;filename=" + fileInfo.getFileName());
+            response.setHeader("Content-Disposition", "attachment;filename=" + fileInfo.getFilename());
             response.setContentType(fileInfo.getContentType());
 
             byte[] bytes = new byte[1024];

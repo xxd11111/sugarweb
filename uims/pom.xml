@@ -62,7 +62,7 @@
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-server</artifactId>
+            <artifactId>support-web</artifactId>
         </dependency>
 
     </dependencies>

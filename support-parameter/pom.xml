@@ -19,11 +19,6 @@
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-cache</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xxd</groupId>
             <artifactId>support-framework</artifactId>
         </dependency>
     </dependencies>

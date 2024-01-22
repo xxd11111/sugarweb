@@ -20,18 +20,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(IdempotentException.class)
-    public Result<?> idempotentException(Throwable ex) {
-        log.error("[IdempotentException]", ex);
-        return Result.error(ex.getMessage());
-    }
-
-    @ExceptionHandler(RateLimitException.class)
-    public Result<?> rateLimitException(Throwable ex) {
-        log.error("[RateLimitException]", ex);
-        return Result.error(ex.getMessage());
-    }
-
     @ExceptionHandler(FrameworkException.class)
     public Result<?> frameworkException(Throwable ex) {
         log.error("[FrameworkException]", ex);

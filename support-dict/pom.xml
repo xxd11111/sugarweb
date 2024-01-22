@@ -22,10 +22,5 @@
             <artifactId>support-framework</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.xxd</groupId>
-            <artifactId>support-cache</artifactId>
-        </dependency>
-
     </dependencies>
 </project>

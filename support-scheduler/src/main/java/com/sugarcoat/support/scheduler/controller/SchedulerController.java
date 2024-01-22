@@ -2,9 +2,9 @@ package com.sugarcoat.support.scheduler.controller;
 
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.common.Result;
-import com.sugarcoat.support.scheduler.service.SchedulerQueryDto;
-import com.sugarcoat.support.scheduler.service.SchedulerServiceImpl;
-import com.sugarcoat.support.scheduler.service.SchedulerTaskDto;
+import com.sugarcoat.support.scheduler.application.SchedulerQueryDto;
+import com.sugarcoat.support.scheduler.application.SchedulerServiceImpl;
+import com.sugarcoat.support.scheduler.application.SchedulerTaskDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;

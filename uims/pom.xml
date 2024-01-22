@@ -17,11 +17,6 @@
 
         <dependency>
             <groupId>com.xxd</groupId>
-            <artifactId>support-cache</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.xxd</groupId>
             <artifactId>support-dict</artifactId>
         </dependency>
 

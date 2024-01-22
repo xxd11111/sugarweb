@@ -5,7 +5,7 @@ import com.sugarcoat.support.scheduler.controller.SchedulerController;
 import com.sugarcoat.support.scheduler.domain.SchedulerRunner;
 import com.sugarcoat.support.scheduler.domain.SgcQuartzSchedulerManager;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
-import com.sugarcoat.support.scheduler.service.SchedulerServiceImpl;
+import com.sugarcoat.support.scheduler.application.SchedulerServiceImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

@@ -24,10 +24,8 @@ public class EnumValidator implements ConstraintValidator<EnumValidate, String> 
     public void initialize(EnumValidate annotation) {
         this.fieldName = annotation.fieldName();
         EnumValue<?>[] values = annotation.value().getEnumConstants();
-        if (values.length > 0) {
-            for (EnumValue<?> value : values) {
-                enumCodes.add(value.getValue());
-            }
+        for (EnumValue<?> value : values) {
+            enumCodes.add(value.getValue());
         }
     }
 

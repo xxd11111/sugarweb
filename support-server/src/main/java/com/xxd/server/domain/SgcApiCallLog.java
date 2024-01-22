@@ -1,6 +1,5 @@
 package com.xxd.server.domain;
 
-import com.sugarcoat.protocol.server.ApiCallLog;
 import lombok.*;
 
 import jakarta.persistence.Entity;
@@ -18,7 +17,7 @@ import java.time.LocalDateTime;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class SgcApiCallLog implements ApiCallLog {
+public class SgcApiCallLog {
 
 	/**
 	 * 日志 id

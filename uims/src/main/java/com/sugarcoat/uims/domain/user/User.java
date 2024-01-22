@@ -1,6 +1,7 @@
 package com.sugarcoat.uims.domain.user;
 
-import cn.hutool.core.collection.CollUtil;
+import com.google.common.collect.Iterables;
+import com.sugarcoat.protocol.security.UserInfo;
 import com.sugarcoat.support.orm.BooleanEnum;
 import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.role.Role;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class User {
+public class User implements UserInfo {
 
     @Id
     private String id;
@@ -57,7 +58,7 @@ public class User {
     private BooleanEnum enable;
 
     public Set<String> listRoles() {
-        if (CollUtil.isEmpty(roles)) {
+        if (Iterables.isEmpty(roles)) {
             return new HashSet<>();
         }
         return roles.stream()

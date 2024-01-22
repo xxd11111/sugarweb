@@ -1,13 +1,14 @@
 package com.sugarcoat.support.orm.datapermission;
 
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 import lombok.Data;
 
 import java.util.Collection;
 import java.util.Map;
 
 /**
- * TODO
+ * 数据权限信息
  *
  * @author 许向东
  * @date 2023/11/17
@@ -23,13 +24,13 @@ public class DataPermissionInfo {
 
     public String getStrategy(String key) {
         String str = strategyMap.get(key);
-        return StrUtil.isEmpty(str) ? strategy : str;
+        return Strings.isNullOrEmpty(str) ? strategy : str;
     }
 
     public Object getValue(String strategy) {
-        if (StrUtil.equals(strategy, DataPermissionStrategy.currentAndSubOrg.getValue())) {
+        if (Objects.equal(strategy, DataPermissionStrategy.currentAndSubOrg.getValue())) {
             return allowOrgIds;
-        } else if (StrUtil.equals(strategy, DataPermissionStrategy.currentOrg.getValue())) {
+        } else if (Objects.equal(strategy, DataPermissionStrategy.currentOrg.getValue())) {
             return orgId;
         } else {
             return orgId;

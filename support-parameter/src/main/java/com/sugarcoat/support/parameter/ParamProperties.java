@@ -26,11 +26,6 @@ public class ParamProperties {
     private String scanPackage;
 
     /**
-     * 是否启用缓存 默认false
-     */
-    private boolean enableCache = false;
-
-    /**
      * 扫描路径，扫描注解 @InnerParamScan
      */
     private String cachePrefix = "sugarcoat:param:";

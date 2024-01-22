@@ -1,15 +1,15 @@
 package com.sugarcoat.support.server.domain;
 
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import com.sugarcoat.protocol.JsonUtil;
 import com.sugarcoat.protocol.ServletUtil;
 import com.sugarcoat.protocol.common.Result;
 import com.sugarcoat.protocol.exception.FrameworkException;
-import com.sugarcoat.protocol.security.SecurityHelper;
-import com.sugarcoat.protocol.security.UserInfo;
 import com.sugarcoat.protocol.server.ApiInfo;
 import com.sugarcoat.protocol.server.ApiLog;
 import com.sugarcoat.protocol.server.ApiManager;
+import com.sugarcoat.protocol.security.SecurityHelper;
+import com.sugarcoat.protocol.security.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -127,7 +127,7 @@ public record ApiLogInfoHandler(SgcApiCallLogRepository apiCallLogRepository,
         //异常名
         apiErrorLog.setExceptionName(ex.getClass().getName());
         //异常信息
-        String exceptionMessage = StrUtil.format("{}: {}", ex.getClass().getSimpleName(), ex.getMessage());
+        String exceptionMessage = Strings.lenientFormat("%s: %s", ex.getClass().getSimpleName(), ex.getMessage());
         apiErrorLog.setExceptionMessage(exceptionMessage);
         //异常根信息
         apiErrorLog.setExceptionRootCauseMessage(getRootCauseMessage(ex));
@@ -149,7 +149,7 @@ public record ApiLogInfoHandler(SgcApiCallLogRepository apiCallLogRepository,
             list.add(ex);
         }
         Throwable rootEx = list.size() < 1 ? null : (Throwable) list.get(list.size() - 1);
-        return null == rootEx ? "null" : StrUtil.format("{}: {}", rootEx.getClass().getSimpleName(), rootEx.getMessage());
+        return null == rootEx ? "null" : Strings.lenientFormat("%s: %s", rootEx.getClass().getSimpleName(), rootEx.getMessage());
     }
 
     private String getExceptionStackTrace(Throwable ex) {

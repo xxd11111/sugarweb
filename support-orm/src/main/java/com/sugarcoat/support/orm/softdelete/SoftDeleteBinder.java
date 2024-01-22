@@ -1,6 +1,6 @@
 package com.sugarcoat.support.orm.softdelete;
 
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import org.hibernate.MappingException;
 import org.hibernate.binder.AttributeBinder;
 import org.hibernate.boot.model.CustomSql;
@@ -19,7 +19,7 @@ public class SoftDeleteBinder implements AttributeBinder<SoftDelete> {
     public SoftDeleteBinder() {
         this.deleteValue = "1";
         this.unDeleteValue = "0";
-        this.sqlDeleteTemplate = "UPDATE {} SET {} WHERE {} = ? ";
+        this.sqlDeleteTemplate = "UPDATE %s SET %s WHERE %s = ? ";
     }
 
     private final String sqlDeleteTemplate;
@@ -37,7 +37,7 @@ public class SoftDeleteBinder implements AttributeBinder<SoftDelete> {
         String setSql = columnName + " = " + deleteValue;
         String tableName = persistentClass.getTable().getName();
         String idColumnName = persistentClass.getIdentifierProperty().getName();
-        String deleteSql = StrUtil.format(sqlDeleteTemplate, tableName, setSql, idColumnName);
+        String deleteSql = Strings.lenientFormat(sqlDeleteTemplate, tableName, setSql, idColumnName);
 
         persistentClass.setCustomSqlDelete(new CustomSql(
                 deleteSql,
@@ -48,7 +48,7 @@ public class SoftDeleteBinder implements AttributeBinder<SoftDelete> {
         String selectWhere = columnName + " = '" + unDeleteValue + "'";
         if (persistentClass instanceof RootClass rootClass) {
             String where = rootClass.getWhere();
-            if (StrUtil.isEmpty(where)) {
+            if (Strings.isNullOrEmpty(where)) {
                 rootClass.setWhere(selectWhere);
             } else {
                 rootClass.setWhere(where + " and " + selectWhere);

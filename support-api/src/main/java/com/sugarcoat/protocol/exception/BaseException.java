@@ -1,6 +1,6 @@
 package com.sugarcoat.protocol.exception;
 
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import com.sugarcoat.protocol.common.HttpCode;
 
 /**
@@ -32,7 +32,7 @@ public class BaseException extends RuntimeException{
     }
 
     public BaseException(String message, Object... objects) {
-        this.message = StrUtil.format(message, objects);
+        this.message = Strings.lenientFormat(message, objects);
     }
 
     public BaseException(HttpCode httpCode) {

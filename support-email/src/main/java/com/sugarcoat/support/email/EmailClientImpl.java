@@ -1,16 +1,19 @@
 package com.sugarcoat.support.email;
 
-import cn.hutool.core.collection.CollUtil;
+import com.google.common.collect.Iterables;
 import com.sugarcoat.protocol.email.EmailClient;
-import com.sugarcoat.protocol.email.EmailInfo;
+import com.sugarcoat.protocol.email.Email;
+import com.sugarcoat.protocol.oss.FileInfo;
+import com.sugarcoat.protocol.oss.FileManager;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -26,38 +29,40 @@ public class EmailClientImpl implements EmailClient {
 
     private final JavaMailSender mailSender;
 
+    private final FileManager fileManager;
+
     @Override
-    public void sendEmail(EmailInfo emailInfo) {
+    public void sendEmail(Email email) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
             // 收件人
-            messageHelper.setTo(emailInfo.getTo());
+            messageHelper.setTo(email.getTo());
             // 发件人
-            messageHelper.setFrom(emailInfo.getFrom());
+            messageHelper.setFrom(email.getFrom());
             // 标题
-            messageHelper.setSubject(emailInfo.getSubject());
+            messageHelper.setSubject(email.getSubject());
             // 发送html
-            messageHelper.setText(emailInfo.getText(), true);
+            messageHelper.setText(email.getText(), true);
             // 附件
-            List<String> attachment = emailInfo.getAttachment();
-            if (CollUtil.isNotEmpty(attachment)) {
-                //todo 等oss
+            List<String> attachment = email.getAttachment();
+            if (!Iterables.isEmpty(attachment)) {
                 for (String id : attachment) {
-                    String filename = null;
-                    MultipartFile file = null;
-                    messageHelper.addAttachment(filename, file);
+                    FileInfo fileObject = fileManager.getFileObject(id);
+                    String filename = fileObject.getFileName();
+                    InputStream content = fileManager.getContent(id);
+                    messageHelper.addAttachment(filename, new InputStreamResource(content));
                 }
             }
 
             // 传入图片
-            List<String> inlines = emailInfo.getInlines();
-            if (CollUtil.isNotEmpty(inlines)) {
-                //todo 等oss
+            List<String> inlines = email.getInlines();
+            if (!Iterables.isEmpty(inlines)) {
                 for (String id : inlines) {
-                    String contentType = null;
-                    MultipartFile file = null;
-                    messageHelper.addInline(id, file, contentType);
+                    FileInfo fileObject = fileManager.getFileObject(id);
+                    String contentType = fileObject.getContentType();
+                    InputStream content = fileManager.getContent(id);
+                    messageHelper.addInline(id, new InputStreamResource(content), contentType);
                 }
             }
             mailSender.send(message);

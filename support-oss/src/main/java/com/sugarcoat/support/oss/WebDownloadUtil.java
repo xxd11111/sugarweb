@@ -1,6 +1,5 @@
 package com.sugarcoat.support.oss;
 
-import cn.hutool.core.util.URLUtil;
 import com.sugarcoat.protocol.exception.ServerException;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
@@ -8,6 +7,7 @@ import org.springframework.core.io.ResourceLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -45,7 +45,7 @@ public class WebDownloadUtil {
         try (ServletOutputStream outputStream = response.getOutputStream()) {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment;filename*=utf-8''" + URLUtil.encode(filename, StandardCharsets.UTF_8));
+            response.setHeader("Content-Disposition", "attachment;filename*=utf-8''" + URLEncoder.encode(filename, StandardCharsets.UTF_8));
             int len;
             int contentLength = 0;
             byte[] bytes = new byte[1024];

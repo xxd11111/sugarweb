@@ -2,9 +2,6 @@ package com.sugarcoat.support.scheduler.service;
 
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
-import com.sugarcoat.support.scheduler.controller.SchedulerQueryDto;
-
-import java.util.List;
 
 /**
  * SchedulerService

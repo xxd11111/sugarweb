@@ -1,5 +1,6 @@
 package com.sugarcoat.support.server.domain;
 
+import com.sugarcoat.support.server.auto.ApiRegister;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 

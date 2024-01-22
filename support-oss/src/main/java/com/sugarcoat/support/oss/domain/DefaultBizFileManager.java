@@ -1,6 +1,6 @@
 package com.sugarcoat.support.oss.domain;
 
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.oss.BizFileManager;
 import com.sugarcoat.protocol.oss.FileInfo;
@@ -121,7 +121,7 @@ public class DefaultBizFileManager implements BizFileManager {
             fileId = bizFile.getFileId();
             break;
         }
-        if (StrUtil.isEmpty(fileId)) {
+        if (Strings.isNullOrEmpty(fileId)) {
             return Optional.empty();
         }
         return fileInfoRepository.findById(fileId).map(a -> a);

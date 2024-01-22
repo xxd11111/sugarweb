@@ -1,6 +1,5 @@
 package com.sugarcoat.support.dict;
 
-import com.sugarcoat.support.orm.auto.RegistryStrategy;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -18,12 +17,6 @@ public class DictionaryProperties {
      * 扫描路径，扫描注解 @InnerDictionary
      */
     private String scanPackage;
-
-    /**
-     * 加载策略:关闭，只新增，智能合并（已修改过的不更改），覆盖
-     * 关闭（默认）
-     */
-    private String registerStrategy = RegistryStrategy.DISABLE.name();
 
     /**
      * 是否启用缓存 默认false

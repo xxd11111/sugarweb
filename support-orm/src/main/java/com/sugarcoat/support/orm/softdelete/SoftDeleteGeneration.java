@@ -1,13 +1,9 @@
 package com.sugarcoat.support.orm.softdelete;
 
-import cn.hutool.core.util.StrUtil;
-import org.hibernate.Session;
+import com.google.common.base.Strings;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.generator.BeforeExecutionGenerator;
 import org.hibernate.generator.EventType;
-import org.hibernate.tuple.AnnotationValueGeneration;
-import org.hibernate.tuple.GenerationTiming;
-import org.hibernate.tuple.ValueGenerator;
 
 import java.util.EnumSet;
 
@@ -23,7 +19,7 @@ public class SoftDeleteGeneration implements BeforeExecutionGenerator {
 
     @Override
     public Object generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o, Object o1, EventType eventType) {
-        if (StrUtil.isEmpty((String) o)) {
+        if (Strings.isNullOrEmpty((String) o)) {
             return unDeleteValue;
         }
         return o;

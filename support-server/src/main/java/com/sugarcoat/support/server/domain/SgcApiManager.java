@@ -4,6 +4,7 @@ import com.sugarcoat.protocol.ServletUtil;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.server.ApiInfo;
 import com.sugarcoat.protocol.server.ApiManager;
+import com.sugarcoat.support.server.auto.ApiRegister;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

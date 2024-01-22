@@ -15,8 +15,6 @@ import java.util.Set;
 @Data
 public class LoginVo {
 
-    private String sessionId;
-
     private String userId;
 
     private String lastLoginIp;

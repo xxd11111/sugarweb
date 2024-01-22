@@ -16,68 +16,53 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-cache</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-dict</artifactId>
-            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xxd</groupId>
+            <artifactId>support-security</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-doc</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-scheduler</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-email</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-orm</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.sugarcoat</groupId>
             <artifactId>support-oss</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-parameter</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.xxd</groupId>
             <artifactId>support-server</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sugarcoat</groupId>
-            <artifactId>support-protection</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
     </dependencies>

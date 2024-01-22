@@ -1,13 +1,11 @@
 package com.sugarcoat.uims.application.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.support.orm.PageDataConvert;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.support.orm.ExpressionWrapper;
-import com.sugarcoat.protocol.server.ApiManager;
 import com.sugarcoat.uims.application.dto.MenuDto;
 import com.sugarcoat.uims.application.vo.MenuTreeVo;
 import com.sugarcoat.uims.application.dto.MenuQueryDto;
@@ -16,6 +14,7 @@ import com.sugarcoat.uims.domain.menu.Menu;
 import com.sugarcoat.uims.domain.menu.MenuRepository;
 import com.sugarcoat.uims.domain.menu.QMenu;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -33,12 +32,10 @@ public class MenuServiceImpl implements MenuService {
 
     private final MenuRepository menuRepository;
 
-    private final ApiManager apiManager;
-
     @Override
     public String save(MenuDto menuDto) {
         Menu menu = new Menu();
-        BeanUtil.copyProperties(menuDto, menu);
+        BeanUtils.copyProperties(menuDto, menu);
         menuRepository.save(menu);
         return menu.getId();
     }
@@ -47,7 +44,7 @@ public class MenuServiceImpl implements MenuService {
     public void modify(MenuDto menuDto) {
         Menu menu = menuRepository.findById(menuDto.getId())
                 .orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + menuDto.getId()));
-        BeanUtil.copyProperties(menuDto, menu);
+        BeanUtils.copyProperties(menuDto, menu);
         menuRepository.save(menu);
     }
 
@@ -59,15 +56,15 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public PageData<MenuTreeVo> page(MenuQueryDto dto) {
         BooleanExpression booleanExpression = ExpressionWrapper.of()
-                .and(StrUtil.isNotBlank(dto.getMenuCode()), QMenu.menu.menuCode.like(dto.getMenuCode(), '/'))
-                .and(StrUtil.isNotBlank(dto.getMenuCode()), QMenu.menu.menuName.like(dto.getMenuName(), '/'))
-                .and(StrUtil.isNotBlank(dto.getMenuCode()), QMenu.menu.enable.eq(dto.getEnable()))
+                .and(!Strings.isNullOrEmpty(dto.getMenuCode()), QMenu.menu.menuCode.like(dto.getMenuCode(), '/'))
+                .and(!Strings.isNullOrEmpty(dto.getMenuCode()), QMenu.menu.menuName.like(dto.getMenuName(), '/'))
+                .and(!Strings.isNullOrEmpty(dto.getMenuCode()), QMenu.menu.enable.eq(dto.getEnable()))
                 .build();
 
         Page<MenuTreeVo> page = menuRepository.findAll(booleanExpression, PageRequest.of(1, 10))
                 .map(a->{
                     MenuTreeVo target = new MenuTreeVo();
-                    BeanUtil.copyProperties(a, target);
+                    BeanUtils.copyProperties(a, target);
                     return target;
                 });
         return PageDataConvert.convert(page, MenuTreeVo.class);
@@ -77,15 +74,8 @@ public class MenuServiceImpl implements MenuService {
     public MenuDto find(String id) {
         Menu menu = menuRepository.findById(id).orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + id));
         MenuDto target = new MenuDto();
-        BeanUtil.copyProperties(menu, target);
+        BeanUtils.copyProperties(menu, target);
         return target;
     }
 
-    @Override
-    public void associateApi(String id, String apiCode) {
-        Menu menu = menuRepository.findById(id).orElseThrow(() -> new ValidateException("菜单不存在,id:{}" + id));
-        apiManager.findApiById(apiCode).orElseThrow(()->new ValidateException("菜单不存在,id:{}" + id));
-        menu.setApiCode(apiCode);
-        menuRepository.save(menu);
-    }
 }

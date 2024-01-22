@@ -1,7 +1,6 @@
 package com.sugarcoat.uims.application.impl;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.support.orm.PageDataConvert;
@@ -18,6 +17,7 @@ import com.sugarcoat.uims.domain.role.QRole;
 import com.sugarcoat.uims.domain.role.Role;
 import com.sugarcoat.uims.domain.role.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public String save(RoleDto roleDto) {
         Role role = new Role();
-        BeanUtil.copyProperties(roleDto, role);
+        BeanUtils.copyProperties(roleDto, role);
         roleRepository.save(role);
         return role.getId();
     }
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void modify(RoleDto roleDto) {
         Role role = roleRepository.findById(roleDto.getId()).orElseThrow(() -> new ValidateException("not find role"));
-        BeanUtil.copyProperties(roleDto, role);
+        BeanUtils.copyProperties(roleDto, role);
         roleRepository.save(role);
     }
 
@@ -70,8 +70,8 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public PageData<RolePageVo> page(RoleQueryDto dto) {
         BooleanExpression expression = ExpressionWrapper.of()
-                .and(StrUtil.isNotEmpty(dto.getRoleCode()), QRole.role.roleCode.like(dto.getRoleCode(), '/'))
-                .and(StrUtil.isNotEmpty(dto.getRoleName()), QRole.role.roleName.like(dto.getRoleName(), '/'))
+                .and(!Strings.isNullOrEmpty(dto.getRoleCode()), QRole.role.roleCode.like(dto.getRoleCode(), '/'))
+                .and(!Strings.isNullOrEmpty(dto.getRoleName()), QRole.role.roleName.like(dto.getRoleName(), '/'))
                 .and(dto.getEnable() != null, QRole.role.enable.eq(dto.getEnable()))
                 .build();
 
@@ -79,7 +79,7 @@ public class RoleServiceImpl implements RoleService {
         Page<RolePageVo> page = roleRepository.findAll(expression, pageable)
                 .map(a->{
                     RolePageVo rolePageVo = new RolePageVo();
-                    BeanUtil.copyProperties(a, rolePageVo);
+                    BeanUtils.copyProperties(a, rolePageVo);
                     return rolePageVo;
                 });
         return PageDataConvert.convert(page, RolePageVo.class);
@@ -89,7 +89,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleVo find(String id) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new ValidateException("not find role"));
         RoleVo roleVo = new RoleVo();
-        BeanUtil.copyProperties(role, roleVo);
+        BeanUtils.copyProperties(role, roleVo);
         return roleVo;
     }
 }

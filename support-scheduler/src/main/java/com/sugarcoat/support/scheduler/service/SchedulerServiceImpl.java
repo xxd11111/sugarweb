@@ -1,13 +1,12 @@
 package com.sugarcoat.support.scheduler.service;
 
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarcoat.protocol.common.PageData;
 import com.sugarcoat.protocol.common.PageDto;
 import com.sugarcoat.protocol.scheduler.SchedulerManager;
 import com.sugarcoat.support.orm.ExpressionWrapper;
 import com.sugarcoat.support.orm.PageDataConvert;
-import com.sugarcoat.support.scheduler.controller.SchedulerQueryDto;
 import com.sugarcoat.support.scheduler.domain.QSgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
@@ -84,8 +83,8 @@ public class SchedulerServiceImpl implements SchedulerService {
         PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
         QSgcSchedulerTask sgcSchedulerTask = QSgcSchedulerTask.sgcSchedulerTask;
         BooleanExpression build = ExpressionWrapper.of()
-                .and(StrUtil.isNotEmpty(queryDto.getTaskName()), sgcSchedulerTask.taskName.like(queryDto.getTaskName()))
-                .and(StrUtil.isNotEmpty(queryDto.getStatus()), sgcSchedulerTask.status.like(queryDto.getStatus()))
+                .and(Strings.isNullOrEmpty(queryDto.getTaskName()), sgcSchedulerTask.taskName.like(queryDto.getTaskName()))
+                .and(Strings.isNullOrEmpty(queryDto.getStatus()), sgcSchedulerTask.status.like(queryDto.getStatus()))
                 .build();
 
         Page<SchedulerTaskDto> page = sgcSchedulerTaskRepository.findAll(build, pageRequest).map(a -> {

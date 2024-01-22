@@ -35,14 +35,8 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamCacheManager paramCacheManager(RedissonClient redissonClient) {
-        return new DefaultParamCacheManager(paramProperties, redissonClient);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ParameterManager paramManager(SgcParamRepository sugarcoatParamRepository, ParamCacheManager paramCacheManager) {
-        return new DefaultParameterManager(sugarcoatParamRepository, paramCacheManager);
+    public ParameterManager paramManager(SgcParamRepository sugarcoatParamRepository) {
+        return new DefaultParameterManager(sugarcoatParamRepository);
     }
 
     @Bean

@@ -1,6 +1,7 @@
 package com.sugarcoat.support.server;
 
 import com.sugarcoat.protocol.server.ApiManager;
+import com.sugarcoat.support.server.auto.ApiRegister;
 import com.sugarcoat.support.server.controller.ApiController;
 import com.sugarcoat.support.server.domain.*;
 import com.sugarcoat.support.server.service.SgcApiService;

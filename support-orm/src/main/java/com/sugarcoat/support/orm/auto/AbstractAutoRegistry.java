@@ -1,7 +1,7 @@
 package com.sugarcoat.support.orm.auto;
 
 
-import cn.hutool.core.collection.CollUtil;
+import com.google.common.collect.*;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 
@@ -23,7 +23,7 @@ public abstract class AbstractAutoRegistry<T> implements Registry, Scanner<T>, A
     @Override
     public void register() {
         Collection<T> scans = this.scan();
-        if (CollUtil.isEmpty(scans)) {
+        if (Iterables.isEmpty(scans)) {
             return;
         }
         this.deleteByCondition(scans);

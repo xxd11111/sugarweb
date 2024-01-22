@@ -49,12 +49,6 @@ public class MenuController {
         return Result.ok();
     }
 
-    @PostMapping("associateApi")
-    public Result<Void> associateApi(String id, String apiCode) {
-        menuService.associateApi(id, apiCode);
-        return Result.ok();
-    }
-
     @PostMapping("remove")
     public Result<Void> remove(String id) {
         menuService.remove(id);

@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>sugarcoat-dependency</module>
         <module>support-cache</module>
         <module>support-dict</module>
         <module>support-server</module>
@@ -20,7 +19,7 @@
         <module>support-oss</module>
         <module>support-email</module>
         <module>support-scheduler</module>
-        <module>support-protection</module>
+        <module>support-security</module>
         <module>uims</module>
     </modules>
 
@@ -30,9 +29,6 @@
     <properties>
         <encoding>UTF-8</encoding>
         <java.version>21</java.version>
-
-        <!--         todo 等待 hibernate-core 6.3.0 修复bug, springboot当前最新版本3.1.4依旧使用hibernate-core 6.2.9;
-         The following mapping resulted in a CCE  https://hibernate.atlassian.net/browse/HHH-16593 -->
         <spring-boot.version>3.2.0</spring-boot.version>
         <configuration.version>1.10</configuration.version>
         <spring.checkstyle.plugin>0.0.34</spring.checkstyle.plugin>
@@ -71,7 +67,55 @@
 
             <dependency>
                 <groupId>com.xxd</groupId>
+                <artifactId>support-dict</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xxd</groupId>
+                <artifactId>support-doc</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xxd</groupId>
+                <artifactId>support-email</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xxd</groupId>
                 <artifactId>support-orm</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sugarcoat</groupId>
+                <artifactId>support-oss</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xxd</groupId>
+                <artifactId>support-parameter</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xxd</groupId>
+                <artifactId>support-scheduler</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xxd</groupId>
+                <artifactId>support-security</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xxd</groupId>
+                <artifactId>support-server</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -86,17 +130,14 @@
 
     <dependencies>
 
+        <!-- 工具包 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>33.0.0-jre</version>
         </dependency>
 
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -104,6 +145,7 @@
             <version>${lombok.version}</version>
         </dependency>
 
+        <!-- web应用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -125,10 +167,17 @@
         <!--            <artifactId>spring-boot-starter-webflux</artifactId>-->
         <!--        </dependency>-->
 
-
+        <!-- 校验工具 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- 自定义yml配置插件 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
@@ -173,12 +222,6 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
-                        </path>
-                        <!-- This is needed when using Lombok 1.18.16 and above -->
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok-mapstruct-binding</artifactId>
-                            <version>0.2.0</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>

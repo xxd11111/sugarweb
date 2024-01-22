@@ -9,6 +9,6 @@ package com.sugarcoat.protocol.email;
  */
 public interface EmailClient {
 
-	void sendEmail(EmailInfo emailInfo);
+	void sendEmail(Email email);
 
 }

@@ -1,5 +1,7 @@
 package com.sugarcoat.protocol.security;
 
+import com.sugarcoat.protocol.BeanUtil;
+
 /**
  * 用户helper
  *
@@ -9,14 +11,10 @@ package com.sugarcoat.protocol.security;
  */
 public class SecurityHelper {
 
-    private static final ThreadLocal<UserInfo> userInfo = new ThreadLocal<>();
-
-    public static void setUserInfo(UserInfo userInfo){
-        SecurityHelper.userInfo.set(userInfo);
-    }
+    private static final UserHolder userHolder = BeanUtil.getBean(UserHolder.class);
 
     public static UserInfo getUserInfo() {
-        return userInfo.get();
+        return userHolder.getUserInfo();
     }
 
 }

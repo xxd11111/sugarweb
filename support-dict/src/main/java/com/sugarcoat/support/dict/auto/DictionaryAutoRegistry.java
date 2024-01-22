@@ -1,15 +1,17 @@
 package com.sugarcoat.support.dict.auto;
 
-import cn.hutool.core.util.ClassUtil;
-import cn.hutool.core.util.StrUtil;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.reflect.ClassPath;
 import com.sugarcoat.protocol.dictionary.DictionaryCode;
 import com.sugarcoat.protocol.dictionary.DictionaryItem;
 import com.sugarcoat.protocol.dictionary.InnerDictionary;
 import com.sugarcoat.protocol.exception.FrameworkException;
+import com.sugarcoat.protocol.parameter.InnerParameter;
 import com.sugarcoat.support.orm.auto.AbstractAutoRegistry;
 import com.sugarcoat.protocol.dictionary.DictionaryManager;
 import com.sugarcoat.support.dict.domain.SugarcoatDictionary;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -46,8 +48,8 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<SugarcoatDictio
         for (SugarcoatDictionary db : all) {
             boolean contain = false;
             for (SugarcoatDictionary scan : scans) {
-                if (StrUtil.equals(scan.getDictGroup(), db.getDictGroup()) &&
-                        StrUtil.equals(scan.getDictCode(), db.getDictCode())) {
+                if (Objects.equals(scan.getDictGroup(), db.getDictGroup()) &&
+                        Objects.equals(scan.getDictCode(), db.getDictCode())) {
                     contain = true;
                     break;
                 }
@@ -66,7 +68,22 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<SugarcoatDictio
 
     @Override
     public Collection<SugarcoatDictionary> scan() {
-        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation("com.sugarcoat.support.dict", InnerDictionary.class);
+        ClassPath classpath = null;
+        try {
+            classpath = ClassPath.from(this.getClass().getClassLoader());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        ImmutableSet<ClassPath.ClassInfo> classInfos = classpath.getTopLevelClasses("com.sugarcoat.support.dict");
+        //获取包下class
+        Set<Class<?>> classes = new HashSet<>();
+        for (ClassPath.ClassInfo classInfo : classInfos) {
+            Class<?> load = classInfo.load();
+            InnerParameter annotation = load.getAnnotation(InnerParameter.class);
+            if (annotation != null) {
+                classes.add(load);
+            }
+        }
         List<SugarcoatDictionary> sugarcoatDictionaries = new ArrayList<>();
         for (Class<?> clazz : classes) {
             InnerDictionary innerDictionary = clazz.getAnnotation(InnerDictionary.class);

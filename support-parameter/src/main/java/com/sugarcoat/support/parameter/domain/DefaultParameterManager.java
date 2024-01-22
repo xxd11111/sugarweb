@@ -1,6 +1,6 @@
 package com.sugarcoat.support.parameter.domain;
 
-import cn.hutool.core.util.StrUtil;
+import com.google.common.base.Strings;
 import com.sugarcoat.protocol.exception.FrameworkException;
 import com.sugarcoat.protocol.exception.ValidateException;
 import com.sugarcoat.protocol.parameter.Parameter;
@@ -23,27 +23,19 @@ public class DefaultParameterManager implements ParameterManager {
 
     private final SgcParamRepository paramRepository;
 
-    private final ParamCacheManager paramCacheManager;
-
     @Override
     public Optional<String> getValue(String code) {
-        if (StrUtil.isBlank(code)) {
+        if (Strings.isNullOrEmpty(code)) {
             return Optional.empty();
         }
-        Optional<String> cacheValue = paramCacheManager.get(code);
-        if (cacheValue.isPresent()) {
-            return cacheValue;
-        } else {
-            return paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code))
-                    .map(SugarcoatParameter::getValue);
-        }
+        return paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code))
+                .map(SugarcoatParameter::getValue);
     }
 
     @Override
     public void save(Parameter parameter) {
         if (parameter instanceof SugarcoatParameter sugarcoatParam) {
             paramRepository.save(sugarcoatParam);
-            paramCacheManager.put(sugarcoatParam);
         } else {
             throw new FrameworkException("Param can not cast to SugarcoatParam");
         }
@@ -54,32 +46,15 @@ public class DefaultParameterManager implements ParameterManager {
         SugarcoatParameter param = paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code))
                 .orElseThrow(() -> new ValidateException("not find Param"));
         paramRepository.delete(param);
-        paramCacheManager.remove(code);
     }
 
     @Override
     public Optional<Parameter> getParameter(String code) {
         //由于get属性只有两个，当前不采用json方式
-        if (StrUtil.isBlank(code)) {
+        if (Strings.isNullOrEmpty(code)) {
             return Optional.empty();
         }
-        Optional<String> cacheValue = paramCacheManager.get(code);
-        //注意泛型擦除问题
-        if (cacheValue.isPresent()) {
-            return Optional.of(new Parameter() {
-                @Override
-                public String getCode() {
-                    return code;
-                }
-
-                @Override
-                public String getValue() {
-                    return cacheValue.get();
-                }
-            });
-        } else {
-            return paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code)).map(a -> a);
-        }
+        return paramRepository.findOne(QSugarcoatParameter.sugarcoatParameter.code.eq(code)).map(a -> a);
     }
 
     @Override
@@ -101,6 +76,5 @@ public class DefaultParameterManager implements ParameterManager {
             }
         }
         paramRepository.saveAll(sugarcoatParams);
-        paramCacheManager.put(parameters);
     }
 }

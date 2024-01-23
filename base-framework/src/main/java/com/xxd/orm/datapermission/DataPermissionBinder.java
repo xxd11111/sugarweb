@@ -17,7 +17,7 @@ import static java.util.Collections.singletonMap;
  * 数据权限逻辑绑定
  *
  * @author 许向东
- * @date 2023/11/15
+ * @version 1.0
  */
 public class DataPermissionBinder implements AttributeBinder<DataPermission> {
 

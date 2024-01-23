@@ -20,7 +20,7 @@ import java.util.*;
  * SchedulerAutoRegistry
  *
  * @author 许向东
- * @date 2023/12/15
+ * @version 1.0
  */
 public class SchedulerAutoRegistry extends AbstractAutoRegistry<SgcSchedulerTask> {
 

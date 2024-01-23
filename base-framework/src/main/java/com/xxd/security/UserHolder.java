@@ -4,7 +4,7 @@ package com.xxd.security;
  * TODO
  *
  * @author xxd
- * @since 2023/8/11
+ * @version 1.0
  */
 public interface UserHolder {
 

@@ -20,7 +20,7 @@ import java.util.*;
  * 字典自动注册处理
  *
  * @author 许向东
- * @date 2023/11/23
+ * @version 1.0
  */
 public class DictionaryAutoRegistry extends AbstractAutoRegistry<SugarcoatDictionary> {
 

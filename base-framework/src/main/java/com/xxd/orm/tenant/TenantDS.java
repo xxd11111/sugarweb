@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  * TenantDS
  *
  * @author xxd
- * @since 2023/11/2 22:36
+ * @version 1.0
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

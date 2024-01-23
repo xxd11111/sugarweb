@@ -8,7 +8,7 @@ import java.util.Optional;
  * SgcAuditorAware
  *
  * @author xxd
- * @since 2023/10/21 16:01
+ * @version 1.0
  */
 public class SgcAuditorAware implements AuditorAware<String> {
 

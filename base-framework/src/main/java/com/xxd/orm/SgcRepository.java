@@ -8,7 +8,7 @@ import org.springframework.data.repository.NoRepositoryBean;
  * 仓库
  *
  * @author xxd
- * @since 2023/3/27 20:42
+ * @version 1.0
  */
 @NoRepositoryBean
 public interface SgcRepository<T> extends CrudRepository<T, String>, QuerydslPredicateExecutor<T> {

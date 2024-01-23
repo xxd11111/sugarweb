@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * oss配置类
  *
  * @author 许向东
- * @date 2023/9/15
+ * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarcoat.oss")
 @Data

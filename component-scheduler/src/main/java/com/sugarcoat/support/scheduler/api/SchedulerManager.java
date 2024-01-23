@@ -6,7 +6,7 @@ import java.util.List;
  * SchedulerManager 用于管理定时任务
  *
  * @author 许向东
- * @date 2023/10/17
+ * @version 1.0
  */
 public interface SchedulerManager {
 

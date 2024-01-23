@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * 定时任务自动注入
  *
  * @author xxd
- * @since 2023/8/10
+ * @version 1.0
  */
 @Configuration(proxyBeanMethods = false)
 @EntityScan

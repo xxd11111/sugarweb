@@ -6,7 +6,7 @@ import com.xxd.common.HttpCode;
  * 与安全相关异常（安全攻击等问题）
  *
  * @author xxd
- * @since 2022-11-12
+ * @version 1.0
  */
 public class SecurityException extends BaseException {
 

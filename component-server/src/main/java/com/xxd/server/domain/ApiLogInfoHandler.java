@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
  * api日志信息处理
  *
  * @author 许向东
- * @date 2023/9/22
+ * @version 1.0
  */
 @Slf4j
 public record ApiLogInfoHandler(SgcApiCallLogRepository apiCallLogRepository,

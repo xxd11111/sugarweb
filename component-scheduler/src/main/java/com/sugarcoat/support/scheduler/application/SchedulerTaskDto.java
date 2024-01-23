@@ -6,7 +6,7 @@ import lombok.Data;
  * SchedulerTaskDto
  *
  * @author 许向东
- * @date 2023/10/18
+ * @version 1.0
  */
 @Data
 public class SchedulerTaskDto {

@@ -12,7 +12,7 @@ import java.util.EnumSet;
  * 数据权限自动赋值
  *
  * @author 许向东
- * @date 2023/11/15
+ * @version 1.0
  */
 public class DataPermissionGeneration implements BeforeExecutionGenerator {
 

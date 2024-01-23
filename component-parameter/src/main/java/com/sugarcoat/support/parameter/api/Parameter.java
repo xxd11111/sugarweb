@@ -5,7 +5,6 @@ package com.sugarcoat.support.parameter.api;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/31
  */
 public interface Parameter {
 

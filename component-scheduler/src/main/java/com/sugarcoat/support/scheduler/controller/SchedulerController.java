@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * 定时任务控制器
  *
  * @author 许向东
- * @date 2023/10/18
+ * @version 1.0
  */
 @RestController
 @RequestMapping("/scheduler")

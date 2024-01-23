@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * 用户持有者
  *
  * @author xxd
- * @since 2023/8/11
+ * @version 1.0
  */
 public class SugarcoatUserHolder implements UserHolder {
 

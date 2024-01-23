@@ -4,7 +4,7 @@ package com.xxd.common;
  * 错误码
  *
  * @author xxd
- * @since 2022-11-15
+ * @version 1.0
  */
 public interface ErrorCode {
 

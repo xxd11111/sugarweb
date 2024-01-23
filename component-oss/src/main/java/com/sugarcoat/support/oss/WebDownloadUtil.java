@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  * web下载工具
  *
  * @author 许向东
- * @since 2023/9/15
+ * @version 1.0
  */
 public class WebDownloadUtil {
 

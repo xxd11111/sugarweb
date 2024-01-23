@@ -11,7 +11,7 @@ import java.util.Collection;
  * 枚举校验工具
  *
  * @author xxd
- * @since 2022-11-14
+ * @version 1.0
  */
 public class EnumValidator implements ConstraintValidator<EnumValidate, String> {
 

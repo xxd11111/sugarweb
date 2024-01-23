@@ -6,7 +6,7 @@ import jakarta.validation.ConstraintValidator;
  * 枚举校验接口
  *
  * @author xxd
- * @since 2022-11-14
+ * @version 1.0
  */
 public interface DictionaryValidator extends ConstraintValidator<DictionaryValidate, String> {
 

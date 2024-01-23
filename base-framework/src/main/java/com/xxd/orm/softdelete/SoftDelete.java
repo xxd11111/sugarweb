@@ -14,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * LogicDelete
  *
  * @author xxd
- * @since 2023/10/22 23:02
+ * @version 1.0
  */
 @ValueGenerationType(generatedBy = SoftDeleteGeneration.class)
 @AttributeBinderType(binder = SoftDeleteBinder.class)

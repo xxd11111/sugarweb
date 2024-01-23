@@ -10,7 +10,7 @@ import jakarta.validation.ConstraintValidatorContext;
  * 枚举校验工具
  *
  * @author xxd
- * @since 2022-11-14
+ * @version 1.0
  */
 public class DictionaryValidatorImpl implements DictionaryValidator {
 

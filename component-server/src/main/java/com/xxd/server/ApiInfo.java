@@ -4,7 +4,7 @@ package com.xxd.server;
  * 接口信息
  *
  * @author 许向东
- * @date 2023/9/22
+ * @version 1.0
  */
 public interface ApiInfo {
 

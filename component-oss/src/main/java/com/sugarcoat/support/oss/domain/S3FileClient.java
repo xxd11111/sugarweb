@@ -16,7 +16,6 @@ import java.io.InputStream;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/5
  */
 public class S3FileClient implements FileClient {
 

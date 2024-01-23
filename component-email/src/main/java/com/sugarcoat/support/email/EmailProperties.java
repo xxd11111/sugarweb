@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 邮箱属性
  *
  * @author 许向东
- * @date 2023/9/14
+ * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarcoat.email")
 @ConditionalOnProperty(prefix = "sugarcoat.email", name = "enable", havingValue = "true")

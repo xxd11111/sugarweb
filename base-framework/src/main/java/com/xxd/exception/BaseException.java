@@ -7,7 +7,7 @@ import com.xxd.common.HttpCode;
  * 基础异常
  *
  * @author xxd
- * @since 2023/9/20 22:54
+ * @version 1.0
  */
 public class BaseException extends RuntimeException{
 

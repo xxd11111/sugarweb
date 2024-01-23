@@ -9,7 +9,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * 租户拦截器
  *
  * @author 许向东
- * @date 2023/11/14
+ * @version 1.0
  */
 public class TenantInterceptor implements HandlerInterceptor {
 

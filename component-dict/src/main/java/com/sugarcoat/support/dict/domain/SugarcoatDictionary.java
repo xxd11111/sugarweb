@@ -12,7 +12,6 @@ import org.hibernate.annotations.UuidGenerator;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/3/20
  */
 @Entity
 @Getter

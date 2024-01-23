@@ -6,7 +6,7 @@ import lombok.Data;
  * UploadInfo
  *
  * @author 许向东
- * @date 2024/1/22
+ * @version 1.0
  */
 @Data
 public class UploadInfo {

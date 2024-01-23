@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/4/25
  */
 @Repository
 public interface SgcDictionaryRepository extends SgcRepository<SugarcoatDictionary> {

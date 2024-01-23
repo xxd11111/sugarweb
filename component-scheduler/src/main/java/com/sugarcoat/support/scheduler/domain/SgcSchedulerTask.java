@@ -9,7 +9,7 @@ import org.hibernate.annotations.UuidGenerator;
  * SgcSchedulerTask
  *
  * @author 许向东
- * @date 2023/10/18
+ * @version 1.0
  */
 @Getter
 @Setter

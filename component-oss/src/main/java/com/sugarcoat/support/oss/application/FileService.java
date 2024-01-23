@@ -10,7 +10,7 @@ import java.util.Set;
  * 文件对外服务
  *
  * @author xxd
- * @since 2023/6/2
+ * @version 1.0
  */
 public interface FileService {
 

@@ -1,7 +1,6 @@
 package com.xxd.orm.tenant.database;
 
 import jakarta.persistence.MappedSuperclass;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,7 +9,7 @@ import lombok.ToString;
  * 数据源配置
  *
  * @author 许向东
- * @date 2023/11/4
+ * @version 1.0
  */
 @Getter
 @Setter

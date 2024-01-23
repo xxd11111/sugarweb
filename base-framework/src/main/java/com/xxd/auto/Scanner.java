@@ -6,7 +6,7 @@ import java.util.Collection;
  * 扫描者
  *
  * @author 许向东
- * @date 2023/11/22
+ * @version 1.0
  */
 public interface Scanner<T> {
 

@@ -16,7 +16,7 @@ import java.lang.annotation.Annotation;
  * TODO
  *
  * @author 许向东
- * @date 2023/11/16
+ * @version 1.0
  */
 public class DataPermissionFilterAdvisor extends AbstractPointcutAdvisor implements BeanFactoryAware {
 

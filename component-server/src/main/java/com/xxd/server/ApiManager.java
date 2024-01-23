@@ -7,7 +7,7 @@ import java.util.Optional;
  * api服务
  *
  * @author xxd
- * @since 2023/10/7 22:27
+ * @version 1.0
  */
 public interface ApiManager {
 

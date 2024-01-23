@@ -10,7 +10,7 @@ import java.lang.annotation.*;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/29
+ * @version 1.0
  */
 @Target({
         ElementType.METHOD,

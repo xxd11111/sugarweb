@@ -10,7 +10,7 @@ import java.util.Map;
  * 租户id解析
  *
  * @author xxd
- * @since 2023/10/21 15:26
+ * @version 1.0
  */
 public class SgcTenantIdResolver implements CurrentTenantIdentifierResolver, HibernatePropertiesCustomizer {
     @Override

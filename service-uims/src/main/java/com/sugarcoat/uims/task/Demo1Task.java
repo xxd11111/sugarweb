@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Demo1Task
  *
  * @author 许向东
- * @date 2023/10/19
+ * @version 1.0
  */
 @Slf4j
 @Component

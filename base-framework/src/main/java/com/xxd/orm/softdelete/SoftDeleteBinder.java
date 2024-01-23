@@ -12,7 +12,7 @@ import org.hibernate.mapping.*;
  * SoftDelete逻辑绑定
  *
  * @author 许向东
- * @date 2023/11/15
+ * @version 1.0
  */
 public class SoftDeleteBinder implements AttributeBinder<SoftDelete> {
 

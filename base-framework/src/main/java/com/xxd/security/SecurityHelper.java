@@ -7,7 +7,7 @@ import com.xxd.BeanUtil;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/3/9
+ * @version 1.0
  */
 public class SecurityHelper {
 

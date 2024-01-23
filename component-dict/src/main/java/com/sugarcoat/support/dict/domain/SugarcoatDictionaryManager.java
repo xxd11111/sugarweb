@@ -12,7 +12,6 @@ import java.util.Optional;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/30
  */
 public class SugarcoatDictionaryManager implements DictionaryManager<SugarcoatDictionary> {
 

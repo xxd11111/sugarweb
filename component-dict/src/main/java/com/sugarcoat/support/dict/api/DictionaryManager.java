@@ -8,7 +8,7 @@ import java.util.Optional;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/29
+ * @version 1.0
  */
 public interface DictionaryManager<T extends Dictionary> {
 

@@ -12,7 +12,7 @@ import java.util.Optional;
  * 枚举工具类
  *
  * @author xxd
- * @since 2022-11-22
+ * @version 1.0
  */
 public class EnumUtil {
 

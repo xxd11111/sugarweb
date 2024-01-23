@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * 数据权限启用注解
  *
  * @author xxd
- * @since 2023/11/15 22:49
+ * @version 1.0
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

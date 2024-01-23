@@ -6,7 +6,7 @@ import com.xxd.common.HttpCode;
  * 用于框架组件抛出异常（框架初始化问题，框架使用异常）
  *
  * @author xxd
- * @since 2022-11-12
+ * @version 1.0
  */
 public class FrameworkException extends BaseException {
 

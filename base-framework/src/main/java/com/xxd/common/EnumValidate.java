@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * 枚举校验
  *
  * @author xxd
- * @since 2022-11-14
+ * @version 1.0
  */
 @Target({ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR,
         ElementType.PARAMETER, ElementType.TYPE_USE})

@@ -6,7 +6,7 @@ import com.xxd.orm.SgcRepository;
  * SgcTenantDataSourceRepository
  *
  * @author xxd
- * @since 2023/11/2 23:13
+ * @version 1.0
  */
 public interface SgcTenantDataSourceRepository extends SgcRepository<SgcTenantDataSource> {
 }

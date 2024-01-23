@@ -7,7 +7,6 @@ import lombok.Data;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/8
  */
 @Data
 public class SgcApiQueryDto {

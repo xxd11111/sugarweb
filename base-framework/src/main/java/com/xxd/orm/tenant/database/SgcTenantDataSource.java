@@ -11,7 +11,7 @@ import java.util.Objects;
  * 多租户数据源信息
  *
  * @author xxd
- * @since 2023/11/1 22:44
+ * @version 1.0
  */
 @Getter
 @Setter

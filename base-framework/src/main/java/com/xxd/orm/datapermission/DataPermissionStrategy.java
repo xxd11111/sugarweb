@@ -8,7 +8,7 @@ import lombok.Getter;
  * DataPermissionStrategy
  *
  * @author 许向东
- * @date 2023/11/17
+ * @version 1.0
  */
 @Getter
 @AllArgsConstructor

@@ -7,7 +7,6 @@ import com.xxd.common.EnumValue;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/4/27
  */
 public enum BooleanEnum implements EnumValue<String> {
 

@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
  * 任务bean
  *
  * @author xxd
- * @date 2023/10/17
+ * @version 1.0
  */
 @DisallowConcurrentExecution
 @PersistJobDataAfterExecution

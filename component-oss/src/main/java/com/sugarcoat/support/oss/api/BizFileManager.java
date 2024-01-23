@@ -8,7 +8,7 @@ import java.util.Optional;
  * 文件业务绑定服务
  *
  * @author xxd
- * @since 2023/6/2
+ * @version 1.0
  */
 public interface BizFileManager {
 

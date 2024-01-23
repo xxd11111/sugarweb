@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * 访问日志
  *
  * @author xxd
- * @since 2022-10-27
+ * @version 1.0
  */
 @Getter
 @Setter

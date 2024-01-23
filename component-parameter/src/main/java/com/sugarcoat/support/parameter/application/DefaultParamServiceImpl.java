@@ -14,9 +14,10 @@ import org.springframework.data.domain.PageRequest;
 import java.util.Set;
 
 /**
+ * 参数服务实现类
+ *
  * @author xxd
- * @description 默认实现方法
- * @since 2022-11-19
+ * @version 1.0
  */
 @RequiredArgsConstructor
 public class DefaultParamServiceImpl implements ParamService {

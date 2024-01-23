@@ -6,7 +6,7 @@ import com.xxd.common.HttpCode;
  * 服务器异常（定时任务，中间件异常，磁盘问题）若细分可补充
  *
  * @author xxd
- * @since 2022-11-12
+ * @version 1.0
  */
 public class ServerException extends BaseException {
 

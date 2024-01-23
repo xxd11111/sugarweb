@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * json工具
  *
  * @author 许向东
- * @date 2023/9/27
+ * @version 1.0
  */
 public class JsonUtil {
 

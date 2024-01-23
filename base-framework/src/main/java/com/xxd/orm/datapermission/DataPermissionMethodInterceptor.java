@@ -8,7 +8,7 @@ import org.aopalliance.intercept.MethodInvocation;
  * DataPermissionFilterAspect
  *
  * @author xxd
- * @since 2023/11/15 22:54
+ * @version 1.0
  */
 public class DataPermissionMethodInterceptor implements MethodInterceptor {
 

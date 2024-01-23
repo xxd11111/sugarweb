@@ -11,7 +11,7 @@ import java.util.Map;
  * 数据权限信息
  *
  * @author 许向东
- * @date 2023/11/17
+ * @version 1.0
  */
 @Data
 public class DataPermissionInfo {

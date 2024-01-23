@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * ServerProperties
  *
  * @author xxd
- * @since 2023/10/8 21:53
+ * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarcoat.server")
 @ConditionalOnProperty(prefix = "sugarcoat.server", name = "enable", havingValue = "true")

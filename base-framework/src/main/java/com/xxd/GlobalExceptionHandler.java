@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * 全局异常拦截
  *
  * @author xxd
- * @since 2022-10-27
+ * @version 1.0
  */
 
 @Slf4j

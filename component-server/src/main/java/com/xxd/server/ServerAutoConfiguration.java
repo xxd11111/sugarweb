@@ -21,7 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
  * 服务自动配置
  *
  * @author xxd
- * @since 2023/5/8 23:28
+ * @version 1.0
  */
 @Configuration(proxyBeanMethods = false)
 @EntityScan

@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * 实体类信息补充，新增，更新
  *
  * @author xxd
- * @since 2022-11-12
+ * @version 1.0
  */
 @Getter
 @Setter

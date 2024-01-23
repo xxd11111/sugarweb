@@ -7,7 +7,6 @@ import java.io.InputStream;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/5
  */
 public interface FileClient {
 

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
  * 文件信息
  *
  * @author 许向东
- * @date 2023/9/15
+ * @version 1.0
  */
 public interface FileInfo {
 

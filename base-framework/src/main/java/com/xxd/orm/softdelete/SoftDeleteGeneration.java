@@ -11,7 +11,7 @@ import java.util.EnumSet;
  * softDelete自动生成
  *
  * @author 许向东
- * @date 2023/11/15
+ * @version 1.0
  */
 public class SoftDeleteGeneration implements BeforeExecutionGenerator {
 

@@ -11,7 +11,7 @@ import java.util.Collection;
  * ScanRegisterHandler
  *
  * @author 许向东
- * @date 2023/12/5
+ * @version 1.0
  */
 public abstract class AbstractAutoRegistry<T> implements Registry, Scanner<T>, ApplicationRunner {
 

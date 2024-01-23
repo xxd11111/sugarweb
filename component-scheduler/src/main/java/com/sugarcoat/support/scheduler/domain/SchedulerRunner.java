@@ -8,7 +8,7 @@ import org.springframework.boot.ApplicationRunner;
  * 定时任务初始化
  *
  * @author 许向东
- * @date 2023/10/18
+ * @version 1.0
  */
 public class SchedulerRunner implements ApplicationRunner {
 

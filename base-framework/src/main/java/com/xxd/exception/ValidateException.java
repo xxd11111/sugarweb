@@ -6,7 +6,7 @@ import com.xxd.common.HttpCode;
  * 校验异常（接口层输入不符合规范，过滤，与业务无关）
  *
  * @author xxd
- * @since 2022-11-12
+ * @version 1.0
  */
 public class ValidateException extends BaseException {
 

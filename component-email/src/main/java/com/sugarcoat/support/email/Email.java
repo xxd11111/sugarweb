@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/9
+ * @version 1.0
  */
 public interface Email {
 

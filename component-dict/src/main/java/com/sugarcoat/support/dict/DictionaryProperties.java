@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 字典配置类
  *
  * @author xxd
- * @since 2023/8/28 22:59
+ * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarcoat.dictionary")
 @Data

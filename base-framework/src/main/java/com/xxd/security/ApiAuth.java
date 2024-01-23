@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * api权限注解
  *
  * @author xxd
- * @since 2023/10/7 21:07
+ * @version 1.0
  */
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)

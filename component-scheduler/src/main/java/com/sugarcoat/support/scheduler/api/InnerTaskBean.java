@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * InnerTaskBean
  *
  * @author 许向东
- * @date 2023/10/19
+ * @version 1.0
  */
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)

@@ -6,7 +6,7 @@ import lombok.Getter;
  * http常用code
  *
  * @author xxd
- * @since 2022-11-13
+ * @version 1.0
  */
 @Getter
 public enum HttpCode implements ErrorCode {

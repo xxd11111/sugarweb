@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * 接口日志拦截
  *
  * @author 许向东
- * @date 2023/9/27
+ * @version 1.0
  */
 @Aspect
 public record ApiLogAspect(ApiLogInfoHandler apiLogInfoHandler) {

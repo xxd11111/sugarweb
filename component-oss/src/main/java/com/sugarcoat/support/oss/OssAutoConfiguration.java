@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * oss自动配置
  *
  * @author xxd
- * @since 2023/8/10
+ * @version 1.0
  */
 @EntityScan
 @EnableJpaRepositories

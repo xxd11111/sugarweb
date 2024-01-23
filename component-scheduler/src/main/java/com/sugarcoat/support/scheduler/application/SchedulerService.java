@@ -7,7 +7,7 @@ import com.xxd.common.PageDto;
  * SchedulerService
  *
  * @author 许向东
- * @date 2023/12/20
+ * @version 1.0
  */
 public interface SchedulerService {
 

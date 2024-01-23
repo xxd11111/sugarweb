@@ -13,7 +13,7 @@ import java.util.Properties;
  * 邮件自动配置
  *
  * @author xxd
- * @since 2023/8/10
+ * @version 1.0
  */
 @EnableConfigurationProperties(EmailProperties.class)
 @ConditionalOnProperty(prefix = "sugarcoat.email", name = "enable", havingValue = "true")

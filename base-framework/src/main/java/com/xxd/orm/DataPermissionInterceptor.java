@@ -13,7 +13,7 @@ import java.util.HashSet;
  * 数据权限拦截器
  *
  * @author xxd
- * @since 2023/11/15 21:04
+ * @version 1.0
  */
 
 public class DataPermissionInterceptor implements HandlerInterceptor {

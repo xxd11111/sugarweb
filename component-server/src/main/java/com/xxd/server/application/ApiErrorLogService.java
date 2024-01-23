@@ -9,7 +9,7 @@ import com.xxd.server.application.dto.ApiErrorLogQueryDto;
  * 异常日志服务
  *
  * @author xxd
- * @since 2022-11-15
+ * @version 1.0
  */
 public interface ApiErrorLogService {
 

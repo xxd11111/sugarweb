@@ -6,7 +6,7 @@ import com.xxd.orm.SgcRepository;
  * 用户仓库
  *
  * @author xxd
- * @since 2023/3/27 20:52
+ * @version 1.0
  */
 public interface UserRepository extends SgcRepository<User> {
 

@@ -10,7 +10,6 @@ import com.xxd.server.application.dto.SgcApiQueryDto;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/3/13
  */
 public interface SgcApiService {
 

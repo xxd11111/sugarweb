@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarcoat.support.scheduler.SchedulerAutoConfiguration
+  com.sugarweb.support.scheduler.SchedulerAutoConfiguration

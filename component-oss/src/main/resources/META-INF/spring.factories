@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarcoat.support.oss.OssAutoConfiguration
+  com.sugarweb.support.oss.OssAutoConfiguration

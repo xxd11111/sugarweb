@@ -1,3 +1,3 @@
-com.xxd.cache.CacheAutoConfiguration
-com.xxd.orm.OrmAutoConfiguration
-com.xxd.security.SecurityAutoConfiguration
+com.sugarweb.cache.CacheAutoConfiguration
+com.sugarweb.orm.OrmAutoConfiguration
+com.sugarweb.security.SecurityAutoConfiguration

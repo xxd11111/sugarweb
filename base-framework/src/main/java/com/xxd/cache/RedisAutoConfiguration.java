@@ -51,8 +51,8 @@ public class RedisAutoConfiguration {
 	public RedissonAutoConfigurationCustomizer redissonCustomizer() {
 		return config -> {
 			config.setThreads(redissonProperties.getThreads()).setNettyThreads(redissonProperties.getNettyThreads());
-			// todo 先看看默认的性能和效果如何
-			// .setCodec(new JsonJacksonCodec(objectMapper));
+			// 先看看默认的性能和效果如何
+			// config.setCodec(new JsonJacksonCodec(objectMapper));
 			RedissonProperties.SingleServerConfig singleServerConfig = redissonProperties.getSingleServerConfig();
 			if (Objects.nonNull(singleServerConfig)) {
 				// 使用单机模式

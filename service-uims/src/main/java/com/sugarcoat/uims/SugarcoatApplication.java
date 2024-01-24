@@ -24,10 +24,4 @@ public class SugarcoatApplication {
         SpringApplication.run(SugarcoatApplication.class, args);
     }
 
-    //todo
-    @Bean
-    public BeanUtil beanUtil(){
-        return new BeanUtil();
-    }
-
 }

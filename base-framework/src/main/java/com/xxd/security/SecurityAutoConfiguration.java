@@ -1,5 +1,6 @@
 package com.xxd.security;
 
+import com.xxd.BeanUtil;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -121,6 +122,11 @@ public class SecurityAutoConfiguration {
     @Bean
     public UserHolder userHolder(){
         return new SugarcoatUserHolder();
+    }
+
+    @Bean
+    public BeanUtil beanUtil(){
+        return new BeanUtil();
     }
 
 }

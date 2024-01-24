@@ -13,7 +13,7 @@ import org.springframework.beans.factory.BeanFactoryAware;
 import java.lang.annotation.Annotation;
 
 /**
- * TODO
+ * 数据权限适配
  *
  * @author 许向东
  * @version 1.0

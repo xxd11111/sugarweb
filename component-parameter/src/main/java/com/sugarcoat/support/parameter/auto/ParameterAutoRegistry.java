@@ -19,7 +19,7 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 /**
- * TODO
+ * 参数自动注册
  *
  * @author 许向东
  * @version 1.0

@@ -4,7 +4,7 @@ package com.xxd.security;
  * 会话管理
  *
  * @author xxd
- * @since 2023/7/2 14:44
+ * @version 1.0
  */
 public interface TokenRepository {
 

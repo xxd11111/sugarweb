@@ -2,7 +2,7 @@ package com.xxd.server.application.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.exception.ValidateException;
 import com.xxd.orm.ExpressionWrapper;
 import com.xxd.orm.PageDataConvert;
@@ -14,7 +14,6 @@ import com.xxd.server.domain.SgcApi;
 import com.xxd.server.domain.SgcApiRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 /**
@@ -22,7 +21,6 @@ import org.springframework.data.domain.Sort;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/8
  */
 @RequiredArgsConstructor
 public class SgcApiServiceImpl implements SgcApiService {
@@ -43,9 +41,9 @@ public class SgcApiServiceImpl implements SgcApiService {
 	}
 
 	@Override
-	public PageData<SgcApiDto> findPage(PageDto pageDto, SgcApiQueryDto queryDto) {
+	public PageData<SgcApiDto> findPage(PageRequest pageDto, SgcApiQueryDto queryDto) {
 		QSgcApi sgcApi = QSgcApi.sgcApi;
-		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
+		org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
 				.withSort(Sort.Direction.DESC, sgcApi.url.getMetadata().getName());
 
 		BooleanExpression expression = ExpressionWrapper.of()

@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/26
  */
 @Data
 public class TokenInfo {

@@ -1,7 +1,7 @@
 package com.xxd.server.application;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.server.application.dto.SgcApiDto;
 import com.xxd.server.application.dto.SgcApiQueryDto;
 
@@ -15,6 +15,6 @@ public interface SgcApiService {
 
 	SgcApiDto findOne(String id);
 
-	PageData<SgcApiDto> findPage(PageDto pageDto, SgcApiQueryDto queryVO);
+	PageData<SgcApiDto> findPage(PageRequest pageRequest, SgcApiQueryDto queryVO);
 
 }

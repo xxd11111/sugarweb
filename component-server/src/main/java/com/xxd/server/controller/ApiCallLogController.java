@@ -1,7 +1,7 @@
 package com.xxd.server.controller;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.server.domain.SgcApiCallLog;
 import com.xxd.server.application.dto.AccessLogQueryDto;
 import com.xxd.server.application.ApiCallLogService;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/2
  */
 @RestController
 @RequestMapping("/server/accessLog")
@@ -30,8 +29,8 @@ public class ApiCallLogController {
 	}
 
 	@GetMapping("findPage")
-	public PageData<SgcApiCallLog> findPage(PageDto pageDto, AccessLogQueryDto queryDto) {
-		return apiCallLogService.findPage(pageDto, queryDto);
+	public PageData<SgcApiCallLog> findPage(PageRequest pageRequest, AccessLogQueryDto queryDto) {
+		return apiCallLogService.findPage(pageRequest, queryDto);
 	}
 
 }

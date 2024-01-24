@@ -8,7 +8,6 @@ import lombok.Data;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/4/24
  */
 @Data
 public class ParamDto {

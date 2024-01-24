@@ -1,7 +1,7 @@
 package com.sugarcoat.support.scheduler.application;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 
 /**
  * SchedulerService
@@ -23,6 +23,6 @@ public interface SchedulerService {
 
     void run(String id);
 
-    PageData<SchedulerTaskDto> page(PageDto pageDto, SchedulerQueryDto queryDto);
+    PageData<SchedulerTaskDto> page(PageRequest pageRequest, SchedulerQueryDto queryDto);
 
 }

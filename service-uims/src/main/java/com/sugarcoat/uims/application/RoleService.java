@@ -12,7 +12,7 @@ import java.util.List;
  * 角色服务
  *
  * @author xxd
- * @since 2022-12-29
+ * @version 1.0
  */
 public interface RoleService {
 

@@ -10,7 +10,6 @@ import com.sugarcoat.uims.application.vo.LoginVo;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/26
  */
 public interface TokenService{
 

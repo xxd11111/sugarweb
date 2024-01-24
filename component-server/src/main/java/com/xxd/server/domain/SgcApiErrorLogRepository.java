@@ -7,7 +7,6 @@ import com.xxd.orm.SgcRepository;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/1
  */
 public interface SgcApiErrorLogRepository extends SgcRepository<SgcApiErrorLog> {
 

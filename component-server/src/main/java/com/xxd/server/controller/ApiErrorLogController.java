@@ -1,7 +1,7 @@
 package com.xxd.server.controller;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.server.domain.SgcApiErrorLog;
 import com.xxd.server.application.ApiErrorLogService;
 import com.xxd.server.application.dto.ApiErrorLogQueryDto;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/2
  */
 @RestController
 @RequestMapping("/server/errorLog")
@@ -30,8 +29,8 @@ public class ApiErrorLogController {
 	}
 
 	@GetMapping("findPage")
-	public PageData<SgcApiErrorLog> findPage(PageDto pageDto, ApiErrorLogQueryDto queryDto) {
-		return apiErrorLogService.findPage(pageDto, queryDto);
+	public PageData<SgcApiErrorLog> findPage(PageRequest pageRequest, ApiErrorLogQueryDto queryDto) {
+		return apiErrorLogService.findPage(pageRequest, queryDto);
 	}
 
 }

@@ -14,7 +14,7 @@ import java.util.Objects;
  * 参数实体
  *
  * @author xxd
- * @since 2022-11-18
+ * @version 1.0
  */
 @Entity
 @Getter

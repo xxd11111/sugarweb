@@ -6,7 +6,7 @@ import lombok.Data;
  * 邮箱登录
  *
  * @author xxd
- * @since 2023/6/26 21:53
+ * @version 1.0
  */
 @Data
 public class EmailLoginVo {

@@ -9,7 +9,7 @@ import com.sugarcoat.uims.application.vo.UserVo;
  * 用户服务
  *
  * @author xxd
- * @since 2023-01-12
+ * @version 1.0
  */
 public interface UserService {
 

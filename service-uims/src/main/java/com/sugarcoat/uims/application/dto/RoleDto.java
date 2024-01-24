@@ -9,7 +9,7 @@ import java.util.Collection;
  * 角色dto
  *
  * @author xxd
- * @since 2022-12-29
+ * @version 1.0
  */
 @Data
 public class RoleDto {

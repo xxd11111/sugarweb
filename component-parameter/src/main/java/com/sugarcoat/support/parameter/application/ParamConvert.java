@@ -7,7 +7,6 @@ import com.sugarcoat.support.parameter.domain.SugarcoatParameter;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/31
  */
 public class ParamConvert {
 

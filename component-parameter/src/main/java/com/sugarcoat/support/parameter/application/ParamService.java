@@ -1,7 +1,7 @@
 package com.sugarcoat.support.parameter.application;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 
 import java.util.Set;
 
@@ -9,7 +9,7 @@ import java.util.Set;
  * 参数缓存
  *
  * @author xxd
- * @since 2022-11-18
+ * @version 1.0
  */
 public interface ParamService {
 
@@ -19,7 +19,7 @@ public interface ParamService {
 
 	ParamDto findById(String id);
 
-	PageData<ParamDto> findPage(PageDto pageDto, ParamQueryDto cmd);
+	PageData<ParamDto> findPage(PageRequest pageRequest, ParamQueryDto cmd);
 
 	void reset(Set<String> ids);
 

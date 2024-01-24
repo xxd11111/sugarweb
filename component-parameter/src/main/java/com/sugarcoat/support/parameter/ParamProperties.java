@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 参数配置
  *
  * @author xxd
- * @since 2023/9/5 22:03
+ * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarcoat.param")
 @ConditionalOnProperty(prefix = "sugarcoat.param", name = "enable", havingValue = "true")

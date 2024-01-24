@@ -9,7 +9,7 @@ import com.sugarcoat.uims.application.dto.MenuQueryDto;
  * 菜单服务
  *
  * @author xxd
- * @since 2022-12-29
+ * @version 1.0
  */
 public interface MenuService {
 

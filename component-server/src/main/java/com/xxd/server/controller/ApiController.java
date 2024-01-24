@@ -1,7 +1,7 @@
 package com.xxd.server.controller;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.common.Result;
 import com.xxd.server.application.SgcApiService;
 import com.xxd.server.application.dto.SgcApiDto;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/5/8
  */
 @RestController
 @RequestMapping("/server/serverApi")
@@ -31,8 +30,8 @@ public class ApiController {
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<SgcApiDto>> findPage(PageDto pageDto, SgcApiQueryDto queryDto) {
-		return Result.data(sgcApiService.findPage(pageDto, queryDto));
+	public Result<PageData<SgcApiDto>> findPage(PageRequest pageRequest, SgcApiQueryDto queryDto) {
+		return Result.data(sgcApiService.findPage(pageRequest, queryDto));
 	}
 
 }

@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  * 菜单服务实现类
  *
  * @author xxd
- * @since 2023/6/27 23:15
+ * @version 1.0
  */
 @Service
 @RequiredArgsConstructor

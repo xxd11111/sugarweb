@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * 启动类
  *
  * @author xxd
- * @since 2022-10-09
+ * @version 1.0
  */
 @SpringBootApplication
 @EntityScan

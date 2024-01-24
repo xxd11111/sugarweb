@@ -13,7 +13,7 @@ import java.util.Objects;
  * 服务接口
  *
  * @author xxd
- * @since 2022-10-25
+ * @version 1.0
  */
 @Getter
 @Setter

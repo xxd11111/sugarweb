@@ -7,7 +7,7 @@ import com.xxd.orm.SgcRepository;
  * 参数仓库
  *
  * @author xxd
- * @since 2023/5/6 23:54
+ * @version 1.0
  */
 public interface SgcParamRepository extends SgcRepository<SugarcoatParameter> {
 

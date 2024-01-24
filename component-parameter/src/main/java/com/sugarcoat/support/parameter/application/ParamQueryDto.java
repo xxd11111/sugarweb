@@ -6,7 +6,7 @@ import lombok.Data;
  * 参数查询指令
  *
  * @author xxd
- * @since 2023/5/6 23:45
+ * @version 1.0
  */
 @Data
 public class ParamQueryDto {

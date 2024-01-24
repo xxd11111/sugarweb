@@ -9,7 +9,7 @@ import java.util.Collection;
  * 角色详情vo
  *
  * @author xxd
- * @since 2023/6/26 21:58
+ * @version 1.0
  */
 @Data
 public class RoleVo {

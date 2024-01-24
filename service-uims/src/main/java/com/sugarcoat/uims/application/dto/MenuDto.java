@@ -11,7 +11,7 @@ import java.util.Set;
  * 菜单dto
  *
  * @author xxd
- * @since 2022-12-29
+ * @version 1.0
  */
 @Data
 public class MenuDto {

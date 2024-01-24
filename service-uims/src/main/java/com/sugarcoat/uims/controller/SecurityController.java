@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 安全控制器
  *
  * @author xxd
- * @since 2023/6/27 22:11
+ * @version 1.0
  */
 @RestController
 @RequestMapping("/security")

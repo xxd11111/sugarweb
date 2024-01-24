@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
  * 菜单url类型
  *
  * @author xxd
- * @since 2023/6/28 22:40
+ * @version 1.0
  */
 @RequiredArgsConstructor
 public enum MenuUrlType {

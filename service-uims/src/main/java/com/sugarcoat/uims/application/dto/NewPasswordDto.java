@@ -6,7 +6,7 @@ import lombok.Data;
  * 密码
  *
  * @author xxd
- * @since 2023/6/26 21:44
+ * @version 1.0
  */
 @Data
 public class NewPasswordDto {

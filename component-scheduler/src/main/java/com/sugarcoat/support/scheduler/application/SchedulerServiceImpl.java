@@ -3,7 +3,7 @@ package com.sugarcoat.support.scheduler.application;
 import com.google.common.base.Strings;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.sugarcoat.support.scheduler.api.SchedulerManager;
 import com.sugarcoat.support.scheduler.domain.QSgcSchedulerTask;
 import com.sugarcoat.support.scheduler.domain.SgcSchedulerTask;
@@ -11,7 +11,6 @@ import com.sugarcoat.support.scheduler.domain.SgcSchedulerTaskRepository;
 import com.xxd.orm.ExpressionWrapper;
 import com.xxd.orm.PageDataConvert;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * SchedulerService
@@ -79,8 +78,8 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     @Override
-    public PageData<SchedulerTaskDto> page(PageDto pageDto, SchedulerQueryDto queryDto) {
-        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
+    public PageData<SchedulerTaskDto> page(PageRequest pageDto, SchedulerQueryDto queryDto) {
+        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
         QSgcSchedulerTask sgcSchedulerTask = QSgcSchedulerTask.sgcSchedulerTask;
         BooleanExpression build = ExpressionWrapper.of()
                 .and(Strings.isNullOrEmpty(queryDto.getTaskName()), sgcSchedulerTask.taskName.like(queryDto.getTaskName()))

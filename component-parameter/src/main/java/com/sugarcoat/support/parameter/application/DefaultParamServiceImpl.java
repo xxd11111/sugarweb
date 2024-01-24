@@ -2,14 +2,13 @@ package com.sugarcoat.support.parameter.application;
 
 import com.querydsl.core.types.dsl.Expressions;
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.exception.ValidateException;
 import com.sugarcoat.support.parameter.domain.QSugarcoatParameter;
 import com.sugarcoat.support.parameter.domain.SgcParamRepository;
 import com.sugarcoat.support.parameter.domain.SugarcoatParameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.Set;
 
@@ -51,8 +50,8 @@ public class DefaultParamServiceImpl implements ParamService {
     }
 
     @Override
-    public PageData<ParamDto> findPage(PageDto pageDto, ParamQueryDto cmd) {
-        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
+    public PageData<ParamDto> findPage(PageRequest pageDto, ParamQueryDto cmd) {
+        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
         Page<ParamDto> page = sugarcoatParamRepository.findAll(Expressions.TRUE, pageRequest)
                 .map(ParamConvert::getParamDTO);
         return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());

@@ -4,7 +4,7 @@ import com.sugarcoat.support.parameter.application.ParamDto;
 import com.sugarcoat.support.parameter.application.ParamQueryDto;
 import com.sugarcoat.support.parameter.application.ParamService;
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.Set;
  * 参数控制器
  *
  * @author xxd
- * @since 2023/5/7 0:41
+ * @version 1.0
  */
 @RestController
 @RequestMapping("param")
@@ -42,8 +42,8 @@ public class ParameterController {
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<ParamDto>> findPage(PageDto pageDto, ParamQueryDto queryVO) {
-		return Result.data(paramService.findPage(pageDto, queryVO));
+	public Result<PageData<ParamDto>> findPage(PageRequest pageRequest, ParamQueryDto queryVO) {
+		return Result.data(paramService.findPage(pageRequest, queryVO));
 	}
 
 }

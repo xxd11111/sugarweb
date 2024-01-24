@@ -6,7 +6,7 @@ import com.xxd.orm.SgcRepository;
  * 菜单仓库
  *
  * @author xxd
- * @since 2023/3/27 20:57
+ * @version 1.0
  */
 public interface MenuRepository extends SgcRepository<Menu> {
 

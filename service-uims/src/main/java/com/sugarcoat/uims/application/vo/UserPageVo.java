@@ -10,7 +10,7 @@ import lombok.Data;
  * 用户分页vo
  *
  * @author xxd
- * @since 2022-12-28
+ * @version 1.0
  */
 @Data
 public class UserPageVo {

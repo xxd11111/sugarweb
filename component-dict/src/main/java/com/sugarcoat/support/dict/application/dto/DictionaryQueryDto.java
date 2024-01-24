@@ -7,7 +7,6 @@ import lombok.Data;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/4/26
  */
 @Data
 public class DictionaryQueryDto {

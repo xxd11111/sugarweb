@@ -16,7 +16,7 @@ import java.util.*;
  * SgcApiManager
  *
  * @author xxd
- * @since 2023/10/8 21:58
+ * @version 1.0
  */
 @RequiredArgsConstructor
 @Slf4j

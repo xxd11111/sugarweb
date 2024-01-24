@@ -11,7 +11,7 @@ import java.util.Objects;
  * 安全日志
  *
  * @author xxd
- * @since 2022-10-27
+ * @version 1.0
  */
 @Getter
 @Setter

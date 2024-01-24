@@ -1,7 +1,7 @@
 package com.xxd.server.application;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.server.domain.SgcApiCallLog;
 import com.xxd.server.application.dto.AccessLogQueryDto;
 
@@ -15,6 +15,6 @@ public interface ApiCallLogService {
 
 	SgcApiCallLog findOne(String id);
 
-	PageData<SgcApiCallLog> findPage(PageDto pageDto, AccessLogQueryDto accessLogQueryDto);
+	PageData<SgcApiCallLog> findPage(PageRequest pageRequest, AccessLogQueryDto accessLogQueryDto);
 
 }

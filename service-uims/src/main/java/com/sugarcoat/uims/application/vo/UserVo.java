@@ -13,7 +13,7 @@ import java.util.Set;
  * 用户vo
  *
  * @author xxd
- * @since 2023/6/26 21:41
+ * @version 1.0
  */
 @Data
 public class UserVo {

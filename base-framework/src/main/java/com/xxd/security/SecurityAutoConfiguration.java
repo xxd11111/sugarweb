@@ -26,7 +26,7 @@ import java.util.List;
  * security配置
  *
  * @author xxd
- * @since 2022-10-14
+ * @version 1.0
  */
 @EnableWebSecurity
 @Configuration

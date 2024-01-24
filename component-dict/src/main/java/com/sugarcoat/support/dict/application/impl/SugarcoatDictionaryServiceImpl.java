@@ -3,7 +3,7 @@ package com.sugarcoat.support.dict.application.impl;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.sugarcoat.support.dict.api.DictionaryManager;
 import com.xxd.exception.ValidateException;
 import com.sugarcoat.support.dict.application.DictionaryService;
@@ -14,7 +14,6 @@ import com.sugarcoat.support.dict.domain.SgcDictionaryRepository;
 import com.sugarcoat.support.dict.domain.SugarcoatDictionary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ import java.util.Set;
  * 默认实现字典服务
  *
  * @author xxd
- * @since 2023/4/22 10:07
+ * @version 1.0
  */
 @Service
 @RequiredArgsConstructor
@@ -66,10 +65,10 @@ public class SugarcoatDictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public PageData<DictionaryDto> findPage(PageDto pageDto, DictionaryQueryDto queryDto) {
+    public PageData<DictionaryDto> findPage(PageRequest pageDto, DictionaryQueryDto queryDto) {
         QSugarcoatDictionary dictionary = QSugarcoatDictionary.sugarcoatDictionary;
         // 构造分页，按照创建时间降序
-        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
+        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
                 .withSort(Sort.Direction.DESC, dictionary.dictGroup.getMetadata().getName());
         // 条件查询
         BooleanExpression expression = Expressions.TRUE;

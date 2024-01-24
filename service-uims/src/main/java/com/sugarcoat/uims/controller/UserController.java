@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
  * 用户控制器
  *
  * @author xxd
- * @since 2022-12-28
+ * @version 1.0
  */
 @RestController
 @RequestMapping("user")

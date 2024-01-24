@@ -4,7 +4,7 @@ import com.sugarcoat.support.dict.application.DictionaryService;
 import com.sugarcoat.support.dict.application.dto.DictionaryDto;
 import com.sugarcoat.support.dict.application.dto.DictionaryQueryDto;
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,6 @@ import java.util.Set;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/4/26
  */
 @RestController
 @RequestMapping("dictionary")
@@ -54,13 +53,13 @@ public class DictionaryController {
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<DictionaryDto>> findPage(PageDto pageDto, DictionaryQueryDto queryDto) {
-		return Result.data(dictionaryService.findPage(pageDto, queryDto));
+	public Result<PageData<DictionaryDto>> findPage(PageRequest pageRequest, DictionaryQueryDto queryDto) {
+		return Result.data(dictionaryService.findPage(pageRequest, queryDto));
 	}
 
 	@GetMapping("findDictionaryPage")
-	public Result<PageData<DictionaryDto>> findDictPage(PageDto pageDto, DictionaryQueryDto queryDto) {
-		return Result.data(dictionaryService.findPage(pageDto, queryDto));
+	public Result<PageData<DictionaryDto>> findDictPage(PageRequest pageRequest, DictionaryQueryDto queryDto) {
+		return Result.data(dictionaryService.findPage(pageRequest, queryDto));
 	}
 
 }

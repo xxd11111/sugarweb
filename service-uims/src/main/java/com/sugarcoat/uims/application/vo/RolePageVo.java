@@ -7,7 +7,7 @@ import lombok.Data;
  * 角色分页vo
  *
  * @author xxd
- * @since 2022-12-29
+ * @version 1.0
  */
 @Data
 public class RolePageVo {

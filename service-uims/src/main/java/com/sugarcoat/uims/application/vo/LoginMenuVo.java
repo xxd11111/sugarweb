@@ -12,7 +12,7 @@ import java.util.Set;
  * 登录菜单vo
  *
  * @author xxd
- * @since 2023/7/2 10:19
+ * @version 1.0
  */
 @Data
 public class LoginMenuVo {

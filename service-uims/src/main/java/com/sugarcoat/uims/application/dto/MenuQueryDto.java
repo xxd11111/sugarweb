@@ -9,7 +9,7 @@ import lombok.Data;
  * 菜单查询条件vo
  *
  * @author xxd
- * @since 2023/6/26 22:23
+ * @version 1.0
  */
 @Data
 public class MenuQueryDto {

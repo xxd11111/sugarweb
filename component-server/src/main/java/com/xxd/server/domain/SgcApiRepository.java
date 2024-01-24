@@ -7,7 +7,7 @@ import com.xxd.orm.SgcRepository;
  * api存储层
  *
  * @author xxd
- * @since 2023-01-03
+ * @version 1.0
  */
 public interface SgcApiRepository extends SgcRepository<SgcApi> {
 

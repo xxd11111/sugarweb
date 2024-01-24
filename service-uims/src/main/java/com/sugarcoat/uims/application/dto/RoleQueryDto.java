@@ -7,7 +7,7 @@ import lombok.Data;
  * 角色查询dto
  *
  * @author xxd
- * @since 2023/6/26 22:16
+ * @version 1.0
  */
 @Data
 public class RoleQueryDto {

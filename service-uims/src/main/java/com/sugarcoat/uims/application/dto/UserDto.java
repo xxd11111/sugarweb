@@ -7,7 +7,7 @@ import lombok.Data;
  * 用户dto
  *
  * @author xxd
- * @since 2022-12-27
+ * @version 1.0
  */
 @Data
 public class UserDto {

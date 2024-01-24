@@ -2,6 +2,7 @@ package com.xxd.exception;
 
 import com.google.common.base.Strings;
 import com.xxd.common.HttpCode;
+import lombok.Getter;
 
 /**
  * 基础异常
@@ -9,11 +10,12 @@ import com.xxd.common.HttpCode;
  * @author xxd
  * @version 1.0
  */
-public class BaseException extends RuntimeException{
+class BaseException extends RuntimeException{
 
     /**
      * 全局错误码
      */
+    @Getter
     private Integer code;
 
     /**
@@ -43,10 +45,6 @@ public class BaseException extends RuntimeException{
     public BaseException(Integer code, String message) {
         this.code = code;
         this.message = message;
-    }
-
-    public Integer getCode() {
-        return code;
     }
 
     public BaseException setCode(Integer code) {

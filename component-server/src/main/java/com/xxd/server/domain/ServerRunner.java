@@ -8,7 +8,7 @@ import org.springframework.boot.ApplicationRunner;
  * ServerRunner
  *
  * @author xxd
- * @since 2023/10/12 22:12
+ * @version 1.0
  */
 public record ServerRunner(ApiRegister apiRegister) implements ApplicationRunner {
 

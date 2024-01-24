@@ -1,7 +1,7 @@
 package com.xxd.server.application;
 
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.server.domain.SgcApiErrorLog;
 import com.xxd.server.application.dto.ApiErrorLogQueryDto;
 
@@ -15,6 +15,6 @@ public interface ApiErrorLogService {
 
 	SgcApiErrorLog findOne(String id);
 
-	PageData<SgcApiErrorLog> findPage(PageDto pageDto, ApiErrorLogQueryDto queryDto);
+	PageData<SgcApiErrorLog> findPage(PageRequest pageRequest, ApiErrorLogQueryDto queryDto);
 
 }

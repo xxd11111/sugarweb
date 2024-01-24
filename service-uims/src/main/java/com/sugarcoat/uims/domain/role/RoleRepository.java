@@ -7,7 +7,7 @@ import com.xxd.orm.SgcRepository;
  * 角色仓库
  *
  * @author xxd
- * @since 2023/3/27 20:56
+ * @version 1.0
  */
 public interface RoleRepository extends SgcRepository<Role> {
 

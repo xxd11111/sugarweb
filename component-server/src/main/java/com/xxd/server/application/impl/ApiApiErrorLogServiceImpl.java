@@ -2,7 +2,7 @@ package com.xxd.server.application.impl;
 
 import com.querydsl.core.types.dsl.Expressions;
 import com.xxd.common.PageData;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.exception.ValidateException;
 import com.xxd.server.domain.SgcApiErrorLog;
 import com.xxd.server.domain.QSgcApiErrorLog;
@@ -11,7 +11,6 @@ import com.xxd.server.application.dto.ApiErrorLogQueryDto;
 import com.xxd.server.domain.SgcApiErrorLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
  *
  * @author xxd
  * @version 1.0
- * @since 2023/6/1
  */
 @AllArgsConstructor
 @Component
@@ -34,9 +32,9 @@ public class ApiApiErrorLogServiceImpl implements ApiErrorLogService {
 	}
 
 	@Override
-	public PageData<SgcApiErrorLog> findPage(PageDto pageDto, ApiErrorLogQueryDto queryDto) {
+	public PageData<SgcApiErrorLog> findPage(PageRequest pageDto, ApiErrorLogQueryDto queryDto) {
 		QSgcApiErrorLog apiErrorLog = QSgcApiErrorLog.sgcApiErrorLog;
-		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
+		org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
 				.withSort(Sort.Direction.DESC, apiErrorLog.getMetadata().getName());
 		Page<SgcApiErrorLog> page = sgcApiErrorLogRepository.findAll(Expressions.TRUE, pageRequest);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());

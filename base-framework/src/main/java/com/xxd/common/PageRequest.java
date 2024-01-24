@@ -11,7 +11,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class PageDto {
+public class PageRequest {
 
     private static final Integer DEFAULT_PAGE = 1;
 

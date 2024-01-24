@@ -8,7 +8,7 @@ import lombok.Getter;
  * 菜单类型
  *
  * @author xxd
- * @since 2022-10-25
+ * @version 1.0
  */
 @Getter
 @AllArgsConstructor

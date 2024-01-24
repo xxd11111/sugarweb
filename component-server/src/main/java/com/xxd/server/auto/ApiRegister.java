@@ -28,7 +28,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * 接口注册
  *
  * @author xxd
- * @since 2022-11-17
+ * @version 1.0
  */
 @Slf4j
 @RequiredArgsConstructor

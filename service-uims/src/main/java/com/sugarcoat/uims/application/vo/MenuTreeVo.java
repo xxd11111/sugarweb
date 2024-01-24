@@ -13,7 +13,7 @@ import java.util.Set;
  * 菜单树vo
  *
  * @author xxd
- * @since 2022-12-29
+ * @version 1.0
  */
 @Data
 public class MenuTreeVo {

@@ -1,7 +1,7 @@
 package com.sugarcoat.support.scheduler.controller;
 
 import com.sugarcoat.support.scheduler.application.SchedulerService;
-import com.xxd.common.PageDto;
+import com.xxd.common.PageRequest;
 import com.xxd.common.Result;
 import com.sugarcoat.support.scheduler.application.SchedulerQueryDto;
 import com.sugarcoat.support.scheduler.application.SchedulerTaskDto;
@@ -26,8 +26,8 @@ public class SchedulerController {
 
     @GetMapping("page")
     @Operation(operationId = "scheduler:findAll", summary = "分页查询")
-    public Result page(PageDto pageDto, SchedulerQueryDto queryDto) {
-        return Result.data(schedulerService.page(pageDto, queryDto));
+    public Result page(PageRequest pageRequest, SchedulerQueryDto queryDto) {
+        return Result.data(schedulerService.page(pageRequest, queryDto));
     }
 
     @PostMapping("add")

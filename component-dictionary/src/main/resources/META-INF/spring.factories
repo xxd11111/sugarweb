@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarweb.support.dict.DictionaryAutoConfiguration
+  com.sugarweb.dictionary.DictionaryAutoConfiguration

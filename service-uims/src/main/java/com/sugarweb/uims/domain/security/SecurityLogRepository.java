@@ -1,7 +1,7 @@
 package com.sugarweb.uims.domain.security;
 
 
-import com.sugarweb.orm.BaseRepository;
+import com.sugarweb.framework.orm.BaseRepository;
 
 /**
  * SecurityLogRepository

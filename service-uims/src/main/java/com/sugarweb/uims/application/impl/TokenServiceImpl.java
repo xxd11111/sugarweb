@@ -1,16 +1,16 @@
 package com.sugarweb.uims.application.impl;
 
-import com.sugarweb.common.PageData;
-import com.sugarweb.exception.ValidateException;
-import com.sugarweb.security.SecurityHelper;
-import com.sugarweb.security.TokenInfo;
+import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.exception.ValidateException;
+import com.sugarweb.framework.security.SecurityHelper;
+import com.sugarweb.framework.security.TokenInfo;
 import com.sugarweb.uims.application.TokenService;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
 import com.sugarweb.uims.application.vo.LoginVo;
 import com.sugarweb.uims.domain.user.QUser;
 import com.sugarweb.uims.domain.user.User;
 import com.sugarweb.uims.domain.user.UserRepository;
-import com.sugarweb.security.TokenRepository;
+import com.sugarweb.framework.security.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

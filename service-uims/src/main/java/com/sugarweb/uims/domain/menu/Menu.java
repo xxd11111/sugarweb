@@ -1,6 +1,6 @@
 package com.sugarweb.uims.domain.menu;
 
-import com.sugarweb.orm.BooleanEnum;
+import com.sugarweb.framework.orm.BooleanEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;

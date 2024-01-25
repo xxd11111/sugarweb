@@ -1,7 +1,7 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.common.PageData;
-import com.sugarweb.common.Result;
+import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.common.Result;
 import com.sugarweb.uims.application.dto.RoleDto;
 import com.sugarweb.uims.application.vo.RoleVo;
 import com.sugarweb.uims.application.vo.RolePageVo;

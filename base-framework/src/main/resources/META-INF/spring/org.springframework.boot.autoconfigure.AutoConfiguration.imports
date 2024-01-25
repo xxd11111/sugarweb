@@ -1,3 +1,3 @@
-com.sugarweb.cache.CacheAutoConfiguration
-com.sugarweb.orm.OrmAutoConfiguration
-com.sugarweb.security.SecurityAutoConfiguration
+com.sugarweb.framework.cache.CacheAutoConfiguration
+com.sugarweb.framework.orm.OrmAutoConfiguration
+com.sugarweb.framework.security.SecurityAutoConfiguration

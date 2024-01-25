@@ -1,7 +1,7 @@
 package com.sugarweb.uims.application.vo;
 
 import com.sugarweb.uims.domain.user.AccountType;
-import com.sugarweb.orm.BooleanEnum;
+import com.sugarweb.framework.orm.BooleanEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToMany;

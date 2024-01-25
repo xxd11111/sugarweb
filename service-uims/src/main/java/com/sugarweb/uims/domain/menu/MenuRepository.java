@@ -1,6 +1,6 @@
 package com.sugarweb.uims.domain.menu;
 
-import com.sugarweb.orm.BaseRepository;
+import com.sugarweb.framework.orm.BaseRepository;
 
 /**
  * 菜单仓库

@@ -1,6 +1,6 @@
 package com.sugarweb.uims.task;
 
-import com.sugarweb.support.scheduler.api.InnerTaskMethod;
+import com.sugarweb.scheduler.auto.InnerTaskMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

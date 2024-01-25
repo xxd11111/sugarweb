@@ -1,6 +1,6 @@
 package com.sugarweb.uims.domain.menu;
 
-import com.sugarweb.common.EnumValue;
+import com.sugarweb.framework.common.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

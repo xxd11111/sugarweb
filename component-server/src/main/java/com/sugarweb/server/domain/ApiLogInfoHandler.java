@@ -1,13 +1,13 @@
 package com.sugarweb.server.domain;
 
 import com.google.common.base.Strings;
-import com.sugarweb.server.JsonUtil;
-import com.sugarweb.server.ServletUtil;
-import com.sugarweb.common.Result;
-import com.sugarweb.exception.FrameworkException;
-import com.sugarweb.server.ApiLog;
-import com.sugarweb.security.SecurityHelper;
-import com.sugarweb.security.UserInfo;
+import com.sugarweb.server.utils.JsonUtil;
+import com.sugarweb.server.utils.ServletUtil;
+import com.sugarweb.framework.common.Result;
+import com.sugarweb.framework.exception.FrameworkException;
+import com.sugarweb.server.aspect.ApiLog;
+import com.sugarweb.framework.security.SecurityHelper;
+import com.sugarweb.framework.security.UserInfo;
 import com.sugarweb.server.application.ApiService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

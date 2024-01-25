@@ -1,6 +1,6 @@
 package com.sugarweb.server.domain;
 
-import com.sugarweb.orm.BaseRepository;
+import com.sugarweb.framework.orm.BaseRepository;
 
 /**
  * 访问日志仓库

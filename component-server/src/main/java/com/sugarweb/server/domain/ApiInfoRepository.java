@@ -1,7 +1,7 @@
 package com.sugarweb.server.domain;
 
 
-import com.sugarweb.orm.BaseRepository;
+import com.sugarweb.framework.orm.BaseRepository;
 
 /**
  * api存储层

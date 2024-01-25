@@ -1,6 +1,6 @@
 package com.sugarweb.uims.domain.user;
 
-import com.sugarweb.orm.BaseRepository;
+import com.sugarweb.framework.orm.BaseRepository;
 
 /**
  * 用户仓库

@@ -1,7 +1,7 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.common.Result;
-import com.sugarweb.security.TokenInfo;
+import com.sugarweb.framework.common.Result;
+import com.sugarweb.framework.security.TokenInfo;
 import com.sugarweb.uims.application.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

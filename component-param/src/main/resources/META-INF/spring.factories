@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarweb.support.param.ParameterAutoConfiguration
+  com.sugarweb.param.ParameterAutoConfiguration

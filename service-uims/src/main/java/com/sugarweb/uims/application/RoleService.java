@@ -1,6 +1,6 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.common.PageData;
+import com.sugarweb.framework.common.PageData;
 import com.sugarweb.uims.application.dto.RoleDto;
 import com.sugarweb.uims.application.vo.RoleVo;
 import com.sugarweb.uims.application.vo.RolePageVo;

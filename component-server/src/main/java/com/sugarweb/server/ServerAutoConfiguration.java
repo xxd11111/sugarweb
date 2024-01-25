@@ -1,9 +1,10 @@
 package com.sugarweb.server;
 
-import com.sugarweb.exception.GlobalExceptionHandler;
-import com.sugarweb.security.AuthenticateService;
-import com.sugarweb.security.AuthenticateFilter;
-import com.sugarweb.server.auto.ApiRegister;
+import com.sugarweb.framework.exception.GlobalExceptionHandler;
+import com.sugarweb.framework.security.AuthenticateService;
+import com.sugarweb.framework.security.AuthenticateFilter;
+import com.sugarweb.server.aspect.ApiLogAspect;
+import com.sugarweb.server.auto.ApiAutoRegister;
 import com.sugarweb.server.controller.ApiController;
 import com.sugarweb.server.domain.*;
 import com.sugarweb.server.application.ApiService;
@@ -64,14 +65,8 @@ public class ServerAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiRegister apiRegister(WebApplicationContext applicationContext, ApiInfoRepository sgcApiInfoRepository) {
-        return new ApiRegister(applicationContext, sgcApiInfoRepository);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ServerRunner serverRunner(ApiRegister apiRegister){
-        return new ServerRunner(apiRegister);
+    public ApiAutoRegister apiRegister(WebApplicationContext applicationContext, ApiInfoRepository sgcApiInfoRepository) {
+        return new ApiAutoRegister(applicationContext, sgcApiInfoRepository);
     }
 
     @Bean

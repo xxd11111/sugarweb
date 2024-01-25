@@ -1,7 +1,7 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.common.PageData;
-import com.sugarweb.security.TokenInfo;
+import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.security.TokenInfo;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
 import com.sugarweb.uims.application.vo.LoginVo;
 

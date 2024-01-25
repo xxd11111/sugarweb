@@ -2,7 +2,7 @@ package com.sugarweb.uims.application.vo;
 
 import com.sugarweb.uims.domain.menu.MenuType;
 import com.sugarweb.uims.domain.menu.MenuUrlType;
-import com.sugarweb.orm.BooleanEnum;
+import com.sugarweb.framework.orm.BooleanEnum;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;

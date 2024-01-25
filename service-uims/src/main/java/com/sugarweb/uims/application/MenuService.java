@@ -1,6 +1,6 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.common.PageData;
+import com.sugarweb.framework.common.PageData;
 import com.sugarweb.uims.application.dto.MenuDto;
 import com.sugarweb.uims.application.vo.MenuTreeVo;
 import com.sugarweb.uims.application.dto.MenuQueryDto;

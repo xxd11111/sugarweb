@@ -1,8 +1,8 @@
 package com.sugarweb.server.controller;
 
-import com.sugarweb.common.PageData;
-import com.sugarweb.common.PageRequest;
-import com.sugarweb.common.Result;
+import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.Result;
 import com.sugarweb.server.application.ApiService;
 import com.sugarweb.server.application.dto.ApiInfoDto;
 import com.sugarweb.server.application.dto.ApiInfoQueryDto;

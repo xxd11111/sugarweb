@@ -1,7 +1,7 @@
 package com.sugarweb.uims.domain.role;
 
 import com.sugarweb.uims.domain.menu.Menu;
-import com.sugarweb.orm.BooleanEnum;
+import com.sugarweb.framework.orm.BooleanEnum;
 import lombok.*;
 import org.hibernate.Hibernate;
 

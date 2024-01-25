@@ -1,9 +1,9 @@
 package com.sugarweb.server.application.impl;
 
 import com.querydsl.core.types.dsl.Expressions;
-import com.sugarweb.common.PageData;
-import com.sugarweb.common.PageRequest;
-import com.sugarweb.exception.ValidateException;
+import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.domain.QApiErrorLog;
 import com.sugarweb.server.application.ApiErrorLogService;

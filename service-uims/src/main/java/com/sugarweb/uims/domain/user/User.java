@@ -1,10 +1,10 @@
 package com.sugarweb.uims.domain.user;
 
 import com.google.common.collect.Iterables;
-import com.sugarweb.security.UserInfo;
+import com.sugarweb.framework.security.UserInfo;
 import com.sugarweb.uims.domain.menu.Menu;
 import com.sugarweb.uims.domain.role.Role;
-import com.sugarweb.orm.BooleanEnum;
+import com.sugarweb.framework.orm.BooleanEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

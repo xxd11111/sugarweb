@@ -1,6 +1,6 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.common.Result;
+import com.sugarweb.framework.common.Result;
 import com.sugarweb.uims.application.dto.NewPasswordDto;
 import com.sugarweb.uims.application.dto.UserDto;
 import com.sugarweb.uims.application.dto.UserQueryDto;

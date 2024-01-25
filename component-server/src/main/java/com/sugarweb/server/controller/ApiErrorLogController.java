@@ -1,7 +1,7 @@
 package com.sugarweb.server.controller;
 
-import com.sugarweb.common.PageData;
-import com.sugarweb.common.PageRequest;
+import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.common.PageRequest;
 import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.application.ApiErrorLogService;
 import com.sugarweb.server.application.dto.ApiErrorLogQueryDto;

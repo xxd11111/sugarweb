@@ -1,7 +1,7 @@
 package com.sugarweb.uims.domain.role;
 
 
-import com.sugarweb.orm.BaseRepository;
+import com.sugarweb.framework.orm.BaseRepository;
 
 /**
  * 角色仓库

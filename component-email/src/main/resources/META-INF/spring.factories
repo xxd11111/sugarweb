@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.sugarweb.support.email.EmailAutoConfiguration
+  com.sugarweb.email.EmailAutoConfiguration

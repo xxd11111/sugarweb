@@ -2,7 +2,7 @@ package com.sugarweb.uims.application.dto;
 
 import com.sugarweb.uims.domain.menu.MenuType;
 import com.sugarweb.uims.domain.menu.MenuUrlType;
-import com.sugarweb.orm.BooleanEnum;
+import com.sugarweb.framework.orm.BooleanEnum;
 import lombok.Data;
 
 import java.util.Set;

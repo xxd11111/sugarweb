@@ -1,11 +1,11 @@
 package com.sugarweb.server.application.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarweb.common.PageData;
-import com.sugarweb.common.PageRequest;
-import com.sugarweb.exception.ValidateException;
-import com.sugarweb.orm.ExpressionWrapper;
-import com.sugarweb.orm.PageDataConvert;
+import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.exception.ValidateException;
+import com.sugarweb.framework.orm.ExpressionWrapper;
+import com.sugarweb.framework.orm.PageDataConvert;
 import com.sugarweb.server.domain.QApiInfo;
 import com.sugarweb.server.application.dto.ApiInfoDto;
 import com.sugarweb.server.application.dto.ApiInfoQueryDto;

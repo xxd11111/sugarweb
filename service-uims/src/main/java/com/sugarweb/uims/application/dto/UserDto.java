@@ -1,6 +1,6 @@
 package com.sugarweb.uims.application.dto;
 
-import com.sugarweb.orm.BooleanEnum;
+import com.sugarweb.framework.orm.BooleanEnum;
 import lombok.Data;
 
 /**

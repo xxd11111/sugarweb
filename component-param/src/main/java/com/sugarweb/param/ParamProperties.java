@@ -28,7 +28,7 @@ public class ParamProperties {
     /**
      * 扫描路径，扫描注解 @InnerParamScan
      */
-    private String cacheprefix = "sugarweb:param:";
+    private String cachePrefix = "sugarweb:param:";
 
 
 }

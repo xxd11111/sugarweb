@@ -9,15 +9,15 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
+        <module>base-framework</module>
         <module>component-dictionary</module>
         <module>component-openapi</module>
         <module>component-param</module>
         <module>component-oss</module>
         <module>component-email</module>
         <module>component-scheduler</module>
-        <module>base-framework</module>
-        <module>service-uims</module>
         <module>component-server</module>
+        <module>service-uims</module>
     </modules>
 
     <name>${project.artifactId}</name>

@@ -11,7 +11,7 @@ import java.util.Optional;
  * @author xxd
  * @version 1.0
  */
-public class DefaultAuditorAware implements AuditorAware<String> {
+public class AuditorAwareImpl implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {

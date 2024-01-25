@@ -3,7 +3,7 @@ package com.sugarweb.framework.orm;
 import com.baomidou.dynamic.datasource.processor.DsProcessor;
 import com.google.common.base.Objects;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sugarweb.framework.orm.audit.DefaultAuditorAware;
+import com.sugarweb.framework.orm.audit.AuditorAwareImpl;
 import com.sugarweb.framework.orm.tenant.TenantIdProcessor;
 import com.sugarweb.framework.orm.tenant.TenantIdResolver;
 import com.sugarweb.framework.orm.datapermission.*;
@@ -42,7 +42,7 @@ public class OrmAutoConfiguration implements BeanPostProcessor, WebMvcConfigurer
 
     @Bean
     public AuditorAware<String> auditorAware() {
-        return new DefaultAuditorAware();
+        return new AuditorAwareImpl();
     }
 
     @Bean(name = "sgcTenantIdResolver")

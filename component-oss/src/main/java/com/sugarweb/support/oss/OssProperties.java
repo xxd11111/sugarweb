@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author 许向东
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "sugarcoat.oss")
+@ConfigurationProperties(prefix = "sugarweb.oss")
 @Data
 public class OssProperties {
 

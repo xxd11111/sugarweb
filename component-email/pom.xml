@@ -19,7 +19,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.sugarcoat</groupId>
+            <groupId>com.sugarweb</groupId>
             <artifactId>component-oss</artifactId>
         </dependency>
     </dependencies>

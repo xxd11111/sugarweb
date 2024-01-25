@@ -8,6 +8,6 @@ package com.sugarweb.support.email;
  */
 public interface EmailClient {
 
-	void sendEmail(Email email);
+	void sendEmail(EmailInfo email);
 
 }

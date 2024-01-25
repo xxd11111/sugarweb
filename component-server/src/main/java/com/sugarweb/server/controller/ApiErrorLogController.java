@@ -2,7 +2,7 @@ package com.sugarweb.server.controller;
 
 import com.sugarweb.common.PageData;
 import com.sugarweb.common.PageRequest;
-import com.sugarweb.server.domain.SgcApiErrorLog;
+import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.application.ApiErrorLogService;
 import com.sugarweb.server.application.dto.ApiErrorLogQueryDto;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +24,12 @@ public class ApiErrorLogController {
 	private final ApiErrorLogService apiErrorLogService;
 
 	@GetMapping("findOne")
-	public SgcApiErrorLog findOne(String id) {
+	public ApiErrorLog findOne(String id) {
 		return apiErrorLogService.findOne(id);
 	}
 
 	@GetMapping("findPage")
-	public PageData<SgcApiErrorLog> findPage(PageRequest pageRequest, ApiErrorLogQueryDto queryDto) {
+	public PageData<ApiErrorLog> findPage(PageRequest pageRequest, ApiErrorLogQueryDto queryDto) {
 		return apiErrorLogService.findPage(pageRequest, queryDto);
 	}
 

@@ -3,7 +3,7 @@ package com.sugarweb.support.oss.controller;
 import com.sugarweb.support.oss.application.FileQueryDto;
 import com.sugarweb.support.oss.application.FileService;
 import com.sugarweb.common.Result;
-import com.sugarweb.support.oss.domain.SgcFileInfo;
+import com.sugarweb.support.oss.domain.FileInfo;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -35,7 +35,7 @@ public class FileController {
 	}
 
 	@PostMapping("upload")
-	public Result<SgcFileInfo> upload(MultipartFile multipartFile, String fileGroup) {
+	public Result<FileInfo> upload(MultipartFile multipartFile, String fileGroup) {
         try {
             return Result.data(fileService.upload(fileGroup, multipartFile.getInputStream(), multipartFile.getContentType(), multipartFile.getOriginalFilename()));
         } catch (IOException e) {

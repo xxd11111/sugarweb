@@ -6,8 +6,8 @@ import com.sugarweb.security.AuthenticateFilter;
 import com.sugarweb.server.auto.ApiRegister;
 import com.sugarweb.server.controller.ApiController;
 import com.sugarweb.server.domain.*;
-import com.sugarweb.server.application.SgcApiService;
-import com.sugarweb.server.application.impl.SgcApiServiceImpl;
+import com.sugarweb.server.application.ApiService;
+import com.sugarweb.server.application.impl.ApiServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -27,19 +27,19 @@ import org.springframework.web.context.WebApplicationContext;
 @EntityScan
 @EnableJpaRepositories
 @EnableConfigurationProperties(ServerProperties.class)
-@ConditionalOnProperty(prefix = "sugarcoat.server", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true")
 public class ServerAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public SgcApiService serverApiService(BaseApiRepository sgcApiRepository) {
-        return new SgcApiServiceImpl(sgcApiRepository);
+    public ApiService serverApiService(ApiInfoRepository sgcApiInfoRepository) {
+        return new ApiServiceImpl(sgcApiInfoRepository);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiController serverApiController(SgcApiService sgcApiService) {
-        return new ApiController(sgcApiService);
+    public ApiController serverApiController(ApiService apiService) {
+        return new ApiController(apiService);
     }
 
     @Bean
@@ -56,22 +56,16 @@ public class ServerAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiLogInfoHandler apiLogInfoHandler(BaseApiCallLogRepository sgcApiCallLogRepository,
-                                               BaseApiErrorLogRepository sgcApiErrorLogRepository,
-                                               ApiManager apiManager) {
-        return new ApiLogInfoHandler(sgcApiCallLogRepository, sgcApiErrorLogRepository, apiManager);
+    public ApiLogInfoHandler apiLogInfoHandler(ApiCallLogRepository sgcApiCallLogRepository,
+                                               ApiErrorLogRepository sgcApiErrorLogRepository,
+                                               ApiService apiService) {
+        return new ApiLogInfoHandler(sgcApiCallLogRepository, sgcApiErrorLogRepository, apiService);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiManager apiManager(BaseApiRepository sgcApiRepository, ApiRegister apiRegister) {
-        return new SgcApiManager(sgcApiRepository, apiRegister);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ApiRegister apiRegister(WebApplicationContext applicationContext, BaseApiRepository sgcApiRepository) {
-        return new ApiRegister(applicationContext, sgcApiRepository);
+    public ApiRegister apiRegister(WebApplicationContext applicationContext, ApiInfoRepository sgcApiInfoRepository) {
+        return new ApiRegister(applicationContext, sgcApiInfoRepository);
     }
 
     @Bean

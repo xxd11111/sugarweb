@@ -3,9 +3,9 @@ package com.sugarweb.server.controller;
 import com.sugarweb.common.PageData;
 import com.sugarweb.common.PageRequest;
 import com.sugarweb.common.Result;
-import com.sugarweb.server.application.SgcApiService;
-import com.sugarweb.server.application.dto.SgcApiDto;
-import com.sugarweb.server.application.dto.SgcApiQueryDto;
+import com.sugarweb.server.application.ApiService;
+import com.sugarweb.server.application.dto.ApiInfoDto;
+import com.sugarweb.server.application.dto.ApiInfoQueryDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +21,17 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ApiController {
 
-	private final SgcApiService sgcApiService;
+	private final ApiService apiService;
 
 	@Operation
 	@GetMapping("findOne/{id}")
-	public Result<SgcApiDto> findOne(@PathVariable String id) {
-		return Result.data(sgcApiService.findOne(id));
+	public Result<ApiInfoDto> findOne(@PathVariable String id) {
+		return Result.data(apiService.findOne(id));
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<SgcApiDto>> findPage(PageRequest pageRequest, SgcApiQueryDto queryDto) {
-		return Result.data(sgcApiService.findPage(pageRequest, queryDto));
+	public Result<PageData<ApiInfoDto>> findPage(PageRequest pageRequest, ApiInfoQueryDto queryDto) {
+		return Result.data(apiService.findPage(pageRequest, queryDto));
 	}
 
 }

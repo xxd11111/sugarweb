@@ -1,5 +1,7 @@
 package com.sugarweb.support.oss.api;
 
+import com.sugarweb.support.oss.domain.FileInfo;
+
 import java.io.InputStream;
 
 /**
@@ -12,7 +14,7 @@ public interface FileClient {
 
 	void createBucket();
 
-	UploadInfo upload(String path, InputStream inputStream, String contentType);
+	FileUploadResult upload(String path, InputStream inputStream, String contentType);
 
 	InputStream getContent(String key);
 

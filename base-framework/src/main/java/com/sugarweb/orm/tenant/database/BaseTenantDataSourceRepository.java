@@ -8,5 +8,5 @@ import com.sugarweb.orm.BaseRepository;
  * @author xxd
  * @version 1.0
  */
-public interface BaseTenantDataSourceRepository extends BaseRepository<SgcTenantDataSource> {
+public interface BaseTenantDataSourceRepository extends BaseRepository<TenantDataSourceInfo> {
 }

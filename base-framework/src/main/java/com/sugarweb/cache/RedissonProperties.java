@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties(prefix = "sugarcoat.cache")
+@ConfigurationProperties(prefix = "sugarweb.cache")
 public class RedissonProperties {
 
 	/**

@@ -14,7 +14,6 @@ import java.io.IOException;
  *
  * @author xxd
  * @version 1.0
- * @version 1.0
  */
 public class AuthenticateFilter extends OncePerRequestFilter {
 

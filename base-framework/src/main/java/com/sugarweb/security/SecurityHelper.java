@@ -8,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
  *
  * @author xxd
  * @version 1.0
- * @version 1.0
  */
 public class SecurityHelper {
 

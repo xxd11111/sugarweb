@@ -1,5 +1,7 @@
 package com.sugarweb.support.scheduler.api;
 
+import com.sugarweb.support.scheduler.domain.SchedulerTask;
+
 import java.util.List;
 
 /**

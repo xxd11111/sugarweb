@@ -4,9 +4,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import com.sugarweb.exception.FrameworkException;
 import com.sugarweb.exception.ServerException;
-import com.sugarweb.support.oss.api.FileInfo;
 import com.sugarweb.support.oss.api.FileClient;
-import com.sugarweb.support.oss.api.UploadInfo;
+import com.sugarweb.support.oss.api.FileUploadResult;
 import com.sugarweb.support.oss.OssProperties;
 
 import java.io.InputStream;
@@ -44,7 +43,7 @@ public class S3FileClient implements FileClient {
     }
 
     @Override
-    public UploadInfo upload(String path, InputStream inputStream, String contentType) {
+    public FileUploadResult upload(String path, InputStream inputStream, String contentType) {
         try {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(contentType);
@@ -53,9 +52,9 @@ public class S3FileClient implements FileClient {
             PutObjectResult putObjectResult = client.putObject(putObjectRequest);
             //这个s3的api非常优秀
             long contentLength = putObjectResult.getMetadata().getContentLength();
-            UploadInfo uploadInfo = new UploadInfo();
-            uploadInfo.setFileSize(contentLength);
-            return uploadInfo;
+            FileUploadResult fileUploadResult = new FileUploadResult();
+            fileUploadResult.setFileSize(contentLength);
+            return fileUploadResult;
         } catch (Exception e) {
             throw new ServerException("上传文件失败，请检查配置信息:[" + e.getMessage() + "]");
         }
@@ -70,7 +69,7 @@ public class S3FileClient implements FileClient {
     @Override
     public FileInfo getFileObject(String filePath) {
         S3Object s3Object = client.getObject(bucketName, filePath);
-        SgcFileInfo fileObject = new SgcFileInfo();
+        FileInfo fileObject = new FileInfo();
         ObjectMetadata objectMetadata = s3Object.getObjectMetadata();
         fileObject.setFileSize(objectMetadata.getContentLength());
         fileObject.setContentType(objectMetadata.getContentType());

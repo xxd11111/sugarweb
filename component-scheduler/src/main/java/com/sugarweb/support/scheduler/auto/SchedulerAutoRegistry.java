@@ -6,9 +6,9 @@ import com.sugarweb.exception.FrameworkException;
 import com.sugarweb.support.scheduler.api.InnerTaskBean;
 import com.sugarweb.support.scheduler.api.InnerTaskMethod;
 import com.sugarweb.auto.AbstractAutoRegistry;
-import com.sugarweb.support.scheduler.domain.QSgcSchedulerTask;
-import com.sugarweb.support.scheduler.domain.SgcSchedulerTask;
-import com.sugarweb.support.scheduler.domain.BaseSchedulerTaskRepository;
+import com.sugarweb.support.scheduler.domain.QSchedulerTask;
+import com.sugarweb.support.scheduler.domain.SchedulerTask;
+import com.sugarweb.support.scheduler.domain.SchedulerTaskRepository;
 import com.sugarweb.orm.BooleanEnum;
 import org.springframework.scheduling.support.CronExpression;
 
@@ -22,21 +22,21 @@ import java.util.*;
  * @author 许向东
  * @version 1.0
  */
-public class SchedulerAutoRegistry extends AbstractAutoRegistry<SgcSchedulerTask> {
+public class SchedulerAutoRegistry extends AbstractAutoRegistry<SchedulerTask> {
 
-    private final BaseSchedulerTaskRepository sgcSchedulerTaskRepository;
+    private final SchedulerTaskRepository sgcSchedulerTaskRepository;
 
-    public SchedulerAutoRegistry(BaseSchedulerTaskRepository sgcSchedulerTaskRepository) {
+    public SchedulerAutoRegistry(SchedulerTaskRepository sgcSchedulerTaskRepository) {
         this.sgcSchedulerTaskRepository = sgcSchedulerTaskRepository;
     }
 
     @Override
-    protected void insert(SgcSchedulerTask o) {
+    protected void insert(SchedulerTask o) {
         sgcSchedulerTaskRepository.save(o);
     }
 
     @Override
-    protected void merge(SgcSchedulerTask db, SgcSchedulerTask scan) {
+    protected void merge(SchedulerTask db, SchedulerTask scan) {
         db.setDefaultCron(scan.getDefaultCron());
         db.setDefaultParams(scan.getDefaultParams());
         db.setBeanName(scan.getDefaultParams());
@@ -45,10 +45,10 @@ public class SchedulerAutoRegistry extends AbstractAutoRegistry<SgcSchedulerTask
     }
 
     @Override
-    protected void deleteByCondition(Collection<SgcSchedulerTask> collection) {
+    protected void deleteByCondition(Collection<SchedulerTask> collection) {
         List<String> removeTaskName = new ArrayList<>();
-        Iterable<SgcSchedulerTask> all = sgcSchedulerTaskRepository.findAll();
-        for (SgcSchedulerTask schedulerTask : all) {
+        Iterable<SchedulerTask> all = sgcSchedulerTaskRepository.findAll();
+        for (SchedulerTask schedulerTask : all) {
             if (collection.stream().noneMatch(a -> schedulerTask.getTaskName().equals(a.getTaskName()))) {
                 removeTaskName.add(schedulerTask.getTaskName());
             }
@@ -57,16 +57,16 @@ public class SchedulerAutoRegistry extends AbstractAutoRegistry<SgcSchedulerTask
     }
 
     @Override
-    protected SgcSchedulerTask selectOne(SgcSchedulerTask o) {
-        QSgcSchedulerTask sgcSchedulerTask = QSgcSchedulerTask.sgcSchedulerTask;
+    protected SchedulerTask selectOne(SchedulerTask o) {
+        QSchedulerTask sgcSchedulerTask = QSchedulerTask.schedulerTask;
         BooleanExpression eq = sgcSchedulerTask.taskName.eq(o.getTaskName());
         return sgcSchedulerTaskRepository.findOne(eq).orElse(null);
     }
 
     @Override
-    public Collection<SgcSchedulerTask> scan() {
+    public Collection<SchedulerTask> scan() {
         Map<String, Object> beansWithAnnotation = BeanUtil.getBeansWithAnnotation(InnerTaskBean.class);
-        Map<String, SgcSchedulerTask> schedulerTaskMap = new HashMap<>();
+        Map<String, SchedulerTask> schedulerTaskMap = new HashMap<>();
         for (Map.Entry<String, Object> stringObjectEntry : beansWithAnnotation.entrySet()) {
             String beanName = stringObjectEntry.getKey();
             Object beanInstance = stringObjectEntry.getValue();
@@ -91,11 +91,11 @@ public class SchedulerAutoRegistry extends AbstractAutoRegistry<SgcSchedulerTask
                 }
                 int paramsLength = parameters.length;
                 if (schedulerTaskMap.containsKey(taskName)) {
-                    SgcSchedulerTask old = schedulerTaskMap.get(taskName);
+                    SchedulerTask old = schedulerTaskMap.get(taskName);
                     throw new FrameworkException("存在同名taskName:{}, fist:{}, second:{}", old.getBeanName() + "." + old.getMethodName(), beanName + "." + method.getName());
                 }
 
-                SgcSchedulerTask schedulerTask = new SgcSchedulerTask();
+                SchedulerTask schedulerTask = new SchedulerTask();
                 schedulerTask.setTaskName(taskName);
                 schedulerTask.setBeanName(beanName);
                 schedulerTask.setMethodName(method.getName());

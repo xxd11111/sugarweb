@@ -16,7 +16,7 @@ import java.util.Properties;
  * @version 1.0
  */
 @EnableConfigurationProperties(EmailProperties.class)
-@ConditionalOnProperty(prefix = "sugarcoat.email", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarweb.email", name = "enable", havingValue = "true")
 public class EmailAutoConfiguration {
 
     @Resource

@@ -9,9 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>component-dict</module>
-        <module>component-doc</module>
-        <module>component-parameter</module>
+        <module>component-dictionary</module>
+        <module>component-openapi</module>
+        <module>component-param</module>
         <module>component-oss</module>
         <module>component-email</module>
         <module>component-scheduler</module>
@@ -46,13 +46,13 @@
 
             <dependency>
                 <groupId>com.sugar</groupId>
-                <artifactId>component-dict</artifactId>
+                <artifactId>component-dictionary</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
             <dependency>
                 <groupId>com.sugar</groupId>
-                <artifactId>component-doc</artifactId>
+                <artifactId>component-openapi</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -63,14 +63,14 @@
             </dependency>
 
             <dependency>
-                <groupId>com.sugarcoat</groupId>
+                <groupId>com.sugarweb</groupId>
                 <artifactId>component-oss</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
             <dependency>
                 <groupId>com.sugar</groupId>
-                <artifactId>component-parameter</artifactId>
+                <artifactId>component-param</artifactId>
                 <version>1.0.0</version>
             </dependency>
 

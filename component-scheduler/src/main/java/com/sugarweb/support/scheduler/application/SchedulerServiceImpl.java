@@ -5,9 +5,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarweb.common.PageData;
 import com.sugarweb.common.PageRequest;
 import com.sugarweb.support.scheduler.api.SchedulerManager;
-import com.sugarweb.support.scheduler.domain.QSgcSchedulerTask;
-import com.sugarweb.support.scheduler.domain.SgcSchedulerTask;
-import com.sugarweb.support.scheduler.domain.BaseSchedulerTaskRepository;
+import com.sugarweb.support.scheduler.domain.QSchedulerTask;
+import com.sugarweb.support.scheduler.domain.SchedulerTask;
+import com.sugarweb.support.scheduler.domain.SchedulerTaskRepository;
 import com.sugarweb.orm.ExpressionWrapper;
 import com.sugarweb.orm.PageDataConvert;
 import org.springframework.data.domain.Page;
@@ -22,16 +22,16 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     private final SchedulerManager schedulerManager;
 
-    private final BaseSchedulerTaskRepository sgcSchedulerTaskRepository;
+    private final SchedulerTaskRepository sgcSchedulerTaskRepository;
 
-    public SchedulerServiceImpl(SchedulerManager schedulerManager, BaseSchedulerTaskRepository sgcSchedulerTaskRepository) {
+    public SchedulerServiceImpl(SchedulerManager schedulerManager, SchedulerTaskRepository sgcSchedulerTaskRepository) {
         this.schedulerManager = schedulerManager;
         this.sgcSchedulerTaskRepository = sgcSchedulerTaskRepository;
     }
 
     @Override
     public void add(SchedulerTaskDto dto) {
-        SgcSchedulerTask schedulerTask = new SgcSchedulerTask();
+        SchedulerTask schedulerTask = new SchedulerTask();
         schedulerTask.setTaskName(dto.getTaskName());
         schedulerTask.setBeanName(dto.getBeanName());
         schedulerTask.setMethodName(dto.getMethodName());
@@ -46,7 +46,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 
     @Override
     public void update(SchedulerTaskDto dto) {
-        SgcSchedulerTask schedulerTask = (SgcSchedulerTask) schedulerManager.getOne(dto.getId());
+        SchedulerTask schedulerTask = (SchedulerTask) schedulerManager.getOne(dto.getId());
         schedulerTask.setTaskName(dto.getTaskName());
         schedulerTask.setBeanName(dto.getBeanName());
         schedulerTask.setMethodName(dto.getMethodName());
@@ -80,7 +80,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     public PageData<SchedulerTaskDto> page(PageRequest pageDto, SchedulerQueryDto queryDto) {
         org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
-        QSgcSchedulerTask sgcSchedulerTask = QSgcSchedulerTask.sgcSchedulerTask;
+        QSchedulerTask sgcSchedulerTask = QSchedulerTask.schedulerTask;
         BooleanExpression build = ExpressionWrapper.of()
                 .and(Strings.isNullOrEmpty(queryDto.getTaskName()), sgcSchedulerTask.taskName.like(queryDto.getTaskName()))
                 .and(Strings.isNullOrEmpty(queryDto.getStatus()), sgcSchedulerTask.status.like(queryDto.getStatus()))

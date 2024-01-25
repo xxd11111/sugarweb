@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sugarcoat</groupId>
+    <groupId>com.sugarweb</groupId>
     <artifactId>component-oss</artifactId>
 
     <dependencies>

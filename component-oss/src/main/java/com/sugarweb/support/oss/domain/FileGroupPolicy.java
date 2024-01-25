@@ -15,12 +15,10 @@ public class FileGroupPolicy {
 
     private String fileGroup;
 
-    private long maxFileSize;
+    private long maxSize;
 
     private List<String> allowFileTypes;
 
     private List<String> denyFileTypes;
-
-    private long uploadMaxSize;
 
 }

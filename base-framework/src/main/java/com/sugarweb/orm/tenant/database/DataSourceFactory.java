@@ -11,23 +11,23 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class DataSourceFactory {
 
-    public static HikariDataSource create(SgcDataSourceProperties sgcDsInfo){
+    public static HikariDataSource create(TenantDataSourceInfo tenantDataSourceInfo){
         HikariConfig hikariConfig = new HikariConfig();
 
-        hikariConfig.setDriverClassName(sgcDsInfo.getDriverClassName());
-        hikariConfig.setJdbcUrl(sgcDsInfo.getJdbcUrl());
-        hikariConfig.setUsername(sgcDsInfo.getUsername());
-        hikariConfig.setPassword(sgcDsInfo.getPassword());
+        hikariConfig.setDriverClassName(tenantDataSourceInfo.getDriverClassName());
+        hikariConfig.setJdbcUrl(tenantDataSourceInfo.getJdbcUrl());
+        hikariConfig.setUsername(tenantDataSourceInfo.getUsername());
+        hikariConfig.setPassword(tenantDataSourceInfo.getPassword());
 
-        hikariConfig.setPoolName(sgcDsInfo.getPoolName());
-        hikariConfig.setMaximumPoolSize(sgcDsInfo.getMaximumPoolSize());
-        hikariConfig.setMinimumIdle(sgcDsInfo.getMinimumIdle());
+        hikariConfig.setPoolName(tenantDataSourceInfo.getPoolName());
+        hikariConfig.setMaximumPoolSize(tenantDataSourceInfo.getMaximumPoolSize());
+        hikariConfig.setMinimumIdle(tenantDataSourceInfo.getMinimumIdle());
 
-        hikariConfig.setConnectionTimeout(sgcDsInfo.getConnectionTimeout());
-        hikariConfig.setValidationTimeout(sgcDsInfo.getValidationTimeout());
-        hikariConfig.setIdleTimeout(sgcDsInfo.getIdleTimeout());
-        hikariConfig.setMaxLifetime(sgcDsInfo.getMaxLifetime());
-        hikariConfig.setKeepaliveTime(sgcDsInfo.getKeepaliveTime());
+        hikariConfig.setConnectionTimeout(tenantDataSourceInfo.getConnectionTimeout());
+        hikariConfig.setValidationTimeout(tenantDataSourceInfo.getValidationTimeout());
+        hikariConfig.setIdleTimeout(tenantDataSourceInfo.getIdleTimeout());
+        hikariConfig.setMaxLifetime(tenantDataSourceInfo.getMaxLifetime());
+        hikariConfig.setKeepaliveTime(tenantDataSourceInfo.getKeepaliveTime());
 
         return new HikariDataSource(hikariConfig);
     }

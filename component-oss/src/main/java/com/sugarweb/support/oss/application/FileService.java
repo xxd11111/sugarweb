@@ -1,6 +1,6 @@
 package com.sugarweb.support.oss.application;
 
-import com.sugarweb.support.oss.domain.SgcFileInfo;
+import com.sugarweb.support.oss.domain.FileInfo;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.InputStream;
@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public interface FileService {
 
-	SgcFileInfo upload(String fileGroup, InputStream inputStream, String contentType, String filename);
+	FileInfo upload(String fileGroup, InputStream inputStream, String contentType, String filename);
 
 	void download(HttpServletResponse response, String fileGroup, String fileId);
 

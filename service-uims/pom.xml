@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 <!--     <packaging>jar</packaging> -->
 
-    <groupId>com.sugarcoat</groupId>
+    <groupId>com.sugarweb</groupId>
     <artifactId>service-uims</artifactId>
 
     <dependencies>
@@ -21,12 +21,12 @@
 
         <dependency>
             <groupId>com.sugar</groupId>
-            <artifactId>component-dict</artifactId>
+            <artifactId>component-dictionary</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.sugar</groupId>
-            <artifactId>component-doc</artifactId>
+            <artifactId>component-openapi</artifactId>
         </dependency>
 
         <dependency>
@@ -40,13 +40,13 @@
         </dependency>
 
         <dependency>
-            <groupId>com.sugarcoat</groupId>
+            <groupId>com.sugarweb</groupId>
             <artifactId>component-oss</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.sugar</groupId>
-            <artifactId>component-parameter</artifactId>
+            <artifactId>component-param</artifactId>
         </dependency>
 
 

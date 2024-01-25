@@ -1,8 +1,8 @@
 package com.sugarweb.server.auto;
 
 import com.sugarweb.exception.FrameworkException;
-import com.sugarweb.server.domain.SgcApi;
-import com.sugarweb.server.domain.BaseApiRepository;
+import com.sugarweb.server.domain.ApiInfo;
+import com.sugarweb.server.domain.ApiInfoRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +36,9 @@ public class ApiRegister {
 
     private final WebApplicationContext applicationContext;
 
-    private final BaseApiRepository apiRepository;
+    private final ApiInfoRepository apiInfoRepository;
 
-    private final Map<String, SgcApi> apiMap = new HashMap<>();
+    private final Map<String, ApiInfo> apiMap = new HashMap<>();
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
@@ -47,22 +47,22 @@ public class ApiRegister {
     //todo 排除包 低优先级
     private final String[] excludePackages = null;
 
-    public Map<String, SgcApi> scan() {
+    public Map<String, ApiInfo> scan() {
         //使用mappingHandlerMapping获取mvc已加载的接口
-        Map<String, SgcApi> urlList = new HashMap<>();
+        Map<String, ApiInfo> urlList = new HashMap<>();
         RequestMappingHandlerMapping bean = applicationContext.getBean("requestMappingHandlerMapping", RequestMappingHandlerMapping.class);
         Map<RequestMappingInfo, HandlerMethod> map = bean.getHandlerMethods();
         map.forEach((k, v) -> {
             //二次加载tag,operation接口
             Method method = v.getMethod();
             Class<?> clazz = method.getDeclaringClass();
-            SgcApi sgcApi = new SgcApi();
+            ApiInfo apiInfo = new ApiInfo();
             Tag tag = clazz.getAnnotation(Tag.class);
             if (tag == null) {
                 return;
             } else {
-                sgcApi.setTagName(tag.name());
-                sgcApi.setTagDescription(tag.description());
+                apiInfo.setTagName(tag.name());
+                apiInfo.setTagDescription(tag.description());
             }
             Operation operation = method.getAnnotation(Operation.class);
             if (operation == null) {
@@ -71,9 +71,9 @@ public class ApiRegister {
                 if (operation.operationId() == null || operation.operationId().isEmpty()) {
                     throw new FrameworkException("{}#{}:未指定operationId", clazz.getSimpleName(), method.getName());
                 }
-                sgcApi.setOperationId(operation.operationId());
-                sgcApi.setSummary(operation.summary());
-                sgcApi.setOperationDescription(operation.description());
+                apiInfo.setOperationId(operation.operationId());
+                apiInfo.setSummary(operation.summary());
+                apiInfo.setOperationDescription(operation.description());
             }
             PatternsRequestCondition patternsRequestCondition = k.getPatternsCondition();
             if (patternsRequestCondition == null) {
@@ -83,17 +83,17 @@ public class ApiRegister {
             if (patterns.size() > 1) {
                 log.warn("ApiScanner扫描中发现存在多个Pattern:{}", patterns);
             }
-            patterns.forEach(sgcApi::setUrl);
+            patterns.forEach(apiInfo::setUrl);
             RequestMethodsRequestCondition methodsRequestCondition = k.getMethodsCondition();
             Set<RequestMethod> methods = methodsRequestCondition.getMethods();
             if (methods.size() > 1) {
                 log.warn("ApiScanner扫描中发现存在多个RequestMethod:{}", methods);
             }
-            methods.forEach(a -> sgcApi.setRequestMethod(a.name()));
-            if (urlList.containsKey(sgcApi.getOperationId())) {
-                throw new FrameworkException("存在重复operationId,{}", sgcApi.getOperationId());
+            methods.forEach(a -> apiInfo.setRequestMethod(a.name()));
+            if (urlList.containsKey(apiInfo.getOperationId())) {
+                throw new FrameworkException("存在重复operationId,{}", apiInfo.getOperationId());
             } else {
-                urlList.put(sgcApi.getOperationId(), sgcApi);
+                urlList.put(apiInfo.getOperationId(), apiInfo);
             }
         });
         log.info("ApiScanner扫描获取{}个接口信息", urlList.size());
@@ -101,7 +101,7 @@ public class ApiRegister {
         return urlList;
     }
 
-    public void load(Map<String, SgcApi> apiMap) {
+    public void load(Map<String, ApiInfo> apiMap) {
         Lock lock = readWriteLock.writeLock();
         if (lock.tryLock()) {
             try {
@@ -114,7 +114,7 @@ public class ApiRegister {
         }
     }
 
-    public void reload(Map<String, SgcApi> apiMap) {
+    public void reload(Map<String, ApiInfo> apiMap) {
         this.apiMap.clear();
         load(apiMap);
     }
@@ -128,17 +128,17 @@ public class ApiRegister {
         // 接口变动导致旧配置失效（需要在其他模块主动提醒）
         // 接口变动-----》项目启动立马加载，最终目标是要与运行项目中一致（故没必要持久化），通过operationId做识别
 
-        Map<String, SgcApi> scan = getApiMap();
-        Collection<SgcApi> values = scan.values();
-        apiRepository.deleteAll();
-        apiRepository.saveAll(values);
+        Map<String, ApiInfo> scan = getApiMap();
+        Collection<ApiInfo> values = scan.values();
+        apiInfoRepository.deleteAll();
+        apiInfoRepository.saveAll(values);
     }
 
     /**
      * 返回拷贝对象，目前浅拷贝就够用了
      */
-    public Map<String, SgcApi> getApiMap() {
-        Map<String, SgcApi> result = new HashMap<>();
+    public Map<String, ApiInfo> getApiMap() {
+        Map<String, ApiInfo> result = new HashMap<>();
         Lock lock = readWriteLock.readLock();
         if (lock.tryLock()) {
             try {

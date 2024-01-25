@@ -3,8 +3,8 @@ package com.sugarweb.support.scheduler;
 import com.sugarweb.support.scheduler.api.SchedulerManager;
 import com.sugarweb.support.scheduler.controller.SchedulerController;
 import com.sugarweb.support.scheduler.domain.SchedulerRunner;
-import com.sugarweb.support.scheduler.domain.SgcQuartzSchedulerManager;
-import com.sugarweb.support.scheduler.domain.BaseSchedulerTaskRepository;
+import com.sugarweb.support.scheduler.domain.QuartzSchedulerManager;
+import com.sugarweb.support.scheduler.domain.SchedulerTaskRepository;
 import com.sugarweb.support.scheduler.application.SchedulerServiceImpl;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,16 +22,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan
 @EnableJpaRepositories
 @EnableConfigurationProperties(SchedulerProperties.class)
-// @ConditionalOnProperty(prefix = "sugarcoat.scheduler", name = "enable", havingValue = "true")
+// @ConditionalOnProperty(prefix = "sugarweb.scheduler", name = "enable", havingValue = "true")
 public class SchedulerAutoConfiguration {
 
     @Bean
     public SchedulerManager schedulerManager() {
-        return new SgcQuartzSchedulerManager();
+        return new QuartzSchedulerManager();
     }
 
     @Bean
-    public SchedulerServiceImpl schedulerService(SchedulerManager schedulerManager, BaseSchedulerTaskRepository sgcSchedulerTaskRepository) {
+    public SchedulerServiceImpl schedulerService(SchedulerManager schedulerManager, SchedulerTaskRepository sgcSchedulerTaskRepository) {
         return new SchedulerServiceImpl(schedulerManager, sgcSchedulerTaskRepository);
     }
 

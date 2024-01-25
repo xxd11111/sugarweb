@@ -9,10 +9,9 @@ import java.util.List;
  *
  * @author xxd
  * @version 1.0
- * @version 1.0
  */
 @Data
-public class EmailInfo implements Email {
+public class EmailInfo {
 
 	/**
 	 * 收件邮箱

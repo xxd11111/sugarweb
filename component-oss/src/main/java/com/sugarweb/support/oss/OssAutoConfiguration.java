@@ -27,7 +27,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan
 @EnableJpaRepositories
 @EnableConfigurationProperties(OssProperties.class)
-@ConditionalOnProperty(prefix = "sugarcoat.oss", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarweb.oss", name = "enable", havingValue = "true")
 public class OssAutoConfiguration {
 
     @Resource

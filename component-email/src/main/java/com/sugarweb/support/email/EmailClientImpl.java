@@ -1,8 +1,8 @@
 package com.sugarweb.support.email;
 
 import com.google.common.collect.Iterables;
-import com.sugarweb.support.oss.api.FileInfo;
 import com.sugarweb.support.oss.api.FileClient;
+import com.sugarweb.support.oss.domain.FileInfo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,6 @@ import java.util.List;
  *
  * @author xxd
  * @version 1.0
- * @version 1.0
  */
 @RequiredArgsConstructor
 @Slf4j
@@ -30,7 +29,7 @@ public class EmailClientImpl implements EmailClient {
     private final FileClient fileClient;
 
     @Override
-    public void sendEmail(Email email) {
+    public void sendEmail(EmailInfo email) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");

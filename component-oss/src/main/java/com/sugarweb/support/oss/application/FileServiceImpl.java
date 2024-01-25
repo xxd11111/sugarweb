@@ -1,11 +1,10 @@
 package com.sugarweb.support.oss.application;
 
 import com.sugarweb.exception.ServerException;
-import com.sugarweb.support.oss.api.BizFileManager;
 import com.sugarweb.support.oss.api.FileClient;
-import com.sugarweb.support.oss.api.UploadInfo;
-import com.sugarweb.support.oss.domain.SgcFileInfo;
-import com.sugarweb.support.oss.domain.BaseFileInfoRepository;
+import com.sugarweb.support.oss.api.FileUploadResult;
+import com.sugarweb.support.oss.domain.FileInfo;
+import com.sugarweb.support.oss.domain.FileInfoRepository;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * 文件对外服务
+ * 文件服务
  *
  * @author xxd
  * @version 1.0
@@ -25,15 +24,14 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     private final FileClient fileClient;
-    private final BizFileManager bizFileManager;
-
-    private final BaseFileInfoRepository fileRepository;
+    private final FileBizService fileBizService;
+    private final FileInfoRepository fileRepository;
 
     @Override
-    public SgcFileInfo upload(String fileGroup, InputStream inputStream, String contentType, String filename) {
+    public FileInfo upload(String fileGroup, InputStream inputStream, String contentType, String filename) {
         String key = "/" + fileGroup + "/" + UUID.randomUUID();
-        UploadInfo upload = fileClient.upload(key, inputStream, contentType);
-        SgcFileInfo fileInfo = new SgcFileInfo();
+        FileUploadResult upload = fileClient.upload(key, inputStream, contentType);
+        FileInfo fileInfo = new FileInfo();
         fileInfo.setBizType(fileGroup);
         fileInfo.setFilename(filename);
         fileInfo.setKey(key);
@@ -57,7 +55,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void download(HttpServletResponse response, String fileGroup, String fileId) {
-        SgcFileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
+        FileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
         try (ServletOutputStream outputStream = response.getOutputStream();
              InputStream inputStream = fileClient.getContent(fileInfo.getKey())) {
             long fileSize = fileInfo.getFileSize();
@@ -78,18 +76,18 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void remove(String fileGroup, String fileId) {
-        SgcFileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
+        FileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
         fileClient.delete(fileInfo.getKey());
-        bizFileManager.separateByFileId(fileInfo.getId());
+        fileBizService.separateByFileId(fileInfo.getId());
     }
 
     @Override
     public void remove(String fileGroup, Set<String> fileIds) {
-        Iterable<SgcFileInfo> fileInfos = fileRepository.findAllById(fileIds);
-        for (SgcFileInfo fileInfo : fileInfos) {
+        Iterable<FileInfo> fileInfos = fileRepository.findAllById(fileIds);
+        for (FileInfo fileInfo : fileInfos) {
             fileClient.delete(fileInfo.getKey());
         }
-        bizFileManager.separateByFileId(fileIds);
+        fileBizService.separateByFileId(fileIds);
     }
 
 }

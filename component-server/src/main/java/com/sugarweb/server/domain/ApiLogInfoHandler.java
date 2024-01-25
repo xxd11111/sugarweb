@@ -5,11 +5,10 @@ import com.sugarweb.server.JsonUtil;
 import com.sugarweb.server.ServletUtil;
 import com.sugarweb.common.Result;
 import com.sugarweb.exception.FrameworkException;
-import com.sugarweb.server.ApiInfo;
 import com.sugarweb.server.ApiLog;
-import com.sugarweb.server.ApiManager;
 import com.sugarweb.security.SecurityHelper;
 import com.sugarweb.security.UserInfo;
+import com.sugarweb.server.application.ApiService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -35,12 +34,12 @@ import java.util.stream.IntStream;
  * @version 1.0
  */
 @Slf4j
-public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
-                                BaseApiErrorLogRepository apiErrorLogRepository,
-                                ApiManager apiManager) {
+public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
+                                ApiErrorLogRepository apiErrorLogRepository,
+                                ApiService apiService) {
 
     @SneakyThrows(FrameworkException.class)
-    public void loadRequestInfo(SgcApiCallLog apiCallLog, LocalDateTime start) {
+    public void loadRequestInfo(ApiCallLog apiCallLog, LocalDateTime start) {
         HttpServletRequest request = ServletUtil.getRequest();
         if (request == null) {
             return;
@@ -52,7 +51,7 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
         apiCallLog.setRequestUserAgent(request.getHeader("User-Agent"));
         apiCallLog.setRequestTime(start);
 
-        ApiInfo apiInfo = apiManager.findApiByUrl(requestURI)
+        ApiInfo apiInfo = apiService.findApiByUrl(requestURI)
                 //正常情况一定不为null
                 .orElseThrow(() -> new FrameworkException("未加载到ApiInfo"));
         apiCallLog.setApiId(apiInfo.getOperationId());
@@ -60,7 +59,7 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
     }
 
     @SneakyThrows(FrameworkException.class)
-    public void loadParamsInfo(SgcApiCallLog apiCallLog, ProceedingJoinPoint joinPoint) {
+    public void loadParamsInfo(ApiCallLog apiCallLog, ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         String[] argNames = methodSignature.getParameterNames();
         Object[] argValues = joinPoint.getArgs();
@@ -100,7 +99,7 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
     }
 
     @SneakyThrows(FrameworkException.class)
-    public void loadResultInfo(SgcApiCallLog apiCallLog, Object result, LocalDateTime start) {
+    public void loadResultInfo(ApiCallLog apiCallLog, Object result, LocalDateTime start) {
         if (result instanceof Result<?> r) {
             apiCallLog.setResultCode(r.getCode());
             apiCallLog.setResultData(JsonUtil.toJsonStr(r.getData()));
@@ -113,7 +112,7 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
     }
 
     @SneakyThrows(FrameworkException.class)
-    public void loadUserInfo(SgcApiCallLog apiCallLog) {
+    public void loadUserInfo(ApiCallLog apiCallLog) {
         UserInfo userInfo = SecurityHelper.getUserInfo();
         String userId = userInfo.getId();
         String username = userInfo.getUsername();
@@ -122,7 +121,7 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
     }
 
     @SneakyThrows(FrameworkException.class)
-    public void loadExceptionInfo(SgcApiErrorLog apiErrorLog, Throwable ex) {
+    public void loadExceptionInfo(ApiErrorLog apiErrorLog, Throwable ex) {
         apiErrorLog.setExceptionTime(LocalDateTime.now());
         //异常名
         apiErrorLog.setExceptionName(ex.getClass().getName());
@@ -160,12 +159,12 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
     }
 
     @SneakyThrows(FrameworkException.class)
-    public void saveLog(SgcApiCallLog apiCallLog) {
+    public void saveLog(ApiCallLog apiCallLog) {
         apiCallLogRepository.save(apiCallLog);
     }
 
     @SneakyThrows(FrameworkException.class)
-    public void saveErrorLog(SgcApiErrorLog apiErrorLog) {
+    public void saveErrorLog(ApiErrorLog apiErrorLog) {
         apiErrorLogRepository.save(apiErrorLog);
     }
 
@@ -174,21 +173,21 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
             return;
         }
         try {
-            SgcApiCallLog sgcApiCallLog = new SgcApiCallLog();
+            ApiCallLog apiCallLog = new ApiCallLog();
             //加载网络请求的参数
-            loadRequestInfo(sgcApiCallLog, start);
+            loadRequestInfo(apiCallLog, start);
 
             //加载执行方法的参数
-            loadParamsInfo(sgcApiCallLog, joinPoint);
+            loadParamsInfo(apiCallLog, joinPoint);
 
             //加载用户信息
-            loadUserInfo(sgcApiCallLog);
+            loadUserInfo(apiCallLog);
 
             //加载结果信息
-            loadResultInfo(sgcApiCallLog, result, start);
+            loadResultInfo(apiCallLog, result, start);
 
             //保存结果
-            saveLog(sgcApiCallLog);
+            saveLog(apiCallLog);
         } catch (Throwable ex) {
             log.error("sendLog功能异常，apiLog:{}, joinPoint:{}, start:{}, result:{}", apiLog, joinPoint, start, result, ex);
         }
@@ -201,7 +200,7 @@ public record ApiLogInfoHandler(BaseApiCallLogRepository apiCallLogRepository,
             return;
         }
         try {
-            SgcApiErrorLog sgcApiErrorLog = new SgcApiErrorLog();
+            ApiErrorLog sgcApiErrorLog = new ApiErrorLog();
             //加载网络请求的参数
             loadRequestInfo(sgcApiErrorLog, start);
 

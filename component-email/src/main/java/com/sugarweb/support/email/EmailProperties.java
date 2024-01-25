@@ -10,8 +10,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author 许向东
  * @version 1.0
  */
-@ConfigurationProperties(prefix = "sugarcoat.email")
-@ConditionalOnProperty(prefix = "sugarcoat.email", name = "enable", havingValue = "true")
+@ConfigurationProperties(prefix = "sugarweb.email")
+@ConditionalOnProperty(prefix = "sugarweb.email", name = "enable", havingValue = "true")
 @Data
 public class EmailProperties {
 

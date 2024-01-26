@@ -27,14 +27,14 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamService paramService(ParamRepository sugarcoatParamRepository) {
-        return new ParamServiceImpl(sugarcoatParamRepository);
+    public ParamService paramService(ParamRepository paramRepository) {
+        return new ParamServiceImpl(paramRepository);
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamAutoRegistry parameterAutoRegistry(ParamRepository sgcParamRepository) {
-        return new ParamAutoRegistry(paramProperties, sgcParamRepository);
+    public ParamAutoRegistry parameterAutoRegistry(ParamService paramService) {
+        return new ParamAutoRegistry(paramProperties, paramService);
     }
 
 

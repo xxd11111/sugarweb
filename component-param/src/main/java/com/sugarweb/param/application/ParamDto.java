@@ -23,6 +23,4 @@ public class ParamDto {
 
 	private String comment;
 
-	private String defaultValue;
-
 }

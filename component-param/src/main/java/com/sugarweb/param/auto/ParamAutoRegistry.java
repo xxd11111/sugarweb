@@ -8,6 +8,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.auto.AbstractAutoRegistry;
 import com.sugarweb.param.ParamProperties;
+import com.sugarweb.param.application.ParamDto;
+import com.sugarweb.param.application.ParamService;
 import com.sugarweb.param.domain.Param;
 import com.sugarweb.param.domain.ParamRepository;
 import com.sugarweb.param.domain.QParam;
@@ -22,51 +24,49 @@ import java.util.*;
  * @author 许向东
  * @version 1.0
  */
-public class ParamAutoRegistry extends AbstractAutoRegistry<Param> {
+public class ParamAutoRegistry extends AbstractAutoRegistry<ParamDto> {
 
     /**
      * 扫描路径
      */
     private final String scanPackage;
 
-    private final ParamRepository paramRepository;
+    private final ParamService paramService;
 
-    public ParamAutoRegistry(ParamProperties paramProperties, ParamRepository paramRepository) {
+    public ParamAutoRegistry(ParamProperties paramProperties, ParamService paramService) {
         this.scanPackage = paramProperties.getScanPackage();
-        this.paramRepository = paramRepository;
+        this.paramService = paramService;
     }
 
     @Override
-    protected void insert(Param o) {
-        paramRepository.save(o);
+    protected void insert(ParamDto o) {
+        paramService.save(o);
     }
 
     @Override
-    protected void merge(Param db, Param scan) {
+    protected void merge(ParamDto db, ParamDto scan) {
         //ignore
     }
 
     @Override
-    protected void deleteByCondition(Collection<Param> collection) {
-        Iterable<Param> all = paramRepository.findAll();
-        List<String> removeIds = new ArrayList<>();
-        for (Param param : all) {
+    protected void deleteByCondition(Collection<ParamDto> collection) {
+        Iterable<ParamDto> all = paramService.findAll();
+        Set<String> removeIds = new HashSet<>();
+        for (ParamDto param : all) {
             if (!collection.contains(param)) {
                 removeIds.add(param.getId());
             }
         }
-        paramRepository.deleteAllById(removeIds);
+        paramService.removeByIds(removeIds);
     }
 
     @Override
-    protected Param selectOne(Param o) {
-        QParam query = QParam.param;
-        BooleanExpression eq = query.code.eq(o.getCode());
-        return paramRepository.findOne(eq).orElse(null);
+    protected ParamDto selectOne(ParamDto o) {
+        return paramService.findByCode(o.getCode()).orElse(null);
     }
 
     @Override
-    public Collection<Param> scan() {
+    public Collection<ParamDto> scan() {
         ClassPath classpath = null;
         try {
             classpath = ClassPath.from(this.getClass().getClassLoader());
@@ -83,12 +83,12 @@ public class ParamAutoRegistry extends AbstractAutoRegistry<Param> {
                 classes.add(load);
             }
         }
-        List<Param> dictGroups = new ArrayList<>();
+        List<ParamDto> dictGroups = new ArrayList<>();
         if (Iterables.isEmpty(classes)) {
             return dictGroups;
         }
         //遍历class
-        Collection<Param> sugarcoatParams = new ArrayList<>();
+        Collection<ParamDto> paramDtos = new ArrayList<>();
 
         for (Class<?> clazz : classes) {
             Field[] declaredFields = clazz.getDeclaredFields();
@@ -113,14 +113,14 @@ public class ParamAutoRegistry extends AbstractAutoRegistry<Param> {
                     value = field.getName();
                 }
                 //创建参数对象
-                Param sugarcoatParam = new Param();
-                sugarcoatParam.setCode(code);
-                sugarcoatParam.setName(name);
-                sugarcoatParam.setValue(value);
-                sugarcoatParam.setComment(name);
-                sugarcoatParams.add(sugarcoatParam);
+                ParamDto paramDto = new ParamDto();
+                paramDto.setCode(code);
+                paramDto.setName(name);
+                paramDto.setValue(value);
+                paramDto.setComment(name);
+                paramDtos.add(paramDto);
             }
         }
-        return sugarcoatParams;
+        return paramDtos;
     }
 }

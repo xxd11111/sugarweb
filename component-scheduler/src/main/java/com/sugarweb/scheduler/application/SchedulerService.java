@@ -1,7 +1,7 @@
 package com.sugarweb.scheduler.application;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 
 /**
  * SchedulerService
@@ -23,6 +23,6 @@ public interface SchedulerService {
 
     void run(String id);
 
-    PageData<SchedulerTaskDto> page(PageRequest pageRequest, SchedulerQueryDto queryDto);
+    PageData<SchedulerTaskDto> page(PageQuery pageQuery, SchedulerQueryDto queryDto);
 
 }

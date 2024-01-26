@@ -1,7 +1,7 @@
 package com.sugarweb.server.controller;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.Result;
 import com.sugarweb.server.application.ApiService;
 import com.sugarweb.server.application.dto.ApiInfoDto;
@@ -30,8 +30,8 @@ public class ApiController {
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<ApiInfoDto>> findPage(PageRequest pageRequest, ApiInfoQueryDto queryDto) {
-		return Result.data(apiService.findPage(pageRequest, queryDto));
+	public Result<PageData<ApiInfoDto>> findPage(PageQuery pageQuery, ApiInfoQueryDto queryDto) {
+		return Result.data(apiService.findPage(pageQuery, queryDto));
 	}
 
 }

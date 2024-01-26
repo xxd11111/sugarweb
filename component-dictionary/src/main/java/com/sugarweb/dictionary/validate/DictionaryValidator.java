@@ -30,7 +30,7 @@ public class DictionaryValidator implements ConstraintValidator<DictionaryValida
         if (groupCode == null || groupCode.isEmpty()) {
             return true;
         }
-        boolean isPresent = getDictionaryService().exist(groupCode, value);
+        boolean isPresent = getDictionaryService().existByCode(groupCode, value);
         if (isPresent) {
             //校验通过
             return true;

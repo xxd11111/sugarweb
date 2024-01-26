@@ -1,7 +1,7 @@
 package com.sugarweb.server.application;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiCallLog;
 import com.sugarweb.server.application.dto.AccessLogQueryDto;
 
@@ -15,6 +15,6 @@ public interface ApiCallLogService {
 
 	ApiCallLog findOne(String id);
 
-	PageData<ApiCallLog> findPage(PageRequest pageRequest, AccessLogQueryDto accessLogQueryDto);
+	PageData<ApiCallLog> findPage(PageQuery pageQuery, AccessLogQueryDto accessLogQueryDto);
 
 }

@@ -4,7 +4,7 @@ import com.sugarweb.dictionary.application.DictionaryService;
 import com.sugarweb.dictionary.application.dto.DictionaryDto;
 import com.sugarweb.dictionary.application.dto.DictionaryQueryDto;
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.Result;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,34 +32,29 @@ public class DictionaryController {
 
 	@DeleteMapping("remove/{ids}")
 	public Result<Void> remove(@PathVariable Set<String> ids) {
-		dictionaryService.remove(ids);
+		dictionaryService.removeByIds(ids);
 		return Result.ok();
 	}
 
 	@DeleteMapping("removeGroup/{group}")
 	public Result<Void> removeGroup(@PathVariable String group) {
-		dictionaryService.removeGroup(group);
+		dictionaryService.removeByGroup(group);
 		return Result.ok();
 	}
 
 	@GetMapping("findOne/{id}")
 	public Result<DictionaryDto> findOne(@PathVariable String id) {
-		return Result.data(dictionaryService.findOne(id));
+		return Result.data(dictionaryService.findById(id).orElse(null));
 	}
 
 	@GetMapping("findDictionary/{dictionaryId}")
 	public Result<DictionaryDto> findDictionary(@PathVariable String dictionaryId) {
-		return Result.data(dictionaryService.findOne(dictionaryId));
+		return Result.data(dictionaryService.findById(dictionaryId).orElse(null));
 	}
 
 	@GetMapping("findPage")
-	public Result<PageData<DictionaryDto>> findPage(PageRequest pageRequest, DictionaryQueryDto queryDto) {
-		return Result.data(dictionaryService.findPage(pageRequest, queryDto));
-	}
-
-	@GetMapping("findDictionaryPage")
-	public Result<PageData<DictionaryDto>> findDictPage(PageRequest pageRequest, DictionaryQueryDto queryDto) {
-		return Result.data(dictionaryService.findPage(pageRequest, queryDto));
+	public Result<PageData<DictionaryDto>> findPage(PageQuery pageQuery, DictionaryQueryDto queryDto) {
+		return Result.data(dictionaryService.findPage(pageQuery, queryDto));
 	}
 
 }

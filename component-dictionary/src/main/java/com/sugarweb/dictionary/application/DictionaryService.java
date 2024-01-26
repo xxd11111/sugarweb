@@ -1,17 +1,17 @@
 package com.sugarweb.dictionary.application;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.dictionary.application.dto.DictionaryQueryDto;
 import com.sugarweb.dictionary.application.dto.DictionaryDto;
-import com.sugarweb.dictionary.domain.Dictionary;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 /**
- * 字典对外服务
+ * 字典服务
  *
  * @author xxd
  * @version 1.0
@@ -20,17 +20,11 @@ public interface DictionaryService {
 
 	void save(DictionaryDto dto);
 
-	void remove(Set<String> ids);
+	void save(Collection<DictionaryDto> dtos);
 
-	void removeGroup(String group);
+	void removeById(String id);
 
-	DictionaryDto findOne(String id);
-
-	PageData<DictionaryDto> findPage(PageRequest pageRequest, DictionaryQueryDto queryDto);
-
-	void put(Dictionary dictionary);
-
-	void put(Collection<Dictionary> dictionaries);
+	void removeByIds(Set<String> ids);
 
 	/**
 	 * 删除字典项
@@ -38,9 +32,7 @@ public interface DictionaryService {
 	 * @param group 字典组编码
 	 * @param code  字典编码
 	 */
-	void remove(String group, String code);
-
-	void removeAll();
+	void removeByCode(String group, String code);
 
 	/**
 	 * 删除字典组
@@ -49,38 +41,19 @@ public interface DictionaryService {
 	 */
 	void removeByGroup(String group);
 
-	void removeById(String id);
+	void removeAll();
 
-	void removeByIds(Collection<String> ids);
+	Optional<DictionaryDto> findById(String id);
 
-	/**
-	 * 获取字典
-	 *
-	 * @param group 字典组编码
-	 * @param code  字典编码
-	 * @return 字典
-	 */
-	Optional<Dictionary> get(String group, String code);
+	List<DictionaryDto> findByIds(Set<String> ids);
 
-	Collection<Dictionary> getByGroup(String group);
+	Optional<DictionaryDto> findByCode(String group, String code);
 
-	Optional<Dictionary> getById(String group);
+	List<DictionaryDto> findByGroup(String group);
 
-	/**
-	 * 获取所有字典
-	 *
-	 * @return 字典集合
-	 */
-	Collection<Dictionary> getAll();
+	PageData<DictionaryDto> findPage(PageQuery pageQuery, DictionaryQueryDto queryDto);
 
-	/**
-	 * 获取字典名称
-	 *
-	 * @param code 字典组编码
-	 * @param name 字典编码
-	 * @return 字典名称
-	 */
-	Optional<Dictionary> getByName(String code, String name);
+	List<DictionaryDto> findAll();
 
 	/**
 	 * 是否存在该字典
@@ -89,8 +62,8 @@ public interface DictionaryService {
 	 * @param code  字典编码
 	 * @return 是否
 	 */
-	boolean exist(String group, String code);
+	boolean existByCode(String group, String code);
 
-	boolean exist(String group);
+	boolean existByGroup(String group);
 
 }

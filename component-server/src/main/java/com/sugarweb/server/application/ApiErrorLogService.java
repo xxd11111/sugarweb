@@ -1,7 +1,7 @@
 package com.sugarweb.server.application;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.application.dto.ApiErrorLogQueryDto;
 
@@ -15,6 +15,6 @@ public interface ApiErrorLogService {
 
 	ApiErrorLog findOne(String id);
 
-	PageData<ApiErrorLog> findPage(PageRequest pageRequest, ApiErrorLogQueryDto queryDto);
+	PageData<ApiErrorLog> findPage(PageQuery pageQuery, ApiErrorLogQueryDto queryDto);
 
 }

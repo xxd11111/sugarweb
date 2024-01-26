@@ -1,7 +1,7 @@
 package com.sugarweb.server.controller;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiCallLog;
 import com.sugarweb.server.application.dto.AccessLogQueryDto;
 import com.sugarweb.server.application.ApiCallLogService;
@@ -29,8 +29,8 @@ public class ApiCallLogController {
 	}
 
 	@GetMapping("findPage")
-	public PageData<ApiCallLog> findPage(PageRequest pageRequest, AccessLogQueryDto queryDto) {
-		return apiCallLogService.findPage(pageRequest, queryDto);
+	public PageData<ApiCallLog> findPage(PageQuery pageQuery, AccessLogQueryDto queryDto) {
+		return apiCallLogService.findPage(pageQuery, queryDto);
 	}
 
 }

@@ -7,10 +7,12 @@ public class DictionaryDto {
 
 	private String id;
 
-	private String code;
+	private String dictCode;
 
-	private String name;
+	private String dictName;
 
-	private String group;
+	private String dictGroup;
+
+	private String dictType;
 
 }

@@ -2,7 +2,7 @@ package com.sugarweb.server.application.impl;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.framework.orm.ExpressionWrapper;
 import com.sugarweb.framework.orm.PageDataConvert;
@@ -14,6 +14,7 @@ import com.sugarweb.server.domain.ApiInfo;
 import com.sugarweb.server.domain.ApiInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
@@ -43,9 +44,9 @@ public class ApiServiceImpl implements ApiService {
 	}
 
 	@Override
-	public PageData<ApiInfoDto> findPage(PageRequest pageDto, ApiInfoQueryDto queryDto) {
+	public PageData<ApiInfoDto> findPage(PageQuery pageDto, ApiInfoQueryDto queryDto) {
 		QApiInfo sgcApi = QApiInfo.apiInfo;
-		org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
+		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
 				.withSort(Sort.Direction.DESC, sgcApi.url.getMetadata().getName());
 
 		BooleanExpression expression = ExpressionWrapper.of()

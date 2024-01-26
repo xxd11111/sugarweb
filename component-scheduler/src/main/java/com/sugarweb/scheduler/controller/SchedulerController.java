@@ -1,7 +1,7 @@
 package com.sugarweb.scheduler.controller;
 
 import com.sugarweb.scheduler.application.SchedulerService;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.Result;
 import com.sugarweb.scheduler.application.SchedulerQueryDto;
 import com.sugarweb.scheduler.application.SchedulerTaskDto;
@@ -26,8 +26,8 @@ public class SchedulerController {
 
     @GetMapping("page")
     @Operation(operationId = "scheduler:findAll", summary = "分页查询")
-    public Result page(PageRequest pageRequest, SchedulerQueryDto queryDto) {
-        return Result.data(schedulerService.page(pageRequest, queryDto));
+    public Result page(PageQuery pageQuery, SchedulerQueryDto queryDto) {
+        return Result.data(schedulerService.page(pageQuery, queryDto));
     }
 
     @PostMapping("add")

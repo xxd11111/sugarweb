@@ -2,7 +2,7 @@ package com.sugarweb.server.application.impl;
 
 import com.querydsl.core.types.dsl.Expressions;
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.domain.QApiErrorLog;
@@ -11,6 +11,7 @@ import com.sugarweb.server.application.dto.ApiErrorLogQueryDto;
 import com.sugarweb.server.domain.ApiErrorLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -32,9 +33,9 @@ public class ApiApiErrorLogServiceImpl implements ApiErrorLogService {
 	}
 
 	@Override
-	public PageData<ApiErrorLog> findPage(PageRequest pageDto, ApiErrorLogQueryDto queryDto) {
+	public PageData<ApiErrorLog> findPage(PageQuery pageDto, ApiErrorLogQueryDto queryDto) {
 		QApiErrorLog apiErrorLog = QApiErrorLog.apiErrorLog;
-		org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
+		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
 				.withSort(Sort.Direction.DESC, apiErrorLog.getMetadata().getName());
 		Page<ApiErrorLog> page = sgcApiErrorLogRepository.findAll(Expressions.TRUE, pageRequest);
 		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());

@@ -1,16 +1,16 @@
 package com.sugarweb.param.application;
 
-import com.google.common.base.Strings;
 import com.querydsl.core.types.dsl.Expressions;
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
-import com.sugarweb.framework.exception.FrameworkException;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.param.domain.Param;
 import com.sugarweb.param.domain.QParam;
 import com.sugarweb.param.domain.ParamRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
 
@@ -37,26 +37,10 @@ public class ParamServiceImpl implements ParamService {
     }
 
     @Override
-    public ParamDto findByCode(String code) {
-        Param sugarcoatParam = paramRepository
-                .findOne(QParam.param.code.eq(code))
-                .orElseThrow(() -> new ValidateException("param not find"));
-        return ParamConvert.getParamDTO(sugarcoatParam);
-    }
-
-    @Override
-    public ParamDto findById(String id) {
-        Param sugarcoatParam = paramRepository.findById(id)
-                .orElseThrow(() -> new ValidateException("param not find"));
-        return ParamConvert.getParamDTO(sugarcoatParam);
-    }
-
-    @Override
-    public PageData<ParamDto> findPage(PageRequest pageDto, ParamQueryDto cmd) {
-        org.springframework.data.domain.PageRequest pageRequest = org.springframework.data.domain.PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
-        Page<ParamDto> page = paramRepository.findAll(Expressions.TRUE, pageRequest)
-                .map(ParamConvert::getParamDTO);
-        return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
+    public void saveAll(Collection<ParamDto> paramDtos) {
+        for (ParamDto paramDto : paramDtos) {
+            this.save(paramDto);
+        }
     }
 
     @Override
@@ -66,58 +50,51 @@ public class ParamServiceImpl implements ParamService {
     }
 
     @Override
-    public Optional<String> getValue(String code) {
-        if (Strings.isNullOrEmpty(code)) {
-            return Optional.empty();
-        }
-        return paramRepository.findOne(QParam.param.code.eq(code))
-                .map(Param::getValue);
+    public void removeByCode(String code) {
+        Optional<Param> one = paramRepository.findOne(QParam.param.code.eq(code));
+        one.ifPresent(param -> paramRepository.deleteById(param.getId()));
     }
 
     @Override
-    public void save(Param parameter) {
-        if (parameter instanceof Param sugarcoatParam) {
-            paramRepository.save(sugarcoatParam);
-        } else {
-            throw new FrameworkException("Param can not cast to SugarcoatParam");
-        }
+    public void removeById(String id) {
+        paramRepository.deleteById(id);
     }
 
     @Override
-    public void remove(String code) {
-        Param param = paramRepository.findOne(QParam.param.code.eq(code))
-                .orElseThrow(() -> new ValidateException("not find Param"));
-        paramRepository.delete(param);
+    public void removeByIds(Set<String> ids) {
+        paramRepository.deleteAllById(ids);
     }
 
     @Override
-    public Optional<Param> getParameter(String code) {
-        //由于get属性只有两个，当前不采用json方式
-        if (Strings.isNullOrEmpty(code)) {
-            return Optional.empty();
-        }
-        return paramRepository.findOne(QParam.param.code.eq(code)).map(a -> a);
+    public List<ParamDto> findAll() {
+        return paramRepository.findAll().stream().map(this::paramDto).toList();
+    }
+
+    private ParamDto paramDto(Param param) {
+        ParamDto paramDto = new ParamDto();
+        BeanUtils.copyProperties(param, paramDto);
+        return paramDto;
     }
 
     @Override
-    public Collection<Param> getAll() {
-        Collection<Param> parameters = new ArrayList<>();
-        Iterable<Param> all = paramRepository.findAll();
-        all.forEach(parameters::add);
-        return parameters;
+    public Optional<ParamDto> findByCode(String code) {
+        return paramRepository
+                .findOne(QParam.param.code.eq(code))
+                .map(ParamConvert::getParamDTO);
     }
 
     @Override
-    public void batchSave(Collection<Param> parameters) {
-        List<Param> sugarcoatParams = new ArrayList<>();
-        for (Param parameter : parameters) {
-            if (parameter instanceof Param sugarcoatParam) {
-                sugarcoatParams.add(sugarcoatParam);
-            } else {
-                throw new FrameworkException("Param can not cast to SugarcoatParam");
-            }
-        }
-        paramRepository.saveAll(sugarcoatParams);
+    public Optional<ParamDto> findById(String id) {
+        return paramRepository.findById(id)
+                .map(ParamConvert::getParamDTO);
+    }
+
+    @Override
+    public PageData<ParamDto> findPage(PageQuery pageDto, ParamQueryDto cmd) {
+        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
+        Page<ParamDto> page = paramRepository.findAll(Expressions.TRUE, pageRequest)
+                .map(ParamConvert::getParamDTO);
+        return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
     }
 
 }

@@ -1,10 +1,10 @@
 package com.sugarweb.param.application;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
-import com.sugarweb.param.domain.Param;
+import com.sugarweb.framework.common.PageQuery;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -16,58 +16,24 @@ import java.util.Set;
  */
 public interface ParamService {
 
-	void save(ParamDto paramDTO);
+	void save(ParamDto paramDto);
 
-	ParamDto findByCode(String code);
-
-	ParamDto findById(String id);
-
-	PageData<ParamDto> findPage(PageRequest pageRequest, ParamQueryDto cmd);
+	void saveAll(Collection<ParamDto> paramDtos);
 
 	void reset(Set<String> ids);
 
+	void removeByCode(String code);
 
-	/**
-	 * 获取参数值
-	 *
-	 * @param code 参数编码
-	 * @return 参数值
-	 */
-	Optional<String> getValue(String code);
+	void removeById(String id);
 
-	/**
-	 * 保存参数
-	 *
-	 * @param parameter 参数
-	 */
-	void save(Param parameter);
+	void removeByIds(Set<String> ids);
 
-	/**
-	 * 根据参数编码删除参数
-	 *
-	 * @param code 参数编码
-	 */
-	void remove(String code);
+	Optional<ParamDto> findByCode(String code);
 
-	/**
-	 * 获取参数
-	 *
-	 * @param code 参数编码
-	 * @return 参数
-	 */
-	Optional<Param> getParameter(String code);
+	Optional<ParamDto> findById(String id);
 
-	/**
-	 * 获取全部系统参数
-	 *
-	 * @return 参数集合
-	 */
-	Collection<Param> getAll();
+	PageData<ParamDto> findPage(PageQuery pageQuery, ParamQueryDto cmd);
 
-	/**
-	 * 批量保存
-	 *
-	 * @param parameters 参数
-	 */
-	void batchSave(Collection<Param> parameters);
+	List<ParamDto> findAll();
+
 }

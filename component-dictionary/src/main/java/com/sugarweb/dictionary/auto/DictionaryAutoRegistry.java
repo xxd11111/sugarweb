@@ -2,6 +2,7 @@ package com.sugarweb.dictionary.auto;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.reflect.ClassPath;
+import com.sugarweb.dictionary.application.dto.DictionaryDto;
 import com.sugarweb.framework.auto.AbstractAutoRegistry;
 import com.sugarweb.dictionary.application.DictionaryService;
 import com.sugarweb.dictionary.domain.Dictionary;
@@ -19,7 +20,7 @@ import java.util.*;
  * @author 许向东
  * @version 1.0
  */
-public class DictionaryAutoRegistry extends AbstractAutoRegistry<Dictionary> {
+public class DictionaryAutoRegistry extends AbstractAutoRegistry<DictionaryDto> {
 
     private final DictionaryService dictionaryService;
 
@@ -28,22 +29,22 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<Dictionary> {
     }
 
     @Override
-    protected void insert(com.sugarweb.dictionary.domain.Dictionary o) {
-        dictionaryService.put(o);
+    protected void insert(DictionaryDto o) {
+        dictionaryService.save(o);
     }
 
     @Override
-    protected void merge(com.sugarweb.dictionary.domain.Dictionary db, com.sugarweb.dictionary.domain.Dictionary scan) {
+    protected void merge(DictionaryDto db, DictionaryDto scan) {
         //ignore
     }
 
     @Override
-    protected void deleteByCondition(Collection<com.sugarweb.dictionary.domain.Dictionary> scans) {
-        Collection<com.sugarweb.dictionary.domain.Dictionary> all = dictionaryService.getAll();
-        Collection<String> removeIds = new ArrayList<>();
-        for (com.sugarweb.dictionary.domain.Dictionary db : all) {
+    protected void deleteByCondition(Collection<DictionaryDto> scans) {
+        Collection<DictionaryDto> all = dictionaryService.findAll();
+        Set<String> removeIds = new HashSet<>();
+        for (DictionaryDto db : all) {
             boolean contain = false;
-            for (com.sugarweb.dictionary.domain.Dictionary scan : scans) {
+            for (DictionaryDto scan : scans) {
                 if (Objects.equals(scan.getDictGroup(), db.getDictGroup()) &&
                         Objects.equals(scan.getDictCode(), db.getDictCode())) {
                     contain = true;
@@ -58,12 +59,12 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<Dictionary> {
     }
 
     @Override
-    protected com.sugarweb.dictionary.domain.Dictionary selectOne(com.sugarweb.dictionary.domain.Dictionary o) {
-        return dictionaryService.get(o.getDictGroup(), o.getDictCode()).orElse(null);
+    protected DictionaryDto selectOne(DictionaryDto o) {
+        return dictionaryService.findByCode(o.getDictGroup(), o.getDictCode()).orElse(null);
     }
 
     @Override
-    public Collection<com.sugarweb.dictionary.domain.Dictionary> scan() {
+    public Collection<DictionaryDto> scan() {
         ClassPath classpath = null;
         try {
             classpath = ClassPath.from(this.getClass().getClassLoader());
@@ -80,7 +81,7 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<Dictionary> {
                 classes.add(load);
             }
         }
-        List<com.sugarweb.dictionary.domain.Dictionary> sugarcoatDictionaries = new ArrayList<>();
+        List<DictionaryDto> dictionaryDtos = new ArrayList<>();
         for (Class<?> clazz : classes) {
             InnerDictionary innerDictionary = clazz.getAnnotation(InnerDictionary.class);
             String group;
@@ -148,12 +149,12 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<Dictionary> {
                         name = k.name();
                     }
 
-                    com.sugarweb.dictionary.domain.Dictionary sugarcoatDictionary = new com.sugarweb.dictionary.domain.Dictionary();
-                    sugarcoatDictionary.setDictCode(code);
-                    sugarcoatDictionary.setDictName(name);
-                    sugarcoatDictionary.setDictGroup(group);
-                    sugarcoatDictionary.setDictType("1");
-                    sugarcoatDictionaries.add(sugarcoatDictionary);
+                    DictionaryDto dictionaryDto = new DictionaryDto();
+                    dictionaryDto.setDictCode(code);
+                    dictionaryDto.setDictName(name);
+                    dictionaryDto.setDictGroup(group);
+                    dictionaryDto.setDictType("1");
+                    dictionaryDtos.add(dictionaryDto);
                 });
 
 
@@ -180,15 +181,15 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<Dictionary> {
                     } catch (IllegalAccessException e) {
                         throw new RuntimeException(e);
                     }
-                    com.sugarweb.dictionary.domain.Dictionary sugarcoatDictionary = new Dictionary();
-                    sugarcoatDictionary.setDictCode(code);
-                    sugarcoatDictionary.setDictName(name);
-                    sugarcoatDictionary.setDictGroup(group);
-                    sugarcoatDictionary.setDictType("1");
-                    sugarcoatDictionaries.add(sugarcoatDictionary);
+                    DictionaryDto dictionaryDto = new DictionaryDto();
+                    dictionaryDto.setDictCode(code);
+                    dictionaryDto.setDictName(name);
+                    dictionaryDto.setDictGroup(group);
+                    dictionaryDto.setDictType("1");
+                    dictionaryDtos.add(dictionaryDto);
                 }
             }
         }
-        return sugarcoatDictionaries;
+        return dictionaryDtos;
     }
 }

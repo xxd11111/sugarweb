@@ -1,7 +1,7 @@
 package com.sugarweb.server.controller;
 
 import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.PageRequest;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.application.ApiErrorLogService;
 import com.sugarweb.server.application.dto.ApiErrorLogQueryDto;
@@ -29,8 +29,8 @@ public class ApiErrorLogController {
 	}
 
 	@GetMapping("findPage")
-	public PageData<ApiErrorLog> findPage(PageRequest pageRequest, ApiErrorLogQueryDto queryDto) {
-		return apiErrorLogService.findPage(pageRequest, queryDto);
+	public PageData<ApiErrorLog> findPage(PageQuery pageQuery, ApiErrorLogQueryDto queryDto) {
+		return apiErrorLogService.findPage(pageQuery, queryDto);
 	}
 
 }

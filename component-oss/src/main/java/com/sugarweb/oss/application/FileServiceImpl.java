@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,7 +25,7 @@ import java.util.UUID;
 public class FileServiceImpl implements FileService {
 
     private final FileClient fileClient;
-    private final FileBizService fileBizService;
+    private final FileLinkService fileLinkService;
     private final FileInfoRepository fileRepository;
 
     @Override
@@ -32,7 +33,7 @@ public class FileServiceImpl implements FileService {
         String key = "/" + fileGroup + "/" + UUID.randomUUID();
         FileUploadResult upload = fileClient.upload(key, inputStream, contentType);
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setBizType(fileGroup);
+        fileInfo.setFileGroup(fileGroup);
         fileInfo.setFilename(filename);
         fileInfo.setKey(key);
         fileInfo.setFileSize(upload.getFileSize());
@@ -43,51 +44,40 @@ public class FileServiceImpl implements FileService {
 
     //只判断文件名，不识别文件magic值
     private String getFileType(String filename) {
-        if (filename == null){
+        if (filename == null) {
             return null;
         }
-        String[] split = filename.split("\\.");
-        if (split.length <= 1) {
+        int dotIndex = filename.lastIndexOf(".");
+        if (dotIndex == -1) {
             return null;
         }
-        return split[1];
+        return filename.substring(dotIndex, filename.length() - 1);
     }
 
     @Override
-    public void download(HttpServletResponse response, String fileGroup, String fileId) {
-        FileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
-        try (ServletOutputStream outputStream = response.getOutputStream();
-             InputStream inputStream = fileClient.getContent(fileInfo.getKey())) {
-            long fileSize = fileInfo.getFileSize();
-            response.setContentLengthLong(fileSize);
-            response.setHeader("Content-Disposition", "attachment;filename=" + fileInfo.getFilename());
-            response.setContentType(fileInfo.getContentType());
-
-            byte[] bytes = new byte[1024];
-            int len;
-            while ((len = inputStream.read(bytes)) > 0) {
-                outputStream.write(bytes, 0, len);
-            }
-            outputStream.flush();
-        } catch (IOException e) {
-            throw new ServerException("文件下载失败", e);
-        }
+    public InputStream findContent(String fileId) {
+        return fileClient.getContent(fileId);
     }
 
     @Override
-    public void remove(String fileGroup, String fileId) {
+    public Optional<FileInfo> findOne(String fileId) {
+        return fileRepository.findById(fileId);
+    }
+
+    @Override
+    public void remove(String fileId) {
         FileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
         fileClient.delete(fileInfo.getKey());
-        fileBizService.separateByFileId(fileInfo.getId());
+        fileLinkService.breakByFileId(fileInfo.getId());
     }
 
     @Override
-    public void remove(String fileGroup, Set<String> fileIds) {
+    public void remove(Set<String> fileIds) {
         Iterable<FileInfo> fileInfos = fileRepository.findAllById(fileIds);
         for (FileInfo fileInfo : fileInfos) {
             fileClient.delete(fileInfo.getKey());
         }
-        fileBizService.separateByFileId(fileIds);
+        fileLinkService.breakByFileIds(fileIds);
     }
 
 }

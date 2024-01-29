@@ -13,9 +13,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface ApiLog {
 
-	/**
-	 * 启用
-	 */
-	boolean enable() default true;
+	String value();
 
 }

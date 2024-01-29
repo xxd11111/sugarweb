@@ -49,6 +49,11 @@
             <artifactId>component-param</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.sugar</groupId>
+            <artifactId>component-server</artifactId>
+        </dependency>
+
 
         <!-- 数据库mariadb连接驱动 -->
         <dependency>

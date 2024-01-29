@@ -14,7 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class FileBizInfo {
+public class FileLinkInfo {
 
     @Id
     @Size(max = 32)
@@ -33,9 +33,9 @@ public class FileBizInfo {
     private String bizId;
 
     /**
-     * 业务类型
+     * 文件组
      */
     @Size(max = 32)
-    private String bizType;
+    private String fileGroup;
 
 }

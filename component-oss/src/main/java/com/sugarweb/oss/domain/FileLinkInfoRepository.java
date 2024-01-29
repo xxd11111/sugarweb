@@ -8,6 +8,6 @@ import com.sugarweb.framework.orm.BaseRepository;
  * @author xxd
  * @version 1.0
  */
-public interface FileBizRepository extends BaseRepository<FileBizInfo> {
+public interface FileLinkInfoRepository extends BaseRepository<FileLinkInfo> {
 
 }

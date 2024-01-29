@@ -8,7 +8,6 @@ import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.server.aspect.ApiLog;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.security.UserInfo;
-import com.sugarweb.server.application.ApiService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -35,8 +34,7 @@ import java.util.stream.IntStream;
  */
 @Slf4j
 public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
-                                ApiErrorLogRepository apiErrorLogRepository,
-                                ApiService apiService) {
+                                ApiErrorLogRepository apiErrorLogRepository) {
 
     @SneakyThrows(FrameworkException.class)
     public void loadRequestInfo(ApiCallLog apiCallLog, LocalDateTime start) {
@@ -50,12 +48,6 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
         apiCallLog.setRequestIp(request.getRemoteAddr());
         apiCallLog.setRequestUserAgent(request.getHeader("User-Agent"));
         apiCallLog.setRequestTime(start);
-
-        ApiInfo apiInfo = apiService.findApiByUrl(requestURI)
-                //正常情况一定不为null
-                .orElseThrow(() -> new FrameworkException("未加载到ApiInfo"));
-        apiCallLog.setApiId(apiInfo.getOperationId());
-        apiCallLog.setApiName(apiInfo.getSummary());
     }
 
     @SneakyThrows(FrameworkException.class)
@@ -147,7 +139,7 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
         for (list = new ArrayList<>(); ex != null && !list.contains(ex); ex = ex.getCause()) {
             list.add(ex);
         }
-        Throwable rootEx = list.size() < 1 ? null : (Throwable) list.get(list.size() - 1);
+        Throwable rootEx = list.isEmpty() ? null : list.getLast();
         return null == rootEx ? "null" : Strings.lenientFormat("%s: %s", rootEx.getClass().getSimpleName(), rootEx.getMessage());
     }
 
@@ -169,11 +161,10 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
     }
 
     public void sendLog(ApiLog apiLog, ProceedingJoinPoint joinPoint, LocalDateTime start, Object result) {
-        if (!apiLog.enable()) {
-            return;
-        }
         try {
             ApiCallLog apiCallLog = new ApiCallLog();
+            apiCallLog.setApiName(apiLog.value());
+
             //加载网络请求的参数
             loadRequestInfo(apiCallLog, start);
 
@@ -196,9 +187,6 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
     }
 
     public void sendErrorLog(ApiLog apiLog, ProceedingJoinPoint joinPoint, LocalDateTime start, Throwable exception) {
-        if (!apiLog.enable()) {
-            return;
-        }
         try {
             ApiErrorLog sgcApiErrorLog = new ApiErrorLog();
             //加载网络请求的参数

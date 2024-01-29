@@ -26,11 +26,6 @@ public class ApiCallLog {
 	private String id;
 
 	/**
-	 * 接口id
-	 */
-	private String apiId;
-
-	/**
 	 * 接口名
 	 */
 	private String apiName;

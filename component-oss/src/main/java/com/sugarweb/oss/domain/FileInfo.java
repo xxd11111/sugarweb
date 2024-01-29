@@ -65,7 +65,7 @@ public class FileInfo {
 	 * 文件组
 	 */
 	@Size(max = 32)
-	private String bizType;
+	private String fileGroup;
 
 	@CreatedBy
 	private String createBy;

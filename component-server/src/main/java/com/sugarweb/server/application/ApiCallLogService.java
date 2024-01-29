@@ -3,7 +3,7 @@ package com.sugarweb.server.application;
 import com.sugarweb.framework.common.PageData;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiCallLog;
-import com.sugarweb.server.application.dto.AccessLogQueryDto;
+import com.sugarweb.server.application.dto.ApiCallLogQueryDto;
 
 /**
  * 访问日志服务
@@ -15,6 +15,6 @@ public interface ApiCallLogService {
 
 	ApiCallLog findOne(String id);
 
-	PageData<ApiCallLog> findPage(PageQuery pageQuery, AccessLogQueryDto accessLogQueryDto);
+	PageData<ApiCallLog> findPage(PageQuery pageQuery, ApiCallLogQueryDto apiCallLogQueryDto);
 
 }

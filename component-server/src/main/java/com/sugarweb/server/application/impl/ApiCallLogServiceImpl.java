@@ -7,7 +7,7 @@ import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.server.domain.QApiCallLog;
 import com.sugarweb.server.application.ApiCallLogService;
 import com.sugarweb.server.domain.ApiCallLog;
-import com.sugarweb.server.application.dto.AccessLogQueryDto;
+import com.sugarweb.server.application.dto.ApiCallLogQueryDto;
 import com.sugarweb.server.domain.ApiCallLogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,7 +33,7 @@ public class ApiCallLogServiceImpl implements ApiCallLogService {
 	}
 
 	@Override
-	public PageData<ApiCallLog> findPage(PageQuery pageDto, AccessLogQueryDto accessLogQueryDto) {
+	public PageData<ApiCallLog> findPage(PageQuery pageDto, ApiCallLogQueryDto apiCallLogQueryDto) {
 		QApiCallLog qApiCallLog = QApiCallLog.apiCallLog;
 		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
 				.withSort(Sort.Direction.DESC, qApiCallLog.requestTime.getMetadata().getName());

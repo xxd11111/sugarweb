@@ -1,9 +1,9 @@
 package com.sugarweb.oss.application;
 
 import com.sugarweb.oss.domain.FileInfo;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -16,10 +16,12 @@ public interface FileService {
 
 	FileInfo upload(String fileGroup, InputStream inputStream, String contentType, String filename);
 
-	void download(HttpServletResponse response, String fileGroup, String fileId);
+	InputStream findContent(String fileId);
 
-	void remove(String fileGroup, String fileId);
+	Optional<FileInfo> findOne(String fileId);
 
-	void remove(String fileGroup, Set<String> fileIds);
+	void remove(String fileId);
+
+	void remove(Set<String> fileIds);
 
 }

@@ -4,6 +4,7 @@ import com.sugarweb.framework.common.PageData;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.security.TokenInfo;
+import com.sugarweb.server.utils.ServletUtil;
 import com.sugarweb.uims.application.TokenService;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
 import com.sugarweb.uims.application.vo.LoginVo;
@@ -11,7 +12,9 @@ import com.sugarweb.uims.domain.user.QUser;
 import com.sugarweb.uims.domain.user.User;
 import com.sugarweb.uims.domain.user.UserRepository;
 import com.sugarweb.framework.security.TokenRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.protocol.RequestUserAgent;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -39,10 +42,17 @@ public class TokenServiceImpl implements TokenService {
         TokenInfo tokenInfo = new TokenInfo();
 
         //set agent信息
-        // tokenInfo.setIp();
-        // tokenInfo.setMac();
-        // tokenInfo.setPlatform();
-        // tokenInfo.setUserAgent();
+        HttpServletRequest request = ServletUtil.getRequest();
+        String ip;
+        String header = request.getHeader("x-forwarded-for");
+        if (header == null){
+            ip = request.getRemoteAddr();
+        }else {
+            ip = header;
+        }
+        tokenInfo.setIp(ip);
+        String userAgent = request.getHeader("User-Agent");
+        tokenInfo.setUserAgent(userAgent);
         tokenInfo.setUserId(user.getId());
 
         //set token信息

@@ -3,7 +3,7 @@ package com.sugarweb.server.controller;
 import com.sugarweb.framework.common.PageData;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiCallLog;
-import com.sugarweb.server.application.dto.AccessLogQueryDto;
+import com.sugarweb.server.application.dto.ApiCallLogQueryDto;
 import com.sugarweb.server.application.ApiCallLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +29,7 @@ public class ApiCallLogController {
 	}
 
 	@GetMapping("findPage")
-	public PageData<ApiCallLog> findPage(PageQuery pageQuery, AccessLogQueryDto queryDto) {
+	public PageData<ApiCallLog> findPage(PageQuery pageQuery, ApiCallLogQueryDto queryDto) {
 		return apiCallLogService.findPage(pageQuery, queryDto);
 	}
 

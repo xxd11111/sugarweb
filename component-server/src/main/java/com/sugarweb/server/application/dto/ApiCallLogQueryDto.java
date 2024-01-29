@@ -6,6 +6,6 @@ package com.sugarweb.server.application.dto;
  * @author xxd
  * @version 1.0
  */
-public class AccessLogQueryDto {
+public class ApiCallLogQueryDto {
 
 }

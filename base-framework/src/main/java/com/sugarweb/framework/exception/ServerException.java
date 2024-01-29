@@ -13,6 +13,10 @@ public class ServerException extends BaseException {
     public ServerException() {
     }
 
+    public ServerException(Throwable e) {
+        super(e);
+    }
+
     public ServerException(String message, Object... objects) {
         super(message, objects);
     }

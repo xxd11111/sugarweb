@@ -4,11 +4,7 @@ import com.sugarweb.framework.exception.GlobalExceptionHandler;
 import com.sugarweb.framework.security.AuthenticateService;
 import com.sugarweb.framework.security.AuthenticateFilter;
 import com.sugarweb.server.aspect.ApiLogAspect;
-import com.sugarweb.server.auto.ApiAutoRegister;
-import com.sugarweb.server.controller.ApiController;
 import com.sugarweb.server.domain.*;
-import com.sugarweb.server.application.ApiService;
-import com.sugarweb.server.application.impl.ApiServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -33,18 +29,6 @@ public class ServerAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiService serverApiService(ApiInfoRepository sgcApiInfoRepository) {
-        return new ApiServiceImpl(sgcApiInfoRepository);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ApiController serverApiController(ApiService apiService) {
-        return new ApiController(apiService);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
     public GlobalExceptionHandler globalExceptionHandler() {
         return new GlobalExceptionHandler();
     }
@@ -58,15 +42,8 @@ public class ServerAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public ApiLogInfoHandler apiLogInfoHandler(ApiCallLogRepository sgcApiCallLogRepository,
-                                               ApiErrorLogRepository sgcApiErrorLogRepository,
-                                               ApiService apiService) {
-        return new ApiLogInfoHandler(sgcApiCallLogRepository, sgcApiErrorLogRepository, apiService);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public ApiAutoRegister apiRegister(WebApplicationContext applicationContext, ApiInfoRepository sgcApiInfoRepository) {
-        return new ApiAutoRegister(applicationContext, sgcApiInfoRepository);
+                                               ApiErrorLogRepository sgcApiErrorLogRepository) {
+        return new ApiLogInfoHandler(sgcApiCallLogRepository, sgcApiErrorLogRepository);
     }
 
     @Bean

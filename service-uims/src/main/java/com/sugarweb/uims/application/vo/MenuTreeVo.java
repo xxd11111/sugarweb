@@ -28,11 +28,6 @@ public class MenuTreeVo {
     private String pid;
 
     /**
-     * 菜单pid
-     */
-    private Set<MenuTreeVo> menuTrees;
-
-    /**
      * 菜单编码
      */
     private String menuCode;

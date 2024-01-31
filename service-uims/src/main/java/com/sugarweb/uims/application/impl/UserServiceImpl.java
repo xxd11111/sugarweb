@@ -1,6 +1,7 @@
 package com.sugarweb.uims.application.impl;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.TreeMultimap;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sugarweb.framework.common.PageData;
 import com.sugarweb.framework.security.SecurityHelper;
@@ -41,11 +42,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVo find(String id) {
+    public UserVo findOne(String id) {
         User user = userRepository.findById(id).orElseThrow(() -> new ValidateException("not find user"));
         UserVo target = new UserVo();
         BeanUtils.copyProperties(user, target);
         return target;
+    }
+
+    @Override
+    public UserVo findLoginUserInfo(String id) {
+        return null;
     }
 
     @Override

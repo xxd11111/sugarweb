@@ -16,7 +16,7 @@ public class TokenInfo {
 
     private String accessToken;
 
-    private LocalDateTime expireTime;
+    private LocalDateTime accessTokenExpireTime;
 
     private String refreshToken;
 

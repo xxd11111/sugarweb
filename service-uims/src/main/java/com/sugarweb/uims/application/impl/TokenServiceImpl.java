@@ -8,13 +8,13 @@ import com.sugarweb.server.utils.ServletUtil;
 import com.sugarweb.uims.application.TokenService;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
 import com.sugarweb.uims.application.vo.LoginVo;
+import com.sugarweb.uims.domain.security.SecurityLog;
 import com.sugarweb.uims.domain.user.QUser;
 import com.sugarweb.uims.domain.user.User;
 import com.sugarweb.uims.domain.user.UserRepository;
 import com.sugarweb.framework.security.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.apache.http.protocol.RequestUserAgent;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -43,13 +43,7 @@ public class TokenServiceImpl implements TokenService {
 
         //set agent信息
         HttpServletRequest request = ServletUtil.getRequest();
-        String ip;
-        String header = request.getHeader("x-forwarded-for");
-        if (header == null){
-            ip = request.getRemoteAddr();
-        }else {
-            ip = header;
-        }
+        String ip= request.getRemoteAddr();
         tokenInfo.setIp(ip);
         String userAgent = request.getHeader("User-Agent");
         tokenInfo.setUserAgent(userAgent);
@@ -57,23 +51,28 @@ public class TokenServiceImpl implements TokenService {
 
         //set token信息
         tokenInfo.setAccessToken(UUID.randomUUID().toString());
-        tokenInfo.setExpireTime(LocalDateTime.now().plusSeconds(60*60*10));
+        tokenInfo.setAccessTokenExpireTime(LocalDateTime.now().plusSeconds(60*60*10));
         tokenInfo.setRefreshToken(UUID.randomUUID().toString());
         tokenInfo.setRefreshExpireTime(LocalDateTime.now().plusSeconds(60*60*24*7));
 
         tokenRepository.save(tokenInfo);
 
-        //todo 用户信息 菜单按钮
+        //insert 登录日志
+        SecurityLog securityLog = new SecurityLog();
+        securityLog.setUserId(user.getId());
+        securityLog.setActionIp(ip);
+        securityLog.setUsername(user.getUsername());
+        securityLog.setEventType("common");
+        securityLog.setActionType("login");
+        securityLog.setMessage("用户登录");
+
+        //登录信息 token等信息
         LoginVo loginVo = new LoginVo();
         loginVo.setUserId(user.getId());
-        loginVo.setAccountType(user.getAccountType());
-        loginVo.setEmail(user.getEmail());
-        loginVo.setMobilePhone(user.getMobilePhone());
-        loginVo.setUsername(user.getUsername());
-        loginVo.setNickName(user.getNickName());
-
-        //todo insert 登录日志
-
+        loginVo.setAccessToken(tokenInfo.getAccessToken());
+        loginVo.setAccessTokenExpiresTime(tokenInfo.getAccessTokenExpireTime());
+        loginVo.setRefreshToken(tokenInfo.getRefreshToken());
+        loginVo.setRefreshTokenExpiresTime(tokenInfo.getRefreshExpireTime());
         return loginVo;
     }
 
@@ -103,7 +102,7 @@ public class TokenServiceImpl implements TokenService {
     public LoginVo refresh(String refreshToken) {
         TokenInfo tokenInfo = tokenRepository.findRefreshToken(refreshToken);
         tokenInfo.setAccessToken(UUID.randomUUID().toString());
-        tokenInfo.setExpireTime(LocalDateTime.now().plusSeconds(60*60*10));
+        tokenInfo.setAccessTokenExpireTime(LocalDateTime.now().plusSeconds(60*60*10));
 
         LoginVo loginVo = new LoginVo();
         return loginVo;

@@ -1,9 +1,8 @@
 package com.sugarweb.uims.application.vo;
 
-import com.sugarweb.uims.domain.user.AccountType;
 import lombok.Data;
 
-import java.util.Set;
+import java.time.LocalDateTime;
 
 /**
  * 登录返回信息
@@ -16,22 +15,12 @@ public class LoginVo {
 
     private String userId;
 
-    private String lastLoginIp;
+    private String accessToken;
 
-    private Long lastLoginTime;
+    private LocalDateTime accessTokenExpiresTime;
 
-    private String lastLoginPlatform;
+    private String refreshToken;
 
-    private String username;
-
-    private String email;
-
-    private String mobilePhone;
-
-    private String nickName;
-
-    private AccountType accountType;
-
-    private Set<LoginMenuVo> menus;
+    private LocalDateTime refreshTokenExpiresTime;
 
 }

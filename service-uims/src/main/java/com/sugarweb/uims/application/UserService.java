@@ -15,7 +15,9 @@ public interface UserService {
 
     String save(UserDto userDTO);
 
-    UserVo find(String id);
+    UserVo findOne(String id);
+
+    UserVo findLoginUserInfo(String id);
 
     PageData<UserPageVo> page(UserQueryDto userQueryDto);
 

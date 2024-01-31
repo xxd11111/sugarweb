@@ -15,12 +15,12 @@ import java.util.Set;
  * @version 1.0
  */
 @Data
-public class LoginMenuVo {
+public class UserMenuVo {
 
     /**
      * 菜单pid
      */
-    private Set<LoginMenuVo> menus;
+    private Set<UserMenuVo> menus;
 
     /**
      * 菜单编码

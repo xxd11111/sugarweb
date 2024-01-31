@@ -18,16 +18,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("user")
 @RequiredArgsConstructor
-public class UserController {
+public class UserManageController {
 
     private final UserService userService;
 
     @GetMapping("{id}")
     public Result findOne(@NotBlank @PathVariable String id) {
-
-
-
-        return Result.data(userService.find(id));
+        return Result.data(userService.findOne(id));
     }
 
     @GetMapping("page")

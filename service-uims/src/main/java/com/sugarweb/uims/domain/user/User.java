@@ -13,10 +13,7 @@ import org.hibernate.Hibernate;
 
 import jakarta.persistence.*;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -52,25 +49,25 @@ public class User implements UserInfo {
 
     @ManyToMany
     @ToString.Exclude
-    private Set<Role> roles;
+    private List<Role> roles;
 
     @Enumerated(EnumType.STRING)
     private BooleanEnum enable;
 
-    public Set<String> listRoles() {
+    public List<String> listRoles() {
         if (Iterables.isEmpty(roles)) {
-            return new HashSet<>();
+            return new ArrayList<>();
         }
         return roles.stream()
                 .map(Role::getRoleCode)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
-    public Set<Menu> listMenus() {
+    public List<Menu> listMenus() {
         return roles.stream()
                 .map(Role::getMenus)
                 .flatMap(Collection::parallelStream)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     public Set<String> listApiCodes() {

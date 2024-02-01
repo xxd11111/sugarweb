@@ -85,9 +85,10 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public void logout() {
-        String userId = SecurityHelper.getUserInfo().getId();
-        String accessToken = "SecurityHelper.getUserInfo()";
+        String accessToken = SecurityHelper.getTokenInfo().getAccessToken();
         tokenRepository.delete(accessToken);
+        // refresh token
+        // tokenRepository.delete(accessToken);
     }
 
     @Override

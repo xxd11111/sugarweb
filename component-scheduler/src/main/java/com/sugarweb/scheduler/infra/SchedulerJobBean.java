@@ -1,6 +1,6 @@
 package com.sugarweb.scheduler.infra;
 
-import com.sugarweb.framework.common.BeanUtil;
+import com.sugarweb.framework.utils.BeanUtil;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.scheduler.domain.SchedulerTask;

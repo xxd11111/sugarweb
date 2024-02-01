@@ -4,7 +4,8 @@ import com.sugarweb.framework.common.PageData;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.security.TokenInfo;
-import com.sugarweb.server.utils.ServletUtil;
+import com.sugarweb.framework.security.UserInfo;
+import com.sugarweb.framework.utils.ServletUtil;
 import com.sugarweb.uims.application.TokenService;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
 import com.sugarweb.uims.application.vo.LoginVo;
@@ -38,16 +39,22 @@ public class TokenServiceImpl implements TokenService {
     public LoginVo login(PasswordLoginDto passwordLoginDto) {
         User user = userRepository.findOne(QUser.user.username.eq(passwordLoginDto.getAccount()))
                 .orElseThrow(() -> new ValidateException("not find user"));
+        //密码校验
         user.checkCertificate(passwordLoginDto.getPassword());
-        TokenInfo tokenInfo = new TokenInfo();
 
+        TokenInfo tokenInfo = new TokenInfo();
         //set agent信息
         HttpServletRequest request = ServletUtil.getRequest();
-        String ip= request.getRemoteAddr();
-        tokenInfo.setIp(ip);
+        String requestIp = ServletUtil.getRequestIp();
+        tokenInfo.setIp(requestIp);
         String userAgent = request.getHeader("User-Agent");
         tokenInfo.setUserAgent(userAgent);
-        tokenInfo.setUserId(user.getId());
+
+        //set user信息
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(user.getId());
+        userInfo.setUsername(user.getUsername());
+        tokenInfo.setUserInfo(userInfo);
 
         //set token信息
         tokenInfo.setAccessToken(UUID.randomUUID().toString());
@@ -60,7 +67,7 @@ public class TokenServiceImpl implements TokenService {
         //insert 登录日志
         SecurityLog securityLog = new SecurityLog();
         securityLog.setUserId(user.getId());
-        securityLog.setActionIp(ip);
+        securityLog.setActionIp(requestIp);
         securityLog.setUsername(user.getUsername());
         securityLog.setEventType("common");
         securityLog.setActionType("login");

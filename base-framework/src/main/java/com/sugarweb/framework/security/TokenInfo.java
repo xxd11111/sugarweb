@@ -22,15 +22,13 @@ public class TokenInfo {
 
     private LocalDateTime refreshExpireTime;
 
-    private String userId;
-
     private String ip;
 
-    private String mac;
-
-    private String platform;
-
     private String userAgent;
+
+    private String userId;
+
+    private UserInfo userInfo;
 
     private List<String> authorities;
 

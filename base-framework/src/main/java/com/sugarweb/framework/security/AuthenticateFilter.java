@@ -25,10 +25,8 @@ public class AuthenticateFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authenticate = request.getHeader("authenticate");
-        if (Strings.isNullOrEmpty(authenticate)){
-            authenticateService.authenticate(authenticate);
-        }
+        String authenticate = Strings.nullToEmpty(request.getHeader("authenticate"));
+        authenticateService.authenticate(authenticate);
         filterChain.doFilter(request, response);
     }
 }

@@ -1,6 +1,6 @@
 package com.sugarweb.framework;
 
-import com.sugarweb.framework.common.BeanUtil;
+import com.sugarweb.framework.utils.BeanUtil;
 import org.springframework.context.annotation.Bean;
 
 /**

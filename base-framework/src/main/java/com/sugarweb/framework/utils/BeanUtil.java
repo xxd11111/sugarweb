@@ -1,4 +1,4 @@
-package com.sugarweb.framework.common;
+package com.sugarweb.framework.utils;
 
 import java.lang.annotation.Annotation;
 import java.util.Map;

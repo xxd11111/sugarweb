@@ -16,10 +16,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan
 @EnableJpaRepositories
 @EnableConfigurationProperties
-public class SugarcoatApplication {
+public class UimsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SugarcoatApplication.class, args);
+        SpringApplication.run(UimsApplication.class, args);
     }
 
 }

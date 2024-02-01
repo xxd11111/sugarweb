@@ -1,7 +1,7 @@
 package com.sugarweb.scheduler.auto;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarweb.framework.common.BeanUtil;
+import com.sugarweb.framework.utils.BeanUtil;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.auto.AbstractAutoRegistry;
 import com.sugarweb.scheduler.domain.SchedulerTask;

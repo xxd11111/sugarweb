@@ -1,4 +1,4 @@
-package com.sugarweb.server.utils;
+package com.sugarweb.framework.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;

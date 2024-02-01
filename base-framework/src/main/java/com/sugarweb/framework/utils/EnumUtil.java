@@ -1,4 +1,4 @@
-package com.sugarweb.framework.common;
+package com.sugarweb.framework.utils;
 
 import com.sugarweb.framework.common.EnumValue;
 import com.sugarweb.framework.exception.ValidateException;

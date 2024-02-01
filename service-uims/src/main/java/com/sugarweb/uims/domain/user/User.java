@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @ToString
 @RequiredArgsConstructor
 @Entity
-public class User implements UserInfo {
+public class User {
 
     @Id
     private String id;
@@ -43,9 +43,6 @@ public class User implements UserInfo {
     private String salt;
 
     private String password;
-
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
 
     @ManyToMany
     @ToString.Exclude
@@ -89,10 +86,6 @@ public class User implements UserInfo {
     public void modifyPassword(String newPassword) {
         // todo 加密方式问题
         password = newPassword;
-    }
-
-    public String getUserType() {
-        return accountType.getValue();
     }
 
     public boolean isAdmin() {

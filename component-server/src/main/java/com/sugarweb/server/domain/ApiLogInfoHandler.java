@@ -1,8 +1,8 @@
 package com.sugarweb.server.domain;
 
 import com.google.common.base.Strings;
-import com.sugarweb.server.utils.JsonUtil;
-import com.sugarweb.server.utils.ServletUtil;
+import com.sugarweb.framework.utils.JsonUtil;
+import com.sugarweb.framework.utils.ServletUtil;
 import com.sugarweb.framework.common.Result;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.server.aspect.ApiLog;
@@ -39,13 +39,10 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
     @SneakyThrows(FrameworkException.class)
     public void loadRequestInfo(ApiCallLog apiCallLog, LocalDateTime start) {
         HttpServletRequest request = ServletUtil.getRequest();
-        if (request == null) {
-            return;
-        }
         apiCallLog.setRequestMethod(request.getMethod());
         String requestURI = request.getRequestURI();
         apiCallLog.setRequestUrl(requestURI);
-        apiCallLog.setRequestIp(request.getRemoteAddr());
+        apiCallLog.setRequestIp(ServletUtil.getRequestIp());
         apiCallLog.setRequestUserAgent(request.getHeader("User-Agent"));
         apiCallLog.setRequestTime(start);
     }

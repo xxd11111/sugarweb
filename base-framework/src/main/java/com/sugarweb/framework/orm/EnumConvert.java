@@ -1,6 +1,6 @@
 package com.sugarweb.framework.orm;
 
-import com.sugarweb.framework.common.EnumUtil;
+import com.sugarweb.framework.utils.EnumUtil;
 import com.sugarweb.framework.common.EnumValue;
 import com.sugarweb.framework.exception.FrameworkException;
 import jakarta.persistence.AttributeConverter;

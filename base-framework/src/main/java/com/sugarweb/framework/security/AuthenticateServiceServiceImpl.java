@@ -2,8 +2,11 @@ package com.sugarweb.framework.security;
 
 import com.sugarweb.framework.common.HttpCode;
 import com.sugarweb.framework.exception.SecurityException;
+import com.sugarweb.framework.utils.ServletUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 /**
  * 会话服务实现类
@@ -18,18 +21,20 @@ public class AuthenticateServiceServiceImpl implements AuthenticateService {
     private final TokenRepository tokenRepository;
 
     @Override
-    public TokenInfo authenticate(String accessToken) {
-        TokenInfo tokenInfo = tokenRepository.findOne(accessToken);
-        if (tokenInfo == null) {
-            throw new SecurityException("");
-        }
-        boolean flag = true;
-        //todo check ip mac
-        if (!flag) {
-            // todo send securityLog
+    public void authenticate(String accessToken) {
+        if (accessToken.isEmpty()) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
-        return tokenInfo;
+        TokenInfo tokenInfo = tokenRepository.findOne(accessToken);
+        if (tokenInfo == null) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
+        if (!Objects.equals(tokenInfo.getIp(), ServletUtil.getRequestIp())) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
+        if (!Objects.equals(tokenInfo.getUserAgent(), ServletUtil.getUserAgent())) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
     }
 
 }

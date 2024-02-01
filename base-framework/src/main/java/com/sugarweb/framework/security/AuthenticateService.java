@@ -8,6 +8,6 @@ package com.sugarweb.framework.security;
  */
 public interface AuthenticateService {
 
-    TokenInfo authenticate(String accessToken);
+    void authenticate(String accessToken);
 
 }

@@ -12,8 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SecurityHelper {
 
     public static UserInfo getUserInfo() {
+        return getTokenInfo().getUserInfo();
+    }
+
+    public static TokenInfo getTokenInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserInfo)authentication.getPrincipal();
+        return (TokenInfo) authentication.getPrincipal();
     }
 
 }

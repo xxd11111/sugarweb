@@ -47,13 +47,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void modify(RoleDto roleDto) {
-        Role role = roleRepository.findById(roleDto.getId()).orElseThrow(() -> new ValidateException("not find role"));
-        BeanUtils.copyProperties(roleDto, role);
-        roleRepository.save(role);
-    }
-
-    @Override
     public void remove(String id) {
         roleRepository.deleteById(id);
     }
@@ -61,8 +54,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void associateMenu(String id, List<String> menuIds) {
         Role role = roleRepository.findById(id).orElseThrow(() -> new ValidateException("not find role"));
-        List<Menu> menus = new ArrayList<>();
-        menuRepository.findAllById(menuIds).forEach(menus::add);
+        List<Menu> menus = new ArrayList<>(menuRepository.findAllById(menuIds));
         role.setMenus(menus);
         roleRepository.save(role);
     }

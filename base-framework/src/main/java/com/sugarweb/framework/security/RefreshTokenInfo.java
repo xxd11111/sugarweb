@@ -12,26 +12,16 @@ import java.util.List;
  * @version 1.0
  */
 @Data
-public class TokenInfo {
-
-    private String accessToken;
-
-    private LocalDateTime accessTokenExpireTime;
+public class RefreshTokenInfo {
 
     private String refreshToken;
 
-    private LocalDateTime refreshExpireTime;
+    private LocalDateTime expireTime;
 
     private String ip;
 
     private String userAgent;
 
     private String userId;
-
-    private UserInfo userInfo;
-
-    private List<String> authorities;
-
-    private List<String> roles;
 
 }

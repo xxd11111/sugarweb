@@ -25,9 +25,9 @@ public class Role {
 	@Id
 	private String id;
 
-	private String roleName;
-
 	private String roleCode;
+
+	private String roleName;
 
 	@ManyToMany
 	private Collection<Menu> menus;

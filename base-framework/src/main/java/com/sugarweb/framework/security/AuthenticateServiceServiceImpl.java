@@ -18,21 +18,21 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AuthenticateServiceServiceImpl implements AuthenticateService {
 
-    private final TokenRepository tokenRepository;
+    private final AccessTokenRepository accessTokenRepository;
 
     @Override
     public void authenticate(String accessToken) {
         if (accessToken.isEmpty()) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
-        TokenInfo tokenInfo = tokenRepository.findOne(accessToken);
-        if (tokenInfo == null) {
+        AccessTokenInfo accessTokenInfo = accessTokenRepository.findOne(accessToken);
+        if (accessTokenInfo == null) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
-        if (!Objects.equals(tokenInfo.getIp(), ServletUtil.getRequestIp())) {
+        if (!Objects.equals(accessTokenInfo.getIp(), ServletUtil.getRequestIp())) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
-        if (!Objects.equals(tokenInfo.getUserAgent(), ServletUtil.getUserAgent())) {
+        if (!Objects.equals(accessTokenInfo.getUserAgent(), ServletUtil.getUserAgent())) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
     }

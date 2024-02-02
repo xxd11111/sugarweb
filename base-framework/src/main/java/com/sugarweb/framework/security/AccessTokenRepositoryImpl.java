@@ -13,24 +13,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class TokenRepositoryImpl implements TokenRepository {
+public class AccessTokenRepositoryImpl implements AccessTokenRepository {
 
     private final RedissonClient redissonClient;
 
-    private static final String KEY_PREFIX = "session";
+    private static final String KEY_PREFIX = "accessToken:";
 
     @Override
-    public void save(TokenInfo tokenInfo) {
-        String key = sessionKey(tokenInfo.getAccessToken());
+    public void save(AccessTokenInfo accessTokenInfo) {
+        String key = sessionKey(accessTokenInfo.getAccessToken());
         RBucket<Object> bucket = redissonClient.getBucket(key);
-        bucket.set(tokenInfo);
+        bucket.set(accessTokenInfo);
     }
 
     @Override
-    public void update(TokenInfo tokenInfo) {
-        String key = sessionKey(tokenInfo.getAccessToken());
+    public void update(AccessTokenInfo accessTokenInfo) {
+        String key = sessionKey(accessTokenInfo.getAccessToken());
         RBucket<Object> bucket = redissonClient.getBucket(key);
-        bucket.set(tokenInfo);
+        bucket.set(accessTokenInfo);
     }
 
     @Override
@@ -40,19 +40,14 @@ public class TokenRepositoryImpl implements TokenRepository {
     }
 
     @Override
-    public TokenInfo findOne(String accessToken) {
+    public AccessTokenInfo findOne(String accessToken) {
         String key = sessionKey(accessToken);
-        RBucket<TokenInfo> bucket = redissonClient.getBucket(key);
+        RBucket<AccessTokenInfo> bucket = redissonClient.getBucket(key);
         return bucket.get();
     }
 
-    @Override
-    public TokenInfo findRefreshToken(String refreshToken) {
-        return null;
-    }
-
     private String sessionKey(String accessToken) {
-        return KEY_PREFIX + ":" + accessToken;
+        return KEY_PREFIX + accessToken;
     }
 
 }

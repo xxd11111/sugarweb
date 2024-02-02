@@ -1,7 +1,6 @@
 package com.sugarweb.uims.controller;
 
 import com.sugarweb.framework.common.Result;
-import com.sugarweb.framework.security.TokenInfo;
 import com.sugarweb.uims.application.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/security")
+@RequestMapping("/security/manage")
 @RequiredArgsConstructor
 public class SecurityController {
 
@@ -25,11 +24,6 @@ public class SecurityController {
     public Result<Void> kickOut(String accessToken) {
         tokenService.kickOut(accessToken);
         return Result.ok();
-    }
-
-    @PostMapping("/find")
-    public Result<TokenInfo> find(String accessToken) {
-        return Result.data(tokenService.find(accessToken));
     }
 
 }

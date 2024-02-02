@@ -17,8 +17,6 @@ public interface UserService {
 
     UserVo findOne(String id);
 
-    UserVo findLoginUserInfo(String id);
-
     PageData<UserPageVo> page(UserQueryDto userQueryDto);
 
     void modifyPassword(NewPasswordDto newPasswordDto);

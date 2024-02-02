@@ -1,9 +1,8 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.security.TokenInfo;
+import com.sugarweb.framework.security.AccessTokenInfo;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
-import com.sugarweb.uims.application.vo.LoginVo;
+import com.sugarweb.uims.application.vo.TokenVo;
 
 /**
  * 会话服务实现类
@@ -13,16 +12,12 @@ import com.sugarweb.uims.application.vo.LoginVo;
  */
 public interface TokenService{
 
-    LoginVo login(PasswordLoginDto passwordLoginDto);
+    TokenVo login(PasswordLoginDto passwordLoginDto);
 
     void logout();
 
     void kickOut(String sessionId);
 
-    PageData<TokenInfo> page();
-
-    TokenInfo find(String sessionId);
-
-    LoginVo refresh(String refreshToken);
+    TokenVo refresh(String refreshToken);
 
 }

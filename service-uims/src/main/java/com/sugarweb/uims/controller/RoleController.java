@@ -41,12 +41,6 @@ public class RoleController {
         return Result.data(roleService.save(menuDTO));
     }
 
-    @PostMapping("update")
-    public Result<Void> update(@RequestBody RoleDto menuDTO) {
-        roleService.modify(menuDTO);
-        return Result.ok();
-    }
-
     @PostMapping("associateMenu")
     public Result<Void> update(String id, String[] menus) {
         roleService.associateMenu(id, List.of(menus));

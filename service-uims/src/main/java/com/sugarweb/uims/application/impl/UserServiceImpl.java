@@ -50,11 +50,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserVo findLoginUserInfo(String id) {
-        return null;
-    }
-
-    @Override
     public PageData<UserPageVo> page(UserQueryDto userQueryDto) {
         BooleanExpression expression = ExpressionWrapper.of()
                 .and(!Strings.isNullOrEmpty(userQueryDto.getUsername()), QUser.user.username.like(userQueryDto.getUsername(), '/'))

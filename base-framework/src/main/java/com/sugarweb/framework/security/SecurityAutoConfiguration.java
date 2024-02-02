@@ -33,13 +33,18 @@ import java.util.List;
 public class SecurityAutoConfiguration {
 
     @Bean
-    public AuthenticateService authenticateService(TokenRepository tokenRepository) {
-        return new AuthenticateServiceServiceImpl(tokenRepository);
+    public AuthenticateService authenticateService(AccessTokenRepository accessTokenRepository) {
+        return new AuthenticateServiceServiceImpl(accessTokenRepository);
     }
 
     @Bean
-    public TokenRepository tokenRepository(RedissonClient redissonClient) {
-        return new TokenRepositoryImpl(redissonClient);
+    public AccessTokenRepository accessTokenRepository(RedissonClient redissonClient) {
+        return new AccessTokenRepositoryImpl(redissonClient);
+    }
+
+    @Bean
+    public RefreshTokenRepository refreshTokenRepository(RedissonClient redissonClient) {
+        return new RefreshTokenRepositoryImpl(redissonClient);
     }
 
     @Bean

@@ -16,9 +16,7 @@ import java.util.List;
  */
 public interface RoleService {
 
-    String save(RoleDto roleDTO);
-
-    void modify(RoleDto roleDTO);
+    String save(RoleDto roleDto);
 
     void remove(String id);
 

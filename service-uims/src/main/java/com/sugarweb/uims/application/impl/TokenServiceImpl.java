@@ -1,24 +1,22 @@
 package com.sugarweb.uims.application.impl;
 
-import com.sugarweb.framework.common.PageData;
+import com.sugarweb.framework.common.HttpCode;
+import com.sugarweb.framework.exception.SecurityException;
 import com.sugarweb.framework.exception.ValidateException;
-import com.sugarweb.framework.security.SecurityHelper;
-import com.sugarweb.framework.security.TokenInfo;
-import com.sugarweb.framework.security.UserInfo;
+import com.sugarweb.framework.security.*;
 import com.sugarweb.framework.utils.ServletUtil;
 import com.sugarweb.uims.application.TokenService;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
-import com.sugarweb.uims.application.vo.LoginVo;
+import com.sugarweb.uims.application.vo.TokenVo;
 import com.sugarweb.uims.domain.security.SecurityLog;
 import com.sugarweb.uims.domain.user.QUser;
 import com.sugarweb.uims.domain.user.User;
 import com.sugarweb.uims.domain.user.UserRepository;
-import com.sugarweb.framework.security.TokenRepository;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -33,86 +31,99 @@ public class TokenServiceImpl implements TokenService {
 
     private final UserRepository userRepository;
 
-    private final TokenRepository tokenRepository;
+    private final AccessTokenRepository accessTokenRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
-    public LoginVo login(PasswordLoginDto passwordLoginDto) {
+    public TokenVo login(PasswordLoginDto passwordLoginDto) {
         User user = userRepository.findOne(QUser.user.username.eq(passwordLoginDto.getAccount()))
                 .orElseThrow(() -> new ValidateException("not find user"));
         //密码校验
         user.checkCertificate(passwordLoginDto.getPassword());
 
-        TokenInfo tokenInfo = new TokenInfo();
-        //set agent信息
-        HttpServletRequest request = ServletUtil.getRequest();
-        String requestIp = ServletUtil.getRequestIp();
-        tokenInfo.setIp(requestIp);
-        String userAgent = request.getHeader("User-Agent");
-        tokenInfo.setUserAgent(userAgent);
+        RefreshTokenInfo refreshTokenInfo = new RefreshTokenInfo();
+        refreshTokenInfo.setRefreshToken(UUID.randomUUID().toString());
+        refreshTokenInfo.setExpireTime(LocalDateTime.now().plusSeconds(60*60*24*7));
+        refreshTokenInfo.setUserId(user.getId());
+        refreshTokenInfo.setIp(ServletUtil.getRequestIp());
+        refreshTokenInfo.setUserAgent(ServletUtil.getUserAgent());
 
-        //set user信息
-        UserInfo userInfo = new UserInfo();
-        userInfo.setId(user.getId());
-        userInfo.setUsername(user.getUsername());
-        tokenInfo.setUserInfo(userInfo);
+        AccessTokenInfo accessTokenInfo = new AccessTokenInfo();
+        accessTokenInfo.setAccessToken(UUID.randomUUID().toString());
+        accessTokenInfo.setRefreshToken(refreshTokenInfo.getRefreshToken());
+        accessTokenInfo.setIp(refreshTokenInfo.getIp());
+        accessTokenInfo.setUserAgent(refreshTokenInfo.getUserAgent());
+        accessTokenInfo.setUserId(refreshTokenInfo.getUserId());
 
-        //set token信息
-        tokenInfo.setAccessToken(UUID.randomUUID().toString());
-        tokenInfo.setAccessTokenExpireTime(LocalDateTime.now().plusSeconds(60*60*10));
-        tokenInfo.setRefreshToken(UUID.randomUUID().toString());
-        tokenInfo.setRefreshExpireTime(LocalDateTime.now().plusSeconds(60*60*24*7));
-
-        tokenRepository.save(tokenInfo);
+        accessTokenRepository.save(accessTokenInfo);
 
         //insert 登录日志
         SecurityLog securityLog = new SecurityLog();
         securityLog.setUserId(user.getId());
-        securityLog.setActionIp(requestIp);
+        securityLog.setActionIp(ServletUtil.getRequestIp());
         securityLog.setUsername(user.getUsername());
         securityLog.setEventType("common");
         securityLog.setActionType("login");
         securityLog.setMessage("用户登录");
 
         //登录信息 token等信息
-        LoginVo loginVo = new LoginVo();
-        loginVo.setUserId(user.getId());
-        loginVo.setAccessToken(tokenInfo.getAccessToken());
-        loginVo.setAccessTokenExpiresTime(tokenInfo.getAccessTokenExpireTime());
-        loginVo.setRefreshToken(tokenInfo.getRefreshToken());
-        loginVo.setRefreshTokenExpiresTime(tokenInfo.getRefreshExpireTime());
-        return loginVo;
+        TokenVo tokenVo = new TokenVo();
+        tokenVo.setUserId(user.getId());
+        tokenVo.setAccessToken(accessTokenInfo.getAccessToken());
+        tokenVo.setAccessTokenExpiresTime(accessTokenInfo.getExpireTime());
+        tokenVo.setRefreshToken(refreshTokenInfo.getRefreshToken());
+        tokenVo.setRefreshTokenExpiresTime(refreshTokenInfo.getExpireTime());
+        return tokenVo;
     }
 
     @Override
     public void logout() {
         String accessToken = SecurityHelper.getTokenInfo().getAccessToken();
-        tokenRepository.delete(accessToken);
-        // refresh token
-        // tokenRepository.delete(accessToken);
+        AccessTokenInfo accessTokenInfo = accessTokenRepository.findOne(accessToken);
+        String refreshToken = accessTokenInfo.getRefreshToken();
+        refreshTokenRepository.delete(refreshToken);
+        accessTokenRepository.delete(accessToken);
     }
 
     @Override
     public void kickOut(String accessToken) {
-        tokenRepository.delete(accessToken);
+        AccessTokenInfo accessTokenInfo = accessTokenRepository.findOne(accessToken);
+        refreshTokenRepository.delete(accessTokenInfo.getRefreshToken());
+        accessTokenRepository.delete(accessToken);
     }
 
     @Override
-    public PageData<TokenInfo> page() {
-        return null;
-    }
+    public TokenVo refresh(String refreshToken) {
+        if (refreshToken.isEmpty()) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
+        RefreshTokenInfo refreshTokenInfo = refreshTokenRepository.findOne(refreshToken);
+        if (refreshTokenInfo == null) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
+        if (!Objects.equals(refreshTokenInfo.getIp(), ServletUtil.getRequestIp())) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
+        if (!Objects.equals(refreshTokenInfo.getUserAgent(), ServletUtil.getUserAgent())) {
+            throw new SecurityException(HttpCode.UNAUTHORIZED);
+        }
 
-    @Override
-    public TokenInfo find(String accessToken) {
-        return tokenRepository.findOne(accessToken);
-    }
+        AccessTokenInfo accessTokenInfo = new AccessTokenInfo();
+        accessTokenInfo.setAccessToken(UUID.randomUUID().toString());
+        //set agent信息
+        accessTokenInfo.setIp(refreshTokenInfo.getIp());
+        accessTokenInfo.setUserAgent(refreshTokenInfo.getUserAgent());
+        //set user信息
+        accessTokenInfo.setUserId(refreshTokenInfo.getUserId());
 
-    @Override
-    public LoginVo refresh(String refreshToken) {
-        TokenInfo tokenInfo = tokenRepository.findRefreshToken(refreshToken);
-        tokenInfo.setAccessToken(UUID.randomUUID().toString());
-        tokenInfo.setAccessTokenExpireTime(LocalDateTime.now().plusSeconds(60*60*10));
-
-        LoginVo loginVo = new LoginVo();
-        return loginVo;
+        accessTokenRepository.save(accessTokenInfo);
+        TokenVo tokenVo = new TokenVo();
+        //登录信息 token等信息
+        tokenVo.setUserId(refreshTokenInfo.getUserId());
+        tokenVo.setAccessToken(accessTokenInfo.getAccessToken());
+        tokenVo.setAccessTokenExpiresTime(accessTokenInfo.getExpireTime());
+        tokenVo.setRefreshToken(refreshTokenInfo.getRefreshToken());
+        tokenVo.setRefreshTokenExpiresTime(refreshTokenInfo.getExpireTime());
+        return tokenVo;
     }
 }

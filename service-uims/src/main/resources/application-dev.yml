@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: /uims
 
-#localhost:8888/uims/v3/api-docs
+#localhost:8889/uims/v3/api-docs
 
 spring:
   application:
@@ -120,7 +120,7 @@ logging:
   level:
     org.hibernate.type.descriptor.sql.BasicBinder: debug
 
-sugarcoat:
+sugarweb:
   cache:
     # redis key前缀
     keyPrefix: uims
@@ -143,8 +143,7 @@ sugarcoat:
       # 发布和订阅连接池大小
       subscriptionConnectionPoolSize: 50
   # redis 单机配置(单机与集群只能开启一个另一个需要注释掉)
-  doc:
-    enable: true
+  openapi:
     title: 用户界面管理系统
     description: 用户界面管理系统
     version: V1.0
@@ -153,35 +152,24 @@ sugarcoat:
     license: MIT
     license-url: https://mit-license.org/
   dictionary:
-    enable: true
-    scanPackage: com.sugarcoat.uims
-    registerStrategy: OVERRIDE
+    scanPackage: com.sugarweb.uims
     enableCache: true
-    cachePrefix: 'sugarcoat:dict:'
+    cachePrefix: 'sugarweb:dictionary:'
   param:
-    enable: true
     enableRegister: true
-    scanPackage: com.sugarcoat.uims
-    enableCache: true
-    cachePrefix: 'sugarcoat:param:'
+    scanPackage: com.sugarweb.uims
+    cachePrefix: 'sugarweb:param:'
   email:
     enable: false
     host: "smtp.qq.com"
     port: 465
     username: ${EMAIL_USERNAME}
     password: ${EMAIL_PASSWORD}
-  sms:
-    enable: false
-    type: aliyun
-  #    type: tencent
   oss:
-    enable: false
     bucketName: x
     endPoint: x
     accessKey: x
     secretKey: x
-  server:
-    enable: true
 
 
 

@@ -12,8 +12,6 @@
     <artifactId>component-param</artifactId>
 
     <dependencies>
-
-
         <dependency>
             <groupId>com.sugar</groupId>
             <artifactId>base-framework</artifactId>

@@ -27,38 +27,33 @@ sugarweb是按照“框架”与“组件”这两个概念构建的一套整合
 
 ## sugarweb做了什么
 
-- framework：通用对象规范，接口返回对象，分页参数对象，分页结果适配器，错误码，状态码，标识对象
-- exception：异常规范，目前分为脏数据，框架异常，安全异常，服务器异常，检验异常，幂等异常，限流异常
-- sms：短信规范，发送短信客户端，发送短信模板对象
-- email：邮件规范，发送邮件客户端，发送邮件模板对象
-- oss：文件存储服务规范，文件服务客户端，文件信息，文件组策略，文件附件管理，文件附件信息
-- data：数据处理规范，敏感词过滤，枚举校验
-- orm：持久化处理规范，数据权限，存储加密，多租户
-- security：安全规范，用户信息管理
-- scheduler：定时任务规范，定时任务管理
-- dict：数据字典规范，字典组对象，字典项对象，字典编码转化，字典管理，字典校验，内部字典导入
-- parameter：参数规范，参数对象，参数管理
-- server：服务端规范，接口标识，接口日志，接口对象，接口管理
+- base-framework：这里整合了主要常用核心框架并进行了通用功能封装，涉及异常处理，持久化框架整合，缓存框架整合，授权认证整合。
+- component-dictionary：字典组件，提供了字典（group,code,name）的增删改查功能，根据注解自动初始化功能。
+- component-email：邮件组件，提供了邮件发送的基础功能。
+- component-openapi：接口文档组件，提供对外接口信息。
+- component-oss：文件存储组件，提供文件存储功能，以及文件与业务绑定功能。
+- component-param：参数组件，提供了参数（key,value）的增删改查功能，自动注册注解功能。
+- component-scheduler：定时任务组件，提供了定时任务注册，启停，执行功能，自动注册注解功能，动态参数配置。
+- component-server：服务组件，提供了服务端访问请求日志功能，异常日志功能。
+- service-uims：用户管理服务，提供用户管理，角色管理，菜单管理，登录登出接口。
 
-sugarcoat规范详细说明文档地址：(准备中)
+## sugarweb使用说明
 
-## sugarcoat使用说明
-
-sugarcoat使用说明文档地址：(准备中)
+这是一套使用整合方案，并不建议使用maven整合，而是直接下载源码或者拉取分支根据自身业务情况进行部分调整后使用。
 
 ## 安装教程
 
-1. 下载或拉取代码
-2. 检测本地环境，建议jdk21, maven3.8.8, redis6.x, mysql8.x
-3. 打开application-dev.yml，配置数据库，redis，minio
-4. 项目中使用了querydsl代码生成技术，需要maven执行compile后才能启动
-5. uims为sugarweb使用案例，启动服务后，打开浏览器输入http://localhost:8889/uims/doc.html
+1. 直接下载或使用git拉取代码。
+2. 检测本地环境，建议jdk21, maven3.8.8, redis6.x, mysql8.x。
+3. 修改service-uims模块下的application-dev.yml，配置数据库，redis，minio信息。
+4. 项目中使用了querydsl代码生成技术，需要maven执行compile后才能启动。
+5. 启动服务后，打开浏览器输入http://localhost:8889/uims/doc.html。
 
 ## 交流与讨论
 
-如果你热爱技术，欢迎加入我们。
+如果你热爱技术，欢迎加入交流。
 
 如果遇到什么问题，或者有更好的建议，欢迎进群讨论。
 
-sugarweb交流qq群：827838560。
+sugar交流qq群：827838560。
 

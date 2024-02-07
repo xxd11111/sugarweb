@@ -3,6 +3,7 @@ package com.sugarweb.framework.security;
 import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -97,12 +98,12 @@ public class SecurityAutoConfiguration {
 //                .authenticationEntryPoint()
 //                .accessDeniedHandler()
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
-                        //静态资源放行
-                        .requestMatchers(antMatcher("/*.html", "/**/*.html", "/**/*.css", "/**/*.js")).permitAll()
+                        //openapi url忽略
+                        .requestMatchers(HttpMethod.GET, "/v3/api-docs").permitAll()
                         //测试模式全忽略
-                        .requestMatchers(antMatcher("/**")).permitAll()
+                        .requestMatchers("/**").permitAll()
                         //忽略验证的url
-                        .requestMatchers(antMatcher(ignoreUrls.toArray(new String[0]))).permitAll()
+                        .requestMatchers(ignoreUrls.toArray(new String[0])).permitAll()
                         .anyRequest().authenticated()
                 )
                 .build();
@@ -113,7 +114,8 @@ public class SecurityAutoConfiguration {
         for (String string : strings) {
             requestMatchers.add(AntPathRequestMatcher.antMatcher(string));
         }
-        return requestMatchers.toArray(new AntPathRequestMatcher[0]);
+        AntPathRequestMatcher[] array = requestMatchers.toArray(new AntPathRequestMatcher[0]);
+        return array;
     }
 
     //todo remove 测试用户

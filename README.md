@@ -28,12 +28,12 @@ sugarweb是按照“框架”与“组件”这两个概念构建的一套整合
 ## sugarweb做了什么
 
 - base-framework：这里整合了主要常用核心框架并进行了通用功能封装，涉及异常处理，持久化框架整合，缓存框架整合，授权认证整合。
-- component-dictionary：字典组件，提供了字典（group,code,name）的增删改查功能，根据注解自动初始化功能。
+- component-dictionary：字典组件，提供了字典（group,code,name）的增删改查功能，自动注册功能。
 - component-email：邮件组件，提供了邮件发送的基础功能。
 - component-openapi：接口文档组件，提供对外接口信息。
 - component-oss：文件存储组件，提供文件存储功能，以及文件与业务绑定功能。
-- component-param：参数组件，提供了参数（key,value）的增删改查功能，自动注册注解功能。
-- component-scheduler：定时任务组件，提供了定时任务注册，启停，执行功能，自动注册注解功能，动态参数配置。
+- component-param：参数组件，提供了参数（key,value）的增删改查功能，自动注册功能。
+- component-scheduler：定时任务组件，提供了定时任务注册，启停，执行功能，自动注册功能，动态参数配置。
 - component-server：服务组件，提供了服务端访问请求日志功能，异常日志功能。
 - service-uims：用户管理服务，提供用户管理，角色管理，菜单管理，登录登出接口。
 
@@ -47,11 +47,9 @@ sugarweb是按照“框架”与“组件”这两个概念构建的一套整合
 2. 检测本地环境，建议jdk21, maven3.8.8, redis6.x, mysql8.x。
 3. 修改service-uims模块下的application-dev.yml，配置数据库，redis，minio信息。
 4. 项目中使用了querydsl代码生成技术，需要maven执行compile后才能启动。
-5. 启动服务后，打开浏览器输入http://localhost:8889/uims/doc.html。
+5. 启动服务后，使用接口信息url配合接口调用工具进行测试，http://localhost:8889/uims/v3/api-docs
 
 ## 交流与讨论
-
-如果你热爱技术，欢迎加入交流。
 
 如果遇到什么问题，或者有更好的建议，欢迎进群讨论。
 

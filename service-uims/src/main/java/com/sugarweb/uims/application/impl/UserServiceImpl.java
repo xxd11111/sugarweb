@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService {
                 .and(!Strings.isNullOrEmpty(userQueryDto.getMobilePhone()), QUser.user.mobilePhone.like(userQueryDto.getMobilePhone(), '/'))
                 .and(!Strings.isNullOrEmpty(userQueryDto.getNickName()), QUser.user.nickName.like(userQueryDto.getNickName(), '/'))
                 .and(userQueryDto.getEnable() != null, QUser.user.enable.eq(userQueryDto.getEnable()))
-                .and(userQueryDto.getAccountType() != null, QUser.user.accountType.eq(userQueryDto.getAccountType()))
                 .build();
 
         PageRequest pageRequest = PageRequest.of(1, 10);

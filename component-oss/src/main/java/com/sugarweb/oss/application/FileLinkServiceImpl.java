@@ -47,7 +47,7 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public void breakFiles(String bizId, String fileGroup) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileBizInfo;
+        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
         BooleanExpression expression = sgcBizFile.fileGroup.eq(fileGroup)
                 .and(sgcBizFile.bizId.eq(bizId));
         Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
@@ -56,7 +56,7 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public void breakFiles(String bizId) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileBizInfo;
+        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
         BooleanExpression expression = sgcBizFile.bizId.eq(bizId);
         Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
         fileLinkInfoRepository.deleteAll(sgcBizFiles);
@@ -64,7 +64,7 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public void breakByFileId(String fileId) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileBizInfo;
+        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
         BooleanExpression expression = sgcBizFile.fileId.eq(fileId);
         Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
         fileLinkInfoRepository.deleteAll(sgcBizFiles);
@@ -72,7 +72,7 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public void breakByFileIds(Collection<String> fileIds) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileBizInfo;
+        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
         BooleanExpression expression = sgcBizFile.fileId.in(fileIds);
         Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
         fileLinkInfoRepository.deleteAll(sgcBizFiles);
@@ -80,7 +80,7 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public List<FileInfo> findAll(String bizId, String fileGroup) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileBizInfo;
+        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
         BooleanExpression expression = sgcBizFile.fileGroup.eq(fileGroup)
                 .and(sgcBizFile.bizId.eq(bizId));
         Iterable<FileLinkInfo> bizFileIterable = fileLinkInfoRepository.findAll(expression);
@@ -96,7 +96,7 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public List<FileInfo> findAll(String bizId) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileBizInfo;
+        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
         BooleanExpression expression = sgcBizFile.bizId.eq(bizId);
         Iterable<FileLinkInfo> bizFileIterable = fileLinkInfoRepository.findAll(expression);
         List<String> fileIds = new ArrayList<>();
@@ -111,7 +111,7 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public Optional<FileInfo> findFirstOne(String bizId, String fileGroup) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileBizInfo;
+        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
         BooleanExpression expression = sgcBizFile.bizId.eq(bizId);
         Iterable<FileLinkInfo> bizFileIterable = fileLinkInfoRepository.findAll(expression);
         String fileId = null;

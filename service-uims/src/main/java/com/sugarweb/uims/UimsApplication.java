@@ -1,10 +1,9 @@
 package com.sugarweb.uims;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * 启动类
@@ -13,9 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @version 1.0
  */
 @SpringBootApplication
-@EntityScan
-@EnableJpaRepositories
-@EnableConfigurationProperties
+@MapperScan("com.sugarweb.uims.domain.repository")
 public class UimsApplication {
 
     public static void main(String[] args) {

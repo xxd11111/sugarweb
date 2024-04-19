@@ -1,7 +1,8 @@
 package com.sugarweb.server.controller;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.server.domain.ApiCallLog;
 import com.sugarweb.server.application.dto.ApiCallLogQueryDto;
 import com.sugarweb.server.application.ApiCallLogService;
@@ -24,13 +25,13 @@ public class ApiCallLogController {
 	private final ApiCallLogService apiCallLogService;
 
 	@GetMapping("findOne")
-	public ApiCallLog findOne(String id) {
-		return apiCallLogService.findOne(id);
+	public R<ApiCallLog> findOne(String id) {
+		return R.data(apiCallLogService.findOne(id));
 	}
 
 	@GetMapping("findPage")
-	public PageData<ApiCallLog> findPage(PageQuery pageQuery, ApiCallLogQueryDto queryDto) {
-		return apiCallLogService.findPage(pageQuery, queryDto);
+	public R<IPage<ApiCallLog>> findPage(PageQuery pageQuery, ApiCallLogQueryDto queryDto) {
+		return R.data(apiCallLogService.findPage(pageQuery, queryDto));
 	}
 
 }

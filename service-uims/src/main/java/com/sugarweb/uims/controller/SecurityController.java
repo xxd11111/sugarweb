@@ -1,6 +1,6 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.framework.common.Result;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.uims.application.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,9 +21,9 @@ public class SecurityController {
     private final TokenService tokenService;
 
     @PostMapping("/kickOut")
-    public Result<Void> kickOut(String accessToken) {
+    public R<Void> kickOut(String accessToken) {
         tokenService.kickOut(accessToken);
-        return Result.ok();
+        return R.ok();
     }
 
 }

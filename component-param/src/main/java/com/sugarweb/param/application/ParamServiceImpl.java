@@ -1,16 +1,14 @@
 package com.sugarweb.param.application;
 
-import com.querydsl.core.types.dsl.Expressions;
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.param.domain.Param;
-import com.sugarweb.param.domain.QParam;
 import com.sugarweb.param.domain.ParamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import java.util.*;
 
@@ -27,7 +25,7 @@ public class ParamServiceImpl implements ParamService {
 
     @Override
     public void save(ParamDto paramDto) {
-        Param param = paramRepository.findById(paramDto.getId())
+        Param param = Optional.ofNullable(paramRepository.selectById(paramDto.getId()))
                 .orElseThrow(() -> new ValidateException("not find param"));
         //更新
         param.setName(paramDto.getName());
@@ -44,14 +42,8 @@ public class ParamServiceImpl implements ParamService {
     }
 
     @Override
-    public void reset(Set<String> ids) {
-        Iterable<Param> params = paramRepository.findAllById(ids);
-        paramRepository.saveAll(params);
-    }
-
-    @Override
     public void removeByCode(String code) {
-        Optional<Param> one = paramRepository.findOne(QParam.param.code.eq(code));
+        Optional<Param> one = Optional.ofNullable(paramRepository.selectOne(new LambdaQueryWrapper<Param>().eq(Param::getCode, code)));
         one.ifPresent(param -> paramRepository.deleteById(param.getId()));
     }
 
@@ -62,12 +54,12 @@ public class ParamServiceImpl implements ParamService {
 
     @Override
     public void removeByIds(Set<String> ids) {
-        paramRepository.deleteAllById(ids);
+        paramRepository.deleteBatchIds(ids);
     }
 
     @Override
     public List<ParamDto> findAll() {
-        return paramRepository.findAll().stream().map(this::paramDto).toList();
+        return paramRepository.selectList().stream().map(this::paramDto).toList();
     }
 
     private ParamDto paramDto(Param param) {
@@ -78,23 +70,20 @@ public class ParamServiceImpl implements ParamService {
 
     @Override
     public Optional<ParamDto> findByCode(String code) {
-        return paramRepository
-                .findOne(QParam.param.code.eq(code))
+        return Optional.ofNullable(paramRepository.selectOne(new LambdaQueryWrapper<Param>().eq(Param::getCode, code)))
                 .map(ParamConvert::getParamDTO);
     }
 
     @Override
     public Optional<ParamDto> findById(String id) {
-        return paramRepository.findById(id)
+        return Optional.ofNullable(paramRepository.selectById(id))
                 .map(ParamConvert::getParamDTO);
     }
 
     @Override
-    public PageData<ParamDto> findPage(PageQuery pageDto, ParamQueryDto cmd) {
-        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
-        Page<ParamDto> page = paramRepository.findAll(Expressions.TRUE, pageRequest)
-                .map(ParamConvert::getParamDTO);
-        return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
+    public IPage<ParamDto> findPage(PageQuery pageQuery, ParamQueryDto cmd) {
+        return paramRepository.selectPage(new Page<>(pageQuery.getPageNumber(), pageQuery.getPageSize()), new LambdaQueryWrapper<Param>())
+                .convert(ParamConvert::getParamDTO);
     }
 
 }

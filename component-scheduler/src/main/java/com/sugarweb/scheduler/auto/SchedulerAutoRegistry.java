@@ -1,11 +1,10 @@
 package com.sugarweb.scheduler.auto;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.utils.BeanUtil;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.auto.AbstractAutoRegistry;
 import com.sugarweb.scheduler.domain.SchedulerTask;
-import com.sugarweb.scheduler.domain.QSchedulerTask;
 import com.sugarweb.scheduler.domain.SchedulerTaskRepository;
 import com.sugarweb.framework.orm.BooleanEnum;
 import org.springframework.scheduling.support.CronExpression;
@@ -44,21 +43,20 @@ public class SchedulerAutoRegistry extends AbstractAutoRegistry<SchedulerTask> {
 
     @Override
     protected void deleteByCondition(Collection<SchedulerTask> collection) {
-        List<String> removeTaskName = new ArrayList<>();
-        Iterable<SchedulerTask> all = sgcSchedulerTaskRepository.findAll();
+        List<String> removeTaskId = new ArrayList<>();
+        Iterable<SchedulerTask> all = sgcSchedulerTaskRepository.selectList();
         for (SchedulerTask schedulerTask : all) {
             if (collection.stream().noneMatch(a -> schedulerTask.getTaskName().equals(a.getTaskName()))) {
-                removeTaskName.add(schedulerTask.getTaskName());
+                removeTaskId.add(schedulerTask.getId());
             }
         }
-        sgcSchedulerTaskRepository.deleteAllById(removeTaskName);
+        sgcSchedulerTaskRepository.deleteBatchIds(removeTaskId);
     }
 
     @Override
     protected SchedulerTask selectOne(SchedulerTask o) {
-        QSchedulerTask sgcSchedulerTask = QSchedulerTask.schedulerTask;
-        BooleanExpression eq = sgcSchedulerTask.taskName.eq(o.getTaskName());
-        return sgcSchedulerTaskRepository.findOne(eq).orElse(null);
+        return sgcSchedulerTaskRepository.selectOne(new LambdaQueryWrapper<SchedulerTask>()
+                .eq(SchedulerTask::getTaskName, o.getTaskName()));
     }
 
     @Override

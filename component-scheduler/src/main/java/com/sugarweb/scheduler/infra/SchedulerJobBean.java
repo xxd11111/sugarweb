@@ -12,6 +12,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Optional;
 
 /**
  * 任务bean
@@ -27,8 +28,8 @@ public class SchedulerJobBean extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext context) {
         String id = context.getJobDetail().getKey().getName();
-        SchedulerTaskRepository sgcSchedulerTaskRepository = BeanUtil.getBean(SchedulerTaskRepository.class);
-        SchedulerTask schedulerTask = sgcSchedulerTaskRepository.findById(id)
+        SchedulerTaskRepository schedulerTaskRepository = BeanUtil.getBean(SchedulerTaskRepository.class);
+        SchedulerTask schedulerTask = Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new FrameworkException("定时任务异常：未根据id找到指定任务，id:{}", id));
         log.info("定时任务执行开始：{}", schedulerTask.getTaskName());
         try {

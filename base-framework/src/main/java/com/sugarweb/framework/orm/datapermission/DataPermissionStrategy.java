@@ -1,6 +1,5 @@
 package com.sugarweb.framework.orm.datapermission;
 
-import com.sugarweb.framework.common.EnumValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum DataPermissionStrategy implements EnumValue<String> {
+public enum DataPermissionStrategy {
 
     all("0"),
     currentAndSubOrg("1"),

@@ -2,8 +2,6 @@ package com.sugarweb.server.domain;
 
 import lombok.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
@@ -16,13 +14,11 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
 public class ApiCallLog {
 
 	/**
 	 * 日志 id
 	 */
-	@Id
 	private String id;
 
 	/**

@@ -6,11 +6,9 @@ import com.sugarweb.scheduler.infra.SchedulerManager;
 import com.sugarweb.scheduler.infra.QuartzSchedulerManager;
 import com.sugarweb.scheduler.domain.SchedulerTaskRepository;
 import com.sugarweb.scheduler.application.SchedulerServiceImpl;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * 定时任务自动注入
@@ -19,8 +17,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @version 1.0
  */
 @Configuration(proxyBeanMethods = false)
-@EntityScan
-@EnableJpaRepositories
 @EnableConfigurationProperties(SchedulerProperties.class)
 // @ConditionalOnProperty(prefix = "sugarweb.scheduler", name = "enable", havingValue = "true")
 public class SchedulerAutoConfiguration {

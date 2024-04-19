@@ -1,19 +1,18 @@
 package com.sugarweb.server.application.impl;
 
-import com.querydsl.core.types.dsl.Expressions;
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.exception.ValidateException;
-import com.sugarweb.server.domain.QApiCallLog;
 import com.sugarweb.server.application.ApiCallLogService;
 import com.sugarweb.server.domain.ApiCallLog;
 import com.sugarweb.server.application.dto.ApiCallLogQueryDto;
 import com.sugarweb.server.domain.ApiCallLogRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * 访问日志服务
@@ -29,16 +28,12 @@ public class ApiCallLogServiceImpl implements ApiCallLogService {
 
 	@Override
 	public ApiCallLog findOne(String id) {
-		return sgcApiCallLogRepository.findById(id).orElseThrow(() -> new ValidateException("访问日志不存在"));
+		return Optional.ofNullable(sgcApiCallLogRepository.selectById(id)).orElseThrow(() -> new ValidateException("访问日志不存在"));
 	}
 
 	@Override
-	public PageData<ApiCallLog> findPage(PageQuery pageDto, ApiCallLogQueryDto apiCallLogQueryDto) {
-		QApiCallLog qApiCallLog = QApiCallLog.apiCallLog;
-		PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
-				.withSort(Sort.Direction.DESC, qApiCallLog.requestTime.getMetadata().getName());
-		Page<ApiCallLog> page = sgcApiCallLogRepository.findAll(Expressions.TRUE, pageRequest);
-		return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
+	public IPage<ApiCallLog> findPage(PageQuery pageQuery, ApiCallLogQueryDto apiCallLogQueryDto) {
+		return sgcApiCallLogRepository.selectPage(new Page<ApiCallLog>(pageQuery.getPageNumber(), pageQuery.getPageSize()), new LambdaQueryWrapper<>());
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.sugarweb.framework.exception;
 
-import com.google.common.base.Strings;
+import cn.hutool.core.util.StrUtil;
 import com.sugarweb.framework.common.HttpCode;
 import lombok.Getter;
 
@@ -38,7 +38,7 @@ class BaseException extends RuntimeException{
     }
 
     public BaseException(String message, Object... objects) {
-        this.message = Strings.lenientFormat(message, objects);
+        this.message = StrUtil.format(message, objects);
     }
 
     public BaseException(HttpCode httpCode) {

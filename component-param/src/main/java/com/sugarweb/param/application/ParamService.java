@@ -1,6 +1,6 @@
 package com.sugarweb.param.application;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
 
 import java.util.Collection;
@@ -20,8 +20,6 @@ public interface ParamService {
 
 	void saveAll(Collection<ParamDto> paramDtos);
 
-	void reset(Set<String> ids);
-
 	void removeByCode(String code);
 
 	void removeById(String id);
@@ -32,7 +30,7 @@ public interface ParamService {
 
 	Optional<ParamDto> findById(String id);
 
-	PageData<ParamDto> findPage(PageQuery pageQuery, ParamQueryDto cmd);
+	IPage<ParamDto> findPage(PageQuery pageQuery, ParamQueryDto cmd);
 
 	List<ParamDto> findAll();
 

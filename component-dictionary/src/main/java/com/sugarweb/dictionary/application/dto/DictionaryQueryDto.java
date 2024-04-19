@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class DictionaryQueryDto {
 
-	private String groupCode;
+	private String dictGroup;
 
 	private String groupName;
 

@@ -1,7 +1,6 @@
 package com.sugarweb.dictionary.auto;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.reflect.ClassPath;
+import cn.hutool.core.util.ClassUtil;
 import com.sugarweb.dictionary.application.dto.DictionaryDto;
 import com.sugarweb.framework.auto.AbstractAutoRegistry;
 import com.sugarweb.dictionary.application.DictionaryService;
@@ -21,6 +20,8 @@ import java.util.*;
  * @version 1.0
  */
 public class DictionaryAutoRegistry extends AbstractAutoRegistry<DictionaryDto> {
+
+    private String classPath = "";
 
     private final DictionaryService dictionaryService;
 
@@ -65,17 +66,9 @@ public class DictionaryAutoRegistry extends AbstractAutoRegistry<DictionaryDto> 
 
     @Override
     public Collection<DictionaryDto> scan() {
-        ClassPath classpath = null;
-        try {
-            classpath = ClassPath.from(this.getClass().getClassLoader());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        ImmutableSet<ClassPath.ClassInfo> classInfos = classpath.getTopLevelClasses("com.sugarcoat.support.dict");
         //获取包下class
-        Set<Class<?>> classes = new HashSet<>();
-        for (ClassPath.ClassInfo classInfo : classInfos) {
-            Class<?> load = classInfo.load();
+        Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(classPath, InnerDictionary.class);
+        for (Class<?> load : classes) {
             InnerDictionary annotation = load.getAnnotation(InnerDictionary.class);
             if (annotation != null) {
                 classes.add(load);

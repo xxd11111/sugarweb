@@ -1,7 +1,5 @@
 package com.sugarweb.oss.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +12,6 @@ import java.time.LocalDateTime;
 /**
  * 文件信息
  */
-@Entity
 @Getter
 @Setter
 @ToString
@@ -24,7 +21,6 @@ public class FileInfo {
 	 * 主键
 	 */
 	@Size(max = 32)
-	@Id
 	private String id;
 
 	/**

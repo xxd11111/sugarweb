@@ -1,11 +1,6 @@
 package com.sugarweb.framework.orm.tenant.database;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import lombok.*;
-import org.hibernate.Hibernate;
-
-import java.util.Objects;
 
 /**
  * 多租户数据源信息
@@ -13,13 +8,9 @@ import java.util.Objects;
  * @author xxd
  * @version 1.0
  */
-@Getter
-@Setter
-@ToString
-@Entity
+@Data
 public class TenantDataSourceInfo {
 
-    @Id
     private String id;
 
     private String tenantId;
@@ -47,14 +38,6 @@ public class TenantDataSourceInfo {
     private Long keepaliveTime;
     // 连接将被测试活动的最大时间量 5000 如果小于250毫秒，则会被重置回5秒
     private Long validationTimeout;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        TenantDataSourceInfo that = (TenantDataSourceInfo) o;
-        return id != null && Objects.equals(id, that.id);
-    }
 
     @Override
     public int hashCode() {

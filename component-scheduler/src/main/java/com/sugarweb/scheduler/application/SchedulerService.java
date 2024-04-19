@@ -1,6 +1,6 @@
 package com.sugarweb.scheduler.application;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
 
 /**
@@ -23,6 +23,6 @@ public interface SchedulerService {
 
     void run(String id);
 
-    PageData<SchedulerTaskDto> page(PageQuery pageQuery, SchedulerQueryDto queryDto);
+    IPage<SchedulerTaskDto> page(PageQuery pageQuery, SchedulerQueryDto queryDto);
 
 }

@@ -1,13 +1,14 @@
 package com.sugarweb.oss.application;
 
 import com.sugarweb.oss.domain.FileInfo;
+import com.sugarweb.oss.domain.FileLinkInfo;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * 文件业务绑定服务
+ * 文件关联服务
  *
  * @author xxd
  * @version 1.0
@@ -26,12 +27,8 @@ public interface FileLinkService {
 
 	void breakByFileIds(Collection<String> fileIds);
 
-	List<FileInfo> findAll(String bizId, String fileGroup);
+	List<FileLinkInfo> findAll(String bizId, String fileGroup);
 
-	List<FileInfo> findAll(String bizId);
-
-	Optional<FileInfo> findFirstOne(String bizId, String fileGroup);
-
-	Optional<FileInfo> findFirstOne(String fileId);
+	Optional<FileLinkInfo> findFirstOne(String bizId, String fileGroup);
 
 }

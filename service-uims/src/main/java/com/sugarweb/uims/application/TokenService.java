@@ -1,8 +1,7 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.framework.security.AccessTokenInfo;
-import com.sugarweb.uims.application.dto.PasswordLoginDto;
-import com.sugarweb.uims.application.vo.TokenVo;
+import com.sugarweb.uims.domain.dto.PasswordLoginDto;
+import com.sugarweb.uims.domain.dto.TokenVo;
 
 /**
  * 会话服务实现类

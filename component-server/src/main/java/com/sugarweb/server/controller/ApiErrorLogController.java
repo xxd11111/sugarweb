@@ -1,7 +1,8 @@
 package com.sugarweb.server.controller;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.application.ApiErrorLogService;
 import com.sugarweb.server.application.dto.ApiErrorLogQueryDto;
@@ -23,14 +24,14 @@ public class ApiErrorLogController {
 
 	private final ApiErrorLogService apiErrorLogService;
 
-	@GetMapping("findOne")
+	@GetMapping("detail")
 	public ApiErrorLog findOne(String id) {
 		return apiErrorLogService.findOne(id);
 	}
 
-	@GetMapping("findPage")
-	public PageData<ApiErrorLog> findPage(PageQuery pageQuery, ApiErrorLogQueryDto queryDto) {
-		return apiErrorLogService.findPage(pageQuery, queryDto);
+	@GetMapping("page")
+	public R<IPage<ApiErrorLog>> findPage(PageQuery pageQuery, ApiErrorLogQueryDto queryDto) {
+		return R.data(apiErrorLogService.findPage(pageQuery, queryDto));
 	}
 
 }

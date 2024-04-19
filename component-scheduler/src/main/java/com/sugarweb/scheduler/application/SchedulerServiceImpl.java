@@ -1,17 +1,12 @@
 package com.sugarweb.scheduler.application;
 
-import com.google.common.base.Strings;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.scheduler.domain.SchedulerTask;
 import com.sugarweb.scheduler.infra.SchedulerManager;
-import com.sugarweb.scheduler.domain.QSchedulerTask;
 import com.sugarweb.scheduler.domain.SchedulerTaskRepository;
-import com.sugarweb.framework.orm.ExpressionWrapper;
-import com.sugarweb.framework.orm.PageDataConvert;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * SchedulerService
@@ -79,15 +74,11 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     @Override
-    public PageData<SchedulerTaskDto> page(PageQuery pageDto, SchedulerQueryDto queryDto) {
-        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize());
-        QSchedulerTask sgcSchedulerTask = QSchedulerTask.schedulerTask;
-        BooleanExpression build = ExpressionWrapper.of()
-                .and(Strings.isNullOrEmpty(queryDto.getTaskName()), sgcSchedulerTask.taskName.like(queryDto.getTaskName()))
-                .and(Strings.isNullOrEmpty(queryDto.getStatus()), sgcSchedulerTask.status.like(queryDto.getStatus()))
-                .build();
-
-        Page<SchedulerTaskDto> page = sgcSchedulerTaskRepository.findAll(build, pageRequest).map(a -> {
+    public IPage<SchedulerTaskDto> page(PageQuery pageDto, SchedulerQueryDto queryDto) {
+        IPage<SchedulerTaskDto> page = sgcSchedulerTaskRepository.selectPage(new Page<>(pageDto.getPageNumber(), pageDto.getPageSize()), new LambdaQueryWrapper<SchedulerTask>()
+                .like(SchedulerTask::getTaskName, queryDto.getTaskName())
+                .eq(SchedulerTask::getStatus, queryDto.getStatus())
+        ).convert(a -> {
             SchedulerTaskDto schedulerTaskDto = new SchedulerTaskDto();
             schedulerTaskDto.setId(a.getId());
             schedulerTaskDto.setTaskName(a.getTaskName());
@@ -101,7 +92,7 @@ public class SchedulerServiceImpl implements SchedulerService {
             schedulerTaskDto.setStatus(a.getStatus());
             return schedulerTaskDto;
         });
-        return PageDataConvert.convert(page, SchedulerTaskDto.class);
+        return page;
     }
 
 }

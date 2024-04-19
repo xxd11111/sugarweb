@@ -1,5 +1,6 @@
 package com.sugarweb.scheduler.infra;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.scheduler.domain.SchedulerTask;
 import com.sugarweb.scheduler.domain.SchedulerTaskRepository;
@@ -20,10 +21,11 @@ public class QuartzSchedulerManager implements SchedulerManager {
     @Resource
     private Scheduler scheduler;
     @Resource
-    private SchedulerTaskRepository sgcSchedulerTaskRepository;
+    private SchedulerTaskRepository schedulerTaskRepository;
 
+    @Override
     public void add(SchedulerTask schedulerTask) {
-        sgcSchedulerTaskRepository.save(schedulerTask);
+        schedulerTaskRepository.save(schedulerTask);
         JobDetail jobDetail = JobBuilder
                 .newJob(SchedulerJobBean.class)
                 .withIdentity(schedulerTask.getId())
@@ -50,8 +52,9 @@ public class QuartzSchedulerManager implements SchedulerManager {
         }
     }
 
+    @Override
     public void update(SchedulerTask schedulerTask) {
-        sgcSchedulerTaskRepository.save(schedulerTask);
+        schedulerTaskRepository.save(schedulerTask);
         try {
             // 构建Cron调度器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder
@@ -75,11 +78,12 @@ public class QuartzSchedulerManager implements SchedulerManager {
         }
     }
 
+    @Override
     public void resume(String id) {
-        SchedulerTask schedulerTask = sgcSchedulerTaskRepository.findById(id)
+        SchedulerTask schedulerTask = Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new ValidateException("定时任务不存在"));
         schedulerTask.setStatus(BooleanEnum.TRUE.getValue());
-        sgcSchedulerTaskRepository.save(schedulerTask);
+        schedulerTaskRepository.save(schedulerTask);
         try {
             scheduler.resumeJob(JobKey.jobKey(id));
         } catch (SchedulerException e) {
@@ -87,11 +91,12 @@ public class QuartzSchedulerManager implements SchedulerManager {
         }
     }
 
+    @Override
     public void pause(String id) {
-        SchedulerTask schedulerTask = sgcSchedulerTaskRepository.findById(id)
+        SchedulerTask schedulerTask = Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new ValidateException("定时任务不存在"));
         schedulerTask.setStatus(BooleanEnum.FALSE.getValue());
-        sgcSchedulerTaskRepository.save(schedulerTask);
+        schedulerTaskRepository.save(schedulerTask);
         try {
             scheduler.pauseJob(JobKey.jobKey(id));
         } catch (SchedulerException e) {
@@ -99,11 +104,12 @@ public class QuartzSchedulerManager implements SchedulerManager {
         }
     }
 
+    @Override
     public void delete(String id) {
-        SchedulerTask schedulerTask = sgcSchedulerTaskRepository.findById(id)
+        SchedulerTask schedulerTask = Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new ValidateException("定时任务不存在"));
         schedulerTask.setStatus(BooleanEnum.FALSE.getValue());
-        sgcSchedulerTaskRepository.delete(schedulerTask);
+        schedulerTaskRepository.deleteById(schedulerTask);
         try {
             scheduler.deleteJob(JobKey.jobKey(id));
         } catch (SchedulerException e) {
@@ -111,12 +117,14 @@ public class QuartzSchedulerManager implements SchedulerManager {
         }
     }
 
+    @Override
     public boolean exists(String id) {
-        return sgcSchedulerTaskRepository.existsById(id);
+        return schedulerTaskRepository.exists(new LambdaQueryWrapper<SchedulerTask>().eq(SchedulerTask::getId, id));
     }
 
+    @Override
     public void run(String id) {
-        if (!sgcSchedulerTaskRepository.existsById(id)) {
+        if (null == schedulerTaskRepository.selectById(id)) {
             throw new ValidateException("定时任务不存在");
         }
         try {
@@ -128,24 +136,20 @@ public class QuartzSchedulerManager implements SchedulerManager {
 
     @Override
     public List<SchedulerTask> getAll() {
-        Iterable<SchedulerTask> all = sgcSchedulerTaskRepository.findAll();
-        List<SchedulerTask> schedulerTasks = new ArrayList<>();
-        for (SchedulerTask schedulerTask : all) {
-            schedulerTasks.add(schedulerTask);
-        }
-        return schedulerTasks;
+        return schedulerTaskRepository.selectList();
     }
 
     @Override
     public SchedulerTask getOne(String id) {
-        return sgcSchedulerTaskRepository.findById(id)
+        return Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new ValidateException("定时任务不存在"));
     }
 
+    @Override
     public void reset() {
         try {
             scheduler.clear();
-            Iterable<SchedulerTask> all = sgcSchedulerTaskRepository.findAll();
+            List<SchedulerTask> all = schedulerTaskRepository.selectList();
             for (SchedulerTask schedulerTask : all) {
                 this.add(schedulerTask);
             }

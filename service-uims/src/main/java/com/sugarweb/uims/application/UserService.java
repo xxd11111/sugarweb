@@ -1,9 +1,12 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.framework.common.PageData;
-import com.sugarweb.uims.application.dto.*;
-import com.sugarweb.uims.application.vo.UserPageVo;
-import com.sugarweb.uims.application.vo.UserVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.uims.domain.dto.NewPasswordDto;
+import com.sugarweb.uims.domain.dto.UserDto;
+import com.sugarweb.uims.domain.dto.UserQueryDto;
+import com.sugarweb.uims.domain.dto.UserPageVo;
+import com.sugarweb.uims.domain.dto.UserVo;
 
 /**
  * 用户服务
@@ -17,7 +20,7 @@ public interface UserService {
 
     UserVo findOne(String id);
 
-    PageData<UserPageVo> page(UserQueryDto userQueryDto);
+    IPage<UserPageVo> page(PageQuery pageQuery, UserQueryDto userQueryDto);
 
     void modifyPassword(NewPasswordDto newPasswordDto);
 

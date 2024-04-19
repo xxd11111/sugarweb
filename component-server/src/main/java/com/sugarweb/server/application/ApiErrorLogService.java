@@ -1,6 +1,6 @@
 package com.sugarweb.server.application;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiErrorLog;
 import com.sugarweb.server.application.dto.ApiErrorLogQueryDto;
@@ -15,6 +15,6 @@ public interface ApiErrorLogService {
 
 	ApiErrorLog findOne(String id);
 
-	PageData<ApiErrorLog> findPage(PageQuery pageQuery, ApiErrorLogQueryDto queryDto);
+	IPage<ApiErrorLog> findPage(PageQuery pageQuery, ApiErrorLogQueryDto queryDto);
 
 }

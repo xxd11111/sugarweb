@@ -1,11 +1,11 @@
 package com.sugarweb.framework.orm.datapermission;
 
-import com.google.common.base.Objects;
-import com.google.common.base.Strings;
+import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 数据权限信息
@@ -24,13 +24,13 @@ public class DataPermissionInfo {
 
     public String getStrategy(String key) {
         String str = strategyMap.get(key);
-        return Strings.isNullOrEmpty(str) ? strategy : str;
+        return StrUtil.isEmpty(str) ? strategy : str;
     }
 
     public Object getValue(String strategy) {
-        if (Objects.equal(strategy, DataPermissionStrategy.currentAndSubOrg.getValue())) {
+        if (Objects.equals(strategy, DataPermissionStrategy.currentAndSubOrg.getValue())) {
             return allowOrgIds;
-        } else if (Objects.equal(strategy, DataPermissionStrategy.currentOrg.getValue())) {
+        } else if (Objects.equals(strategy, DataPermissionStrategy.currentOrg.getValue())) {
             return orgId;
         } else {
             return orgId;

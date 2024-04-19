@@ -2,8 +2,6 @@ package com.sugarweb.server.domain;
 
 import lombok.*;
 
-import jakarta.persistence.Entity;
-
 import java.time.LocalDateTime;
 
 /**
@@ -16,7 +14,6 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity
 public class ApiErrorLog extends ApiCallLog {
 
     /**

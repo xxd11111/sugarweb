@@ -1,8 +1,8 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.framework.common.Result;
-import com.sugarweb.uims.application.dto.PasswordLoginDto;
-import com.sugarweb.uims.application.vo.TokenVo;
+import com.sugarweb.framework.common.R;
+import com.sugarweb.uims.domain.dto.PasswordLoginDto;
+import com.sugarweb.uims.domain.dto.TokenVo;
 import com.sugarweb.uims.application.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -25,23 +25,23 @@ public class AuthenticateController {
 
     @PostMapping("/login")
     @Operation(summary = "登录")
-    public Result<TokenVo> login(PasswordLoginDto passwordLoginDto) {
+    public R<TokenVo> login(PasswordLoginDto passwordLoginDto) {
         TokenVo login = tokenService.login(passwordLoginDto);
-        return Result.data(login);
+        return R.data(login);
     }
 
     @PostMapping("/logout")
     @Operation(summary = "登出")
-    public Result<Void> logout() {
+    public R<Void> logout() {
         tokenService.logout();
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("/refresh")
     @Operation(summary = "刷新token")
-    public Result<TokenVo> refresh(String refreshToken) {
+    public R<TokenVo> refresh(String refreshToken) {
         TokenVo login = tokenService.refresh(refreshToken);
-        return Result.data(login);
+        return R.data(login);
     }
 
 }

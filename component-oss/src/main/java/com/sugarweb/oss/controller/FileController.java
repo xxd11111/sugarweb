@@ -2,7 +2,7 @@ package com.sugarweb.oss.controller;
 
 import com.sugarweb.framework.exception.ServerException;
 import com.sugarweb.oss.application.FileService;
-import com.sugarweb.framework.common.Result;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.oss.domain.FileInfo;
 import com.sugarweb.oss.utils.WebDownloadUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,24 +45,24 @@ public class FileController {
 	}
 
 	@PostMapping("upload")
-	public Result<FileInfo> upload(MultipartFile multipartFile, String fileGroup) {
+	public R<FileInfo> upload(MultipartFile multipartFile, String fileGroup) {
         try {
-            return Result.data(fileService.upload(fileGroup, multipartFile.getInputStream(), multipartFile.getContentType(), multipartFile.getOriginalFilename()));
+            return R.data(fileService.upload(fileGroup, multipartFile.getInputStream(), multipartFile.getContentType(), multipartFile.getOriginalFilename()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
 	@PostMapping("batchRemove")
-	public Result<Void> remove(Set<String> fileIds) {
+	public R<Void> remove(Set<String> fileIds) {
 		fileService.remove(fileIds);
-		return Result.ok();
+		return R.ok();
 	}
 
 	@PostMapping("remove")
-	public Result<Void> remove(String fileId) {
+	public R<Void> remove(String fileId) {
 		fileService.remove(fileId);
-		return Result.ok();
+		return R.ok();
 	}
 
 }

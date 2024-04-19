@@ -28,7 +28,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring-boot.version>3.2.0</spring-boot.version>
+        <spring-boot.version>3.1.9</spring-boot.version>
         <configuration.version>1.10</configuration.version>
         <springdoc.version>1.6.13</springdoc.version>
         <lombok.version>1.18.30</lombok.version>
@@ -37,7 +37,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -59,29 +58,25 @@
                 <version>3.21.1</version>
             </dependency>
 
+<!--             <dependency> -->
+<!--                 <groupId>com.baomidou</groupId> -->
+<!--                 <artifactId>dynamic-datasource-spring-boot3-starter</artifactId> -->
+<!--                 <version>4.2.0</version> -->
+<!--             </dependency> -->
+
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
-                <version>4.2.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.querydsl</groupId>
-                <artifactId>querydsl-jpa</artifactId>
-                <classifier>jakarta</classifier>
-                <version>5.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.querydsl</groupId>
-                <artifactId>querydsl-apt</artifactId>
-                <scope>provided</scope>
-                <optional>true</optional>
-                <classifier>jakarta</classifier>
-                <version>5.0.0</version>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>3.5.4</version>
             </dependency>
 
             <!-- 工具包 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.26</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -166,13 +161,6 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-            <classifier>jakarta</classifier>
-        </dependency>
     </dependencies>
 
     <build>
@@ -203,45 +191,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-                <configuration>
-<!--                     <source>${java.version}</source> -->
-<!--                     <target>${java.version}</target> -->
-<!--                     <encoding>${encoding}</encoding> -->
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>${lombok.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.mysema.maven</groupId>
-                <artifactId>apt-maven-plugin</artifactId>
-                <version>${apt-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>target/generated-sources/java</outputDirectory>
-                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.querydsl</groupId>
-                        <artifactId>querydsl-apt</artifactId>
-                        <version>5.0.0</version>
-                        <classifier>jakarta</classifier>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

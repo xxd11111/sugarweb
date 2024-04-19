@@ -13,10 +13,8 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * oss自动配置
@@ -24,8 +22,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author xxd
  * @version 1.0
  */
-@EntityScan
-@EnableJpaRepositories
 @EnableConfigurationProperties(OssProperties.class)
 @ConditionalOnProperty(prefix = "sugarweb.oss", name = "enable", havingValue = "true")
 public class OssAutoConfiguration {

@@ -1,8 +1,6 @@
 package com.sugarweb.scheduler.domain;
 
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
 
 /**
  * SgcSchedulerTask
@@ -13,11 +11,7 @@ import org.hibernate.annotations.UuidGenerator;
 @Getter
 @Setter
 @ToString
-@Entity
 public class SchedulerTask {
-    @Id
-    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
-    @Column(length = 40)
     private String id;
 
     private String taskName;

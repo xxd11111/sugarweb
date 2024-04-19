@@ -1,6 +1,6 @@
 package com.sugarweb.server.application;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.server.domain.ApiCallLog;
 import com.sugarweb.server.application.dto.ApiCallLogQueryDto;
@@ -15,6 +15,6 @@ public interface ApiCallLogService {
 
 	ApiCallLog findOne(String id);
 
-	PageData<ApiCallLog> findPage(PageQuery pageQuery, ApiCallLogQueryDto apiCallLogQueryDto);
+	IPage<ApiCallLog> findPage(PageQuery pageQuery, ApiCallLogQueryDto apiCallLogQueryDto);
 
 }

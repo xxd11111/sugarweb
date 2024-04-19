@@ -1,29 +1,25 @@
 package com.sugarweb.uims.application.impl;
 
-import com.google.common.base.Strings;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.common.PageUtil;
 import com.sugarweb.framework.exception.ValidateException;
-import com.sugarweb.uims.application.dto.RoleDto;
-import com.sugarweb.uims.application.vo.RoleVo;
-import com.sugarweb.uims.application.vo.RolePageVo;
-import com.sugarweb.uims.application.dto.RoleQueryDto;
+import com.sugarweb.uims.domain.dto.RoleDto;
+import com.sugarweb.uims.domain.dto.RoleVo;
+import com.sugarweb.uims.domain.dto.RolePageVo;
+import com.sugarweb.uims.domain.dto.RoleQueryDto;
 import com.sugarweb.uims.application.RoleService;
-import com.sugarweb.uims.domain.menu.Menu;
-import com.sugarweb.uims.domain.menu.MenuRepository;
-import com.sugarweb.uims.domain.role.QRole;
-import com.sugarweb.uims.domain.role.Role;
-import com.sugarweb.uims.domain.role.RoleRepository;
-import com.sugarweb.framework.orm.ExpressionWrapper;
-import com.sugarweb.framework.orm.PageDataConvert;
+import com.sugarweb.uims.domain.Menu;
+import com.sugarweb.uims.domain.repository.MenuRepository;
+import com.sugarweb.uims.domain.Role;
+import com.sugarweb.uims.domain.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 角色服务实现类
@@ -53,33 +49,32 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void associateMenu(String id, List<String> menuIds) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> new ValidateException("not find role"));
-        List<Menu> menus = new ArrayList<>(menuRepository.findAllById(menuIds));
+        Role role = Optional.ofNullable(roleRepository.selectById(id))
+                .orElseThrow(() -> new ValidateException("not find role"));
+        List<Menu> menus = menuRepository.selectBatchIds(menuIds);
         role.setMenus(menus);
         roleRepository.save(role);
     }
 
     @Override
-    public PageData<RolePageVo> page(RoleQueryDto dto) {
-        BooleanExpression expression = ExpressionWrapper.of()
-                .and(!Strings.isNullOrEmpty(dto.getRoleCode()), QRole.role.roleCode.like(dto.getRoleCode(), '/'))
-                .and(!Strings.isNullOrEmpty(dto.getRoleName()), QRole.role.roleName.like(dto.getRoleName(), '/'))
-                .and(dto.getEnable() != null, QRole.role.enable.eq(dto.getEnable()))
-                .build();
+    public IPage<RolePageVo> page(PageQuery pageQuery, RoleQueryDto dto) {
+        LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<Role>()
+                .eq(Role::getEnable, dto.getEnable())
+                .like(Role::getRoleName, dto.getRoleName())
+                .eq(Role::getRoleCode, dto.getRoleCode());
 
-        PageRequest pageable = PageRequest.of(1, 10);
-        Page<RolePageVo> page = roleRepository.findAll(expression, pageable)
-                .map(a->{
+        return roleRepository.selectPage(PageUtil.getPage(pageQuery), lambdaQueryWrapper)
+                .convert(a -> {
                     RolePageVo rolePageVo = new RolePageVo();
                     BeanUtils.copyProperties(a, rolePageVo);
                     return rolePageVo;
                 });
-        return PageDataConvert.convert(page, RolePageVo.class);
     }
 
     @Override
     public RoleVo find(String id) {
-        Role role = roleRepository.findById(id).orElseThrow(() -> new ValidateException("not find role"));
+        Role role = Optional.ofNullable(roleRepository.selectById(id))
+                .orElseThrow(() -> new ValidateException("not find role"));
         RoleVo roleVo = new RoleVo();
         BeanUtils.copyProperties(role, roleVo);
         return roleVo;

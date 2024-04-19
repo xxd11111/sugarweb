@@ -1,10 +1,11 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.framework.common.PageData;
-import com.sugarweb.uims.application.dto.RoleDto;
-import com.sugarweb.uims.application.vo.RoleVo;
-import com.sugarweb.uims.application.vo.RolePageVo;
-import com.sugarweb.uims.application.dto.RoleQueryDto;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.uims.domain.dto.RoleDto;
+import com.sugarweb.uims.domain.dto.RoleVo;
+import com.sugarweb.uims.domain.dto.RolePageVo;
+import com.sugarweb.uims.domain.dto.RoleQueryDto;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface RoleService {
 
     void associateMenu(String id, List<String> menuIds);
 
-    PageData<RolePageVo> page(RoleQueryDto roleQueryDTO);
+    IPage<RolePageVo> page(PageQuery pageQuery, RoleQueryDto roleQueryDTO);
 
     RoleVo find(String id);
 

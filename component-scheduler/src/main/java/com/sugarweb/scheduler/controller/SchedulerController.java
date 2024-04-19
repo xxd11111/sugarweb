@@ -2,7 +2,7 @@ package com.sugarweb.scheduler.controller;
 
 import com.sugarweb.scheduler.application.SchedulerService;
 import com.sugarweb.framework.common.PageQuery;
-import com.sugarweb.framework.common.Result;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.scheduler.application.SchedulerQueryDto;
 import com.sugarweb.scheduler.application.SchedulerTaskDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,50 +26,50 @@ public class SchedulerController {
 
     @GetMapping("page")
     @Operation(operationId = "scheduler:findAll", summary = "分页查询")
-    public Result page(PageQuery pageQuery, SchedulerQueryDto queryDto) {
-        return Result.data(schedulerService.page(pageQuery, queryDto));
+    public R page(PageQuery pageQuery, SchedulerQueryDto queryDto) {
+        return R.data(schedulerService.page(pageQuery, queryDto));
     }
 
     @PostMapping("add")
     @Operation(operationId = "scheduler:add", summary = "新增")
-    public Result add(@RequestBody SchedulerTaskDto dto) {
+    public R add(@RequestBody SchedulerTaskDto dto) {
         schedulerService.add(dto);
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("update")
     @Operation(operationId = "scheduler:update", summary = "更新")
-    public Result update(@RequestBody SchedulerTaskDto dto) {
+    public R update(@RequestBody SchedulerTaskDto dto) {
         schedulerService.update(dto);
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("delete/{id}")
     @Operation(operationId = "scheduler:delete", summary = "删除")
-    public Result delete(@PathVariable String id) {
+    public R delete(@PathVariable String id) {
         schedulerService.delete(id);
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("pause/{id}")
     @Operation(operationId = "scheduler:pause", summary = "停用")
-    public Result pause(@PathVariable String id) {
+    public R pause(@PathVariable String id) {
         schedulerService.pause(id);
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("resume/{id}")
     @Operation(operationId = "scheduler:resume", summary = "启用")
-    public Result resume(@PathVariable String id) {
+    public R resume(@PathVariable String id) {
         schedulerService.resume(id);
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("run/{id}")
     @Operation(operationId = "scheduler:run", summary = "执行一次")
-    public Result run(@PathVariable String id) {
+    public R run(@PathVariable String id) {
         schedulerService.run(id);
-        return Result.ok();
+        return R.ok();
     }
 
 }

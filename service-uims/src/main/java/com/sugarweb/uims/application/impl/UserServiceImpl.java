@@ -1,25 +1,24 @@
 package com.sugarweb.uims.application.impl;
 
-import com.google.common.base.Strings;
-import com.google.common.collect.TreeMultimap;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.common.PageUtil;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.exception.ValidateException;
-import com.sugarweb.uims.application.dto.*;
 import com.sugarweb.uims.application.UserService;
-import com.sugarweb.uims.application.vo.UserPageVo;
-import com.sugarweb.uims.application.vo.UserVo;
-import com.sugarweb.uims.domain.user.QUser;
-import com.sugarweb.uims.domain.user.User;
-import com.sugarweb.uims.domain.user.UserRepository;
-import com.sugarweb.framework.orm.ExpressionWrapper;
-import com.sugarweb.framework.orm.PageDataConvert;
+import com.sugarweb.uims.domain.dto.NewPasswordDto;
+import com.sugarweb.uims.domain.dto.UserDto;
+import com.sugarweb.uims.domain.dto.UserQueryDto;
+import com.sugarweb.uims.domain.dto.UserPageVo;
+import com.sugarweb.uims.domain.dto.UserVo;
+import com.sugarweb.uims.domain.User;
+import com.sugarweb.uims.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * 用户服务实现类
@@ -43,36 +42,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVo findOne(String id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ValidateException("not find user"));
+        User user = Optional.ofNullable(userRepository.selectById(id))
+                .orElseThrow(() -> new ValidateException("not find user"));
         UserVo target = new UserVo();
         BeanUtils.copyProperties(user, target);
         return target;
     }
 
     @Override
-    public PageData<UserPageVo> page(UserQueryDto userQueryDto) {
-        BooleanExpression expression = ExpressionWrapper.of()
-                .and(!Strings.isNullOrEmpty(userQueryDto.getUsername()), QUser.user.username.like(userQueryDto.getUsername(), '/'))
-                .and(!Strings.isNullOrEmpty(userQueryDto.getEmail()), QUser.user.email.like(userQueryDto.getEmail(), '/'))
-                .and(!Strings.isNullOrEmpty(userQueryDto.getMobilePhone()), QUser.user.mobilePhone.like(userQueryDto.getMobilePhone(), '/'))
-                .and(!Strings.isNullOrEmpty(userQueryDto.getNickName()), QUser.user.nickName.like(userQueryDto.getNickName(), '/'))
-                .and(userQueryDto.getEnable() != null, QUser.user.enable.eq(userQueryDto.getEnable()))
-                .build();
+    public IPage<UserPageVo> page(PageQuery pageQuery, UserQueryDto queryDto) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>()
+                .eq(User::getUsername, queryDto.getUsername())
+                .eq(User::getNickName, queryDto.getNickName())
+                .eq(User::getMobilePhone, queryDto.getMobilePhone())
+                .eq(User::getEnable, queryDto.getEnable())
+                .eq(User::getEmail, queryDto.getEmail());
 
-        PageRequest pageRequest = PageRequest.of(1, 10);
-        Page<UserPageVo> page = userRepository.findAll(expression, pageRequest)
-                .map(a->{
+        return userRepository.selectPage(PageUtil.getPage(pageQuery), lambdaQueryWrapper)
+                .convert(a -> {
                     UserPageVo userPageVo = new UserPageVo();
                     BeanUtils.copyProperties(a, userPageVo);
                     return userPageVo;
                 });
-        return PageDataConvert.convert(page, UserPageVo.class);
     }
 
     @Override
     public void modifyPassword(NewPasswordDto newPasswordDto) {
         String id = SecurityHelper.getUserInfo().getId();
-        User user = userRepository.findById(id).orElseThrow(() -> new ValidateException("not dind user"));
+        User user = Optional.ofNullable(userRepository.selectById(id))
+                .orElseThrow(() -> new ValidateException("not dind user"));
         String oldPassword = newPasswordDto.getOldPassword();
         user.checkCertificate(oldPassword);
         user.modifyPassword(newPasswordDto.getNewPassword());
@@ -86,16 +84,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean existUsername(String username) {
-        return userRepository.exists(QUser.user.username.eq(username));
+        return userRepository.exists(new LambdaQueryWrapper<User>()
+                .eq(User::getUsername, username));
     }
 
     @Override
     public boolean existMobilePhone(String mobilePhone) {
-        return userRepository.exists(QUser.user.mobilePhone.eq(mobilePhone));
+        return userRepository.exists(new LambdaQueryWrapper<User>()
+                .eq(User::getMobilePhone, mobilePhone));
     }
 
     @Override
     public boolean existEmail(String email) {
-        return userRepository.exists(QUser.user.email.eq(email));
+        return userRepository.exists(new LambdaQueryWrapper<User>()
+                .eq(User::getMobilePhone, email));
     }
 }

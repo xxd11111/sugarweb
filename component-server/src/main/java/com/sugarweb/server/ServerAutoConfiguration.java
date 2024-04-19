@@ -7,12 +7,9 @@ import com.sugarweb.server.aspect.ApiLogAspect;
 import com.sugarweb.server.domain.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * 服务自动配置
@@ -21,8 +18,6 @@ import org.springframework.web.context.WebApplicationContext;
  * @version 1.0
  */
 @Configuration(proxyBeanMethods = false)
-@EntityScan
-@EnableJpaRepositories
 @EnableConfigurationProperties(ServerProperties.class)
 @ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true")
 public class ServerAutoConfiguration {

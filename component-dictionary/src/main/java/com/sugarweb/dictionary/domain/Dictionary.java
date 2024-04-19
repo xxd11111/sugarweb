@@ -1,10 +1,9 @@
 package com.sugarweb.dictionary.domain;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.UuidGenerator;
 
 /**
  * 字典信息
@@ -12,26 +11,23 @@ import org.hibernate.annotations.UuidGenerator;
  * @author xxd
  * @version 1.0
  */
-@Entity
 @Getter
 @Setter
 @ToString
 public class Dictionary {
-    @Id
-    @UuidGenerator(style = UuidGenerator.Style.RANDOM)
-    @Column(length = 40)
+    @Size(max = 32)
     private String id;
 
-    @Column(length = 32)
+    @Size(max = 32)
     private String dictGroup;
 
-    @Column(length = 32)
+    @Size(max = 32)
     private String dictCode;
 
-    @Column(length = 32)
+    @Size(max = 32)
     private String dictName;
 
-    @Column(length = 1)
+    @Size(max = 1)
     private String dictType;
 
     @Override

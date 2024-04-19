@@ -1,6 +1,6 @@
 package com.sugarweb.dictionary.application;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.dictionary.application.dto.DictionaryQueryDto;
 import com.sugarweb.dictionary.application.dto.DictionaryDto;
@@ -41,8 +41,6 @@ public interface DictionaryService {
 	 */
 	void removeByGroup(String group);
 
-	void removeAll();
-
 	Optional<DictionaryDto> findById(String id);
 
 	List<DictionaryDto> findByIds(Set<String> ids);
@@ -51,7 +49,7 @@ public interface DictionaryService {
 
 	List<DictionaryDto> findByGroup(String group);
 
-	PageData<DictionaryDto> findPage(PageQuery pageQuery, DictionaryQueryDto queryDto);
+	IPage<DictionaryDto> findPage(PageQuery pageQuery, DictionaryQueryDto queryDto);
 
 	List<DictionaryDto> findAll();
 

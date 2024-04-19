@@ -1,6 +1,6 @@
 package com.sugarweb.framework.security;
 
-import com.google.common.base.Strings;
+import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class AuthenticateFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authenticate = Strings.nullToEmpty(request.getHeader("authenticate"));
+        String authenticate = StrUtil.nullToEmpty(request.getHeader("authenticate"));
         if (!authenticate.isEmpty()){
             authenticateService.authenticate(authenticate);
         }

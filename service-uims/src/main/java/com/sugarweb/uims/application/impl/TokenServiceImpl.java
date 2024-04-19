@@ -1,22 +1,23 @@
 package com.sugarweb.uims.application.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.common.HttpCode;
 import com.sugarweb.framework.exception.SecurityException;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.framework.security.*;
 import com.sugarweb.framework.utils.ServletUtil;
 import com.sugarweb.uims.application.TokenService;
-import com.sugarweb.uims.application.dto.PasswordLoginDto;
-import com.sugarweb.uims.application.vo.TokenVo;
-import com.sugarweb.uims.domain.security.SecurityLog;
-import com.sugarweb.uims.domain.user.QUser;
-import com.sugarweb.uims.domain.user.User;
-import com.sugarweb.uims.domain.user.UserRepository;
+import com.sugarweb.uims.domain.dto.PasswordLoginDto;
+import com.sugarweb.uims.domain.dto.TokenVo;
+import com.sugarweb.uims.domain.SecurityLog;
+import com.sugarweb.uims.domain.User;
+import com.sugarweb.uims.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -30,13 +31,12 @@ import java.util.UUID;
 public class TokenServiceImpl implements TokenService {
 
     private final UserRepository userRepository;
-
     private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
     public TokenVo login(PasswordLoginDto passwordLoginDto) {
-        User user = userRepository.findOne(QUser.user.username.eq(passwordLoginDto.getAccount()))
+        User user = Optional.ofNullable(userRepository.selectOne(new LambdaQueryWrapper<User>().eq(User::getUsername, passwordLoginDto.getAccount())))
                 .orElseThrow(() -> new ValidateException("not find user"));
         //密码校验
         user.checkCertificate(passwordLoginDto.getPassword());

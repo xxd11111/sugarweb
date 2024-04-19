@@ -11,20 +11,10 @@ spring:
   jackson:
     time-zone: GMT+8
   datasource:
-    dynamic:
-      primary: master #设置默认的数据源或者数据源组,默认值即为master
-      strict: true #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
-      datasource:
-        master:
-          url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-          username: ${MYSQL_USERNAME:root}
-          password: ${MYSQL_PASSWORD:123456}
-          driver-class-name: com.mysql.cj.jdbc.Driver
-        slave_1:
-          url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-          username: ${MYSQL_USERNAME:root}
-          password: ${MYSQL_PASSWORD:123456}
-          driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:123456}
+    driver-class-name: com.mysql.cj.jdbc.Driver
     # 连接池设置
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -44,14 +34,26 @@ spring:
       connectionTestQuery: SELECT 1
       # 多久检查一次连接的活性
       keepaliveTime: 30000
-  jpa:
-    #    database-platform: org.hibernate.dialect.MySQLDialect
-    show-sql: true
-    open-in-view: false
-    properties:
-      hibernate.format_sql: true
-    hibernate:
-      ddl-auto: update
+mybatis-plus:
+  # mapper扫描路径
+  mapperLocations: classpath:com/thinvent/cataloging/mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或分号分隔
+  typeAliasesPackage: com.sugarweb.uims.domain
+  # 全局配置
+  global-config:
+    # 关闭自带banner
+    banner: false
+    # 数据库配置
+    DbConfig:
+      # 主键类型
+      id-type: auto
+      table-underline: true
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    mapUnderscoreToCamelCase: true
+    cacheEnabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
   mvc:
     path-match:
       matching-strategy: ant_path_matcher
@@ -160,7 +162,6 @@ sugarweb:
     scanPackage: com.sugarweb.uims
     cachePrefix: 'sugarweb:param:'
   email:
-    enable: false
     host: "smtp.qq.com"
     port: 465
     username: ${EMAIL_USERNAME}

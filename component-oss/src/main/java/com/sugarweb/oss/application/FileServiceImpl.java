@@ -11,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * 文件服务
@@ -61,19 +59,19 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Optional<FileInfo> findOne(String fileId) {
-        return fileRepository.findById(fileId);
+        return Optional.ofNullable(fileRepository.selectById(fileId));
     }
 
     @Override
     public void remove(String fileId) {
-        FileInfo fileInfo = fileRepository.findById(fileId).orElseThrow(() -> new ServerException("文件不存在"));
+        FileInfo fileInfo = findOne(fileId).orElseThrow(() -> new ServerException("文件不存在"));
         fileClient.delete(fileInfo.getKey());
         fileLinkService.breakByFileId(fileInfo.getId());
     }
 
     @Override
-    public void remove(Set<String> fileIds) {
-        Iterable<FileInfo> fileInfos = fileRepository.findAllById(fileIds);
+    public void remove(Collection<String> fileIds) {
+        List<FileInfo> fileInfos = fileRepository.selectBatchIds(fileIds);
         for (FileInfo fileInfo : fileInfos) {
             fileClient.delete(fileInfo.getKey());
         }

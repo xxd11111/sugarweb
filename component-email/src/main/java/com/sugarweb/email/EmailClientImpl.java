@@ -1,6 +1,6 @@
 package com.sugarweb.email;
 
-import com.google.common.collect.Iterables;
+import cn.hutool.core.collection.CollUtil;
 import com.sugarweb.oss.infra.FileClient;
 import com.sugarweb.oss.domain.FileInfo;
 import jakarta.mail.MessagingException;
@@ -43,7 +43,7 @@ public class EmailClientImpl implements EmailClient {
             messageHelper.setText(email.getText(), true);
             // 附件
             List<String> attachment = email.getAttachment();
-            if (!Iterables.isEmpty(attachment)) {
+            if (CollUtil.isNotEmpty(attachment)) {
                 for (String id : attachment) {
                     FileInfo fileObject = fileClient.getFileObject(id);
                     String filename = fileObject.getFilename();
@@ -54,7 +54,7 @@ public class EmailClientImpl implements EmailClient {
 
             // 传入图片
             List<String> inlines = email.getInlines();
-            if (!Iterables.isEmpty(inlines)) {
+            if (CollUtil.isNotEmpty(inlines)) {
                 for (String id : inlines) {
                     FileInfo fileObject = fileClient.getFileObject(id);
                     String contentType = fileObject.getContentType();

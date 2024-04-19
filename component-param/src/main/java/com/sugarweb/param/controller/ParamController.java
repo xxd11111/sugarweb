@@ -1,15 +1,13 @@
 package com.sugarweb.param.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.param.application.ParamDto;
 import com.sugarweb.param.application.ParamQueryDto;
 import com.sugarweb.param.application.ParamService;
-import com.sugarweb.framework.common.PageData;
 import com.sugarweb.framework.common.PageQuery;
-import com.sugarweb.framework.common.Result;
+import com.sugarweb.framework.common.R;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 /**
  * 参数控制器
@@ -25,25 +23,19 @@ public class ParamController {
     private final ParamService paramService;
 
     @PostMapping("save")
-    public Result<?> save(@RequestBody ParamDto paramDto) {
+    public R<?> save(@RequestBody ParamDto paramDto) {
         paramService.save(paramDto);
-        return Result.ok();
-    }
-
-    @PostMapping("reset/{ids}")
-    public Result<?> reset(@PathVariable Set<String> ids) {
-        paramService.reset(ids);
-        return Result.ok();
+        return R.ok();
     }
 
     @GetMapping("findOne/{id}")
-    public Result<ParamDto> findOne(@PathVariable String id) {
-        return Result.data(paramService.findById(id).orElse(null));
+    public R<ParamDto> findOne(@PathVariable String id) {
+        return R.data(paramService.findById(id).orElse(null));
     }
 
     @GetMapping("findPage")
-    public Result<PageData<ParamDto>> findPage(PageQuery pageQuery, ParamQueryDto queryVO) {
-        return Result.data(paramService.findPage(pageQuery, queryVO));
+    public R<IPage<ParamDto>> findPage(PageQuery pageQuery, ParamQueryDto queryVO) {
+        return R.data(paramService.findPage(pageQuery, queryVO));
     }
 
 }

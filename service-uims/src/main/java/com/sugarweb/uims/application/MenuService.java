@@ -1,9 +1,10 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.framework.common.PageData;
-import com.sugarweb.uims.application.dto.MenuDto;
-import com.sugarweb.uims.application.vo.MenuTreeVo;
-import com.sugarweb.uims.application.dto.MenuQueryDto;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.uims.domain.dto.MenuDto;
+import com.sugarweb.uims.domain.dto.MenuTreeVo;
+import com.sugarweb.uims.domain.dto.MenuQueryDto;
 
 /**
  * 菜单服务
@@ -13,13 +14,13 @@ import com.sugarweb.uims.application.dto.MenuQueryDto;
  */
 public interface MenuService {
 
-    String save(MenuDto menuDTO);
+    String save(MenuDto dto);
 
-    void modify(MenuDto menuDTO);
+    void modify(MenuDto dto);
 
     void remove(String id);
 
-    PageData<MenuTreeVo> page(MenuQueryDto menuQueryDTOVO);
+    IPage<MenuTreeVo> page(PageQuery pageQuery, MenuQueryDto dto);
 
     MenuDto find(String id);
 

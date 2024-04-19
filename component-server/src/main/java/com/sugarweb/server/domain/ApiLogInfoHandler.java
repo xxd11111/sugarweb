@@ -1,9 +1,9 @@
 package com.sugarweb.server.domain;
 
-import com.google.common.base.Strings;
+import cn.hutool.core.util.StrUtil;
 import com.sugarweb.framework.utils.JsonUtil;
 import com.sugarweb.framework.utils.ServletUtil;
-import com.sugarweb.framework.common.Result;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.server.aspect.ApiLog;
 import com.sugarweb.framework.security.SecurityHelper;
@@ -89,7 +89,7 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
 
     @SneakyThrows(FrameworkException.class)
     public void loadResultInfo(ApiCallLog apiCallLog, Object result, LocalDateTime start) {
-        if (result instanceof Result<?> r) {
+        if (result instanceof R<?> r) {
             apiCallLog.setResultCode(r.getCode());
             apiCallLog.setResultData(JsonUtil.toJsonStr(r.getData()));
             apiCallLog.setResultMsg(r.getMsg());
@@ -115,7 +115,7 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
         //异常名
         apiErrorLog.setExceptionName(ex.getClass().getName());
         //异常信息
-        String exceptionMessage = Strings.lenientFormat("%s: %s", ex.getClass().getSimpleName(), ex.getMessage());
+        String exceptionMessage = StrUtil.format("%s: %s", ex.getClass().getSimpleName(), ex.getMessage());
         apiErrorLog.setExceptionMessage(exceptionMessage);
         //异常根信息
         apiErrorLog.setExceptionRootCauseMessage(getRootCauseMessage(ex));
@@ -137,7 +137,7 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
             list.add(ex);
         }
         Throwable rootEx = list.isEmpty() ? null : list.getLast();
-        return null == rootEx ? "null" : Strings.lenientFormat("%s: %s", rootEx.getClass().getSimpleName(), rootEx.getMessage());
+        return null == rootEx ? "null" : StrUtil.format("%s: %s", rootEx.getClass().getSimpleName(), rootEx.getMessage());
     }
 
     private String getExceptionStackTrace(Throwable ex) {

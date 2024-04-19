@@ -1,7 +1,6 @@
 package com.sugarweb.oss.application;
 
-import com.google.common.base.Strings;
-import com.querydsl.core.types.dsl.BooleanExpression;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.oss.domain.*;
 import lombok.RequiredArgsConstructor;
 
@@ -20,8 +19,6 @@ import java.util.Optional;
 public class FileLinkServiceImpl implements FileLinkService {
 
     private final FileLinkInfoRepository fileLinkInfoRepository;
-
-    private final FileInfoRepository fileInfoRepository;
 
     @Override
     public void linkFiles(String bizId, String fileGroup, Collection<String> fileIds) {
@@ -47,87 +44,45 @@ public class FileLinkServiceImpl implements FileLinkService {
 
     @Override
     public void breakFiles(String bizId, String fileGroup) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
-        BooleanExpression expression = sgcBizFile.fileGroup.eq(fileGroup)
-                .and(sgcBizFile.bizId.eq(bizId));
-        Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
-        fileLinkInfoRepository.deleteAll(sgcBizFiles);
+        fileLinkInfoRepository.delete(new LambdaQueryWrapper<FileLinkInfo>()
+                .eq(FileLinkInfo::getBizId, bizId)
+                .eq(FileLinkInfo::getFileGroup, fileGroup)
+        );
     }
 
     @Override
     public void breakFiles(String bizId) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
-        BooleanExpression expression = sgcBizFile.bizId.eq(bizId);
-        Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
-        fileLinkInfoRepository.deleteAll(sgcBizFiles);
+        fileLinkInfoRepository.delete(new LambdaQueryWrapper<FileLinkInfo>()
+                .eq(FileLinkInfo::getBizId, bizId)
+        );
     }
 
     @Override
     public void breakByFileId(String fileId) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
-        BooleanExpression expression = sgcBizFile.fileId.eq(fileId);
-        Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
-        fileLinkInfoRepository.deleteAll(sgcBizFiles);
+        fileLinkInfoRepository.delete(new LambdaQueryWrapper<FileLinkInfo>()
+                .eq(FileLinkInfo::getFileId, fileId)
+        );
     }
 
     @Override
     public void breakByFileIds(Collection<String> fileIds) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
-        BooleanExpression expression = sgcBizFile.fileId.in(fileIds);
-        Iterable<FileLinkInfo> sgcBizFiles = fileLinkInfoRepository.findAll(expression);
-        fileLinkInfoRepository.deleteAll(sgcBizFiles);
+        fileLinkInfoRepository.delete(new LambdaQueryWrapper<FileLinkInfo>()
+                .in(FileLinkInfo::getFileId, fileIds)
+        );
     }
 
     @Override
-    public List<FileInfo> findAll(String bizId, String fileGroup) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
-        BooleanExpression expression = sgcBizFile.fileGroup.eq(fileGroup)
-                .and(sgcBizFile.bizId.eq(bizId));
-        Iterable<FileLinkInfo> bizFileIterable = fileLinkInfoRepository.findAll(expression);
-        List<String> fileIds = new ArrayList<>();
-        for (FileLinkInfo bizFile : bizFileIterable) {
-            fileIds.add(bizFile.getFileId());
-        }
-        Iterable<FileInfo> fileInfoIterable = fileInfoRepository.findAllById(fileIds);
-        List<FileInfo> files = new ArrayList<>();
-        fileInfoIterable.forEach(files::add);
-        return files;
+    public List<FileLinkInfo> findAll(String bizId, String fileGroup) {
+        return fileLinkInfoRepository.selectList(new LambdaQueryWrapper<FileLinkInfo>()
+                .eq(FileLinkInfo::getBizId, bizId)
+                .eq(FileLinkInfo::getFileGroup, fileGroup)
+        );
     }
 
     @Override
-    public List<FileInfo> findAll(String bizId) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
-        BooleanExpression expression = sgcBizFile.bizId.eq(bizId);
-        Iterable<FileLinkInfo> bizFileIterable = fileLinkInfoRepository.findAll(expression);
-        List<String> fileIds = new ArrayList<>();
-        for (FileLinkInfo bizFile : bizFileIterable) {
-            fileIds.add(bizFile.getFileId());
-        }
-        Iterable<FileInfo> fileInfoIterable = fileInfoRepository.findAllById(fileIds);
-        List<FileInfo> files = new ArrayList<>();
-        fileInfoIterable.forEach(files::add);
-        return files;
+    public Optional<FileLinkInfo> findFirstOne(String bizId, String fileGroup) {
+        List<FileLinkInfo> all = findAll(bizId, fileGroup);
+        return all.stream().findFirst();
     }
-
-    @Override
-    public Optional<FileInfo> findFirstOne(String bizId, String fileGroup) {
-        QFileLinkInfo sgcBizFile = QFileLinkInfo.fileLinkInfo;
-        BooleanExpression expression = sgcBizFile.bizId.eq(bizId);
-        Iterable<FileLinkInfo> bizFileIterable = fileLinkInfoRepository.findAll(expression);
-        String fileId = null;
-        for (FileLinkInfo bizFile : bizFileIterable) {
-            fileId = bizFile.getFileId();
-            break;
-        }
-        if (Strings.isNullOrEmpty(fileId)) {
-            return Optional.empty();
-        }
-        return fileInfoRepository.findById(fileId).map(a -> a);
-    }
-
-    @Override
-    public Optional<FileInfo> findFirstOne(String fileId) {
-		return fileInfoRepository.findById(fileId).map(a -> a);
-	}
 
 }

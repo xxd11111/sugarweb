@@ -1,10 +1,11 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.Result;
-import com.sugarweb.uims.application.dto.MenuDto;
-import com.sugarweb.uims.application.vo.MenuTreeVo;
-import com.sugarweb.uims.application.dto.MenuQueryDto;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.common.R;
+import com.sugarweb.uims.domain.dto.MenuDto;
+import com.sugarweb.uims.domain.dto.MenuTreeVo;
+import com.sugarweb.uims.domain.dto.MenuQueryDto;
 import com.sugarweb.uims.application.MenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,30 +29,30 @@ public class MenuController {
 
     @GetMapping("{id}")
     @Operation(operationId = "menu:findOne")
-    public Result<MenuDto> findOne(@NotBlank @PathVariable String id) {
-        return Result.data(menuService.find(id));
+    public R<MenuDto> findOne(@NotBlank @PathVariable String id) {
+        return R.data(menuService.find(id));
     }
 
     @GetMapping("page")
-    public Result<PageData<MenuTreeVo>> page(@RequestParam MenuQueryDto menuQueryDTOVO) {
-        return Result.data(menuService.page(menuQueryDTOVO));
+    public R<IPage<MenuTreeVo>> page(@RequestParam MenuQueryDto queryDto, PageQuery pageQuery) {
+        return R.data(menuService.page(pageQuery, queryDto));
     }
 
     @PostMapping("save")
-    public Result<String> save(@RequestBody MenuDto menuDTO) {
-        return Result.data(menuService.save(menuDTO));
+    public R<String> save(@RequestBody MenuDto menuDTO) {
+        return R.data(menuService.save(menuDTO));
     }
 
     @PostMapping("modify")
-    public Result<Void> modify(@RequestBody MenuDto menuDTO) {
+    public R<Void> modify(@RequestBody MenuDto menuDTO) {
         menuService.modify(menuDTO);
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("remove")
-    public Result<Void> remove(String id) {
+    public R<Void> remove(String id) {
         menuService.remove(id);
-        return Result.ok();
+        return R.ok();
     }
 
 }

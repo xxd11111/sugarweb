@@ -1,14 +1,12 @@
 package com.sugarweb.framework.orm;
 
-import com.sugarweb.framework.common.EnumValue;
-
 /**
  * 标识枚举
  *
  * @author xxd
  * @version 1.0
  */
-public enum BooleanEnum implements EnumValue<String> {
+public enum BooleanEnum {
 
     /**
      * 否
@@ -19,7 +17,6 @@ public enum BooleanEnum implements EnumValue<String> {
      */
     TRUE("1");
 
-    @Override
     public String getValue() {
         return code;
     }
@@ -29,7 +26,5 @@ public enum BooleanEnum implements EnumValue<String> {
     }
 
     private final String code;
-
-    public static class Convert extends EnumConvert<BooleanEnum, String> {}
 
 }

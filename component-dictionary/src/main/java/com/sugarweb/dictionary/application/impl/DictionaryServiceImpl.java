@@ -1,20 +1,15 @@
 package com.sugarweb.dictionary.application.impl;
 
-import com.google.common.collect.Iterables;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.dictionary.application.DictionaryService;
 import com.sugarweb.dictionary.application.dto.DictionaryDto;
 import com.sugarweb.dictionary.application.dto.DictionaryQueryDto;
 import com.sugarweb.dictionary.domain.Dictionary;
-import com.sugarweb.dictionary.domain.QDictionary;
 import com.sugarweb.dictionary.domain.DictionaryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -64,97 +59,77 @@ public class DictionaryServiceImpl implements DictionaryService {
 
     @Override
     public void removeByIds(Set<String> ids) {
-        dictionaryRepository.deleteAllById(ids);
+        dictionaryRepository.deleteBatchIds(ids);
     }
 
     @Override
     public void removeByCode(String group, String code) {
-        QDictionary dictionary = QDictionary.dictionary;
-        BooleanExpression expression = dictionary.dictGroup.eq(group);
-        expression.and(dictionary.dictCode.eq(code));
-        Optional<Dictionary> dictionaryOptional = dictionaryRepository.findOne(expression);
-        dictionaryOptional.ifPresent(a -> dictionaryRepository.deleteById(a.getId()));
+        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper<Dictionary>()
+                .eq(Dictionary::getDictGroup, group)
+                .eq(Dictionary::getDictCode, code);
+        dictionaryRepository.delete(lambdaQueryWrapper);
     }
 
     @Override
     public void removeByGroup(String group) {
-        QDictionary dictionary = QDictionary.dictionary;
-        BooleanExpression expression = dictionary.dictGroup.eq(group);
-        List<Dictionary> dictionaries = dictionaryRepository.findAll(expression);
-        if (!Iterables.isEmpty(dictionaries)) {
-            List<String> ids = dictionaries.stream().map(Dictionary::getId).toList();
-            dictionaryRepository.deleteAllById(ids);
-        }
-    }
-
-    @Override
-    public void removeAll() {
-        dictionaryRepository.deleteAll();
+        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper<Dictionary>()
+                .eq(Dictionary::getDictGroup, group);
+        dictionaryRepository.delete(lambdaQueryWrapper);
     }
 
     @Override
     public Optional<DictionaryDto> findById(String id) {
-        return dictionaryRepository.findById(id).map(this::toDictDTO);
+        return Optional.ofNullable(dictionaryRepository.selectById(id)).map(this::toDictDTO);
     }
 
     @Override
     public List<DictionaryDto> findByIds(Set<String> ids) {
-        List<Dictionary> allById = dictionaryRepository.findAllById(ids);
+        List<Dictionary> allById = dictionaryRepository.selectBatchIds(ids);
         return allById.stream().map(this::toDictDTO).toList();
     }
 
     @Override
     public List<DictionaryDto> findByGroup(String group) {
-        QDictionary dictionary = QDictionary.dictionary;
-        BooleanExpression expression = dictionary.dictGroup.eq(group);
-        return dictionaryRepository.findAll(expression).stream().map(this::toDictDTO).toList();
+        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper<Dictionary>()
+                .eq(Dictionary::getDictGroup, group);
+        return dictionaryRepository.selectList(lambdaQueryWrapper).stream().map(this::toDictDTO).toList();
     }
 
     @Override
     public Optional<DictionaryDto> findByCode(String group, String code) {
-        QDictionary dictionary = QDictionary.dictionary;
-        BooleanExpression expression = dictionary.dictGroup.eq(group);
-        expression.and(dictionary.dictCode.eq(code));
-        return dictionaryRepository.findOne(expression).map(this::toDictDTO);
+        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper<Dictionary>()
+                .eq(Dictionary::getDictGroup, group)
+                .eq(Dictionary::getDictCode, code);
+        return Optional.ofNullable(dictionaryRepository.selectOne(lambdaQueryWrapper)).map(this::toDictDTO);
     }
 
     @Override
-    public PageData<DictionaryDto> findPage(PageQuery pageDto, DictionaryQueryDto queryDto) {
-        QDictionary dictionary = QDictionary.dictionary;
-        // 构造分页，按照创建时间降序
-        PageRequest pageRequest = PageRequest.of(pageDto.getPageNumber(), pageDto.getPageSize())
-                .withSort(Sort.Direction.DESC, dictionary.dictGroup.getMetadata().getName());
-        // 条件查询
-        BooleanExpression expression = Expressions.TRUE;
-        if (queryDto.getGroupName() != null && !queryDto.getGroupName().isEmpty()) {
-            expression = expression.and(dictionary.dictName.like(queryDto.getGroupName(), '/'));
-        }
-        if (queryDto.getGroupCode() != null && !queryDto.getGroupCode().isEmpty()) {
-            expression = expression.and(dictionary.dictCode.eq(queryDto.getGroupCode()));
-        }
-        Page<DictionaryDto> page = dictionaryRepository.findAll(expression, pageRequest)
-                .map(this::toDictDTO);
-        return new PageData<>(page.getContent(), page.getTotalElements(), page.getNumber(), page.getSize());
+    public IPage<DictionaryDto> findPage(PageQuery pageDto, DictionaryQueryDto queryDto) {
+        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper<Dictionary>()
+                .eq(Dictionary::getDictName, queryDto.getGroupName())
+                .eq(Dictionary::getDictGroup, queryDto.getDictGroup());
+        return dictionaryRepository.selectPage(new Page<>(pageDto.getPageNumber(), pageDto.getPageSize()), lambdaQueryWrapper)
+                .convert(this::toDictDTO);
     }
 
     @Override
     public List<DictionaryDto> findAll() {
-        return dictionaryRepository.findAll().stream().map(this::toDictDTO).toList();
+        return dictionaryRepository.selectList().stream().map(this::toDictDTO).toList();
     }
 
     @Override
     public boolean existByCode(String group, String code) {
-        QDictionary dictionary = QDictionary.dictionary;
-        BooleanExpression expression = dictionary.dictGroup.eq(group);
-        expression.and(dictionary.dictCode.eq(code));
-        return dictionaryRepository.exists(expression);
+        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper<Dictionary>()
+                .eq(Dictionary::getDictGroup, group)
+                .eq(Dictionary::getDictCode, code);
+        return dictionaryRepository.exists(lambdaQueryWrapper);
     }
 
     @Override
     public boolean existByGroup(String group) {
-        QDictionary dictionary = QDictionary.dictionary;
-        BooleanExpression expression = dictionary.dictGroup.eq(group);
-        return dictionaryRepository.exists(expression);
+        LambdaQueryWrapper<Dictionary> lambdaQueryWrapper = new LambdaQueryWrapper<Dictionary>()
+                .eq(Dictionary::getDictGroup, group);
+        return dictionaryRepository.exists(lambdaQueryWrapper);
     }
 
 }

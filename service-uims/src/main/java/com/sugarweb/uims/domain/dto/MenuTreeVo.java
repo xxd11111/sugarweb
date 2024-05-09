@@ -2,7 +2,7 @@ package com.sugarweb.uims.domain.dto;
 
 import com.sugarweb.uims.domain.constans.MenuType;
 import com.sugarweb.uims.domain.constans.MenuUrlType;
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.framework.common.BooleanFlag;
 import lombok.Data;
 
 import java.util.Set;
@@ -68,5 +68,5 @@ public class MenuTreeVo {
     /**
      * 状态
      */
-    private BooleanEnum enable;
+    private BooleanFlag enable;
 }

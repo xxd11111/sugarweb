@@ -27,7 +27,7 @@ public class FileLinkServiceImpl implements FileLinkService {
             FileLinkInfo sgcBizFile = new FileLinkInfo();
             sgcBizFile.setFileId(fileId);
             sgcBizFile.setBizId(bizId);
-            sgcBizFile.setFileGroup(fileGroup);
+            sgcBizFile.setBizType(fileGroup);
             sgcBizFiles.add(sgcBizFile);
         }
         fileLinkInfoRepository.saveAll(sgcBizFiles);
@@ -38,7 +38,7 @@ public class FileLinkServiceImpl implements FileLinkService {
         FileLinkInfo sgcBizFile = new FileLinkInfo();
         sgcBizFile.setFileId(fileId);
         sgcBizFile.setBizId(bizId);
-        sgcBizFile.setFileGroup(fileGroup);
+        sgcBizFile.setBizType(fileGroup);
         fileLinkInfoRepository.save(sgcBizFile);
     }
 
@@ -46,7 +46,7 @@ public class FileLinkServiceImpl implements FileLinkService {
     public void breakFiles(String bizId, String fileGroup) {
         fileLinkInfoRepository.delete(new LambdaQueryWrapper<FileLinkInfo>()
                 .eq(FileLinkInfo::getBizId, bizId)
-                .eq(FileLinkInfo::getFileGroup, fileGroup)
+                .eq(FileLinkInfo::getBizType, fileGroup)
         );
     }
 
@@ -75,7 +75,7 @@ public class FileLinkServiceImpl implements FileLinkService {
     public List<FileLinkInfo> findAll(String bizId, String fileGroup) {
         return fileLinkInfoRepository.selectList(new LambdaQueryWrapper<FileLinkInfo>()
                 .eq(FileLinkInfo::getBizId, bizId)
-                .eq(FileLinkInfo::getFileGroup, fileGroup)
+                .eq(FileLinkInfo::getBizType, fileGroup)
         );
     }
 

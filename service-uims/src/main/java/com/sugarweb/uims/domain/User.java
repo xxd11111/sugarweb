@@ -1,6 +1,5 @@
 package com.sugarweb.uims.domain;
 
-import com.sugarweb.framework.orm.BooleanEnum;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -32,7 +31,7 @@ public class User {
 
     private String password;
 
-    private BooleanEnum enable;
+    private String status;
 
     public void checkCertificate(String certificate) {
         // todo 加密方式问题

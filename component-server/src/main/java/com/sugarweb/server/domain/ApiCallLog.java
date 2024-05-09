@@ -59,7 +59,7 @@ public class ApiCallLog {
 	/**
 	 * 请求代理
 	 */
-	private String requestUserAgent;
+	private String userAgent;
 
 	/**
 	 * 开始请求时间

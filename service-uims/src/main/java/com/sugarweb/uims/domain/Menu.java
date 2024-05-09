@@ -1,8 +1,5 @@
 package com.sugarweb.uims.domain;
 
-import com.sugarweb.framework.orm.BooleanEnum;
-import com.sugarweb.uims.domain.constans.MenuType;
-import com.sugarweb.uims.domain.constans.MenuUrlType;
 import lombok.*;
 
 /**
@@ -40,12 +37,12 @@ public class Menu {
 	/**
 	 * 菜单类型
 	 */
-	private MenuType menuType;
+	private String menuType;
 
 	/**
 	 * url类型
 	 */
-	private MenuUrlType menuUrlType;
+	private String menuUrlType;
 
 	/**
 	 * 菜单url
@@ -70,6 +67,6 @@ public class Menu {
 	/**
 	 * 状态
 	 */
-	private BooleanEnum enable;
+	private String status;
 
 }

@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan("com.sugarweb.uims.domain.repository")
+@MapperScan({"com.sugarweb.uims.domain.repository","com.sugarweb.*.domain"})
 public class UimsApplication {
 
     public static void main(String[] args) {

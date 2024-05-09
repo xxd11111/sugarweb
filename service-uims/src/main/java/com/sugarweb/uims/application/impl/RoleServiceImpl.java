@@ -2,7 +2,7 @@ package com.sugarweb.uims.application.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.common.PageQuery;
-import com.sugarweb.framework.common.PageUtil;
+import com.sugarweb.framework.orm.PageUtil;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.uims.domain.dto.RoleDto;
 import com.sugarweb.uims.domain.dto.RoleVo;
@@ -59,7 +59,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public IPage<RolePageVo> page(PageQuery pageQuery, RoleQueryDto dto) {
         LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<Role>()
-                .eq(Role::getEnable, dto.getEnable())
+                .eq(Role::getStatus, dto.getEnable())
                 .like(Role::getRoleName, dto.getRoleName())
                 .eq(Role::getRoleCode, dto.getRoleCode());
 

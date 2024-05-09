@@ -6,7 +6,7 @@ import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.auto.AbstractAutoRegistry;
 import com.sugarweb.scheduler.domain.SchedulerTask;
 import com.sugarweb.scheduler.domain.SchedulerTaskRepository;
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.framework.common.BooleanFlag;
 import org.springframework.scheduling.support.CronExpression;
 
 import java.lang.reflect.Method;
@@ -100,7 +100,7 @@ public class SchedulerAutoRegistry extends AbstractAutoRegistry<SchedulerTask> {
                 schedulerTask.setDefaultParams(params);
                 schedulerTask.setCron(cron);
                 schedulerTask.setDefaultCron(cron);
-                schedulerTask.setStatus(BooleanEnum.TRUE.getValue());
+                schedulerTask.setStatus(BooleanFlag.TRUE.getCode());
                 schedulerTaskMap.put(taskName, schedulerTask);
             }
         }

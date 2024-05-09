@@ -43,7 +43,7 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
         String requestURI = request.getRequestURI();
         apiCallLog.setRequestUrl(requestURI);
         apiCallLog.setRequestIp(ServletUtil.getRequestIp());
-        apiCallLog.setRequestUserAgent(request.getHeader("User-Agent"));
+        apiCallLog.setUserAgent(request.getHeader("User-Agent"));
         apiCallLog.setRequestTime(start);
     }
 

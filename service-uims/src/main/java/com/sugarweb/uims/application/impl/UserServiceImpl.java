@@ -2,7 +2,7 @@ package com.sugarweb.uims.application.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.common.PageQuery;
-import com.sugarweb.framework.common.PageUtil;
+import com.sugarweb.framework.orm.PageUtil;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.uims.application.UserService;
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
                 .eq(User::getUsername, queryDto.getUsername())
                 .eq(User::getNickName, queryDto.getNickName())
                 .eq(User::getMobilePhone, queryDto.getMobilePhone())
-                .eq(User::getEnable, queryDto.getEnable())
+                .eq(User::getStatus, queryDto.getEnable())
                 .eq(User::getEmail, queryDto.getEmail());
 
         return userRepository.selectPage(PageUtil.getPage(pageQuery), lambdaQueryWrapper)

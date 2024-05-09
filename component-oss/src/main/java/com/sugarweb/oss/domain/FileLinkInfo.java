@@ -32,6 +32,6 @@ public class FileLinkInfo {
      * 文件组
      */
     @Size(max = 32)
-    private String fileGroup;
+    private String bizType;
 
 }

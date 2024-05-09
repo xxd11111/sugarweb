@@ -63,10 +63,4 @@ public class FileInfo {
 	@Size(max = 32)
 	private String fileGroup;
 
-	@CreatedBy
-	private String createBy;
-
-	@CreatedDate
-	private LocalDateTime createDate;
-
 }

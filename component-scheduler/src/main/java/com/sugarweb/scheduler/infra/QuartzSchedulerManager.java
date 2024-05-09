@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.scheduler.domain.SchedulerTask;
 import com.sugarweb.scheduler.domain.SchedulerTaskRepository;
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.framework.common.BooleanFlag;
 import jakarta.annotation.Resource;
 import org.quartz.*;
 
@@ -44,7 +44,7 @@ public class QuartzSchedulerManager implements SchedulerManager {
                 .build();
         try {
             scheduler.scheduleJob(jobDetail, trigger);
-            if (BooleanEnum.FALSE.getValue().equals(schedulerTask.getStatus())) {
+            if (BooleanFlag.FALSE.getCode().equals(schedulerTask.getStatus())) {
                 scheduler.pauseJob(JobKey.jobKey(schedulerTask.getId()));
             }
         } catch (SchedulerException e) {
@@ -68,7 +68,7 @@ public class QuartzSchedulerManager implements SchedulerManager {
                     .withSchedule(scheduleBuilder)
                     .build();
             scheduler.rescheduleJob(TriggerKey.triggerKey(schedulerTask.getId()), trigger);
-            if (BooleanEnum.FALSE.getValue().equals(schedulerTask.getStatus())) {
+            if (BooleanFlag.FALSE.getCode().equals(schedulerTask.getStatus())) {
                 scheduler.pauseJob(JobKey.jobKey(schedulerTask.getId()));
             } else {
                 scheduler.resumeJob(JobKey.jobKey(schedulerTask.getId()));
@@ -82,7 +82,7 @@ public class QuartzSchedulerManager implements SchedulerManager {
     public void resume(String id) {
         SchedulerTask schedulerTask = Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new ValidateException("定时任务不存在"));
-        schedulerTask.setStatus(BooleanEnum.TRUE.getValue());
+        schedulerTask.setStatus(BooleanFlag.TRUE.getCode());
         schedulerTaskRepository.save(schedulerTask);
         try {
             scheduler.resumeJob(JobKey.jobKey(id));
@@ -95,7 +95,7 @@ public class QuartzSchedulerManager implements SchedulerManager {
     public void pause(String id) {
         SchedulerTask schedulerTask = Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new ValidateException("定时任务不存在"));
-        schedulerTask.setStatus(BooleanEnum.FALSE.getValue());
+        schedulerTask.setStatus(BooleanFlag.FALSE.getCode());
         schedulerTaskRepository.save(schedulerTask);
         try {
             scheduler.pauseJob(JobKey.jobKey(id));
@@ -108,7 +108,7 @@ public class QuartzSchedulerManager implements SchedulerManager {
     public void delete(String id) {
         SchedulerTask schedulerTask = Optional.ofNullable(schedulerTaskRepository.selectById(id))
                 .orElseThrow(() -> new ValidateException("定时任务不存在"));
-        schedulerTask.setStatus(BooleanEnum.FALSE.getValue());
+        schedulerTask.setStatus(BooleanFlag.FALSE.getCode());
         schedulerTaskRepository.deleteById(schedulerTask);
         try {
             scheduler.deleteJob(JobKey.jobKey(id));

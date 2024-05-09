@@ -1,6 +1,6 @@
 package com.sugarweb.uims.domain.dto;
 
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.framework.common.BooleanFlag;
 import lombok.Data;
 
 /**
@@ -25,6 +25,6 @@ public class MenuQueryDto {
     /**
      * 状态
      */
-    private BooleanEnum enable;
+    private BooleanFlag enable;
 
 }

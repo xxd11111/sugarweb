@@ -32,8 +32,6 @@ public class SchedulerTask {
 
     private String defaultParams;
 
-    private String taskData;
-
     // private String lastExecuteTime;
     //
     // private String nextExecuteTime;

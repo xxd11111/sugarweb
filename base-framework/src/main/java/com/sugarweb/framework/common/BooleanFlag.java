@@ -1,4 +1,4 @@
-package com.sugarweb.framework.orm;
+package com.sugarweb.framework.common;
 
 /**
  * 标识枚举
@@ -6,7 +6,7 @@ package com.sugarweb.framework.orm;
  * @author xxd
  * @version 1.0
  */
-public enum BooleanEnum {
+public enum BooleanFlag {
 
     /**
      * 否
@@ -17,11 +17,11 @@ public enum BooleanEnum {
      */
     TRUE("1");
 
-    public String getValue() {
+    public String getCode() {
         return code;
     }
 
-    BooleanEnum(String code) {
+    BooleanFlag(String code) {
         this.code = code;
     }
 

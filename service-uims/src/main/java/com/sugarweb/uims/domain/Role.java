@@ -1,7 +1,6 @@
 package com.sugarweb.uims.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.sugarweb.framework.orm.BooleanEnum;
 import lombok.*;
 
 import java.util.Collection;
@@ -27,6 +26,6 @@ public class Role {
     @TableField(exist = false)
     private Collection<Menu> menus;
 
-    private BooleanEnum enable;
+    private String status;
 
 }

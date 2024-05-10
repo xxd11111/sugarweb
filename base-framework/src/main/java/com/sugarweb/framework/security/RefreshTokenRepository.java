@@ -8,12 +8,12 @@ package com.sugarweb.framework.security;
  */
 public interface RefreshTokenRepository {
 
-    void save(RefreshTokenInfo accessTokenInfo);
+    void save(RefreshToken accessTokenInfo);
 
-    void update(RefreshTokenInfo accessTokenInfo);
+    void update(RefreshToken accessTokenInfo);
 
     void delete(String accessToken);
 
-    RefreshTokenInfo findOne(String accessToken);
+    RefreshToken findOne(String accessToken);
 
 }

@@ -8,12 +8,12 @@ package com.sugarweb.framework.security;
  */
 public interface AccessTokenRepository {
 
-    void save(AccessTokenInfo accessTokenInfo);
+    void save(AccessToken accessToken);
 
-    void update(AccessTokenInfo accessTokenInfo);
+    void update(AccessToken accessToken);
 
     void delete(String accessToken);
 
-    AccessTokenInfo findOne(String accessToken);
+    AccessToken findOne(String accessToken);
 
 }

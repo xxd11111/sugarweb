@@ -13,24 +13,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class AccessTokenRepositoryImpl implements AccessTokenRepository {
+public class RedisAccessTokenRepository implements AccessTokenRepository {
 
     private final RedissonClient redissonClient;
 
     private static final String KEY_PREFIX = "accessToken:";
 
     @Override
-    public void save(AccessTokenInfo accessTokenInfo) {
-        String key = sessionKey(accessTokenInfo.getAccessToken());
+    public void save(AccessToken accessToken) {
+        String key = sessionKey(accessToken.getAccessToken());
         RBucket<Object> bucket = redissonClient.getBucket(key);
-        bucket.set(accessTokenInfo);
+        bucket.set(accessToken);
     }
 
     @Override
-    public void update(AccessTokenInfo accessTokenInfo) {
-        String key = sessionKey(accessTokenInfo.getAccessToken());
+    public void update(AccessToken accessToken) {
+        String key = sessionKey(accessToken.getAccessToken());
         RBucket<Object> bucket = redissonClient.getBucket(key);
-        bucket.set(accessTokenInfo);
+        bucket.set(accessToken);
     }
 
     @Override
@@ -40,9 +40,9 @@ public class AccessTokenRepositoryImpl implements AccessTokenRepository {
     }
 
     @Override
-    public AccessTokenInfo findOne(String accessToken) {
+    public AccessToken findOne(String accessToken) {
         String key = sessionKey(accessToken);
-        RBucket<AccessTokenInfo> bucket = redissonClient.getBucket(key);
+        RBucket<AccessToken> bucket = redissonClient.getBucket(key);
         return bucket.get();
     }
 

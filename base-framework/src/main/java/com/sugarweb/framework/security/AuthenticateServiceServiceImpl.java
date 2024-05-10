@@ -25,7 +25,7 @@ public class AuthenticateServiceServiceImpl implements AuthenticateService {
         if (accessToken.isEmpty()) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
-        AccessTokenInfo accessTokenInfo = accessTokenRepository.findOne(accessToken);
+        AccessToken accessTokenInfo = accessTokenRepository.findOne(accessToken);
         if (accessTokenInfo == null) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }

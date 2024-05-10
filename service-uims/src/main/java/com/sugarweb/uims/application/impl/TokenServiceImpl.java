@@ -41,21 +41,21 @@ public class TokenServiceImpl implements TokenService {
         //密码校验
         user.checkCertificate(passwordLoginDto.getPassword());
 
-        RefreshTokenInfo refreshTokenInfo = new RefreshTokenInfo();
-        refreshTokenInfo.setRefreshToken(UUID.randomUUID().toString());
-        refreshTokenInfo.setExpireTime(LocalDateTime.now().plusSeconds(60*60*24*7));
-        refreshTokenInfo.setUserId(user.getId());
-        refreshTokenInfo.setIp(ServletUtil.getRequestIp());
-        refreshTokenInfo.setUserAgent(ServletUtil.getUserAgent());
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setRefreshToken(UUID.randomUUID().toString());
+        refreshToken.setExpireTime(LocalDateTime.now().plusSeconds(60*60*24*7));
+        refreshToken.setUserId(user.getId());
+        refreshToken.setIp(ServletUtil.getRequestIp());
+        refreshToken.setUserAgent(ServletUtil.getUserAgent());
 
-        AccessTokenInfo accessTokenInfo = new AccessTokenInfo();
-        accessTokenInfo.setAccessToken(UUID.randomUUID().toString());
-        accessTokenInfo.setRefreshToken(refreshTokenInfo.getRefreshToken());
-        accessTokenInfo.setIp(refreshTokenInfo.getIp());
-        accessTokenInfo.setUserAgent(refreshTokenInfo.getUserAgent());
-        accessTokenInfo.setUserId(refreshTokenInfo.getUserId());
+        AccessToken accessToken = new AccessToken();
+        accessToken.setAccessToken(UUID.randomUUID().toString());
+        accessToken.setRefreshToken(refreshToken.getRefreshToken());
+        accessToken.setIp(refreshToken.getIp());
+        accessToken.setUserAgent(refreshToken.getUserAgent());
+        accessToken.setUserId(refreshToken.getUserId());
 
-        accessTokenRepository.save(accessTokenInfo);
+        accessTokenRepository.save(accessToken);
 
         //insert 登录日志
         SecurityLog securityLog = new SecurityLog();
@@ -69,17 +69,17 @@ public class TokenServiceImpl implements TokenService {
         //登录信息 token等信息
         TokenVo tokenVo = new TokenVo();
         tokenVo.setUserId(user.getId());
-        tokenVo.setAccessToken(accessTokenInfo.getAccessToken());
-        tokenVo.setAccessTokenExpiresTime(accessTokenInfo.getExpireTime());
-        tokenVo.setRefreshToken(refreshTokenInfo.getRefreshToken());
-        tokenVo.setRefreshTokenExpiresTime(refreshTokenInfo.getExpireTime());
+        tokenVo.setAccessToken(accessToken.getAccessToken());
+        tokenVo.setAccessTokenExpiresTime(accessToken.getExpireTime());
+        tokenVo.setRefreshToken(refreshToken.getRefreshToken());
+        tokenVo.setRefreshTokenExpiresTime(refreshToken.getExpireTime());
         return tokenVo;
     }
 
     @Override
     public void logout() {
         String accessToken = SecurityHelper.getTokenInfo().getAccessToken();
-        AccessTokenInfo accessTokenInfo = accessTokenRepository.findOne(accessToken);
+        AccessToken accessTokenInfo = accessTokenRepository.findOne(accessToken);
         String refreshToken = accessTokenInfo.getRefreshToken();
         refreshTokenRepository.delete(refreshToken);
         accessTokenRepository.delete(accessToken);
@@ -87,7 +87,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public void kickOut(String accessToken) {
-        AccessTokenInfo accessTokenInfo = accessTokenRepository.findOne(accessToken);
+        AccessToken accessTokenInfo = accessTokenRepository.findOne(accessToken);
         refreshTokenRepository.delete(accessTokenInfo.getRefreshToken());
         accessTokenRepository.delete(accessToken);
     }
@@ -97,7 +97,7 @@ public class TokenServiceImpl implements TokenService {
         if (refreshToken.isEmpty()) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
-        RefreshTokenInfo refreshTokenInfo = refreshTokenRepository.findOne(refreshToken);
+        RefreshToken refreshTokenInfo = refreshTokenRepository.findOne(refreshToken);
         if (refreshTokenInfo == null) {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
@@ -108,20 +108,20 @@ public class TokenServiceImpl implements TokenService {
             throw new SecurityException(HttpCode.UNAUTHORIZED);
         }
 
-        AccessTokenInfo accessTokenInfo = new AccessTokenInfo();
-        accessTokenInfo.setAccessToken(UUID.randomUUID().toString());
+        AccessToken accessToken = new AccessToken();
+        accessToken.setAccessToken(UUID.randomUUID().toString());
         //set agent信息
-        accessTokenInfo.setIp(refreshTokenInfo.getIp());
-        accessTokenInfo.setUserAgent(refreshTokenInfo.getUserAgent());
+        accessToken.setIp(refreshTokenInfo.getIp());
+        accessToken.setUserAgent(refreshTokenInfo.getUserAgent());
         //set user信息
-        accessTokenInfo.setUserId(refreshTokenInfo.getUserId());
+        accessToken.setUserId(refreshTokenInfo.getUserId());
 
-        accessTokenRepository.save(accessTokenInfo);
+        accessTokenRepository.save(accessToken);
         TokenVo tokenVo = new TokenVo();
         //登录信息 token等信息
         tokenVo.setUserId(refreshTokenInfo.getUserId());
-        tokenVo.setAccessToken(accessTokenInfo.getAccessToken());
-        tokenVo.setAccessTokenExpiresTime(accessTokenInfo.getExpireTime());
+        tokenVo.setAccessToken(accessToken.getAccessToken());
+        tokenVo.setAccessTokenExpiresTime(accessToken.getExpireTime());
         tokenVo.setRefreshToken(refreshTokenInfo.getRefreshToken());
         tokenVo.setRefreshTokenExpiresTime(refreshTokenInfo.getExpireTime());
         return tokenVo;

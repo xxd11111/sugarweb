@@ -15,7 +15,7 @@ public class AuthenticationInfo {
 
     private UserInfo userInfo;
 
-    private AccessTokenInfo accessTokenInfo;
+    private AccessToken accessToken;
 
     private List<String> authorities;
 

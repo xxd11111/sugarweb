@@ -4,15 +4,13 @@ import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -40,12 +38,12 @@ public class SecurityAutoConfiguration {
 
     @Bean
     public AccessTokenRepository accessTokenRepository(RedissonClient redissonClient) {
-        return new AccessTokenRepositoryImpl(redissonClient);
+        return new RedisAccessTokenRepository(redissonClient);
     }
 
     @Bean
     public RefreshTokenRepository refreshTokenRepository(RedissonClient redissonClient) {
-        return new RefreshTokenRepositoryImpl(redissonClient);
+        return new RedisRefreshTokenRepository(redissonClient);
     }
 
     @Bean
@@ -87,21 +85,18 @@ public class SecurityAutoConfiguration {
                 )
                 .cors(Customizer.withDefaults())
                 .sessionManagement(Customizer.withDefaults())
-                .authenticationManager(new AuthenticationManager() {
-                    @Override
-                    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-                        return null;
-                    }
-                })
+                .authenticationManager(authentication -> authentication)
                 .addFilterBefore(authenticateFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(Customizer.withDefaults())
 //                .authenticationEntryPoint()
 //                .accessDeniedHandler()
+                .formLogin(a -> a.loginProcessingUrl("/login").permitAll())
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         //openapi url忽略
+                        .anyRequest().authenticated()
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs").permitAll()
                         //测试模式全忽略
-                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/login").permitAll()
                         //忽略验证的url
                         .requestMatchers(ignoreUrls.toArray(new String[0])).permitAll()
                         .anyRequest().authenticated()
@@ -122,7 +117,16 @@ public class SecurityAutoConfiguration {
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(User.withUsername("admin").password("123456").roles("admin").build());
+        manager.createUser(User.withUsername("admin")
+                .password(new BCryptPasswordEncoder().encode("123456"))
+                .roles("admin")
+                .build()
+        );
+        manager.createUser(User.withUsername("user")
+                .password(new BCryptPasswordEncoder().encode("123456"))
+                .roles("user")
+                .build()
+        );
         return manager;
     }
 

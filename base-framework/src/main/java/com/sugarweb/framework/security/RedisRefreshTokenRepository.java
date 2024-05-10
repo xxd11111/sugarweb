@@ -13,24 +13,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
+public class RedisRefreshTokenRepository implements RefreshTokenRepository {
 
     private final RedissonClient redissonClient;
 
     private static final String KEY_PREFIX = "session";
 
     @Override
-    public void save(RefreshTokenInfo refreshTokenInfo) {
-        String key = tokenKey(refreshTokenInfo.getRefreshToken());
+    public void save(RefreshToken refreshToken) {
+        String key = tokenKey(refreshToken.getRefreshToken());
         RBucket<Object> bucket = redissonClient.getBucket(key);
-        bucket.set(refreshTokenInfo);
+        bucket.set(refreshToken);
     }
 
     @Override
-    public void update(RefreshTokenInfo refreshTokenInfo) {
-        String key = tokenKey(refreshTokenInfo.getRefreshToken());
+    public void update(RefreshToken refreshToken) {
+        String key = tokenKey(refreshToken.getRefreshToken());
         RBucket<Object> bucket = redissonClient.getBucket(key);
-        bucket.set(refreshTokenInfo);
+        bucket.set(refreshToken);
     }
 
     @Override
@@ -40,9 +40,9 @@ public class RefreshTokenRepositoryImpl implements RefreshTokenRepository {
     }
 
     @Override
-    public RefreshTokenInfo findOne(String refreshToken) {
+    public RefreshToken findOne(String refreshToken) {
         String key = tokenKey(refreshToken);
-        RBucket<RefreshTokenInfo> bucket = redissonClient.getBucket(key);
+        RBucket<RefreshToken> bucket = redissonClient.getBucket(key);
         return bucket.get();
     }
 

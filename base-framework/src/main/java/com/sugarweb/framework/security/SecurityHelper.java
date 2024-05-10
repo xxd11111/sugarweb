@@ -15,8 +15,8 @@ public class SecurityHelper {
         return getAuthenticationInfo().getUserInfo();
     }
 
-    public static AccessTokenInfo getTokenInfo() {
-        return getAuthenticationInfo().getAccessTokenInfo();
+    public static AccessToken getTokenInfo() {
+        return getAuthenticationInfo().getAccessToken();
     }
 
     public static AuthenticationInfo getAuthenticationInfo() {

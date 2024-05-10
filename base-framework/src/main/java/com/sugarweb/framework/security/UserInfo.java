@@ -1,6 +1,10 @@
 package com.sugarweb.framework.security;
 
 import lombok.Data;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 /**
  * 用户信息，自定义用户需要满足以下信息
@@ -14,5 +18,7 @@ public class UserInfo {
     private String id;
 
     private String username;
+
+    private Collection<String> authorities;
 
 }

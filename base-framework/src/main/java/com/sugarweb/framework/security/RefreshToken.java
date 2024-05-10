@@ -3,7 +3,6 @@ package com.sugarweb.framework.security;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 会话信息
@@ -12,7 +11,7 @@ import java.util.List;
  * @version 1.0
  */
 @Data
-public class RefreshTokenInfo {
+public class RefreshToken {
 
     private String refreshToken;
 

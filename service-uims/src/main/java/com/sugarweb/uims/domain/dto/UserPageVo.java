@@ -1,7 +1,7 @@
 package com.sugarweb.uims.domain.dto;
 
 import com.sugarweb.uims.domain.constans.AccountType;
-import com.sugarweb.framework.common.BooleanFlag;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 /**
@@ -25,5 +25,5 @@ public class UserPageVo {
 
     private AccountType accountType;
 
-    private BooleanFlag enable;
+    private Flag enable;
 }

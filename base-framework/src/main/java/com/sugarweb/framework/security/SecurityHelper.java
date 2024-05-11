@@ -1,5 +1,6 @@
 package com.sugarweb.framework.security;
 
+import com.sugarweb.framework.security.resource.UserInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -12,17 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SecurityHelper {
 
     public static UserInfo getUserInfo() {
-        return getAuthenticationInfo().getUserInfo();
+        return (UserInfo) SecurityContextHolder.getContext().getAuthentication();
     }
-
-    public static AccessToken getTokenInfo() {
-        return getAuthenticationInfo().getAccessToken();
-    }
-
-    public static AuthenticationInfo getAuthenticationInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (AuthenticationInfo) authentication.getPrincipal();
-    }
-
 
 }

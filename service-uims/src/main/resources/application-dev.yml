@@ -34,26 +34,6 @@ spring:
       connectionTestQuery: SELECT 1
       # 多久检查一次连接的活性
       keepaliveTime: 30000
-mybatis-plus:
-  # mapper扫描路径
-  mapperLocations: classpath:com/thinvent/cataloging/mapper/*Mapper.xml
-  # 实体扫描，多个package用逗号或分号分隔
-  typeAliasesPackage: com.sugarweb.uims.domain
-  # 全局配置
-  global-config:
-    # 关闭自带banner
-    banner: false
-    # 数据库配置
-    DbConfig:
-      # 主键类型
-      id-type: auto
-      table-underline: true
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
-  configuration:
-    mapUnderscoreToCamelCase: true
-    cacheEnabled: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
   mvc:
     path-match:
       matching-strategy: ant_path_matcher
@@ -93,29 +73,49 @@ mybatis-plus:
     properties:
       org:
         quartz:
-#          scheduler:
-#            # 调度器实例名称
-#            instanceName: UimsScheduler
-#            # 分布式节点ID自动生成
-#            instanceId: AUTO
-#          jobStore:
-#            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
-#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-#            # 表前缀
-#            tablePrefix: QRTZ_
-#            # 是否开启集群
-#            isClustered: true
-#            # 数据源别名（自定义）
-#            dataSource: quartz
-#            # 分布式节点有效性检查时间间隔（毫秒）
-#            clusterCheckinInterval: 10000
-#            useProperties: false
+          #          scheduler:
+          #            # 调度器实例名称
+          #            instanceName: UimsScheduler
+          #            # 分布式节点ID自动生成
+          #            instanceId: AUTO
+          #          jobStore:
+          #            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+          #            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+          #            # 表前缀
+          #            tablePrefix: QRTZ_
+          #            # 是否开启集群
+          #            isClustered: true
+          #            # 数据源别名（自定义）
+          #            dataSource: quartz
+          #            # 分布式节点有效性检查时间间隔（毫秒）
+          #            clusterCheckinInterval: 10000
+          #            useProperties: false
           # 线程池配置
           threadPool:
             class: org.quartz.simpl.SimpleThreadPool
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
+mybatis-plus:
+  # mapper扫描路径
+  mapperLocations: classpath:com/thinvent/cataloging/mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或分号分隔
+  typeAliasesPackage: com.sugarweb.uims.domain
+  # 全局配置
+  global-config:
+    # 关闭自带banner
+    banner: false
+    # 数据库配置
+    DbConfig:
+      # 主键类型
+      id-type: auto
+      table-underline: true
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+  configuration:
+    mapUnderscoreToCamelCase: true
+    cacheEnabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
 
 # 日志配置
 logging:

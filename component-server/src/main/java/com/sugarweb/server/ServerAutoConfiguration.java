@@ -1,8 +1,6 @@
 package com.sugarweb.server;
 
 import com.sugarweb.framework.exception.GlobalExceptionHandler;
-import com.sugarweb.framework.security.AuthenticateService;
-import com.sugarweb.framework.security.AuthenticateFilter;
 import com.sugarweb.server.aspect.ApiLogAspect;
 import com.sugarweb.server.domain.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -39,11 +37,6 @@ public class ServerAutoConfiguration {
     public ApiLogInfoHandler apiLogInfoHandler(ApiCallLogRepository sgcApiCallLogRepository,
                                                ApiErrorLogRepository sgcApiErrorLogRepository) {
         return new ApiLogInfoHandler(sgcApiCallLogRepository, sgcApiErrorLogRepository);
-    }
-
-    @Bean
-    public AuthenticateFilter authenticateFilter(AuthenticateService authenticateService) {
-        return new AuthenticateFilter(authenticateService);
     }
 
 }

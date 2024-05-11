@@ -7,7 +7,7 @@ import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.server.aspect.ApiLog;
 import com.sugarweb.framework.security.SecurityHelper;
-import com.sugarweb.framework.security.UserInfo;
+import com.sugarweb.framework.security.resource.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;

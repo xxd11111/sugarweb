@@ -1,6 +1,6 @@
 package com.sugarweb.uims.domain.dto;
 
-import com.sugarweb.framework.common.BooleanFlag;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 import java.util.Collection;
@@ -22,5 +22,5 @@ public class RoleVo {
 
     private Collection<MenuTreeVo> menus;
 
-    private BooleanFlag enable;
+    private Flag enable;
 }

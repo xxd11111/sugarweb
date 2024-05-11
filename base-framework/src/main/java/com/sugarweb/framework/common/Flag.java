@@ -1,12 +1,17 @@
 package com.sugarweb.framework.common;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * 标识枚举
  *
  * @author xxd
  * @version 1.0
  */
-public enum BooleanFlag {
+@Getter
+@AllArgsConstructor
+public enum Flag {
 
     /**
      * 否
@@ -17,14 +22,6 @@ public enum BooleanFlag {
      */
     TRUE("1");
 
-    public String getCode() {
-        return code;
-    }
-
-    BooleanFlag(String code) {
-        this.code = code;
-    }
-
-    private final String code;
+    private final String value;
 
 }

@@ -1,6 +1,5 @@
 package com.sugarweb.framework.security;
 
-import org.redisson.api.RedissonClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -32,29 +30,10 @@ import java.util.List;
 public class SecurityAutoConfiguration {
 
     @Bean
-    public AuthenticateService authenticateService(AccessTokenRepository accessTokenRepository) {
-        return new AuthenticateServiceServiceImpl(accessTokenRepository);
-    }
-
-    @Bean
-    public AccessTokenRepository accessTokenRepository(RedissonClient redissonClient) {
-        return new RedisAccessTokenRepository(redissonClient);
-    }
-
-    @Bean
-    public RefreshTokenRepository refreshTokenRepository(RedissonClient redissonClient) {
-        return new RedisRefreshTokenRepository(redissonClient);
-    }
-
-    @Bean
-    public AuthenticateFilter authenticateFilter(AuthenticateService authenticateService) {
-        return new AuthenticateFilter(authenticateService);
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticateFilter authenticateFilter) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         List<String> ignoreUrls = new ArrayList<>();
+        // http.addFilterBefore(authenticateFilter, UsernamePasswordAuthenticationFilter.class)
 
         return http
                 .csrf(Customizer.withDefaults())
@@ -86,7 +65,6 @@ public class SecurityAutoConfiguration {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(Customizer.withDefaults())
                 .authenticationManager(authentication -> authentication)
-                .addFilterBefore(authenticateFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(Customizer.withDefaults())
 //                .authenticationEntryPoint()
 //                .accessDeniedHandler()

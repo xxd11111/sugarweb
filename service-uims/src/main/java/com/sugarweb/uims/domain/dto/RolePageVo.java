@@ -1,6 +1,6 @@
 package com.sugarweb.uims.domain.dto;
 
-import com.sugarweb.framework.common.BooleanFlag;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 /**
@@ -18,5 +18,5 @@ public class RolePageVo {
 
     private String roleCode;
 
-    private BooleanFlag enable;
+    private Flag enable;
 }

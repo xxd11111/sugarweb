@@ -2,7 +2,7 @@ package com.sugarweb.uims.domain.dto;
 
 import com.sugarweb.uims.domain.constans.MenuType;
 import com.sugarweb.uims.domain.constans.MenuUrlType;
-import com.sugarweb.framework.common.BooleanFlag;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 import java.util.Set;
@@ -68,5 +68,5 @@ public class MenuDto {
     /**
      * 状态
      */
-    private BooleanFlag enable;
+    private Flag enable;
 }

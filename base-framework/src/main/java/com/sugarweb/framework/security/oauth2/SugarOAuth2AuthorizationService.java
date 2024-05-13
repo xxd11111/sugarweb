@@ -1,4 +1,4 @@
-package com.sugarweb.framework.security.service;
+package com.sugarweb.framework.security.oauth2;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

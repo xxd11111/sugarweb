@@ -3,7 +3,7 @@ package com.sugarweb.uims.application.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.orm.PageUtil;
-import com.sugarweb.framework.security.SecurityHelper;
+import com.sugarweb.framework.security.base.SecurityHelper;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.uims.application.UserService;
 import com.sugarweb.uims.domain.dto.NewPasswordDto;

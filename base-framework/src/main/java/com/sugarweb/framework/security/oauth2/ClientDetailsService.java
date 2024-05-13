@@ -17,33 +17,26 @@
  *
  */
 
-package com.sugarweb.framework.security.auth;
+package com.sugarweb.framework.security.oauth2;
 
-import com.sugarweb.framework.security.resource.SysUser;
-import com.sugarweb.framework.security.resource.UserInfo;
+import com.sugarweb.framework.common.R;
+
+import java.util.List;
 
 /**
  * @author lengleng
- * @date 2018/6/22
+ * @date 2020/12/05
  */
-public interface UserService {
+public interface ClientDetailsService {
 
-    /**
-     * 通过用户名查询用户、角色信息
-     *
-     * @param user 用户查询对象
-     * @param from 调用标志
-     * @return R
-     */
-    UserInfo info(SysUser user, String from);
+	/**
+	 * 通过clientId 查询客户端信息
+	 */
+	SysOauthClientDetails getClientDetailsById(String clientId);
 
-    /**
-     * 锁定用户
-     *
-     * @param username 用户名
-     * @param from     调用标识
-     * @return
-     */
-    Boolean lockUser(String username, String from);
+	/**
+	 * 查询全部客户端
+	 */
+	List<SysOauthClientDetails> listClientDetails();
 
 }

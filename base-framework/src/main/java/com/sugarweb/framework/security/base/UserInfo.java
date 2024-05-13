@@ -1,4 +1,4 @@
-package com.sugarweb.framework.security.resource;
+package com.sugarweb.framework.security.base;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;

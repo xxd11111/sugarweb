@@ -21,27 +21,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticateController {
 
-    private final TokenService tokenService;
-
-    @PostMapping("/login")
-    @Operation(summary = "登录")
-    public R<TokenVo> login(PasswordLoginDto passwordLoginDto) {
-        TokenVo login = tokenService.login(passwordLoginDto);
-        return R.data(login);
-    }
-
-    @PostMapping("/logout")
-    @Operation(summary = "登出")
-    public R<Void> logout() {
-        tokenService.logout();
-        return R.ok();
-    }
-
-    @PostMapping("/refresh")
-    @Operation(summary = "刷新token")
-    public R<TokenVo> refresh(String refreshToken) {
-        TokenVo login = tokenService.refresh(refreshToken);
-        return R.data(login);
-    }
+    // private final TokenService tokenService;
+    //
+    // @PostMapping("/login")
+    // @Operation(summary = "登录")
+    // public R<TokenVo> login(PasswordLoginDto passwordLoginDto) {
+    //     TokenVo login = tokenService.login(passwordLoginDto);
+    //     return R.data(login);
+    // }
+    //
+    // @PostMapping("/logout")
+    // @Operation(summary = "登出")
+    // public R<Void> logout() {
+    //     tokenService.logout();
+    //     return R.ok();
+    // }
+    //
+    // @PostMapping("/refresh")
+    // @Operation(summary = "刷新token")
+    // public R<TokenVo> refresh(String refreshToken) {
+    //     TokenVo login = tokenService.refresh(refreshToken);
+    //     return R.data(login);
+    // }
+    //
+    // @PostMapping("/kickOut")
+    // public R<Void> kickOut(String accessToken) {
+    //     tokenService.kickOut(accessToken);
+    //     return R.ok();
+    // }
 
 }

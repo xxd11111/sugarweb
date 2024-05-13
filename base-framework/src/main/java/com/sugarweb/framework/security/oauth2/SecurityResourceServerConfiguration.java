@@ -1,4 +1,4 @@
-package com.sugarweb.framework.security.resource;
+package com.sugarweb.framework.security.oauth2;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

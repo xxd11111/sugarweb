@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sugarweb.framework.security.resource;
+package com.sugarweb.framework.security.oauth2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sugarweb.framework.common.R;

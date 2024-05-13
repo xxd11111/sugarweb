@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-package com.sugarweb.framework.security.resource;
+package com.sugarweb.framework.security.base;
 
-import com.sugarweb.framework.security.auth.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +23,7 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * 用户详细信息
@@ -33,7 +33,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Slf4j
 @Primary
 @RequiredArgsConstructor
-public class AbstractDetailsServiceImpl implements AbstractDetailsService {
+public class UsernameDetailsServiceImpl implements UserDetailsService {
 
 	private final UserService userService;
 
@@ -51,19 +51,13 @@ public class AbstractDetailsServiceImpl implements AbstractDetailsService {
 		if (cache != null && cache.get(username) != null) {
 			return (UserInfo) cache.get(username).get();
 		}
-
-		SysUser userDTO = new SysUser();
-		userDTO.setUsername(username);
-		UserInfo userDetails = userService.info(userDTO, "1");
+		UserInfoSearch search = new UserInfoSearch();
+		search.setUsername(username);
+		UserInfo userDetails = userService.info(search);
 		if (cache != null) {
 			cache.put(username, userDetails);
 		}
 		return userDetails;
-	}
-
-	@Override
-	public int getOrder() {
-		return Integer.MIN_VALUE;
 	}
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.sugarweb.framework.security.resource;
+package com.sugarweb.framework.security.oauth2;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;

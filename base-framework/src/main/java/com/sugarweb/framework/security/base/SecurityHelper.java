@@ -1,7 +1,5 @@
-package com.sugarweb.framework.security;
+package com.sugarweb.framework.security.base;
 
-import com.sugarweb.framework.security.resource.UserInfo;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**

@@ -1,10 +1,10 @@
-package com.sugarweb.framework.security.resource;
+package com.sugarweb.framework.security.oauth2;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.sugarweb.framework.security.auth.SugarUserDetailService;
+import com.sugarweb.framework.security.base.UserInfo;
+import com.sugarweb.framework.security.base.UsernameDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.Ordered;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +20,6 @@ import org.springframework.security.oauth2.server.resource.InvalidBearerTokenExc
 import org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector;
 
 import java.security.Principal;
-import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -50,8 +49,8 @@ public class SugarOpaqueTokenIntrospector implements OpaqueTokenIntrospector {
                     AuthorityUtils.NO_AUTHORITIES);
         }
 
-        SugarUserDetailService userDetailsService = SpringUtil
-                .getBean(SugarUserDetailService.class);
+        UserDetailsService userDetailsService = SpringUtil
+                .getBean(UsernameDetailsServiceImpl.class);
 
         UserDetails userDetails = null;
         try {

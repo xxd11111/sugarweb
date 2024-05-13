@@ -71,7 +71,6 @@ public class SecurityAutoConfiguration {
                 .formLogin(a -> a.loginProcessingUrl("/login").permitAll())
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry
                         //openapi url忽略
-                        .anyRequest().authenticated()
                         .requestMatchers(HttpMethod.GET, "/v3/api-docs").permitAll()
                         //测试模式全忽略
                         .requestMatchers("/login").permitAll()

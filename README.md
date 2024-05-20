@@ -8,7 +8,7 @@ sugarweb采用组件化构架设计，整合了web应用所需通用组件。
 ## 技术选型
 
 - 基础环境：jdk21, maven3.8.8, redis6.x, mysql8.x
-- 基础依赖框架：springboot3.x, spring-security, spring-data-jpa, redisson, guava, lombok
+- 基础依赖框架：springboot3.x, spring-security, mybatis-plus, redisson, guava, lombok
 - 组件技术选型： quartz, aws-s3, springdoc-openapi, spring-boot-starter-mail
 
 ## 项目结构

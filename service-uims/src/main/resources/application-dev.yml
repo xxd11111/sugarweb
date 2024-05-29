@@ -1,9 +1,7 @@
 server:
   port: 8889
-  servlet:
-    context-path: /uims
 
-#localhost:8889/uims/v3/api-docs
+#localhost:8889/v3/api-docs
 
 spring:
   application:
@@ -11,9 +9,9 @@ spring:
   jackson:
     time-zone: GMT+8
   datasource:
-    url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-    username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:123456}
+    url: jdbc:mysql://192.168.193.151:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: root
+    password: oneapimmysql
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 连接池设置
     type: com.zaxxer.hikari.HikariDataSource
@@ -112,10 +110,28 @@ mybatis-plus:
       table-underline: true
       logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      table-format: '%S' #表名大写（%S）小写（%s）
   configuration:
     mapUnderscoreToCamelCase: true
     cacheEnabled: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: satoken
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 2592000
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: true
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: true
 
 # 日志配置
 logging:

@@ -1,7 +1,5 @@
 package com.sugarweb.framework.security.base;
 
-import org.springframework.security.core.context.SecurityContextHolder;
-
 /**
  * 用户helper
  *
@@ -11,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class SecurityHelper {
 
     public static UserInfo getUserInfo() {
-        return (UserInfo) SecurityContextHolder.getContext().getAuthentication();
+        return null;
     }
 
 }

@@ -3,7 +3,7 @@ package com.sugarweb.uims.application.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
-import com.sugarweb.framework.orm.PageUtil;
+import com.sugarweb.framework.orm.PageHelper;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.uims.domain.dto.MenuDto;
 import com.sugarweb.uims.domain.dto.MenuTreeVo;
@@ -57,7 +57,7 @@ public class MenuServiceImpl implements MenuService {
                 .eq(Menu::getMenuCode, dto.getMenuCode())
                 .eq(Menu::getStatus, dto.getEnable());
 
-        return menuRepository.selectPage(PageUtil.getPage(pageQuery), lambdaQueryWrapper)
+        return menuRepository.selectPage(PageHelper.getPage(pageQuery), lambdaQueryWrapper)
                 .convert(a->{
                     MenuTreeVo target = new MenuTreeVo();
                     BeanUtils.copyProperties(a, target);

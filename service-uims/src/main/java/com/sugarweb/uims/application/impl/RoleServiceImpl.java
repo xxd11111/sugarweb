@@ -2,7 +2,7 @@ package com.sugarweb.uims.application.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.common.PageQuery;
-import com.sugarweb.framework.orm.PageUtil;
+import com.sugarweb.framework.orm.PageHelper;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.uims.domain.dto.RoleDto;
 import com.sugarweb.uims.domain.dto.RoleVo;
@@ -63,7 +63,7 @@ public class RoleServiceImpl implements RoleService {
                 .like(Role::getRoleName, dto.getRoleName())
                 .eq(Role::getRoleCode, dto.getRoleCode());
 
-        return roleRepository.selectPage(PageUtil.getPage(pageQuery), lambdaQueryWrapper)
+        return roleRepository.selectPage(PageHelper.getPage(pageQuery), lambdaQueryWrapper)
                 .convert(a -> {
                     RolePageVo rolePageVo = new RolePageVo();
                     BeanUtils.copyProperties(a, rolePageVo);

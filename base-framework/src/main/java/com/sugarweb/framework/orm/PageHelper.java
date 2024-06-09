@@ -10,7 +10,7 @@ import com.sugarweb.framework.common.PageQuery;
  * @author 许向东
  * @version 1.0
  */
-public class PageUtil {
+public class PageHelper {
 
     public static <T> IPage<T> getPage(PageQuery pageQuery){
         return new Page<>(pageQuery.getPageNumber(), pageQuery.getPageSize());

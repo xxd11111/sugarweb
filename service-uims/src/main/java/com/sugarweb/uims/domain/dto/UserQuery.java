@@ -10,7 +10,7 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class UserQueryDto {
+public class UserQuery {
 
     private String username;
 

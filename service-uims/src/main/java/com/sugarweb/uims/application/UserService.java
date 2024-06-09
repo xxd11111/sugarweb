@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.uims.domain.dto.NewPasswordDto;
 import com.sugarweb.uims.domain.dto.UserDto;
-import com.sugarweb.uims.domain.dto.UserQueryDto;
+import com.sugarweb.uims.domain.dto.UserQuery;
 import com.sugarweb.uims.domain.dto.UserPageVo;
 import com.sugarweb.uims.domain.dto.UserVo;
 
@@ -20,7 +20,7 @@ public interface UserService {
 
     UserVo findOne(String id);
 
-    IPage<UserPageVo> page(PageQuery pageQuery, UserQueryDto userQueryDto);
+    IPage<UserPageVo> page(PageQuery pageQuery, UserQuery userQuery);
 
     void modifyPassword(NewPasswordDto newPasswordDto);
 

@@ -4,7 +4,7 @@ import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
 import com.sugarweb.uims.domain.dto.NewPasswordDto;
 import com.sugarweb.uims.domain.dto.UserDto;
-import com.sugarweb.uims.domain.dto.UserQueryDto;
+import com.sugarweb.uims.domain.dto.UserQuery;
 import com.sugarweb.uims.application.UserService;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping("page")
-    public R page(PageQuery pageQuery, UserQueryDto userQueryDTO) {
-        return R.data(userService.page(pageQuery, userQueryDTO));
+    public R page(PageQuery pageQuery, UserQuery userQuery) {
+        return R.data(userService.page(pageQuery, userQuery));
     }
 
     @PostMapping("save")

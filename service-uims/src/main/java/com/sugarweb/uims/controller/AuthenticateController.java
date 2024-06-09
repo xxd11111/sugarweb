@@ -1,16 +1,22 @@
 package com.sugarweb.uims.controller;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
+import cn.dev33.satoken.session.SaSession;
+import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.dev33.satoken.util.SaResult;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.BCrypt;
+import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.R;
-import com.sugarweb.uims.domain.dto.PasswordLoginDto;
-import com.sugarweb.uims.domain.dto.TokenVo;
-import com.sugarweb.uims.application.TokenService;
-import io.swagger.v3.oas.annotations.Operation;
+import com.sugarweb.framework.security.SecurityHelper;
+import com.sugarweb.framework.security.UserInfo;
+import com.sugarweb.uims.domain.User;
+import com.sugarweb.uims.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 /**
  * 认证控制器
@@ -23,32 +29,49 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticateController {
     // 测试登录，浏览器访问： http://localhost:8889/authenticate/doLogin?username=zhang&password=123456
-    @RequestMapping("doLogin")
-    public String doLogin(String username, String password) {
-        // 此处仅作模拟示例，真实项目需要从数据库中查询数据进行比对
-        if ("zhang".equals(username) && "123456".equals(password)) {
-            StpUtil.login(10001);
-            return "登录成功";
+
+    UserRepository userRepository;
+
+    @PostMapping("login")
+    public R doLogin(String username, String password) {
+        User user = Db.getOne(ChainWrappers.lambdaQueryChain(User.class)
+                .eq(User::getUsername, username)
+                .getWrapper());
+        if (user == null) {
+            throw new SecurityException("用户或密码错误");
         }
-        return "登录失败";
+        String salt = user.getSalt();
+        boolean checkpw = BCrypt.checkpw(password, salt);
+        if (!checkpw) {
+            throw new SecurityException("用户或密码错误");
+        }
+        StpUtil.login(user.getId());
+        UserInfo userInfo = new UserInfo(user.getId(), user.getUsername(), new ArrayList<>(), new ArrayList<>());
+        StpUtil.getSession().set("userInfo", userInfo);
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        return R.data(tokenInfo);
     }
 
-    // 查询登录状态，浏览器访问： http://localhost:8889/authenticate/isLogin
-    @RequestMapping("isLogin")
-    public String isLogin() {
-        return "当前会话是否登录：" + StpUtil.isLogin();
+    @GetMapping("userInfo")
+    public R userInfo() {
+        UserInfo userInfo = SecurityHelper.getUserInfo();
+        return R.data(userInfo);
     }
 
-    // 查询 Token 信息  ---- http://localhost:8889/authenticate/tokenInfo
-    @RequestMapping("tokenInfo")
+    @GetMapping("tokenInfo")
     public R tokenInfo() {
         return R.data(StpUtil.getTokenInfo());
     }
 
-    // 测试注销  ---- http://localhost:8889/authenticate/logout
     @RequestMapping("logout")
     public R logout() {
         StpUtil.logout();
+        return R.ok();
+    }
+
+    @RequestMapping("kickout/{id}")
+    public R logout(@PathVariable String id) {
+        StpUtil.kickout(id);
         return R.ok();
     }
 

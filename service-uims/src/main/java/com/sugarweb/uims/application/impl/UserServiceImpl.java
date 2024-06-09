@@ -2,13 +2,13 @@ package com.sugarweb.uims.application.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.sugarweb.framework.common.PageQuery;
-import com.sugarweb.framework.orm.PageUtil;
-import com.sugarweb.framework.security.base.SecurityHelper;
+import com.sugarweb.framework.orm.PageHelper;
+import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.uims.application.UserService;
 import com.sugarweb.uims.domain.dto.NewPasswordDto;
 import com.sugarweb.uims.domain.dto.UserDto;
-import com.sugarweb.uims.domain.dto.UserQueryDto;
+import com.sugarweb.uims.domain.dto.UserQuery;
 import com.sugarweb.uims.domain.dto.UserPageVo;
 import com.sugarweb.uims.domain.dto.UserVo;
 import com.sugarweb.uims.domain.User;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public IPage<UserPageVo> page(PageQuery pageQuery, UserQueryDto queryDto) {
+    public IPage<UserPageVo> page(PageQuery pageQuery, UserQuery queryDto) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>()
                 .eq(User::getUsername, queryDto.getUsername())
                 .eq(User::getNickName, queryDto.getNickName())
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
                 .eq(User::getStatus, queryDto.getEnable())
                 .eq(User::getEmail, queryDto.getEmail());
 
-        return userRepository.selectPage(PageUtil.getPage(pageQuery), lambdaQueryWrapper)
+        return userRepository.selectPage(PageHelper.getPage(pageQuery), lambdaQueryWrapper)
                 .convert(a -> {
                     UserPageVo userPageVo = new UserPageVo();
                     BeanUtils.copyProperties(a, userPageVo);

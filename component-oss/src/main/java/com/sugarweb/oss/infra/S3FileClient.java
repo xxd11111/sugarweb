@@ -49,7 +49,6 @@ public class S3FileClient implements FileClient {
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, path, inputStream, metadata);
             putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead);
             PutObjectResult putObjectResult = client.putObject(putObjectRequest);
-            //这个s3的api非常优秀
             long contentLength = putObjectResult.getMetadata().getContentLength();
             FileUploadResult fileUploadResult = new FileUploadResult();
             fileUploadResult.setFileSize(contentLength);

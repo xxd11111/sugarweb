@@ -1,6 +1,8 @@
 package com.sugarweb.oss.application;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.oss.domain.*;
 import lombok.RequiredArgsConstructor;
 
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * 文件业务绑定客户端
@@ -19,6 +22,18 @@ import java.util.Optional;
 public class FileLinkServiceImpl implements FileLinkService {
 
     private final FileLinkInfoRepository fileLinkInfoRepository;
+
+    @Override
+    public void replaceFiles(String bizId, String fileGroup, Collection<String> fileIds) {
+        breakFiles(bizId, fileGroup);
+        linkFiles(bizId, fileGroup, fileIds);
+    }
+
+    @Override
+    public void replaceFile(String bizId, String fileGroup, String fileId) {
+        breakFiles(bizId, fileGroup);
+        linkFile(bizId, fileGroup, fileId);
+    }
 
     @Override
     public void linkFiles(String bizId, String fileGroup, Collection<String> fileIds) {
@@ -72,17 +87,17 @@ public class FileLinkServiceImpl implements FileLinkService {
     }
 
     @Override
-    public List<FileLinkInfo> findAll(String bizId, String fileGroup) {
-        return fileLinkInfoRepository.selectList(new LambdaQueryWrapper<FileLinkInfo>()
+    public List<FileInfo> findLinkFile(String bizId, String fileGroup) {
+        List<FileLinkInfo> fileLinkInfos = fileLinkInfoRepository.selectList(new LambdaQueryWrapper<FileLinkInfo>()
                 .eq(FileLinkInfo::getBizId, bizId)
                 .eq(FileLinkInfo::getBizType, fileGroup)
         );
-    }
-
-    @Override
-    public Optional<FileLinkInfo> findFirstOne(String bizId, String fileGroup) {
-        List<FileLinkInfo> all = findAll(bizId, fileGroup);
-        return all.stream().findFirst();
+        List<String> fileIds = fileLinkInfos.stream().map(FileLinkInfo::getFileId).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(fileIds)){
+            return Db.listByIds(fileIds, FileInfo.class);
+        }else {
+            return new ArrayList<>();
+        }
     }
 
 }

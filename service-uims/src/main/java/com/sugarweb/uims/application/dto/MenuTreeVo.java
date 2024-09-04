@@ -1,24 +1,29 @@
-package com.sugarweb.uims.domain.dto;
+package com.sugarweb.uims.application.dto;
 
 import com.sugarweb.uims.domain.constans.MenuType;
 import com.sugarweb.uims.domain.constans.MenuUrlType;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 import java.util.Set;
 
 /**
- * 登录菜单vo
+ * 菜单树vo
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class UserMenuVo {
+public class MenuTreeVo {
+    /**
+     * 菜单id
+     */
+    private String id;
 
     /**
      * 菜单pid
      */
-    private Set<UserMenuVo> menus;
+    private String pid;
 
     /**
      * 菜单编码
@@ -55,4 +60,13 @@ public class UserMenuVo {
      */
     private Integer sequence;
 
+    /**
+     * 菜单权限
+     */
+    private Set<String> serverApis;
+
+    /**
+     * 状态
+     */
+    private Flag enable;
 }

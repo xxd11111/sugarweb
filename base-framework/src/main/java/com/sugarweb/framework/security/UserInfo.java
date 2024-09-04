@@ -23,8 +23,6 @@ public class UserInfo {
 
     private String username;
 
-    private String password;
-
     private List<String> roles;
 
     private List<String> permissions;

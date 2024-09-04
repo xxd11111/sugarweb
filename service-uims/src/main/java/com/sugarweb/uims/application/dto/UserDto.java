@@ -1,16 +1,18 @@
-package com.sugarweb.uims.domain.dto;
+package com.sugarweb.uims.application.dto;
 
 import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 /**
- * 用户查询dto
+ * 用户dto
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class UserQuery {
+public class UserDto {
+
+    private String id;
 
     private String username;
 
@@ -19,6 +21,8 @@ public class UserQuery {
     private String mobilePhone;
 
     private String nickName;
+
+    private String password;
 
     private Flag enable;
 }

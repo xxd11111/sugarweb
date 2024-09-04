@@ -1,4 +1,4 @@
-package com.sugarweb.uims.domain.dto;
+package com.sugarweb.uims.application.dto;
 
 import com.sugarweb.framework.common.Flag;
 import lombok.Data;

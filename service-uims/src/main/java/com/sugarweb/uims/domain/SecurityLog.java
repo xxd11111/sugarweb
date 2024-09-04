@@ -1,5 +1,6 @@
 package com.sugarweb.uims.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 
 /**
@@ -17,6 +18,7 @@ public class SecurityLog {
     /**
      * 事件类型
      */
+    @TableId
     private String id;
 
     /**

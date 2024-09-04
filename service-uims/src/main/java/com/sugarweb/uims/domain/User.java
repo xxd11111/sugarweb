@@ -1,5 +1,6 @@
 package com.sugarweb.uims.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class User {
 
+    @TableId
     private String id;
 
     private String username;
@@ -32,18 +34,5 @@ public class User {
     private String password;
 
     private String status;
-
-    public void checkCertificate(String certificate) {
-        // todo 加密方式问题
-        boolean equals = certificate.equals(password);
-        if (!equals) {
-            throw new SecurityException("凭证错误");
-        }
-    }
-
-    public void modifyPassword(String newPassword) {
-        // todo 加密方式问题
-        password = newPassword;
-    }
 
 }

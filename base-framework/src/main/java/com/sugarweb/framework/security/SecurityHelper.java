@@ -1,6 +1,5 @@
 package com.sugarweb.framework.security;
 
-import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**

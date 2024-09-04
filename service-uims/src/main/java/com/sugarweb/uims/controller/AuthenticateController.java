@@ -9,7 +9,7 @@ import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.security.UserInfo;
 import com.sugarweb.uims.domain.User;
-import com.sugarweb.uims.domain.dto.PasswordLoginDto;
+import com.sugarweb.uims.application.dto.PasswordLoginDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

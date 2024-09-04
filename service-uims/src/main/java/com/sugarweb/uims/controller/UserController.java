@@ -2,10 +2,10 @@ package com.sugarweb.uims.controller;
 
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
-import com.sugarweb.uims.domain.dto.NewPasswordDto;
-import com.sugarweb.uims.domain.dto.UserDto;
-import com.sugarweb.uims.domain.dto.UserQuery;
 import com.sugarweb.uims.application.UserService;
+import com.sugarweb.uims.application.dto.NewPasswordDto;
+import com.sugarweb.uims.application.dto.UserDto;
+import com.sugarweb.uims.application.dto.UserQuery;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

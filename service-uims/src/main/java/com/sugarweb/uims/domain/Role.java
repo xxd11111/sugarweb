@@ -1,6 +1,7 @@
 package com.sugarweb.uims.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 
 import java.util.Collection;
@@ -17,6 +18,7 @@ import java.util.Collection;
 @RequiredArgsConstructor
 public class Role {
 
+    @TableId
     private String id;
 
     private String roleCode;

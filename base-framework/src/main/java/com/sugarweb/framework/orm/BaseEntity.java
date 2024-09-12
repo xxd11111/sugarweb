@@ -23,7 +23,7 @@ public class BaseEntity {
 
 	private LocalDateTime lastModifiedDate;
 
-	@Override
+	
 	public int hashCode() {
 		return getClass().hashCode();
 	}

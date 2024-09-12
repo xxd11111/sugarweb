@@ -20,12 +20,12 @@ public class BeanUtil implements BeanFactoryPostProcessor, ApplicationContextAwa
 	public BeanUtil() {
 	}
 
-	@Override
+	
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		BeanUtil.beanFactory = beanFactory;
 	}
 
-	@Override
+	
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		BeanUtil.applicationContext = applicationContext;
 	}

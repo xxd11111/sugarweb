@@ -15,7 +15,7 @@
         <module>component-param</module>
         <module>component-oss</module>
         <module>component-email</module>
-        <module>component-scheduler</module>
+        <module>component-task</module>
         <module>component-server</module>
         <module>service-uims</module>
         <module>component-llm</module>
@@ -126,7 +126,7 @@
 
             <dependency>
                 <groupId>com.sugar</groupId>
-                <artifactId>component-dictionary</artifactId>
+                <artifactId>component-dictItem</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -156,7 +156,7 @@
 
             <dependency>
                 <groupId>com.sugar</groupId>
-                <artifactId>component-scheduler</artifactId>
+                <artifactId>component-task</artifactId>
                 <version>1.0.0</version>
             </dependency>
 

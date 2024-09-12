@@ -1,8 +1,6 @@
 package com.sugarweb.param.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 /**
  * 参数实体
@@ -10,33 +8,31 @@ import lombok.ToString;
  * @author xxd
  * @version 1.0
  */
-@Getter
-@Setter
-@ToString
+@Data
 public class Param {
     /**
      * id
      */
-    private String id;
+    private String paramId;
 
     /**
      * 编码
      */
-    private String code;
+    private String paramCode;
 
     /**
      * 名称
      */
-    private String name;
+    private String paramName;
 
     /**
      * 值
      */
-    private String value;
+    private String paramValue;
 
     /**
      * 备注
      */
-    private String comment;
+    private String paramComment;
 
 }

@@ -62,7 +62,7 @@ public class UserService {
     }
 
     public void modifyPassword(NewPasswordDto newPasswordDto) {
-        String id = SecurityHelper.getUserInfo().getId();
+        String id = SecurityHelper.getLoginUser().getId();
         User user = Optional.ofNullable(Db.getById(id, User.class))
                 .orElseThrow(() -> new ValidateException("not dind user"));
         String oldPassword = newPasswordDto.getOldPassword();

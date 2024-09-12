@@ -11,6 +11,8 @@ import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.sugarweb.oss.application.FileLinkService;
+import com.sugarweb.oss.application.FileService;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -53,6 +55,16 @@ public class OssAutoConfiguration {
                 .withForceGlobalBucketAccessEnabled(true)
                 .build();
         return S3client;
+    }
+
+    @Bean
+    public FileService fileService(AmazonS3 client) {
+        return new FileService(ossProperties.getBucketName(), client);
+    }
+
+    @Bean
+    public FileLinkService fileLinkService() {
+        return new FileLinkService();
     }
 
 }

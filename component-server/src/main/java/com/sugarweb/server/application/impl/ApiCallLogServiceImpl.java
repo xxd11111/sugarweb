@@ -26,12 +26,12 @@ public class ApiCallLogServiceImpl implements ApiCallLogService {
 
 	private final ApiCallLogRepository sgcApiCallLogRepository;
 
-	@Override
+	
 	public ApiCallLog findOne(String id) {
 		return Optional.ofNullable(sgcApiCallLogRepository.selectById(id)).orElseThrow(() -> new ValidateException("访问日志不存在"));
 	}
 
-	@Override
+	
 	public IPage<ApiCallLog> findPage(PageQuery pageQuery, ApiCallLogQueryDto apiCallLogQueryDto) {
 		return sgcApiCallLogRepository.selectPage(new Page<ApiCallLog>(pageQuery.getPageNumber(), pageQuery.getPageSize()), new LambdaQueryWrapper<>());
 	}

@@ -19,18 +19,16 @@ public class DictionaryValidator implements ConstraintValidator<DictionaryValida
         return InnerDictionaryService.DICTIONARY_SERVICE;
     }
 
-    @Override
     public void initialize(DictionaryValidate annotation) {
         groupCode = annotation.groupCode();
     }
 
-    @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         // 校验通过
         if (groupCode == null || groupCode.isEmpty()) {
             return true;
         }
-        boolean isPresent = getDictionaryService().existByCode(groupCode, value);
+        boolean isPresent = getDictionaryService().existsItemByCode(groupCode, value, null);
         if (isPresent) {
             //校验通过
             return true;

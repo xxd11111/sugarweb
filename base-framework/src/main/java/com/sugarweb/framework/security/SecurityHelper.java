@@ -10,8 +10,8 @@ import cn.dev33.satoken.stp.StpUtil;
  */
 public class SecurityHelper {
 
-    public static UserInfo getUserInfo() {
-        return (UserInfo) StpUtil.getSession().get("userInfo");
+    public static LoginUser getLoginUser() {
+        return (LoginUser) StpUtil.getSession().get("userInfo");
     }
 
 }

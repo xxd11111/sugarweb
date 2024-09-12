@@ -6,8 +6,8 @@ import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.R;
+import com.sugarweb.framework.security.LoginUser;
 import com.sugarweb.framework.security.SecurityHelper;
-import com.sugarweb.framework.security.UserInfo;
 import com.sugarweb.uims.domain.User;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
 import lombok.RequiredArgsConstructor;
@@ -39,16 +39,16 @@ public class AuthenticateController {
             throw new SecurityException("用户或密码错误");
         }
         StpUtil.login(user.getId());
-        UserInfo userInfo = new UserInfo(user.getId(), user.getUsername(), new ArrayList<>(), new ArrayList<>());
-        StpUtil.getSession().set("userInfo", userInfo);
+        LoginUser loginUser = new LoginUser(user.getId(), user.getUsername(), new ArrayList<>(), new ArrayList<>());
+        StpUtil.getSession().set("userInfo", loginUser);
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return R.data(tokenInfo);
     }
 
     @GetMapping("userInfo")
     public R userInfo() {
-        UserInfo userInfo = SecurityHelper.getUserInfo();
-        return R.data(userInfo);
+        LoginUser loginUser = SecurityHelper.getLoginUser();
+        return R.data(loginUser);
     }
 
     @GetMapping("tokenInfo")

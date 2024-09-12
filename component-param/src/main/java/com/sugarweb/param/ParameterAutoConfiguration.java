@@ -1,9 +1,7 @@
 package com.sugarweb.param;
 
 import com.sugarweb.param.application.ParamService;
-import com.sugarweb.param.application.ParamServiceImpl;
 import com.sugarweb.param.auto.ParamAutoRegistry;
-import com.sugarweb.param.domain.ParamRepository;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -25,8 +23,8 @@ public class ParameterAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ParamService paramService(ParamRepository paramRepository) {
-        return new ParamServiceImpl(paramRepository);
+    public ParamService paramService() {
+        return new ParamService();
     }
 
     @Bean

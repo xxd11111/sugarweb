@@ -4,6 +4,9 @@ server:
 #localhost:8889/v3/api-docs
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   application:
     name: uims
   jackson:

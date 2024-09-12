@@ -7,7 +7,7 @@ import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.server.aspect.ApiLog;
 import com.sugarweb.framework.security.SecurityHelper;
-import com.sugarweb.framework.security.UserInfo;
+import com.sugarweb.framework.security.LoginUser;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -102,9 +102,9 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
 
     @SneakyThrows(FrameworkException.class)
     public void loadUserInfo(ApiCallLog apiCallLog) {
-        UserInfo userInfo = SecurityHelper.getUserInfo();
-        String userId = userInfo.getId();
-        String username = userInfo.getUsername();
+        LoginUser loginUser = SecurityHelper.getLoginUser();
+        String userId = loginUser.getId();
+        String username = loginUser.getUsername();
         apiCallLog.setUserId(userId);
         apiCallLog.setUsername(username);
     }

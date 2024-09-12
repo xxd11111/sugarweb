@@ -26,12 +26,12 @@ public class ApiApiErrorLogServiceImpl implements ApiErrorLogService {
 
 	private final ApiErrorLogRepository sgcApiErrorLogRepository;
 
-	@Override
+	
 	public ApiErrorLog findOne(String id) {
 		return Optional.ofNullable(sgcApiErrorLogRepository.selectById(id)).orElseThrow(() -> new ValidateException("异常日志不存在,id:{}", id));
 	}
 
-	@Override
+	
 	public IPage<ApiErrorLog> findPage(PageQuery pageDto, ApiErrorLogQueryDto queryDto) {
 		Page<ApiErrorLog> page = sgcApiErrorLogRepository.selectPage(new Page<>(pageDto.getPageNumber(), pageDto.getPageSize()), new LambdaQueryWrapper<>());
 		return page;

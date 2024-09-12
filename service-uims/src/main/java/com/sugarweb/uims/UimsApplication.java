@@ -3,7 +3,6 @@ package com.sugarweb.uims;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * 启动类
@@ -12,7 +11,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan({"com.sugarweb.uims.domain.repository","com.sugarweb.*.domain"})
+@MapperScan({"com.sugarweb.uims.domain.repository", "com.sugarweb.*.po"})
 public class UimsApplication {
 
     public static void main(String[] args) {

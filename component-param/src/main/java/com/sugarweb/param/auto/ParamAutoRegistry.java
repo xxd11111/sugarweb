@@ -3,13 +3,12 @@ package com.sugarweb.param.auto;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.auto.AbstractAutoRegistry;
+import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.param.ParamProperties;
 import com.sugarweb.param.application.ParamDto;
 import com.sugarweb.param.application.ParamService;
 
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -33,34 +32,34 @@ public class ParamAutoRegistry extends AbstractAutoRegistry<ParamDto> {
         this.paramService = paramService;
     }
 
-    @Override
+
     protected void insert(ParamDto o) {
         paramService.save(o);
     }
 
-    @Override
+
     protected void merge(ParamDto db, ParamDto scan) {
         //ignore
     }
 
-    @Override
+
     protected void deleteByCondition(Collection<ParamDto> collection) {
         Iterable<ParamDto> all = paramService.findAll();
         Set<String> removeIds = new HashSet<>();
         for (ParamDto param : all) {
             if (!collection.contains(param)) {
-                removeIds.add(param.getId());
+                removeIds.add(param.getParamId());
             }
         }
         paramService.removeByIds(removeIds);
     }
 
-    @Override
+
     protected ParamDto selectOne(ParamDto o) {
-        return paramService.findByCode(o.getCode()).orElse(null);
+        return paramService.getByCode(o.getParamCode());
     }
 
-    @Override
+
     public Collection<ParamDto> scan() {
         //获取包下class
         Set<Class<?>> classes = ClassUtil.scanPackageByAnnotation(scanPackage, InnerParam.class);
@@ -101,10 +100,10 @@ public class ParamAutoRegistry extends AbstractAutoRegistry<ParamDto> {
                 }
                 //创建参数对象
                 ParamDto paramDto = new ParamDto();
-                paramDto.setCode(code);
-                paramDto.setName(name);
-                paramDto.setValue(value);
-                paramDto.setComment(name);
+                paramDto.setParamCode(code);
+                paramDto.setParamName(name);
+                paramDto.setParamValue(value);
+                paramDto.setParamComment(name);
                 paramDtos.add(paramDto);
             }
         }

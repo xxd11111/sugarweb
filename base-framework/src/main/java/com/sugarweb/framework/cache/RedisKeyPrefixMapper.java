@@ -13,7 +13,7 @@ public class RedisKeyPrefixMapper implements NameMapper {
 		this.prefix = prefix == null || prefix.isEmpty() ? "" : prefix + ":";
 	}
 
-	@Override
+	
 	public String map(String name) {
 		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException("未指定key");
@@ -21,7 +21,7 @@ public class RedisKeyPrefixMapper implements NameMapper {
 		return prefix + name;
 	}
 
-	@Override
+	
 	public String unmap(String name) {
 		if (name == null || name.isEmpty()) {
 			return null;

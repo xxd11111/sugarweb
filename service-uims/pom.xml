@@ -50,7 +50,7 @@
 
         <dependency>
             <groupId>com.sugar</groupId>
-            <artifactId>component-dictionary</artifactId>
+            <artifactId>component-dictItem</artifactId>
         </dependency>
 
         <dependency>
@@ -60,7 +60,7 @@
 
         <dependency>
             <groupId>com.sugar</groupId>
-            <artifactId>component-scheduler</artifactId>
+            <artifactId>component-task</artifactId>
         </dependency>
 
         <dependency>

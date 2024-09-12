@@ -10,14 +10,25 @@ import com.sugarweb.param.domain.Param;
  */
 public class ParamConvert {
 
-	public static ParamDto getParamDTO(Param param) {
+	public static ParamDto toParamDto(Param param) {
 		ParamDto paramDto = new ParamDto();
-		paramDto.setId(param.getId());
-		paramDto.setCode(param.getCode());
-		paramDto.setName(param.getName());
-		paramDto.setValue(param.getValue());
-		paramDto.setComment(param.getComment());
+		paramDto.setParamId(param.getParamId());
+		paramDto.setParamName(param.getParamName());
+		paramDto.setParamCode(param.getParamCode());
+		paramDto.setParamValue(param.getParamValue());
+		paramDto.setParamComment(param.getParamComment());
 		return paramDto;
+
+	}
+
+	public static Param toParam(ParamDto paramDto) {
+		Param param = new Param();
+		param.setParamId(paramDto.getParamId());
+		param.setParamName(paramDto.getParamName());
+		param.setParamCode(paramDto.getParamCode());
+		param.setParamValue(paramDto.getParamValue());
+		param.setParamComment(paramDto.getParamComment());
+		return param;
 	}
 
 }

@@ -15,12 +15,11 @@ import java.util.Collection;
  */
 public abstract class AbstractAutoRegistry<T> implements Registry, Scanner<T>, ApplicationRunner {
 
-    @Override
+    
     public void run(ApplicationArguments args) throws Exception {
         register();
     }
 
-    @Override
     public void register() {
         Collection<T> scans = this.scan();
         if (CollUtil.isEmpty(scans)) {

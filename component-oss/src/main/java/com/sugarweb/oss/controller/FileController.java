@@ -1,9 +1,13 @@
 package com.sugarweb.oss.controller;
 
-import com.sugarweb.framework.exception.ServerException;
-import com.sugarweb.oss.application.FileService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
-import com.sugarweb.oss.domain.FileInfo;
+import com.sugarweb.framework.exception.ServerException;
+import com.sugarweb.oss.application.FileDto;
+import com.sugarweb.oss.application.FileService;
+import com.sugarweb.oss.application.dto.FileQuery;
+import com.sugarweb.oss.po.FileInfo;
 import com.sugarweb.oss.utils.WebDownloadUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -29,23 +32,23 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class FileController {
 
-	private final FileService fileService;
+    private final FileService fileService;
 
-	@GetMapping("download")
-	public void download(HttpServletResponse response, String fileId) {
-		Optional<FileInfo> optionalFileInfo = fileService.findOne(fileId);
-		if (optionalFileInfo.isPresent()) {
-			try(InputStream content = fileService.findContent(fileId)) {
-				FileInfo fileInfo = optionalFileInfo.get();
-				WebDownloadUtil.download(response, content, fileInfo.getFilename(), fileInfo.getContentType());
-			} catch (IOException e) {
-                throw new ServerException(e);
-            }
+    @GetMapping("download")
+    public void download(HttpServletResponse response, String fileId) {
+        FileInfo fileInfo = fileService.getFileInfo(fileId);
+        if (fileInfo == null) {
+            return;
         }
-	}
+        try (InputStream content = fileService.getContentByKey(fileInfo.getFileKey())) {
+            WebDownloadUtil.download(response, content, fileInfo.getFilename(), fileInfo.getContentType());
+        } catch (IOException e) {
+            throw new ServerException("文件下载失败", e);
+        }
+    }
 
-	@PostMapping("upload")
-	public R<FileInfo> upload(MultipartFile multipartFile, String fileGroup) {
+    @PostMapping("upload")
+    public R<FileDto> upload(MultipartFile multipartFile, String fileGroup) {
         try {
             return R.data(fileService.upload(fileGroup, multipartFile.getInputStream(), multipartFile.getContentType(), multipartFile.getOriginalFilename()));
         } catch (IOException e) {
@@ -53,16 +56,21 @@ public class FileController {
         }
     }
 
-	@PostMapping("batchRemove")
-	public R<Void> remove(Set<String> fileIds) {
-		fileService.remove(fileIds);
-		return R.ok();
-	}
+    @PostMapping("batchRemove")
+    public R<Void> batchRemove(Set<String> fileIds) {
+        fileService.batchRemove(fileIds);
+        return R.ok();
+    }
 
-	@PostMapping("remove")
-	public R<Void> remove(String fileId) {
-		fileService.remove(fileId);
-		return R.ok();
-	}
+    @PostMapping("remove")
+    public R<Void> remove(String fileId) {
+        fileService.remove(fileId);
+        return R.ok();
+    }
+
+    @PostMapping("page")
+    public R<IPage<FileDto>> page(PageQuery pageQuery, FileQuery query) {
+        return R.data(fileService.page(pageQuery, query));
+    }
 
 }

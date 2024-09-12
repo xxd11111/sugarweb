@@ -2,14 +2,14 @@ package com.sugarweb.dictionary.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.dictionary.application.DictionaryService;
-import com.sugarweb.dictionary.application.dto.DictionaryDto;
-import com.sugarweb.dictionary.application.dto.DictionaryQueryDto;
+import com.sugarweb.dictionary.application.dto.DictGroupDto;
+import com.sugarweb.dictionary.application.dto.DictItemDto;
+import com.sugarweb.dictionary.application.dto.DictQuery;
+import com.sugarweb.dictionary.domain.DictGroup;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
 
 /**
  * 字典控制器
@@ -25,36 +25,37 @@ public class DictionaryController {
 	private final DictionaryService dictionaryService;
 
 	@PostMapping("save")
-	public R<Void> save(@RequestBody DictionaryDto dto) {
-		dictionaryService.save(dto);
+	public R<Void> save(@RequestBody DictItemDto dto) {
+		dictionaryService.saveItem(dto);
 		return R.ok();
 	}
 
-	@DeleteMapping("remove/{ids}")
-	public R<Void> remove(@PathVariable Set<String> ids) {
-		dictionaryService.removeByIds(ids);
+	@PostMapping("save")
+	public R<Void> update(@RequestBody DictItemDto dto) {
+		dictionaryService.updateItem(dto);
 		return R.ok();
 	}
 
-	@DeleteMapping("removeGroup/{group}")
-	public R<Void> removeGroup(@PathVariable String group) {
-		dictionaryService.removeByGroup(group);
+	@PostMapping("removeGroupById/{id}")
+	public R<Void> remove(@PathVariable String id) {
+		dictionaryService.removeGroupById(id);
 		return R.ok();
 	}
 
-	@GetMapping("findOne/{id}")
-	public R<DictionaryDto> findOne(@PathVariable String id) {
-		return R.data(dictionaryService.findById(id).orElse(null));
+	@PostMapping("removeItemById/{id}")
+	public R<Void> removeGroup(@PathVariable String id) {
+		dictionaryService.removeItemById(id);
+		return R.ok();
 	}
 
-	@GetMapping("findDictionary/{dictionaryId}")
-	public R<DictionaryDto> findDictionary(@PathVariable String dictionaryId) {
-		return R.data(dictionaryService.findById(dictionaryId).orElse(null));
+	@GetMapping("getItemById/{id}")
+	public R<DictItemDto> findOne(@PathVariable String id) {
+		return R.data(dictionaryService.getItemById(id));
 	}
 
-	@GetMapping("findPage")
-	public R<IPage<DictionaryDto>> findPage(PageQuery pageQuery, DictionaryQueryDto queryDto) {
-		return R.data(dictionaryService.findPage(pageQuery, queryDto));
+	@GetMapping("groupPage")
+	public R<IPage<DictGroupDto>> groupPage(PageQuery pageQuery, DictQuery queryDto) {
+		return R.data(dictionaryService.groupPage(pageQuery, queryDto));
 	}
 
 }

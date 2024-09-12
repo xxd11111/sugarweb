@@ -1,6 +1,5 @@
 package com.sugarweb.param.application;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 /**
@@ -12,15 +11,29 @@ import lombok.Data;
 @Data
 public class ParamDto {
 
-	@NotEmpty
-	private String id;
+    /**
+     * id
+     */
+    private String paramId;
 
-	private String code;
+    /**
+     * 编码
+     */
+    private String paramCode;
 
-	private String name;
+    /**
+     * 名称
+     */
+    private String paramName;
 
-	private String value;
+    /**
+     * 值
+     */
+    private String paramValue;
 
-	private String comment;
+    /**
+     * 备注
+     */
+    private String paramComment;
 
 }

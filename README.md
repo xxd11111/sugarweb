@@ -16,7 +16,7 @@ sugarweb采用组件化构架设计，整合了web应用所需通用组件。
 | 模组                   | 描述           | 模块依赖关系                        |
 |----------------------|--------------|-------------------------------|
 | base-framework       | 基础框架整合       | 无                             |
-| component-dictionary | 数据字典组件       | base-framework                |
+| component-dictItem | 数据字典组件       | base-framework                |
 | component-email      | 邮件组件         | base-framework, component-oss |
 | component-openapi    | 接口文档         | base-framework                |
 | component-oss        | 文件存储         | base-framework                |
@@ -28,7 +28,7 @@ sugarweb采用组件化构架设计，整合了web应用所需通用组件。
 ## sugarweb做了什么
 
 - base-framework：这里整合了主要常用核心框架并进行了通用功能封装，涉及异常处理，持久化框架整合，缓存框架整合，授权认证整合。
-- component-dictionary：字典组件，提供了字典（group,code,name）的增删改查功能，自动注册功能。
+- component-dictItem：字典组件，提供了字典（group,code,name）的增删改查功能，自动注册功能。
 - component-email：邮件组件，提供了邮件发送的基础功能。
 - component-openapi：接口文档组件，提供对外接口信息。
 - component-oss：文件存储组件，提供文件存储功能，以及文件与业务绑定功能。

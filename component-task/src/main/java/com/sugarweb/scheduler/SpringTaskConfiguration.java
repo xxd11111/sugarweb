@@ -16,10 +16,14 @@ public class SpringTaskConfiguration implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
         taskRegistrar.addTriggerTask(
-                () -> System.out.println("定时任务1!"),
-                a -> new CronTrigger("cron1").nextExecution(a)
+                this::test,
+                a -> new CronTrigger("0 0/1 * * * ?").nextExecution(a)
         );
         taskRegistrar.setTaskScheduler(scheduler);
+    }
+
+    private void test() {
+        System.out.println("定时任务1");
     }
 
 }

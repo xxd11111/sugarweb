@@ -6,7 +6,7 @@ import com.sugarweb.framework.auto.AbstractAutoRegistry;
 import com.sugarweb.framework.common.Flag;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.utils.BeanUtil;
-import com.sugarweb.scheduler.domain.TaskInfo;
+import com.sugarweb.scheduler.domain.TaskPo;
 import org.springframework.scheduling.support.CronExpression;
 
 import java.lang.reflect.Method;
@@ -19,38 +19,38 @@ import java.util.*;
  * @author 许向东
  * @version 1.0
  */
-public class TaskAutoRegistry extends AbstractAutoRegistry<TaskInfo> {
+public class TaskAutoRegistry extends AbstractAutoRegistry<TaskPo> {
 
-    protected void insert(TaskInfo o) {
+    protected void insert(TaskPo o) {
         Db.save(o);
     }
 
 
-    protected void merge(TaskInfo db, TaskInfo scan) {
+    protected void merge(TaskPo db, TaskPo scan) {
     }
 
 
-    protected void deleteByCondition(Collection<TaskInfo> collection) {
+    protected void deleteByCondition(Collection<TaskPo> collection) {
         List<String> removeTaskId = new ArrayList<>();
-        List<TaskInfo> all = Db.list(TaskInfo.class);
-        for (TaskInfo task : all) {
+        List<TaskPo> all = Db.list(TaskPo.class);
+        for (TaskPo task : all) {
             if (collection.stream().noneMatch(a -> task.getTaskName().equals(a.getTaskName()))) {
                 removeTaskId.add(task.getId());
             }
         }
-        Db.removeByIds(removeTaskId, TaskInfo.class);
+        Db.removeByIds(removeTaskId, TaskPo.class);
     }
 
 
-    protected TaskInfo selectOne(TaskInfo o) {
-        return Db.getOne(new LambdaQueryWrapper<TaskInfo>()
-                .eq(TaskInfo::getTaskName, o.getTaskName()));
+    protected TaskPo selectOne(TaskPo o) {
+        return Db.getOne(new LambdaQueryWrapper<TaskPo>()
+                .eq(TaskPo::getTaskName, o.getTaskName()));
     }
 
 
-    public Collection<TaskInfo> scan() {
+    public Collection<TaskPo> scan() {
         Map<String, Object> beansWithAnnotation = BeanUtil.getBeansWithAnnotation(InnerTaskBean.class);
-        Map<String, TaskInfo> schedulerTaskMap = new HashMap<>();
+        Map<String, TaskPo> schedulerTaskMap = new HashMap<>();
         for (Map.Entry<String, Object> stringObjectEntry : beansWithAnnotation.entrySet()) {
             String beanName = stringObjectEntry.getKey();
             Object beanInstance = stringObjectEntry.getValue();
@@ -75,11 +75,11 @@ public class TaskAutoRegistry extends AbstractAutoRegistry<TaskInfo> {
                 }
                 int paramsLength = parameters.length;
                 if (schedulerTaskMap.containsKey(taskName)) {
-                    TaskInfo old = schedulerTaskMap.get(taskName);
+                    TaskPo old = schedulerTaskMap.get(taskName);
                     throw new FrameworkException("存在同名taskName:{}, fist:{}, second:{}", old.getBeanName() + "." + old.getMethodName(), beanName + "." + method.getName());
                 }
 
-                TaskInfo task = new TaskInfo();
+                TaskPo task = new TaskPo();
                 task.setTaskName(taskName);
                 task.setBeanName(beanName);
                 task.setMethodName(method.getName());

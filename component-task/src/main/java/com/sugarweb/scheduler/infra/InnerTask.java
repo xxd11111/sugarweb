@@ -1,13 +1,13 @@
 package com.sugarweb.scheduler.infra;
 
 /**
- * TaskExecutor
+ * TODO
  *
  * @author 许向东
  * @version 1.0
  */
-public interface TaskExecutor {
+public @interface InnerTask {
 
-    void execute();
+
 
 }

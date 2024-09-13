@@ -10,6 +10,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarweb.scheduler")
-@ConditionalOnProperty(prefix = "sugarweb.scheduler", name = "enable", havingValue = "true")
+// @ConditionalOnProperty(prefix = "sugarweb.scheduler", name = "enable", havingValue = "true")
 public class SchedulerProperties {
 }

@@ -19,7 +19,7 @@ import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 @EnableScheduling
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(SchedulerProperties.class)
-@ConditionalOnProperty(prefix = "sugarweb.scheduler", name = "enable", havingValue = "true")
+// @ConditionalOnProperty(prefix = "sugarweb.scheduler", name = "enable", havingValue = "true")
 public class SchedulerAutoConfiguration {
 
     @Bean

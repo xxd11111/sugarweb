@@ -103,7 +103,7 @@ public record ApiLogInfoHandler(ApiCallLogRepository apiCallLogRepository,
     @SneakyThrows(FrameworkException.class)
     public void loadUserInfo(ApiCallLog apiCallLog) {
         LoginUser loginUser = SecurityHelper.getLoginUser();
-        String userId = loginUser.getId();
+        String userId = loginUser.getUserId();
         String username = loginUser.getUsername();
         apiCallLog.setUserId(userId);
         apiCallLog.setUsername(username);

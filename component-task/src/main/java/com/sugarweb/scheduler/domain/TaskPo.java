@@ -3,13 +3,13 @@ package com.sugarweb.scheduler.domain;
 import lombok.Data;
 
 /**
- * SgcSchedulerTask
+ * TaskInfo
  *
  * @author 许向东
  * @version 1.0
  */
 @Data
-public class TaskInfo {
+public class TaskPo {
 
     private String id;
 
@@ -22,8 +22,6 @@ public class TaskInfo {
     private String cron;
 
     private String status;
-
-    private Integer paramsLength;
 
     private String params;
 

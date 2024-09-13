@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan({"com.sugarweb.uims.domain.repository", "com.sugarweb.*.po"})
+@MapperScan({"com.sugarweb.uims.domain", "com.sugarweb.*.po"})
 public class UimsApplication {
 
     public static void main(String[] args) {

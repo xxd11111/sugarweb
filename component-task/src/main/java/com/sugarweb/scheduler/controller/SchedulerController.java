@@ -51,17 +51,17 @@ public class SchedulerController {
         return R.ok();
     }
 
-    @PostMapping("pause/{id}")
+    @PostMapping("stop/{id}")
     @Operation(operationId = "scheduler:pause", summary = "停用")
-    public R pause(@PathVariable String id) {
-        taskService.pause(id);
+    public R stop(@PathVariable String id) {
+        taskService.stop(id);
         return R.ok();
     }
 
-    @PostMapping("resume/{id}")
+    @PostMapping("start/{id}")
     @Operation(operationId = "scheduler:resume", summary = "启用")
-    public R resume(@PathVariable String id) {
-        taskService.resume(id);
+    public R start(@PathVariable String id) {
+        taskService.start(id);
         return R.ok();
     }
 

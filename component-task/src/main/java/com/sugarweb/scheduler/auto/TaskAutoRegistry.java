@@ -49,14 +49,14 @@ public class TaskAutoRegistry extends AbstractAutoRegistry<TaskInfo> {
 
 
     public Collection<TaskInfo> scan() {
-        Map<String, Object> beansWithAnnotation = BeanUtil.getBeansWithAnnotation(InnerTaskBean.class);
+        Map<String, Object> beansWithAnnotation = BeanUtil.getBeansWithAnnotation(RegistryTaskBean.class);
         Map<String, TaskInfo> schedulerTaskMap = new HashMap<>();
         for (Map.Entry<String, Object> stringObjectEntry : beansWithAnnotation.entrySet()) {
             String beanName = stringObjectEntry.getKey();
             Object beanInstance = stringObjectEntry.getValue();
             Method[] methods = beanInstance.getClass().getMethods();
             for (Method method : methods) {
-                InnerTaskMethod annotation = method.getAnnotation(InnerTaskMethod.class);
+                RegistryTaskTrigger annotation = method.getAnnotation(RegistryTaskTrigger.class);
                 if (annotation == null) {
                     continue;
                 }

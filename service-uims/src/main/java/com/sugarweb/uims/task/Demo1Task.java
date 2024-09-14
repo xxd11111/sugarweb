@@ -1,6 +1,6 @@
 package com.sugarweb.uims.task;
 
-import com.sugarweb.scheduler.auto.InnerTaskMethod;
+import com.sugarweb.scheduler.auto.RegistryTaskTrigger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 // @InnerTaskBean
 public class Demo1Task {
 
-    @InnerTaskMethod(id = "1001", cron = "0/20 * * * * ? ", params = "123")
+    @RegistryTaskTrigger(id = "1001", cron = "0/20 * * * * ? ", params = "123")
     public void executeTask(String params) throws InterruptedException {
         Thread.sleep(10000);
         log.info("executeTask:demo1," + params);

@@ -1,14 +1,12 @@
 package com.sugarweb.scheduler;
 
 import com.sugarweb.scheduler.application.TaskService;
-import com.sugarweb.scheduler.controller.SchedulerController;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import com.sugarweb.scheduler.controller.TaskController;
+import com.sugarweb.scheduler.infra.TaskManager;
+import com.sugarweb.scheduler.infra.SingleTaskManager;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.SchedulingConfigurer;
-import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 
 /**
  * 定时任务自动注入
@@ -16,32 +14,28 @@ import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
  * @author xxd
  * @version 1.0
  */
-@EnableScheduling
+//不使用spring的定时任务
+// @EnableScheduling
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(SchedulerProperties.class)
 // @ConditionalOnProperty(prefix = "sugarweb.scheduler", name = "enable", havingValue = "true")
 public class SchedulerAutoConfiguration {
 
     @Bean
-    public SimpleAsyncTaskScheduler taskScheduler() {
-        SimpleAsyncTaskScheduler scheduler = new SimpleAsyncTaskScheduler();
-        scheduler.setVirtualThreads(true);
-        return scheduler;
+    public SingleTaskManager taskManager() {
+        SingleTaskManager taskManager = new SingleTaskManager();
+        taskManager.initLoad();
+        return taskManager;
     }
 
     @Bean
-    public SchedulingConfigurer schedulingConfigurer(SimpleAsyncTaskScheduler scheduler) {
-        return new SpringTaskConfiguration(scheduler);
+    public TaskService taskService(TaskManager taskManager) {
+        return new TaskService(taskManager);
     }
 
     @Bean
-    public TaskService taskService() {
-        return new TaskService();
-    }
-
-    @Bean
-    public SchedulerController schedulerController() {
-        return new SchedulerController();
+    public TaskController schedulerController() {
+        return new TaskController();
     }
 
 }

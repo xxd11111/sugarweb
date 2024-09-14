@@ -22,6 +22,6 @@ public enum Flag {
      */
     TRUE("1");
 
-    private final String value;
+    private final String code;
 
 }

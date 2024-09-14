@@ -1,16 +1,19 @@
-package com.sugarweb.scheduler.application;
+package com.sugarweb.scheduler.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
- * SchedulerTaskDto
+ * TaskInfo
  *
  * @author 许向东
  * @version 1.0
  */
 @Data
-public class TaskDto {
+public class TaskInfo {
 
+    @TableId(type = IdType.INPUT)
     private String taskId;
 
     private String taskName;
@@ -22,4 +25,5 @@ public class TaskDto {
     private String enabled;
 
     private String taskData;
+
 }

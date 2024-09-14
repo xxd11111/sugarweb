@@ -1,4 +1,4 @@
-package com.sugarweb.scheduler.domain;
+package com.sugarweb.scheduler.po;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -3,8 +3,6 @@ package com.sugarweb.scheduler.infra;
 import com.sugarweb.scheduler.po.TaskInfo;
 import com.sugarweb.scheduler.po.TaskTrigger;
 
-import java.util.List;
-
 /**
  * TaskManager
  *
@@ -13,7 +11,7 @@ import java.util.List;
  */
 public interface TaskManager {
 
-    void initLoad();
+    void init();
 
     void saveTask(TaskInfo taskInfo);
 
@@ -29,15 +27,9 @@ public interface TaskManager {
 
     void removeTrigger(String triggerId);
 
-    boolean existsBean(String beanName);
+    void enabledTrigger(String triggerId);
 
-    TaskBean getTaskBean(String beanName);
-
-    List<String> getTaskBeanNames();
-
-    void startTrigger(String triggerId);
-
-    void stopTrigger(String triggerId);
+    void disabledTrigger(String triggerId);
 
     void runTaskOnce(String beanName);
 }

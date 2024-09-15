@@ -16,6 +16,8 @@ public class TaskInfo {
     @TableId(type = IdType.INPUT)
     private String taskId;
 
+    private String taskCode;
+
     private String taskName;
 
     private String beanName;

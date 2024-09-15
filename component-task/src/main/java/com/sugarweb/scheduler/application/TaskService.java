@@ -24,6 +24,7 @@ public class TaskService {
     public void saveTask(TaskDto dto) {
         TaskInfo task = new TaskInfo();
         task.setTaskId(dto.getTaskId());
+        task.setTaskCode(dto.getTaskCode());
         task.setTaskName(dto.getTaskName());
         task.setBeanName(dto.getBeanName());
         task.setMethodName(dto.getMethodName());
@@ -71,12 +72,12 @@ public class TaskService {
         taskManager.removeTrigger(triggerId);
     }
 
-    public void startTrigger(String triggerId) {
-        taskManager.startTrigger(triggerId);
+    public void enabledTrigger(String triggerId) {
+        taskManager.enabledTrigger(triggerId);
     }
 
-    public void stopTrigger(String triggerId) {
-        taskManager.stopTrigger(triggerId);
+    public void disabledTrigger(String triggerId) {
+        taskManager.disabledTrigger(triggerId);
     }
 
     public void run(String beanName) {

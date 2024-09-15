@@ -2,8 +2,8 @@ package com.sugarweb.scheduler.controller;
 
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
-import com.sugarweb.scheduler.application.TaskQuery;
 import com.sugarweb.scheduler.application.TaskDto;
+import com.sugarweb.scheduler.application.TaskQuery;
 import com.sugarweb.scheduler.application.TaskService;
 import com.sugarweb.scheduler.application.TaskTriggerDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,17 +66,17 @@ public class TaskController {
         return R.ok();
     }
 
-    @PostMapping("stopTrigger")
-    @Operation(operationId = "task:stopTrigger", summary = "停用")
-    public R stopTrigger(@RequestParam String triggerId) {
-        taskService.stopTrigger(triggerId);
+    @PostMapping("disabledTrigger")
+    @Operation(operationId = "task:disabledTrigger", summary = "停用")
+    public R disabledTrigger(@RequestParam String triggerId) {
+        taskService.disabledTrigger(triggerId);
         return R.ok();
     }
 
-    @PostMapping("startTrigger")
-    @Operation(operationId = "task:triggerId", summary = "启用")
-    public R startTrigger(@RequestParam String triggerId) {
-        taskService.startTrigger(triggerId);
+    @PostMapping("enabledTrigger")
+    @Operation(operationId = "task:enabledTrigger", summary = "启用")
+    public R enabledTrigger(@RequestParam String triggerId) {
+        taskService.enabledTrigger(triggerId);
         return R.ok();
     }
 

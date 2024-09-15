@@ -13,6 +13,8 @@ public class TaskDto {
 
     private String taskId;
 
+    private String taskCode;
+
     private String taskName;
 
     private String beanName;

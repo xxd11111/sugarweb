@@ -15,6 +15,8 @@ public class TaskTrigger {
 
     private String taskId;
 
+    private String taskCode;
+
     private String triggerName;
 
     private String cron;

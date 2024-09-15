@@ -2,6 +2,7 @@ package com.sugarweb.scheduler.infra;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.Flag;
 import com.sugarweb.framework.utils.BeanUtil;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /**
@@ -24,42 +26,51 @@ import java.util.stream.Collectors;
  */
 public class SingleTaskManager extends SimpleAsyncTaskScheduler implements TaskManager {
 
+    private final AtomicBoolean isInit = new AtomicBoolean(false);
+
     private final SimpleAsyncTaskScheduler taskScheduler = this;
 
     private final Map<String, ScheduledFuture<?>> runningTriggers = new ConcurrentHashMap<>();
-
-    private Map<String, TaskBean> taskBeanMap;
 
     public void saveTask(TaskInfo taskInfo) {
         Db.save(taskInfo);
     }
 
     public void updateTask(TaskInfo taskInfo) {
+        List<TaskTrigger> taskTriggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()
+                .eq(TaskTrigger::getEnabled, Flag.TRUE.getCode())
+                .eq(TaskTrigger::getTaskId, taskInfo.getTaskId()));
+        for (TaskTrigger taskTrigger : taskTriggers) {
+            if (shouldRun(taskInfo.getEnabled(), taskTrigger.getEnabled())) {
+                cleanTrigger(taskTrigger.getTriggerId());
+                loadTrigger(taskTrigger.getTriggerId(), taskInfo.getBeanName(), taskTrigger.getCron());
+            } else {
+                cleanTrigger(taskTrigger.getTriggerId());
+            }
+        }
         Db.updateById(taskInfo);
+    }
+
+    private boolean shouldRun(String taskEnabled, String triggerEnabled) {
+        return taskEnabled.equals(Flag.TRUE.getCode()) && triggerEnabled.equals(Flag.TRUE.getCode());
     }
 
     public void saveTrigger(TaskTrigger taskTrigger) {
         TaskInfo taskInfo = Db.getById(taskTrigger.getTaskId(), TaskInfo.class);
-        Db.save(taskTrigger);
-
-        TaskBean taskBean = getTaskBean(taskInfo.getBeanName());
-        if (taskBean != null) {
-            ScheduledFuture<?> schedule = taskScheduler.schedule(taskBean::execute, new CronTrigger(taskTrigger.getCron()));
-            runningTriggers.put(taskTrigger.getTriggerId(), schedule);
+        if (shouldRun(taskInfo.getEnabled(), taskTrigger.getEnabled())) {
+            cleanTrigger(taskTrigger.getTriggerId());
+            loadTrigger(taskTrigger.getTriggerId(), taskInfo.getBeanName(), taskTrigger.getCron());
         }
+        Db.save(taskTrigger);
     }
 
     public void updateTrigger(TaskTrigger taskTrigger) {
         TaskInfo taskInfo = Db.getById(taskTrigger.getTaskId(), TaskInfo.class);
-        Db.updateById(taskTrigger);
-
-        stopTrigger(taskTrigger.getTriggerId());
-
-        TaskBean taskBean = getTaskBean(taskInfo.getBeanName());
-        if (taskBean != null) {
-            ScheduledFuture<?> schedule = taskScheduler.schedule(taskBean::execute, new CronTrigger(taskTrigger.getCron()));
-            runningTriggers.put(taskTrigger.getTriggerId(), schedule);
+        if (shouldRun(taskInfo.getEnabled(), taskTrigger.getEnabled())) {
+            cleanTrigger(taskTrigger.getTriggerId());
+            loadTrigger(taskTrigger.getTriggerId(), taskInfo.getBeanName(), taskTrigger.getCron());
         }
+        Db.updateById(taskTrigger);
     }
 
     public void saveTaskTrigger(TaskInfo taskInfo, TaskTrigger taskTrigger) {
@@ -67,23 +78,36 @@ public class SingleTaskManager extends SimpleAsyncTaskScheduler implements TaskM
         saveTrigger(taskTrigger);
     }
 
-    public void removeTask(String taskId) {
-        List<TaskTrigger> triggers = Db.list(new LambdaQueryWrapper<TaskTrigger>().eq(TaskTrigger::getTaskId, taskId));
+    public void removeTask(String taskCode) {
+        List<TaskTrigger> triggers = Db.list(new LambdaQueryWrapper<TaskTrigger>().eq(TaskTrigger::getTaskId, taskCode));
         if (CollUtil.isNotEmpty(triggers)) {
             for (TaskTrigger trigger : triggers) {
-                stopTrigger(trigger.getTriggerId());
+                cleanTrigger(trigger.getTriggerId());
             }
         }
-        Db.remove(new LambdaQueryWrapper<TaskTrigger>().eq(TaskTrigger::getTaskId, taskId));
-        Db.removeById(taskId, TaskInfo.class);
+        Db.remove(new LambdaQueryWrapper<TaskTrigger>().eq(TaskTrigger::getTaskCode, taskCode));
+        Db.removeById(taskCode, TaskInfo.class);
     }
 
     public void removeTrigger(String triggerId) {
-        stopTrigger(triggerId);
+        cleanTrigger(triggerId);
         Db.removeById(triggerId, TaskTrigger.class);
     }
 
-    public void stopTrigger(String triggerId) {
+    public void disabledTrigger(String triggerId) {
+        cleanTrigger(triggerId);
+        Db.update(new LambdaUpdateWrapper<TaskTrigger>()
+                .set(TaskTrigger::getEnabled, Flag.FALSE.getCode())
+                .eq(TaskTrigger::getTriggerId, triggerId));
+    }
+
+    private void loadTrigger(String triggerId, String beanName, String cron) {
+        BaseTask baseTask = new BaseTask(beanName);
+        ScheduledFuture<?> schedule = taskScheduler.schedule(baseTask::execute, new CronTrigger(cron));
+        runningTriggers.put(triggerId, schedule);
+    }
+
+    private void cleanTrigger(String triggerId) {
         if (runningTriggers.containsKey(triggerId)) {
             ScheduledFuture<?> scheduledFuture = runningTriggers.get(triggerId);
             scheduledFuture.cancel(true);
@@ -91,59 +115,45 @@ public class SingleTaskManager extends SimpleAsyncTaskScheduler implements TaskM
         }
     }
 
-    public void startTrigger(String triggerId) {
-        if (runningTriggers.containsKey(triggerId)) {
-            return;
-        }
+    public void enabledTrigger(String triggerId) {
         TaskTrigger taskTrigger = Db.getById(triggerId, TaskTrigger.class);
         TaskInfo taskInfo = Db.getById(taskTrigger.getTaskId(), TaskInfo.class);
-        TaskBean taskBean = getTaskBean(taskInfo.getBeanName());
-        if (taskBean != null) {
-            ScheduledFuture<?> schedule = taskScheduler.schedule(taskBean::execute, new CronTrigger(taskTrigger.getCron()));
-            runningTriggers.put(taskTrigger.getTriggerId(), schedule);
+        if (shouldRun(taskInfo.getEnabled(), taskTrigger.getEnabled())) {
+            cleanTrigger(triggerId);
+            loadTrigger(taskTrigger.getCron(), taskInfo.getBeanName(), taskTrigger.getCron());
         }
+        Db.update(new LambdaUpdateWrapper<TaskTrigger>()
+                .set(TaskTrigger::getEnabled, Flag.TRUE.getCode())
+                .eq(TaskTrigger::getTriggerId, triggerId));
     }
 
     @Override
     public void runTaskOnce(String beanName) {
-        TaskBean taskBean = getTaskBean(beanName);
-        if (taskBean != null) {
-            taskBean.execute();
-        }
+        new BaseTask(beanName).execute();
     }
 
-    public boolean existsBean(String beanName) {
-        return taskBeanMap.containsKey(beanName);
-    }
+    public void init() {
+        if (isInit.compareAndSet(false, true)) {
+            TaskBeanAdapter.load(BeanUtil.getBeansOfType(TaskBean.class));
 
-    public TaskBean getTaskBean(String beanName) {
-        return taskBeanMap.get(beanName);
-    }
+            List<TaskInfo> taskInfos = Db.list(new LambdaQueryWrapper<TaskInfo>()
+                    .eq(TaskInfo::getEnabled, Flag.TRUE.getCode()));
+            Map<String, String> taskIdBeanNameMap = taskInfos.stream()
+                    .collect(Collectors.toMap(TaskInfo::getTaskId, TaskInfo::getBeanName));
 
-    public List<String> getTaskBeanNames() {
-        return CollUtil.newArrayList(taskBeanMap.keySet());
-    }
+            List<TaskTrigger> triggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()
+                    .eq(TaskTrigger::getEnabled, Flag.TRUE.getCode())
+            );
 
-    public void initLoad() {
-        taskBeanMap = BeanUtil.getBeansOfType(TaskBean.class);
-
-        List<TaskInfo> taskInfos = Db.list(new LambdaQueryWrapper<TaskInfo>()
-                .eq(TaskInfo::getEnabled, Flag.TRUE.getCode()));
-        Map<String, String> taskIdBeanNameMap = taskInfos.stream()
-                .collect(Collectors.toMap(TaskInfo::getTaskId, TaskInfo::getBeanName));
-
-        List<TaskTrigger> triggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()
-                .eq(TaskTrigger::getEnabled, Flag.TRUE.getCode())
-        );
-
-        for (TaskTrigger trigger : triggers) {
-            String beanName = taskIdBeanNameMap.get(trigger.getTaskId());
-            if (beanName != null) {
-                TaskBean taskBean = getTaskBean(beanName);
-                ScheduledFuture<?> schedule = taskScheduler.schedule(taskBean::execute, new CronTrigger(trigger.getCron()));
+            for (TaskTrigger trigger : triggers) {
+                String beanName = taskIdBeanNameMap.get(trigger.getTaskId());
+                ScheduledFuture<?> schedule = taskScheduler.schedule(new BaseTask(beanName)::execute, new CronTrigger(trigger.getCron()));
                 runningTriggers.put(trigger.getTriggerId(), schedule);
             }
+        } else {
+            throw new IllegalStateException("TaskManager 已经初始化");
         }
+
     }
 
 }

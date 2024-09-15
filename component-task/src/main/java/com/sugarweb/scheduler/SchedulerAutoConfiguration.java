@@ -24,7 +24,7 @@ public class SchedulerAutoConfiguration {
     @Bean
     public SingleTaskManager taskManager() {
         SingleTaskManager taskManager = new SingleTaskManager();
-        taskManager.initLoad();
+        taskManager.init();
         return taskManager;
     }
 

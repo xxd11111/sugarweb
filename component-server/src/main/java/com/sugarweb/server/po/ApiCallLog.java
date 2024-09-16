@@ -1,4 +1,4 @@
-package com.sugarweb.server.domain;
+package com.sugarweb.server.po;
 
 import lombok.*;
 
@@ -19,7 +19,7 @@ public class ApiCallLog {
 	/**
 	 * 日志 id
 	 */
-	private String id;
+	private String logId;
 
 	/**
 	 * 接口名
@@ -54,7 +54,7 @@ public class ApiCallLog {
 	/**
 	 * 请求参数
 	 */
-	private String requestParams;
+	private String methodParams;
 
 	/**
 	 * 请求代理
@@ -64,12 +64,17 @@ public class ApiCallLog {
 	/**
 	 * 开始请求时间
 	 */
-	private LocalDateTime requestTime;
+	private LocalDateTime startTime;
+
+	/**
+	 * 结束请求时间
+	 */
+	private LocalDateTime endTime;
 
 	/**
 	 * 执行时长，单位：毫秒
 	 */
-	private Integer duration;
+	private Integer costTime;
 
 	/**
 	 * 结果码
@@ -84,6 +89,12 @@ public class ApiCallLog {
 	/**
 	 * 结果提示
 	 */
-	private String resultMsg;
+	private String resultMessage;
+
+	private String exceptionMessage;
+
+	private String exceptionClassName;
+
+	private String exceptionStackTrace;
 
 }

@@ -15,7 +15,7 @@ public class R<T> {
 
     private Integer code;
 
-    private String msg;
+    private String message;
 
     private T data;
 
@@ -54,7 +54,7 @@ public class R<T> {
     private static <T> R<T> build(T data, Integer code, String msg) {
         R<T> r = new R<>();
         r.setCode(code);
-        r.setMsg(msg);
+        r.setMessage(msg);
         r.setData(data);
         return r;
     }

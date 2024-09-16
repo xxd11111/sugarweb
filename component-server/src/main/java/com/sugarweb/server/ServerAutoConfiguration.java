@@ -1,8 +1,8 @@
 package com.sugarweb.server;
 
 import com.sugarweb.framework.exception.GlobalExceptionHandler;
+import com.sugarweb.server.application.ApiCallLogService;
 import com.sugarweb.server.aspect.ApiLogAspect;
-import com.sugarweb.server.domain.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,15 +28,14 @@ public class ServerAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiLogAspect apiLogAspect(ApiLogInfoHandler apiLogInfoHandler) {
-        return new ApiLogAspect(apiLogInfoHandler);
+    public ApiLogAspect apiLogAspect() {
+        return new ApiLogAspect();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiLogInfoHandler apiLogInfoHandler(ApiCallLogRepository sgcApiCallLogRepository,
-                                               ApiErrorLogRepository sgcApiErrorLogRepository) {
-        return new ApiLogInfoHandler(sgcApiCallLogRepository, sgcApiErrorLogRepository);
+    public ApiCallLogService apiCallLogService() {
+        return new ApiCallLogService();
     }
 
 }

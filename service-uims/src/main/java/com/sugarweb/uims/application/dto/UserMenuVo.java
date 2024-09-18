@@ -1,7 +1,7 @@
 package com.sugarweb.uims.application.dto;
 
-import com.sugarweb.uims.domain.constans.MenuType;
-import com.sugarweb.uims.domain.constans.MenuUrlType;
+import com.sugarweb.uims.constans.MenuType;
+import com.sugarweb.uims.constans.MenuUrlType;
 import lombok.Data;
 
 import java.util.Set;

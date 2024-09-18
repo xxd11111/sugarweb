@@ -25,6 +25,13 @@ import java.util.ArrayList;
 @RequestMapping("/authenticate")
 @RequiredArgsConstructor
 public class AuthenticateController {
+
+    public static void main(String[] args) {
+        String gensalt = BCrypt.gensalt(10);
+        System.out.println(gensalt);
+        System.out.println(BCrypt.hashpw("123456", gensalt));
+    }
+
     @PostMapping("login")
     public R login(PasswordLoginDto passwordLoginDto) {
         User user = Db.getOne(ChainWrappers.lambdaQueryChain(User.class)
@@ -33,8 +40,7 @@ public class AuthenticateController {
         if (user == null) {
             throw new SecurityException("用户或密码错误");
         }
-        String salt = user.getSalt();
-        boolean checkpw = BCrypt.checkpw(passwordLoginDto.getPassword(), salt);
+        boolean checkpw = BCrypt.checkpw(passwordLoginDto.getPassword(), user.getPassword());
         if (!checkpw) {
             throw new SecurityException("用户或密码错误");
         }
@@ -62,7 +68,7 @@ public class AuthenticateController {
         return R.ok();
     }
 
-    @RequestMapping("kickout/{id}")
+    @RequestMapping("kickOut/{id}")
     public R logout(@PathVariable String id) {
         StpUtil.kickout(id);
         return R.ok();

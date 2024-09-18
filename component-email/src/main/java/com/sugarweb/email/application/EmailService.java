@@ -1,6 +1,9 @@
 package com.sugarweb.email.application;
 
 import cn.hutool.core.collection.CollUtil;
+import com.sugarweb.email.application.dto.EmailAttachment;
+import com.sugarweb.email.application.dto.EmailDto;
+import com.sugarweb.email.application.dto.EmailInline;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AllArgsConstructor;

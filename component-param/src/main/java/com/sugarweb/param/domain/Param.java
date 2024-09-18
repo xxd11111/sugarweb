@@ -1,5 +1,6 @@
 package com.sugarweb.param.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -13,6 +14,7 @@ public class Param {
     /**
      * id
      */
+    @TableId
     private String paramId;
 
     /**

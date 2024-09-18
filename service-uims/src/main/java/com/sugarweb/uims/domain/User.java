@@ -1,10 +1,7 @@
 package com.sugarweb.uims.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * 用户
@@ -12,10 +9,7 @@ import lombok.ToString;
  * @author xxd
  * @version 1.0
  */
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 public class User {
 
     @TableId

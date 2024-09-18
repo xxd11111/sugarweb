@@ -1,5 +1,6 @@
 package com.sugarweb.dictionary.domain;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import lombok.Data;
 public class DictGroup {
 
     @Size(max = 32)
+    @TableId
     private String groupId;
 
     @Size(max = 32)

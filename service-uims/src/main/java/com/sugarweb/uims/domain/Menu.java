@@ -9,10 +9,7 @@ import lombok.*;
  * @author xxd
  * @version 1.0
  */
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 public class Menu {
 
 	/**

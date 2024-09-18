@@ -12,10 +12,7 @@ import java.util.Collection;
  * @author xxd
  * @version 1.0
  */
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 public class Role {
 
     @TableId
@@ -24,9 +21,6 @@ public class Role {
     private String roleCode;
 
     private String roleName;
-
-    @TableField(exist = false)
-    private Collection<Menu> menus;
 
     private String status;
 

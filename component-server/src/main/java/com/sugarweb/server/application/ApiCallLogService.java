@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.orm.PageHelper;
 import com.sugarweb.server.application.dto.ApiCallLogQuery;
-import com.sugarweb.server.po.ApiCallLog;
+import com.sugarweb.server.domain.ApiCallLog;
 
 /**
  * 访问日志服务

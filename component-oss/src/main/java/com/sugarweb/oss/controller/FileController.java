@@ -7,7 +7,7 @@ import com.sugarweb.framework.exception.ServerException;
 import com.sugarweb.oss.application.FileDto;
 import com.sugarweb.oss.application.FileService;
 import com.sugarweb.oss.application.dto.FileQuery;
-import com.sugarweb.oss.po.FileInfo;
+import com.sugarweb.oss.domain.FileInfo;
 import com.sugarweb.oss.utils.WebDownloadUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

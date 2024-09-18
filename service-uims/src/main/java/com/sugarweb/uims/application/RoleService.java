@@ -45,7 +45,6 @@ public class RoleService {
         Role role = Optional.ofNullable(Db.getById(id, Role.class))
                 .orElseThrow(() -> new ValidateException("not find role"));
         List<Menu> menus = Db.listByIds(menuIds, Menu.class);
-        role.setMenus(menus);
         Db.save(role);
     }
 

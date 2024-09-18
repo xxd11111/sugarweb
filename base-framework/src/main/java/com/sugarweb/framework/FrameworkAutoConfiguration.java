@@ -2,6 +2,7 @@ package com.sugarweb.framework;
 
 import com.sugarweb.framework.utils.BeanUtil;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 
 /**
  * FrameworkAutoConfiguration
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 public class FrameworkAutoConfiguration {
 
     @Bean
+    @Order(-1)
     public BeanUtil beanUtil(){
         return new BeanUtil();
     }

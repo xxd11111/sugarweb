@@ -8,7 +8,7 @@ import com.sugarweb.framework.security.LoginUser;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.framework.utils.JsonUtil;
 import com.sugarweb.framework.utils.ServletUtil;
-import com.sugarweb.server.po.ApiCallLog;
+import com.sugarweb.server.domain.ApiCallLog;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;

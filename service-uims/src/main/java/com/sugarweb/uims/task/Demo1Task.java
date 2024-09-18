@@ -1,6 +1,6 @@
 package com.sugarweb.uims.task;
 
-import com.sugarweb.scheduler.auto.RegistryTaskTrigger;
+import com.sugarweb.task.auto.RegistryTaskTrigger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

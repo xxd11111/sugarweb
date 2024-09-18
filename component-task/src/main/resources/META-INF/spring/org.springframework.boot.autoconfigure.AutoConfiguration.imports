@@ -1,1 +1,1 @@
-com.sugarweb.scheduler.SchedulerAutoConfiguration
+com.sugarweb.task.SchedulerAutoConfiguration

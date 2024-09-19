@@ -51,7 +51,7 @@ public class ChatService {
                 如果不确定或在文档部分找不到答案，只需说明您不知道答案，不要提及文档部分。
                                 
                 文档:
-                // {documents}
+                {documents}
                 """;
 
         List<Document> similarDocuments = vectorStore.similaritySearch(SearchRequest.query(question).withTopK(5));

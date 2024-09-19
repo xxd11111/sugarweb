@@ -8,7 +8,6 @@ import com.sugarweb.framework.exception.ServiceException;
 import com.sugarweb.framework.orm.PageHelper;
 import com.sugarweb.param.domain.Param;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -75,6 +74,17 @@ public class ParamService {
             return null;
         }
         return ParamConvert.toParamDto(param);
+    }
+
+    public String getValueByCode(String code) {
+        Param param = Db.getOne(new LambdaQueryWrapper<Param>()
+                .select(Param::getParamValue)
+                .eq(Param::getParamCode, code));
+        if (param == null) {
+            return null;
+        } else {
+            return param.getParamValue();
+        }
     }
 
     public ParamDto getById(String id) {

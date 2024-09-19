@@ -60,7 +60,7 @@
 
         <dependency>
             <groupId>com.sugar</groupId>
-            <artifactId>component-dictItem</artifactId>
+            <artifactId>component-dict</artifactId>
         </dependency>
 
         <dependency>

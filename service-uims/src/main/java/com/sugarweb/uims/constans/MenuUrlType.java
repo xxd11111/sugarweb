@@ -1,6 +1,7 @@
 package com.sugarweb.uims.constans;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * 菜单url类型
@@ -8,7 +9,8 @@ import lombok.RequiredArgsConstructor;
  * @author xxd
  * @version 1.0
  */
-@RequiredArgsConstructor
+@Getter
+@AllArgsConstructor
 public enum MenuUrlType {
 
     NONE("0"),
@@ -17,5 +19,5 @@ public enum MenuUrlType {
 
     OUTER("2");
 
-    private final String code;
+    private final String value;
 }

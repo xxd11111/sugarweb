@@ -13,13 +13,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum AccountType {
 
-    SUPER_ADMIN("1", "超级管理员"),
-    ADMIN("2", "管理员"),
-    COMMON("3", "普通用户"),
-    ANONYMOUS("4", "游客");
+    SUPER_ADMIN("1"),
+    ADMIN("2"),
+    COMMON("3"),
+    ANONYMOUS("4");
 
     private final String value;
-
-    private final String desc;
 
 }

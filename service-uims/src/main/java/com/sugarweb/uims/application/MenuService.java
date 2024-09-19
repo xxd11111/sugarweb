@@ -48,7 +48,7 @@ public class MenuService {
         LambdaQueryWrapper<Menu> lambdaQueryWrapper = new LambdaQueryWrapper<Menu>()
                 .like(Menu::getMenuName, dto.getMenuName())
                 .eq(Menu::getMenuCode, dto.getMenuCode())
-                .eq(Menu::getStatus, dto.getEnable());
+                .eq(Menu::getEnabled, dto.getEnable());
 
         return Db.page(PageHelper.getPage(pageQuery), lambdaQueryWrapper)
                 .convert(a -> {

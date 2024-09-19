@@ -51,7 +51,7 @@ public class RoleService {
 
     public IPage<RolePageVo> page(PageQuery pageQuery, RoleQueryDto dto) {
         LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<Role>()
-                .eq(Role::getStatus, dto.getEnable())
+                .eq(Role::getEnabled, dto.getEnable())
                 .like(Role::getRoleName, dto.getRoleName())
                 .eq(Role::getRoleCode, dto.getRoleCode());
 

@@ -1,10 +1,8 @@
 package com.sugarweb.uims.domain;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.*;
+import lombok.Data;
 
-import java.util.Collection;
 
 /**
  * 角色
@@ -22,6 +20,6 @@ public class Role {
 
     private String roleName;
 
-    private String status;
+    private String enabled;
 
 }

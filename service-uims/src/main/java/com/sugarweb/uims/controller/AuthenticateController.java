@@ -3,17 +3,21 @@ package com.sugarweb.uims.controller;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.crypto.digest.BCrypt;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.security.LoginUser;
 import com.sugarweb.framework.security.SecurityHelper;
-import com.sugarweb.uims.domain.User;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
+import com.sugarweb.uims.domain.RoleMenu;
+import com.sugarweb.uims.domain.User;
+import com.sugarweb.uims.domain.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 认证控制器
@@ -25,12 +29,6 @@ import java.util.ArrayList;
 @RequestMapping("/authenticate")
 @RequiredArgsConstructor
 public class AuthenticateController {
-
-    public static void main(String[] args) {
-        String gensalt = BCrypt.gensalt(10);
-        System.out.println(gensalt);
-        System.out.println(BCrypt.hashpw("123456", gensalt));
-    }
 
     @PostMapping("login")
     public R login(PasswordLoginDto passwordLoginDto) {
@@ -45,7 +43,12 @@ public class AuthenticateController {
             throw new SecurityException("用户或密码错误");
         }
         StpUtil.login(user.getId());
-        LoginUser loginUser = new LoginUser(user.getId(), user.getUsername(), new ArrayList<>(), new ArrayList<>());
+        List<UserRole> userRoles = Db.list(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId()));
+        List<RoleMenu> roleMenus = Db.list(new LambdaQueryWrapper<RoleMenu>().in(RoleMenu::getRoleId, userRoles.stream().map(UserRole::getRoleId).toList()));
+        LoginUser loginUser = new LoginUser(user.getId(),
+                user.getUsername(),
+                userRoles.stream().map(UserRole::getRoleCode).toList(),
+                roleMenus.stream().map(RoleMenu::getApiPermission).distinct().toList());
         StpUtil.getSession().set("userInfo", loginUser);
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         return R.data(tokenInfo);
@@ -62,13 +65,13 @@ public class AuthenticateController {
         return R.data(StpUtil.getTokenInfo());
     }
 
-    @RequestMapping("logout")
+    @PostMapping("logout")
     public R logout() {
         StpUtil.logout();
         return R.ok();
     }
 
-    @RequestMapping("kickOut/{id}")
+    @PostMapping("kickout/{id}")
     public R logout(@PathVariable String id) {
         StpUtil.kickout(id);
         return R.ok();

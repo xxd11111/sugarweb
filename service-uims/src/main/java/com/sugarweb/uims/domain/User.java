@@ -1,7 +1,7 @@
 package com.sugarweb.uims.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.*;
+import lombok.Data;
 
 /**
  * 用户
@@ -23,10 +23,8 @@ public class User {
 
     private String nickName;
 
-    private String salt;
-
     private String password;
 
-    private String status;
+    private String enabled;
 
 }

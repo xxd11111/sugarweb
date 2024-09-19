@@ -50,7 +50,7 @@ public class UserService {
                 .eq(User::getUsername, queryDto.getUsername())
                 .eq(User::getNickName, queryDto.getNickName())
                 .eq(User::getMobilePhone, queryDto.getMobilePhone())
-                .eq(User::getStatus, queryDto.getEnable())
+                .eq(User::getEnabled, queryDto.getEnable())
                 .eq(User::getEmail, queryDto.getEmail());
 
         return Db.page(PageHelper.getPage(pageQuery), lambdaQueryWrapper)

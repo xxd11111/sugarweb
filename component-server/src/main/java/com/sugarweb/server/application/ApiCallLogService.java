@@ -17,7 +17,7 @@ import com.sugarweb.server.domain.ApiCallLog;
  */
 public class ApiCallLogService {
 
-    public ApiCallLog getOne(String id) {
+    public ApiCallLog getById(String id) {
         return Db.getById(id, ApiCallLog.class);
     }
 

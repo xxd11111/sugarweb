@@ -116,8 +116,14 @@ public class DictService {
     }
 
 
-    public List<DictItemDto> findAll() {
+    public List<DictItemDto> listItem() {
         return Db.list(DictItem.class).stream().map(this::toDictItemDto).collect(Collectors.toList());
+    }
+
+    public IPage<DictItemDto> itemPage(PageQuery pageDto, DictQuery queryDto) {
+        return Db.page(PageHelper.getPage(pageDto), new LambdaQueryWrapper<DictItem>()
+                .eq(DictItem::getDictGroupId, queryDto.getGroupId())
+        ).convert(this::toDictItemDto);
     }
 
     public boolean existsItemByCode(String groupCode, String itemCode, String excludeItemId) {

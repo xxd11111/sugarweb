@@ -51,6 +51,41 @@ public class SingleTaskManager extends SimpleAsyncTaskScheduler implements TaskM
         Db.updateById(taskInfo);
     }
 
+    @Override
+    public void enabledTask(String taskId) {
+        TaskInfo taskInfo = Db.getById(taskId, TaskInfo.class);
+        if (Flag.TRUE.getCode().equals(taskInfo.getEnabled())){
+            return;
+        }
+        List<TaskTrigger> taskTriggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()
+                .eq(TaskTrigger::getEnabled, Flag.TRUE.getCode())
+                .eq(TaskTrigger::getTaskId, taskId));
+        for (TaskTrigger taskTrigger : taskTriggers) {
+            cleanTrigger(taskTrigger.getTriggerId());
+            loadTrigger(taskTrigger.getTriggerId(), taskInfo.getBeanName(), taskTrigger.getCron());
+        }
+        Db.update(new LambdaUpdateWrapper<TaskInfo>()
+                .set(TaskInfo::getEnabled, Flag.TRUE.getCode())
+                .eq(TaskInfo::getTaskId, taskId));
+    }
+
+    @Override
+    public void disabledTask(String taskId) {
+        TaskInfo taskInfo = Db.getById(taskId, TaskInfo.class);
+        if (Flag.FALSE.getCode().equals(taskInfo.getEnabled())){
+            return;
+        }
+        List<TaskTrigger> taskTriggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()
+                .eq(TaskTrigger::getEnabled, Flag.TRUE.getCode())
+                .eq(TaskTrigger::getTaskId, taskId));
+        for (TaskTrigger taskTrigger : taskTriggers) {
+            cleanTrigger(taskTrigger.getTriggerId());
+        }
+        Db.update(new LambdaUpdateWrapper<TaskInfo>()
+                .set(TaskInfo::getEnabled, Flag.FALSE.getCode())
+                .eq(TaskInfo::getTaskId, taskId));
+    }
+
     private boolean shouldRun(String taskEnabled, String triggerEnabled) {
         return taskEnabled.equals(Flag.TRUE.getCode()) && triggerEnabled.equals(Flag.TRUE.getCode());
     }

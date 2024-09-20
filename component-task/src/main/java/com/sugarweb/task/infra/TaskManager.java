@@ -17,6 +17,10 @@ public interface TaskManager {
 
     void updateTask(TaskInfo taskInfo);
 
+    void enabledTask(String taskId);
+
+    void disabledTask(String taskId);
+
     void saveTrigger(TaskTrigger taskTrigger);
 
     void updateTrigger(TaskTrigger taskTrigger);

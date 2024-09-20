@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class DictQuery {
 
+	private String groupId;
+
 	private String groupName;
 
 	private String groupCode;

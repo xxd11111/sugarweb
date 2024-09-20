@@ -44,6 +44,14 @@ public class TaskService {
         taskManager.updateTask(task);
     }
 
+    public void enabledTask(String taskId) {
+        taskManager.enabledTask(taskId);
+    }
+
+    public void disabledTask(String taskId) {
+        taskManager.disabledTask(taskId);
+    }
+
     public void saveTrigger(TaskTriggerDto dto) {
         TaskTrigger taskTrigger = new TaskTrigger();
         taskTrigger.setTriggerId(dto.getTriggerId());

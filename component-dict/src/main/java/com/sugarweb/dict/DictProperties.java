@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "sugarweb.dictionary")
 @Data
-public class DictionaryProperties {
+public class DictProperties {
 
     /**
      * 扫描路径，扫描注解 @InnerDictionary

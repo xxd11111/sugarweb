@@ -8,6 +8,9 @@ import com.sugarweb.framework.common.Flag;
 import com.sugarweb.framework.utils.BeanUtil;
 import com.sugarweb.task.domain.TaskInfo;
 import com.sugarweb.task.domain.TaskTrigger;
+import jakarta.annotation.PreDestroy;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 
@@ -175,7 +178,7 @@ public class SingleTaskManager extends SimpleAsyncTaskScheduler implements TaskM
             Map<String, String> taskIdBeanNameMap = taskInfos.stream()
                     .collect(Collectors.toMap(TaskInfo::getTaskId, TaskInfo::getBeanName));
 
-            List<TaskTrigger> triggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()
+            List<TaskTrigger> triggers = Db.list(new LambdaQueryWrapper<>(TaskTrigger.class)
                     .eq(TaskTrigger::getEnabled, Flag.TRUE.getCode())
             );
 

@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("dictionary")
 @RequiredArgsConstructor
 @Tag(name = "字典管理")
-public class DictionaryController {
+public class DictController {
 
 	private final DictService dictService;
 

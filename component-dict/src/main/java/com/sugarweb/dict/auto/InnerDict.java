@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface InnerDictionary {
+public @interface InnerDict {
 
     /**
      * 字典组编码 为空时使用类名

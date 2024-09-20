@@ -3,6 +3,8 @@ package com.sugarweb.server;
 import com.sugarweb.framework.exception.GlobalExceptionHandler;
 import com.sugarweb.server.application.ApiCallLogService;
 import com.sugarweb.server.aspect.ApiLogAspect;
+import com.sugarweb.server.controller.ApiCallLogController;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,9 +17,9 @@ import org.springframework.context.annotation.Configuration;
  * @author xxd
  * @version 1.0
  */
-@Configuration(proxyBeanMethods = false)
+@AutoConfiguration
 @EnableConfigurationProperties(ServerProperties.class)
-@ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true", matchIfMissing = true)
 public class ServerAutoConfiguration {
 
     @Bean
@@ -36,6 +38,12 @@ public class ServerAutoConfiguration {
     @ConditionalOnMissingBean
     public ApiCallLogService apiCallLogService() {
         return new ApiCallLogService();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ApiCallLogController apiCallLogController(ApiCallLogService apiCallLogService) {
+        return new ApiCallLogController(apiCallLogService);
     }
 
 }

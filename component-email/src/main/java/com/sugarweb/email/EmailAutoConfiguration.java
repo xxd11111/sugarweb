@@ -4,6 +4,7 @@ import com.sugarweb.email.application.EmailFileService;
 import com.sugarweb.email.application.EmailService;
 import com.sugarweb.framework.exception.FrameworkException;
 import jakarta.annotation.Resource;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -19,8 +20,9 @@ import java.util.Properties;
  * @author xxd
  * @version 1.0
  */
+@AutoConfiguration
 @EnableConfigurationProperties(EmailProperties.class)
-@ConditionalOnProperty(prefix = "sugarweb.email", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarweb.email", name = "enable", havingValue = "true", matchIfMissing = true)
 public class EmailAutoConfiguration {
 
     @Resource

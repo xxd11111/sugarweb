@@ -11,7 +11,7 @@ import jakarta.validation.ConstraintValidatorContext;
  * @author xxd
  * @version 1.0
  */
-public class DictionaryValidator implements ConstraintValidator<DictionaryValidate, String> {
+public class DictValidator implements ConstraintValidator<DictValidate, String> {
 
     private String groupCode;
 
@@ -19,7 +19,7 @@ public class DictionaryValidator implements ConstraintValidator<DictionaryValida
         return InnerDictionaryService.DICTIONARY_SERVICE;
     }
 
-    public void initialize(DictionaryValidate annotation) {
+    public void initialize(DictValidate annotation) {
         groupCode = annotation.groupCode();
     }
 

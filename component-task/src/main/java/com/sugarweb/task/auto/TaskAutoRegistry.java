@@ -73,7 +73,6 @@ public class TaskAutoRegistry extends AbstractAutoRegistry<TaskInfo> {
                 if (!isParameterStringOrNull(parameters)) {
                     throw new FrameworkException("schedulerTask方法不符合要求，只允许无参数或者一个String参数");
                 }
-                int paramsLength = parameters.length;
                 if (schedulerTaskMap.containsKey(taskName)) {
                     TaskInfo old = schedulerTaskMap.get(taskName);
                     throw new FrameworkException("存在同名taskName:{}, fist:{}, second:{}", old.getBeanName() + "." + old.getMethodName(), beanName + "." + method.getName());

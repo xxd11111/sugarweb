@@ -2,9 +2,11 @@ package com.sugarweb.param;
 
 import com.sugarweb.param.application.ParamService;
 import com.sugarweb.param.auto.ParamAutoRegistry;
+import com.sugarweb.param.controller.ParamController;
 import jakarta.annotation.Resource;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
@@ -14,9 +16,10 @@ import org.springframework.context.annotation.Bean;
  * @author xxd
  * @version 1.0
  */
-@EntityScan
+@AutoConfiguration
 @EnableConfigurationProperties(ParamProperties.class)
-public class ParameterAutoConfiguration {
+@ConditionalOnProperty(prefix = "sugarweb.param", name = "enable", havingValue = "true", matchIfMissing = true)
+public class ParamAutoConfiguration {
 
     @Resource
     private ParamProperties paramProperties;
@@ -31,6 +34,12 @@ public class ParameterAutoConfiguration {
     @ConditionalOnMissingBean
     public ParamAutoRegistry parameterAutoRegistry(ParamService paramService) {
         return new ParamAutoRegistry(paramProperties, paramService);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ParamController paramController(ParamService paramService) {
+        return new ParamController(paramService);
     }
 
 

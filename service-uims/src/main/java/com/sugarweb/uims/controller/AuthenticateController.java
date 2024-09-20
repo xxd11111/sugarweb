@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 认证控制器
+ * 登录认证管理
  *
  * @author xxd
  * @version 1.0

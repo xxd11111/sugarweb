@@ -12,7 +12,7 @@ import org.springframework.data.annotation.TypeAlias;
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan({"com.sugarweb.uims.mapper"})
+@MapperScan({"com.sugarweb.uims.mapper", "com.sugarweb.task.mapper"})
 public class UimsApplication {
 
     public static void main(String[] args) {

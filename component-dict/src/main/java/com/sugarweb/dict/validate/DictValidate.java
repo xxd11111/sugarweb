@@ -22,9 +22,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Constraint(
-        validatedBy = DictionaryValidator.class
+        validatedBy = DictValidator.class
 )
-public @interface DictionaryValidate {
+public @interface DictValidate {
 
     /**
      * 字典组code

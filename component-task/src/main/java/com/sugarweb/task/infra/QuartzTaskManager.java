@@ -1,15 +1,12 @@
 package com.sugarweb.task.infra;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.sugarweb.framework.common.Flag;
-import com.sugarweb.framework.exception.ValidateException;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.task.domain.TaskInfo;
 import com.sugarweb.task.domain.TaskTrigger;
 import jakarta.annotation.Resource;
-import org.quartz.*;
-
-import java.util.List;
-import java.util.Optional;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
 
 /**
  * SchedulerManager 用于管理定时任务
@@ -30,7 +27,12 @@ public class QuartzTaskManager implements TaskManager {
 
     @Override
     public void saveTask(TaskInfo taskInfo) {
-
+        Db.save(taskInfo);
+        JobDetail jobDetail = JobBuilder
+                .newJob(SchedulerJobBean.class)
+                .withIdentity(taskInfo.getTaskId())
+                .usingJobData("beanName", taskInfo.getBeanName())
+                .build();
     }
 
     @Override

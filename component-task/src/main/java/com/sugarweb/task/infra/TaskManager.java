@@ -17,6 +17,8 @@ public interface TaskManager {
 
     void updateTask(TaskInfo taskInfo);
 
+    void removeTask(String taskId);
+
     void enabledTask(String taskId);
 
     void disabledTask(String taskId);
@@ -26,8 +28,6 @@ public interface TaskManager {
     void updateTrigger(TaskTrigger taskTrigger);
 
     void saveTaskTrigger(TaskInfo taskInfo, TaskTrigger taskTrigger);
-
-    void removeTask(String taskId);
 
     void removeTrigger(String triggerId);
 

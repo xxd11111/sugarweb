@@ -8,9 +8,6 @@ import com.sugarweb.framework.common.Flag;
 import com.sugarweb.framework.utils.BeanUtil;
 import com.sugarweb.task.domain.TaskInfo;
 import com.sugarweb.task.domain.TaskTrigger;
-import jakarta.annotation.PreDestroy;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 
@@ -57,7 +54,7 @@ public class SingleTaskManager extends SimpleAsyncTaskScheduler implements TaskM
     @Override
     public void enabledTask(String taskId) {
         TaskInfo taskInfo = Db.getById(taskId, TaskInfo.class);
-        if (Flag.TRUE.getCode().equals(taskInfo.getEnabled())){
+        if (Flag.TRUE.getCode().equals(taskInfo.getEnabled())) {
             return;
         }
         List<TaskTrigger> taskTriggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()
@@ -75,7 +72,7 @@ public class SingleTaskManager extends SimpleAsyncTaskScheduler implements TaskM
     @Override
     public void disabledTask(String taskId) {
         TaskInfo taskInfo = Db.getById(taskId, TaskInfo.class);
-        if (Flag.FALSE.getCode().equals(taskInfo.getEnabled())){
+        if (Flag.FALSE.getCode().equals(taskInfo.getEnabled())) {
             return;
         }
         List<TaskTrigger> taskTriggers = Db.list(new LambdaQueryWrapper<TaskTrigger>()

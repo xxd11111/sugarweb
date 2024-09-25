@@ -25,6 +25,13 @@ public class TaskController {
     @Resource
     public TaskService taskService;
 
+    @GetMapping("reload")
+    @Operation(operationId = "task:reload", summary = "重新加载")
+    public R reload() {
+        taskService.reload();
+        return R.ok();
+    }
+
     @GetMapping("page")
     @Operation(operationId = "task:page", summary = "任务分页查询")
     public R page(PageQuery pageQuery, TaskQuery queryDto) {

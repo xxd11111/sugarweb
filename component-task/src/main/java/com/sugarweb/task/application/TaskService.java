@@ -21,6 +21,10 @@ public class TaskService {
 
     private final TaskManager taskManager;
 
+    public void reload() {
+        taskManager.reload();
+    }
+
     public void saveTask(TaskDto dto) {
         TaskInfo task = new TaskInfo();
         task.setTaskId(dto.getTaskId());

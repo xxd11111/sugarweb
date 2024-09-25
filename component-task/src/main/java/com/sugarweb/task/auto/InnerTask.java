@@ -3,22 +3,20 @@ package com.sugarweb.task.auto;
 import java.lang.annotation.*;
 
 /**
- * InnerTaskMethod
+ * InnerTaskBean
  *
  * @author 许向东
  * @version 1.0
  */
-@Target({ ElementType.METHOD })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RegistryTaskTrigger {
+public @interface InnerTask {
 
-    String id();
-
-    String cron();
+    String taskCode();
 
     String taskName() default "";
 
-    String params() default "";
+    boolean enabled() default true;
 
 }

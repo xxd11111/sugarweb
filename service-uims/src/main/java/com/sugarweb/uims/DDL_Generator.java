@@ -77,11 +77,12 @@ class DDL_Generator {
             StringBuilder column = new StringBuilder();
             String primaryKey = null;
             List<String> colList = new ArrayList<>();
+            boolean isFirst = true;
             for (Field f : fields) {
                 String dealName;
                 if (!"serialVersionUID".equals(f.getName())) {
                     //获取注解名称
-                    String commitVachr = " COMMENT '',";
+                    String commitVachr = " COMMENT ''";
                     //驼峰转换
                     dealName = dealSubLine(f.getName());
                     if (colList.contains(dealName)) {
@@ -99,20 +100,47 @@ class DDL_Generator {
                     }
 
                     TableId tableId = f.getAnnotation(TableId.class);
-                    if (Objects.nonNull(tableId)) {
-                        column.append(" \n `").append(dealName).append("`").append(dataType).append("NOT NULL ").append(commitVachr);
-                        primaryKey = dealName;
-                    } else {
-                        column.append(" \n `").append(dealName).append("`").append(dataType).append(" DEFAULT NULL ").append(commitVachr);
+                    if (isFirst) {
+                        if (Objects.nonNull(tableId)) {
+                            column.append(dealName).append("`").append(dataType).append("NOT NULL ").append(commitVachr);
+                            primaryKey = dealName;
+                        } else {
+                            column.append(dealName).append("`").append(dataType).append(" DEFAULT NULL ").append(commitVachr);
+                        }
+                    }else {
+                        column.append(",");
+                        if (Objects.nonNull(tableId)) {
+                            column.append(" \n `").append(dealName).append("`").append(dataType).append("NOT NULL ").append(commitVachr);
+                            primaryKey = dealName;
+                        } else {
+                            column.append(" \n `").append(dealName).append("`").append(dataType).append(" DEFAULT NULL ").append(commitVachr);
+                        }
                     }
+
                     colList.add(dealName);
+                    isFirst = false;
                 }
             }
-            return "\n DROP TABLE IF EXISTS `" + className + "`; " +
-                    " \n CREATE TABLE `" + className + "`  (" + " \n " + column +
-                    " \n PRIMARY KEY (`" + primaryKey + "`) " +
-                    " \n ) ENGINE = InnoDB  CHARSET = utf8mb4 collate = utf8mb4_0900_ai_ci " +
-                    tableCommitVarchar;
+            if (StrUtil.isNotEmpty(primaryKey)) {
+                column.append(", \n PRIMARY KEY (`" + primaryKey + "`) ");
+            }
+
+
+            String dropTemp = """
+                    DROP TABLE IF EXISTS `{className}`;
+                    """;
+            String createTemp = """
+                    CREATE TABLE `{className}` (
+                    {column}
+                    ) ENGINE = InnoDB
+                    CHARSET = utf8mb4
+                    collate = utf8mb4_0900_ai_ci
+                    {tableCommitVarchar}
+                     """;
+            String replace = StrUtil.replace(dropTemp + createTemp, "{className}", className);
+            replace = StrUtil.replace(replace, "{column}", column.toString());
+            replace = StrUtil.replace(replace, "{tableCommitVarchar}", tableCommitVarchar);
+            return replace;
         } catch (ClassNotFoundException e) {
             log.debug("该类未找到！");
             return null;

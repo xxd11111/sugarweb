@@ -17,7 +17,7 @@ public class TaskTrigger {
 
     private String taskId;
 
-    private String taskCode;
+    private String triggerCode;
 
     private String triggerName;
 
@@ -26,5 +26,7 @@ public class TaskTrigger {
     private String enabled;
 
     private String triggerData;
+
+    private String isDefault;
 
 }

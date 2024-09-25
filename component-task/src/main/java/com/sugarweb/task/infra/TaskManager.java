@@ -11,7 +11,7 @@ import com.sugarweb.task.domain.TaskTrigger;
  */
 public interface TaskManager {
 
-    void init();
+    void reload();
 
     void saveTask(TaskInfo taskInfo);
 

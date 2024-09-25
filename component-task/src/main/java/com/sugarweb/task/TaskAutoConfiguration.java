@@ -1,17 +1,16 @@
 package com.sugarweb.task;
 
-import com.sugarweb.framework.FrameworkAutoConfiguration;
 import com.sugarweb.task.application.TaskService;
 import com.sugarweb.task.controller.TaskController;
-import com.sugarweb.task.infra.SingleTaskManager;
+import com.sugarweb.task.infra.QuartzTaskManager;
+import com.sugarweb.task.infra.SpringbootTaskAdapter;
 import com.sugarweb.task.infra.TaskManager;
+import org.quartz.Scheduler;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Bean;
-import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 
 /**
  * 定时任务自动注入
@@ -26,15 +25,13 @@ import org.springframework.scheduling.concurrent.SimpleAsyncTaskScheduler;
 public class TaskAutoConfiguration {
 
     @Bean
-    public ApplicationRunner taskRunner(SingleTaskManager taskManager) {
-        return args -> taskManager.init();
+    public SpringbootTaskAdapter springbootTaskAdapter() {
+        return new SpringbootTaskAdapter();
     }
 
     @Bean
-    public SingleTaskManager taskManager() {
-        SingleTaskManager taskManager = new SingleTaskManager();
-        taskManager.setVirtualThreads(true);
-        return taskManager;
+    public TaskManager taskManager(Scheduler scheduler) {
+        return new QuartzTaskManager(scheduler);
     }
 
     @Bean

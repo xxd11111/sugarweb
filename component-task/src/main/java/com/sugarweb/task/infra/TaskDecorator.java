@@ -1,13 +1,11 @@
 package com.sugarweb.task.infra;
 
 /**
- * TaskExecutor
+ * TaskDecorator
  *
  * @author 许向东
  * @version 1.0
  */
-public interface TaskBean {
-
-    void run();
+public interface TaskDecorator extends TaskBean {
 
 }

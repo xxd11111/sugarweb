@@ -6,17 +6,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TaskBeanAdapter
+ * TaskBeanFactory
  *
  * @author 许向东
  * @version 1.0
  */
-public class TaskBeanAdapter {
+public class TaskBeanFactory {
 
     private static Map<String, TaskBean> taskBeanMap;
 
     protected static void load(Map<String, TaskBean> taskBeanMap) {
-        TaskBeanAdapter.taskBeanMap = taskBeanMap;
+        TaskBeanFactory.taskBeanMap = taskBeanMap;
     }
 
     public static boolean existsBean(String beanName) {

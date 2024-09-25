@@ -1,7 +1,10 @@
 package com.sugarweb.uims.task;
 
-import com.sugarweb.task.auto.RegistryTaskTrigger;
+import com.sugarweb.task.auto.InnerTask;
+import com.sugarweb.task.auto.InnerTaskTrigger;
+import com.sugarweb.task.infra.TaskBean;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.simpl.SimpleThreadPool;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,13 +15,12 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-// @InnerTaskBean
-public class Demo1Task {
-
-    @RegistryTaskTrigger(id = "1001", cron = "0/20 * * * * ? ", params = "123")
-    public void executeTask(String params) throws InterruptedException {
-        Thread.sleep(10000);
-        log.info("executeTask:demo1," + params);
+@InnerTask(taskCode = "Demo1Task", taskName = "测试任务1")
+@InnerTaskTrigger(triggerCode = "1001", triggerName = "Demo1Task-1001", cron = "0/5 * * * * ?")
+public class Demo1Task implements TaskBean {
+    @Override
+    public void run() {
+        log.info("executeTask:demo1");
     }
 
 }

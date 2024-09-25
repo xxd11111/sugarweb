@@ -27,4 +27,6 @@ public class TaskInfo {
 
     private String taskData;
 
+    private String isDefault;
+
 }

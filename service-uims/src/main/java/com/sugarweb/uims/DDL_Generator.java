@@ -59,7 +59,8 @@ class DDL_Generator {
     private static final List<String> exculudeList = List.of("serialVersionUID");
 
     public static void main(String[] args) {
-        Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain"));
+        System.out.println("a踩踩踩踩踩");
+        Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain.po."));
         StringBuilder sqlStr = new StringBuilder();
         // 获取包下的所有类名称
         for (Class<?> clazz : classes) {

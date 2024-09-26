@@ -23,7 +23,7 @@
     </modules>
 
     <name>${project.artifactId}</name>
-    <description>sugarweb整合方案</description>
+    <description>sugarweb~</description>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

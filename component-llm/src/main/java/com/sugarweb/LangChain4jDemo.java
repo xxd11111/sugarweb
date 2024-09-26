@@ -58,11 +58,10 @@ public class LangChain4jDemo {
         System.out.println(embeddingMatch.embedded().text()); // I like football.
 
         ChatLanguageModel model = OllamaChatModel.builder()
-                .baseUrl("http://192.168.193.151:11434")
-                .modelName("qwen:4b")
+                .baseUrl("http://localhost:11434")
+                .modelName("qwen2.5:3b")
                 .format("json")
                 .build();
-
         String json = model.generate("Give me a JSON with 2 fields: name and age of a John Doe, 42");
         System.out.println();
     }

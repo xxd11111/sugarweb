@@ -1,11 +1,14 @@
 package com.sugarweb.param.application;
 
-import com.sugarweb.framework.common.PageData;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.exception.ServiceException;
+import com.sugarweb.framework.orm.PageHelper;
+import com.sugarweb.param.domain.po.Param;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -14,26 +17,90 @@ import java.util.Set;
  * @author xxd
  * @version 1.0
  */
-public interface ParamService {
+public class ParamService {
 
-	void save(ParamDto paramDto);
+    public void save(ParamDto paramDto) {
+        if (Db.getOne(new LambdaQueryWrapper<Param>().eq(Param::getParamCode, paramDto.getParamCode())) != null) {
+            throw new ServiceException("参数编码已存在");
+        }
+        Param param = new Param();
+        param.setParamCode(paramDto.getParamCode());
+        param.setParamName(paramDto.getParamName());
+        param.setParamValue(paramDto.getParamValue());
+        param.setParamComment(paramDto.getParamComment());
+        Db.save(param);
+    }
 
-	void saveAll(Collection<ParamDto> paramDtos);
+    public void update(ParamDto paramDto) {
+        Param param = Db.getById(paramDto.getParamId(), Param.class);
+        if (param == null) {
+            throw new ServiceException("参数不存在");
+        }
+        param.setParamCode(paramDto.getParamCode());
+        param.setParamName(paramDto.getParamName());
+        param.setParamValue(paramDto.getParamValue());
+        param.setParamComment(paramDto.getParamComment());
+        Db.save(param);
+    }
 
-	void reset(Set<String> ids);
+    public void updateValue(String code, String value) {
+        Param param = Db.getOne(new LambdaQueryWrapper<Param>().eq(Param::getParamCode, code));
+        if (param == null) {
+            throw new ServiceException("参数不存在");
+        }
+        param.setParamValue(value);
+        Db.updateById(param);
+    }
 
-	void removeByCode(String code);
+    public void removeByCode(String code) {
+        Db.remove(new LambdaQueryWrapper<Param>().eq(Param::getParamCode, code));
+    }
 
-	void removeById(String id);
+    public void removeById(String id) {
+        Db.removeById(id, Param.class);
+    }
 
-	void removeByIds(Set<String> ids);
+    public void removeByIds(Set<String> ids) {
+        Db.removeByIds(ids, Param.class);
+    }
 
-	Optional<ParamDto> findByCode(String code);
+    public List<ParamDto> findAll() {
+        return Db.list(Param.class).stream().map(ParamConvert::toParamDto).toList();
+    }
 
-	Optional<ParamDto> findById(String id);
+    public ParamDto getByCode(String code) {
+        Param param = Db.getOne(new LambdaQueryWrapper<Param>().eq(Param::getParamCode, code));
+        if (param == null) {
+            return null;
+        }
+        return ParamConvert.toParamDto(param);
+    }
 
-	PageData<ParamDto> findPage(PageQuery pageQuery, ParamQueryDto cmd);
+    public String getValueByCode(String code) {
+        Param param = Db.getOne(new LambdaQueryWrapper<Param>()
+                .select(Param::getParamValue)
+                .eq(Param::getParamCode, code));
+        if (param == null) {
+            return null;
+        } else {
+            return param.getParamValue();
+        }
+    }
 
-	List<ParamDto> findAll();
+    public ParamDto getById(String id) {
+        Param param = Db.getById(id, Param.class);
+        if (param == null) {
+            return null;
+        }
+        return ParamConvert.toParamDto(param);
+    }
+
+
+    public IPage<ParamDto> page(PageQuery pageQuery, ParamQuery query) {
+        return Db.page(PageHelper.getPage(pageQuery), new LambdaQueryWrapper<Param>()
+                .like(query.getParamCode() != null, Param::getParamCode, query.getParamCode())
+                .like(query.getParamName() != null, Param::getParamName, query.getParamName())
+        ).convert(ParamConvert::toParamDto);
+    }
 
 }

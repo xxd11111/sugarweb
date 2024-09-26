@@ -2,8 +2,18 @@
 <configuration>
     <!-- 日志存放路径 -->
     <property name="log.path" value="./logs" />
-    <!-- 日志输出格式 -->
-    <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+    <!-- 日志输出格式(无色) -->
+<!--     <property name="log.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" /> -->
+
+    <!-- 日志输出格式（彩色） -->
+    <property name="log.pattern"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -58,11 +68,11 @@
     </appender>
 
     <!-- 用户访问日志输出  -->
-    <appender name="sys-userInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.path}/sys-userInfo.log</file>
+    <appender name="sys-loginUser" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.path}/sys-loginUser.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
-            <fileNamePattern>${log.path}/sys-userInfo.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${log.path}/sys-loginUser.%d{yyyy-MM-dd}.log</fileNamePattern>
             <!-- 日志最大的历史 60天 -->
             <maxHistory>60</maxHistory>
         </rollingPolicy>
@@ -87,7 +97,7 @@
     </root>
 
     <!--系统用户操作日志-->
-    <logger name="sys-userInfo" level="info">
-        <appender-ref ref="sys-userInfo"/>
+    <logger name="sys-loginUser" level="info">
+        <appender-ref ref="sys-loginUser"/>
     </logger>
 </configuration>

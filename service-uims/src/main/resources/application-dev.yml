@@ -1,30 +1,21 @@
 server:
-  port: 8889
-  servlet:
-    context-path: /uims
+  port: 8080
 
-#localhost:8889/uims/v3/api-docs
+#localhost:8889/v3/api-docs
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   application:
     name: uims
   jackson:
     time-zone: GMT+8
   datasource:
-    dynamic:
-      primary: master #设置默认的数据源或者数据源组,默认值即为master
-      strict: true #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
-      datasource:
-        master:
-          url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-          username: ${MYSQL_USERNAME:root}
-          password: ${MYSQL_PASSWORD:123456}
-          driver-class-name: com.mysql.cj.jdbc.Driver
-        slave_1:
-          url: jdbc:mysql://${MYSQL_SERVER_IP:localhost}:3306/dev-test2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
-          username: ${MYSQL_USERNAME:root}
-          password: ${MYSQL_PASSWORD:123456}
-          driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sugarweb?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
     # 连接池设置
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
@@ -44,21 +35,13 @@ spring:
       connectionTestQuery: SELECT 1
       # 多久检查一次连接的活性
       keepaliveTime: 30000
-  jpa:
-    #    database-platform: org.hibernate.dialect.MySQLDialect
-    show-sql: true
-    open-in-view: false
-    properties:
-      hibernate.format_sql: true
-    hibernate:
-      ddl-auto: update
   mvc:
     path-match:
       matching-strategy: ant_path_matcher
   data:
     redis:
       # 地址
-      host: ${REDIS_SERVER_IP:localhost}
+      host: localhost
       # 端口，默认为6379
       port: 6379
       # 数据库索引
@@ -91,29 +74,88 @@ spring:
     properties:
       org:
         quartz:
-#          scheduler:
-#            # 调度器实例名称
-#            instanceName: UimsScheduler
-#            # 分布式节点ID自动生成
-#            instanceId: AUTO
-#          jobStore:
-#            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
-#            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
-#            # 表前缀
-#            tablePrefix: QRTZ_
-#            # 是否开启集群
-#            isClustered: true
-#            # 数据源别名（自定义）
-#            dataSource: quartz
-#            # 分布式节点有效性检查时间间隔（毫秒）
-#            clusterCheckinInterval: 10000
-#            useProperties: false
+          #          scheduler:
+          #            # 调度器实例名称
+          #            instanceName: UimsScheduler
+          #            # 分布式节点ID自动生成
+          #            instanceId: AUTO
+          #          jobStore:
+          #            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+          #            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+          #            # 表前缀
+          #            tablePrefix: QRTZ_
+          #            # 是否开启集群
+          #            isClustered: true
+          #            # 数据源别名（自定义）
+          #            dataSource: quartz
+          #            # 分布式节点有效性检查时间间隔（毫秒）
+          #            clusterCheckinInterval: 10000
+          #            useProperties: false
           # 线程池配置
           threadPool:
             class: org.quartz.simpl.SimpleThreadPool
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
+
+
+  ai:
+    ollama:
+      base-url: 'http://192.168.193.151:11434'
+      chat:
+        model: 'qwen:4b'
+      embedding:
+        options:
+          model: 'nomic-embed-text'
+    vectorstore:
+      milvus:
+        client:
+          host: "192.168.193.151"
+          port: 19530
+          username: "root"
+          password: "milvus"
+        databaseName: "default"
+        collectionName: "vector_store"
+        embeddingDimension: 768
+        indexType: IVF_FLAT
+        metricType: COSINE
+mybatis-plus:
+  # mapper扫描路径
+  mapperLocations: classpath*:com/sugarweb/*/domain/mapper/*Mapper.xml
+  # 实体扫描，多个package用逗号或分号分隔
+  typeAliasesPackage: com.sugarweb.uims.domain.po,com.sugarweb.task.domain.po
+  # 全局配置
+  global-config:
+    # 关闭自带banner
+    banner: false
+    # 数据库配置
+    DbConfig:
+      # 主键类型
+      id-type: assign_id
+      table-underline: true
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      table-format: '%S' #表名大写（%S）小写（%s）
+  configuration:
+    mapUnderscoreToCamelCase: true
+    cacheEnabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
+sa-token:
+  # token 名称（同时也是 cookie 名称）
+  token-name: satoken
+  # token 有效期（单位：秒） 默认30天，-1 代表永久有效
+  timeout: 2592000
+  # token 最低活跃频率（单位：秒），如果 token 超过此时间没有访问系统就会被冻结，默认-1 代表不限制，永不冻结
+  active-timeout: -1
+  # 是否允许同一账号多地同时登录 （为 true 时允许一起登录, 为 false 时新登录挤掉旧登录）
+  is-concurrent: true
+  # 在多人登录同一账号时，是否共用一个 token （为 true 时所有登录共用一个 token, 为 false 时每次登录新建一个 token）
+  is-share: true
+  # token 风格（默认可取值：uuid、simple-uuid、random-32、random-64、random-128、tik）
+  token-style: uuid
+  # 是否输出操作日志
+  is-log: true
 
 # 日志配置
 logging:
@@ -160,7 +202,6 @@ sugarweb:
     scanPackage: com.sugarweb.uims
     cachePrefix: 'sugarweb:param:'
   email:
-    enable: false
     host: "smtp.qq.com"
     port: 465
     username: ${EMAIL_USERNAME}
@@ -170,6 +211,8 @@ sugarweb:
     endPoint: x
     accessKey: x
     secretKey: x
+  task:
+    auto-register-strategy: reset
 
 
 

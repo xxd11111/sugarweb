@@ -19,6 +19,7 @@ import org.springdoc.core.providers.JavadocProvider;
 import org.springdoc.core.service.OpenAPIService;
 import org.springdoc.core.service.SecurityService;
 import org.springdoc.core.utils.PropertyResolverUtils;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -33,6 +34,7 @@ import java.util.Optional;
 /**
  * Swagger 自动配置类
  */
+@AutoConfiguration
 @ConditionalOnClass({OpenAPI.class})
 @EnableConfigurationProperties(OpenapiProperties.class)
 @ConditionalOnProperty(prefix = "sugarweb.openapi", name = "enabled", havingValue = "true", matchIfMissing = true)

@@ -1,7 +1,11 @@
 package com.sugarweb.email;
 
-import com.sugarweb.oss.infra.FileClient;
+import com.sugarweb.email.application.EmailFileService;
+import com.sugarweb.email.application.EmailService;
+import com.sugarweb.framework.exception.FrameworkException;
 import jakarta.annotation.Resource;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +20,9 @@ import java.util.Properties;
  * @author xxd
  * @version 1.0
  */
+@AutoConfiguration
 @EnableConfigurationProperties(EmailProperties.class)
-@ConditionalOnProperty(prefix = "sugarweb.email", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarweb.email", name = "enable", havingValue = "true", matchIfMissing = true)
 public class EmailAutoConfiguration {
 
     @Resource
@@ -41,8 +46,16 @@ public class EmailAutoConfiguration {
     }
 
     @Bean
-    public EmailClient emailClient(JavaMailSender mailSender, FileClient fileClient){
-        return new EmailClientImpl(mailSender, fileClient);
+    public EmailService emailService(JavaMailSender mailSender, EmailFileService emailFileService) {
+        return new EmailService(mailSender, emailFileService);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public EmailFileService emailFileService() {
+        return fileId -> {
+            throw new FrameworkException("[EmailFileService.getContent]文件获取方法未实现！");
+        };
     }
 
 }

@@ -16,8 +16,7 @@ public class JsonUtil {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return "";
+            throw new RuntimeException(e);
         }
     }
 

@@ -1,6 +1,6 @@
 package com.sugarweb.framework.utils;
 
-import com.google.common.base.Strings;
+import cn.hutool.core.util.StrUtil;
 import com.sugarweb.framework.exception.FrameworkException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestAttributes;
@@ -28,7 +28,7 @@ public class ServletUtil {
     }
 
     public static String getUserAgent() {
-        return Strings.nullToEmpty(getRequest().getHeader("User-Agent"));
+        return StrUtil.nullToEmpty(getRequest().getHeader("User-Agent"));
     }
 
 }

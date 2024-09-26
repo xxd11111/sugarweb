@@ -1,8 +1,8 @@
 package com.sugarweb.uims.application.dto;
 
-import com.sugarweb.uims.domain.menu.MenuType;
-import com.sugarweb.uims.domain.menu.MenuUrlType;
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.uims.constans.MenuType;
+import com.sugarweb.uims.constans.MenuUrlType;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 import java.util.Set;
@@ -68,5 +68,5 @@ public class MenuDto {
     /**
      * 状态
      */
-    private BooleanEnum enable;
+    private Flag enable;
 }

@@ -1,6 +1,6 @@
 package com.sugarweb.uims.application.dto;
 
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 /**
@@ -24,5 +24,5 @@ public class UserDto {
 
     private String password;
 
-    private BooleanEnum enable;
+    private Flag enable;
 }

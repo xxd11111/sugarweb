@@ -1,12 +1,13 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.framework.common.PageData;
-import com.sugarweb.framework.common.Result;
-import com.sugarweb.uims.application.dto.RoleDto;
-import com.sugarweb.uims.application.vo.RoleVo;
-import com.sugarweb.uims.application.vo.RolePageVo;
-import com.sugarweb.uims.application.dto.RoleQueryDto;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.uims.application.RoleService;
+import com.sugarweb.uims.application.dto.RoleDto;
+import com.sugarweb.uims.application.dto.RoleVo;
+import com.sugarweb.uims.application.dto.RolePageVo;
+import com.sugarweb.uims.application.dto.RoleQueryDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,30 +28,30 @@ public class RoleController {
     private final RoleService roleService;
 
     @GetMapping("{id}")
-    public Result<RoleVo> findOne(@NotBlank @PathVariable String id) {
-        return Result.data(roleService.find(id));
+    public R<RoleVo> findOne(@NotBlank @PathVariable String id) {
+        return R.data(roleService.find(id));
     }
 
     @GetMapping("page")
-    public Result<PageData<RolePageVo>> page(RoleQueryDto roleQueryDTO) {
-        return Result.data(roleService.page(roleQueryDTO));
+    public R<IPage<RolePageVo>> page(PageQuery pageQuery, RoleQueryDto queryDto) {
+        return R.data(roleService.page(pageQuery, queryDto));
     }
 
     @PostMapping("save")
-    public Result<String> save(@RequestBody RoleDto menuDTO) {
-        return Result.data(roleService.save(menuDTO));
+    public R<String> save(@RequestBody RoleDto menuDTO) {
+        return R.data(roleService.save(menuDTO));
     }
 
     @PostMapping("associateMenu")
-    public Result<Void> update(String id, String[] menus) {
+    public R<Void> update(String id, String[] menus) {
         roleService.associateMenu(id, List.of(menus));
-        return Result.ok();
+        return R.ok();
     }
 
     @PostMapping("remove")
-    public Result<Void> remove(String id) {
+    public R<Void> remove(String id) {
         roleService.remove(id);
-        return Result.ok();
+        return R.ok();
     }
 
 }

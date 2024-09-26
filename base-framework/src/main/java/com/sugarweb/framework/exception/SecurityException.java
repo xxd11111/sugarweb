@@ -3,7 +3,7 @@ package com.sugarweb.framework.exception;
 import com.sugarweb.framework.common.HttpCode;
 
 /**
- * 与安全相关异常（安全攻击等问题）
+ * 与安全相关异常（密码错误，账号被锁定等）
  *
  * @author xxd
  * @version 1.0

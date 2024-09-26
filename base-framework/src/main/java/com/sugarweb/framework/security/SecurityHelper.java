@@ -1,7 +1,6 @@
 package com.sugarweb.framework.security;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import cn.dev33.satoken.stp.StpUtil;
 
 /**
  * 用户helper
@@ -11,18 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public class SecurityHelper {
 
-    public static UserInfo getUserInfo() {
-        return getAuthenticationInfo().getUserInfo();
+    public static LoginUser getLoginUser() {
+        return (LoginUser) StpUtil.getSession().get("userInfo");
     }
-
-    public static AccessTokenInfo getTokenInfo() {
-        return getAuthenticationInfo().getAccessTokenInfo();
-    }
-
-    public static AuthenticationInfo getAuthenticationInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (AuthenticationInfo) authentication.getPrincipal();
-    }
-
 
 }

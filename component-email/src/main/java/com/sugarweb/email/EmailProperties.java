@@ -11,7 +11,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarweb.email")
-@ConditionalOnProperty(prefix = "sugarweb.email", name = "enable", havingValue = "true")
 @Data
 public class EmailProperties {
 

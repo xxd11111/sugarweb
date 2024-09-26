@@ -10,14 +10,15 @@
     <version>1.0.0</version>
     <modules>
         <module>base-framework</module>
-        <module>component-dictionary</module>
+        <module>component-dict</module>
         <module>component-openapi</module>
         <module>component-param</module>
         <module>component-oss</module>
         <module>component-email</module>
-        <module>component-scheduler</module>
+        <module>component-task</module>
         <module>component-server</module>
         <module>service-uims</module>
+        <module>component-llm</module>
     </modules>
 
     <name>${project.artifactId}</name>
@@ -28,7 +29,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring-boot.version>3.2.0</spring-boot.version>
+        <spring-boot.version>3.2.5</spring-boot.version>
         <configuration.version>1.10</configuration.version>
         <springdoc.version>1.6.13</springdoc.version>
         <lombok.version>1.18.30</lombok.version>
@@ -37,7 +38,6 @@
 
     <dependencyManagement>
         <dependencies>
-
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -59,34 +59,45 @@
                 <version>3.21.1</version>
             </dependency>
 
+            <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+            <dependency>
+                <groupId>cn.dev33</groupId>
+                <artifactId>sa-token-spring-boot3-starter</artifactId>
+                <version>1.39.0</version>
+            </dependency>
+
+            <!--             <dependency> -->
+<!--                 <groupId>com.baomidou</groupId> -->
+<!--                 <artifactId>dynamic-datasource-spring-boot3-starter</artifactId> -->
+<!--                 <version>4.2.0</version> -->
+<!--             </dependency> -->
+
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
-                <version>4.2.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.querydsl</groupId>
-                <artifactId>querydsl-jpa</artifactId>
-                <classifier>jakarta</classifier>
-                <version>5.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.querydsl</groupId>
-                <artifactId>querydsl-apt</artifactId>
-                <scope>provided</scope>
-                <optional>true</optional>
-                <classifier>jakarta</classifier>
-                <version>5.0.0</version>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>3.5.6</version>
             </dependency>
 
             <!-- 工具包 -->
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>33.0.0-jre</version>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>5.8.26</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+<!--             <dependency> -->
+<!--                 <groupId>com.google.guava</groupId> -->
+<!--                 <artifactId>guava</artifactId> -->
+<!--                 <version>33.0.0-jre</version> -->
+<!--             </dependency> -->
 
             <!-- openapi3.0 注解 -->
             <dependency>
@@ -115,7 +126,7 @@
 
             <dependency>
                 <groupId>com.sugar</groupId>
-                <artifactId>component-dictionary</artifactId>
+                <artifactId>component-dict</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -145,7 +156,7 @@
 
             <dependency>
                 <groupId>com.sugar</groupId>
-                <artifactId>component-scheduler</artifactId>
+                <artifactId>component-task</artifactId>
                 <version>1.0.0</version>
             </dependency>
 
@@ -166,84 +177,54 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
-            <groupId>com.querydsl</groupId>
-            <artifactId>querydsl-apt</artifactId>
-            <scope>provided</scope>
-            <optional>true</optional>
-            <classifier>jakarta</classifier>
-        </dependency>
     </dependencies>
 
     <build>
-        <finalName>${project.name}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                    <configuration>
-                        <finalName>${project.build.finalName}</finalName>
-                        <layers>
-                            <enabled>true</enabled>
-                        </layers>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-<!--                     <source>${java.version}</source> -->
-<!--                     <target>${java.version}</target> -->
-<!--                     <encoding>${encoding}</encoding> -->
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
+                    <source>21</source>
+                    <target>21</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
                         </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>${spring-boot.version}</version>
+                        </path>
                     </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.mysema.maven</groupId>
-                <artifactId>apt-maven-plugin</artifactId>
-                <version>${apt-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>process</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>target/generated-sources/java</outputDirectory>
-                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-                        </configuration>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.querydsl</groupId>
-                        <artifactId>querydsl-apt</artifactId>
-                        <version>5.0.0</version>
-                        <classifier>jakarta</classifier>
-                    </dependency>
-                </dependencies>
-            </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 关闭过滤 -->
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!-- 引入所有 匹配文件进行过滤 -->
+                <includes>
+                    <include>application*</include>
+                    <include>bootstrap*</include>
+                    <include>banner*</include>
+                </includes>
+                <!-- 启用过滤 即该资源中的变量将会被过滤器中的值替换 -->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <profiles>
@@ -276,6 +257,24 @@
 
     <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->
     <repositories>
+        <!-- spring ai repo -->
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/snapshot</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+
         <repository>
             <id>public</id>
             <name>aliyun-repository</name>

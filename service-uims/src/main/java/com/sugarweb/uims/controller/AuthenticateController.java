@@ -1,17 +1,25 @@
 package com.sugarweb.uims.controller;
 
-import com.sugarweb.framework.common.Result;
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.crypto.digest.BCrypt;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.toolkit.ChainWrappers;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.sugarweb.framework.common.R;
+import com.sugarweb.framework.security.LoginUser;
+import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
-import com.sugarweb.uims.application.vo.TokenVo;
-import com.sugarweb.uims.application.TokenService;
-import io.swagger.v3.oas.annotations.Operation;
+import com.sugarweb.uims.domain.po.RoleMenu;
+import com.sugarweb.uims.domain.po.User;
+import com.sugarweb.uims.domain.po.UserRole;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
- * 认证控制器
+ * 登录认证管理
  *
  * @author xxd
  * @version 1.0
@@ -21,27 +29,51 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticateController {
 
-    private final TokenService tokenService;
-
-    @PostMapping("/login")
-    @Operation(summary = "登录")
-    public Result<TokenVo> login(PasswordLoginDto passwordLoginDto) {
-        TokenVo login = tokenService.login(passwordLoginDto);
-        return Result.data(login);
+    @PostMapping("login")
+    public R login(PasswordLoginDto passwordLoginDto) {
+        User user = Db.getOne(ChainWrappers.lambdaQueryChain(User.class)
+                .eq(User::getUsername, passwordLoginDto.getAccount())
+                .getWrapper());
+        if (user == null) {
+            throw new SecurityException("用户或密码错误");
+        }
+        boolean checkpw = BCrypt.checkpw(passwordLoginDto.getPassword(), user.getPassword());
+        if (!checkpw) {
+            throw new SecurityException("用户或密码错误");
+        }
+        StpUtil.login(user.getId());
+        List<UserRole> userRoles = Db.list(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getId()));
+        List<RoleMenu> roleMenus = Db.list(new LambdaQueryWrapper<RoleMenu>().in(RoleMenu::getRoleId, userRoles.stream().map(UserRole::getRoleId).toList()));
+        LoginUser loginUser = new LoginUser(user.getId(),
+                user.getUsername(),
+                userRoles.stream().map(UserRole::getRoleCode).toList(),
+                roleMenus.stream().map(RoleMenu::getApiPermission).distinct().toList());
+        StpUtil.getSession().set("userInfo", loginUser);
+        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        return R.data(tokenInfo);
     }
 
-    @PostMapping("/logout")
-    @Operation(summary = "登出")
-    public Result<Void> logout() {
-        tokenService.logout();
-        return Result.ok();
+    @GetMapping("userInfo")
+    public R userInfo() {
+        LoginUser loginUser = SecurityHelper.getLoginUser();
+        return R.data(loginUser);
     }
 
-    @PostMapping("/refresh")
-    @Operation(summary = "刷新token")
-    public Result<TokenVo> refresh(String refreshToken) {
-        TokenVo login = tokenService.refresh(refreshToken);
-        return Result.data(login);
+    @GetMapping("tokenInfo")
+    public R tokenInfo() {
+        return R.data(StpUtil.getTokenInfo());
+    }
+
+    @PostMapping("logout")
+    public R logout() {
+        StpUtil.logout();
+        return R.ok();
+    }
+
+    @PostMapping("kickout/{id}")
+    public R logout(@PathVariable String id) {
+        StpUtil.kickout(id);
+        return R.ok();
     }
 
 }

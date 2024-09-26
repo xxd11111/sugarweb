@@ -1,6 +1,6 @@
 package com.sugarweb.uims.application.dto;
 
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 import java.util.Collection;
@@ -21,5 +21,5 @@ public class RoleDto {
 
     private Collection<String> menus;
 
-    private BooleanEnum enable;
+    private Flag enable;
 }

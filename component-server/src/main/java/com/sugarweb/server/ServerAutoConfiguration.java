@@ -1,18 +1,15 @@
 package com.sugarweb.server;
 
 import com.sugarweb.framework.exception.GlobalExceptionHandler;
-import com.sugarweb.framework.security.AuthenticateService;
-import com.sugarweb.framework.security.AuthenticateFilter;
+import com.sugarweb.server.application.ApiCallLogService;
 import com.sugarweb.server.aspect.ApiLogAspect;
-import com.sugarweb.server.domain.*;
+import com.sugarweb.server.controller.ApiCallLogController;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * 服务自动配置
@@ -20,11 +17,9 @@ import org.springframework.web.context.WebApplicationContext;
  * @author xxd
  * @version 1.0
  */
-@Configuration(proxyBeanMethods = false)
-@EntityScan
-@EnableJpaRepositories
+@AutoConfiguration
 @EnableConfigurationProperties(ServerProperties.class)
-@ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true")
+@ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true", matchIfMissing = true)
 public class ServerAutoConfiguration {
 
     @Bean
@@ -35,20 +30,20 @@ public class ServerAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiLogAspect apiLogAspect(ApiLogInfoHandler apiLogInfoHandler) {
-        return new ApiLogAspect(apiLogInfoHandler);
+    public ApiLogAspect apiLogAspect() {
+        return new ApiLogAspect();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public ApiLogInfoHandler apiLogInfoHandler(ApiCallLogRepository sgcApiCallLogRepository,
-                                               ApiErrorLogRepository sgcApiErrorLogRepository) {
-        return new ApiLogInfoHandler(sgcApiCallLogRepository, sgcApiErrorLogRepository);
+    public ApiCallLogService apiCallLogService() {
+        return new ApiCallLogService();
     }
 
     @Bean
-    public AuthenticateFilter authenticateFilter(AuthenticateService authenticateService) {
-        return new AuthenticateFilter(authenticateService);
+    @ConditionalOnMissingBean
+    public ApiCallLogController apiCallLogController(ApiCallLogService apiCallLogService) {
+        return new ApiCallLogController(apiCallLogService);
     }
 
 }

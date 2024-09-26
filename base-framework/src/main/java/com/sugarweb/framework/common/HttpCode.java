@@ -1,5 +1,6 @@
 package com.sugarweb.framework.common;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -9,6 +10,7 @@ import lombok.Getter;
  * @version 1.0
  */
 @Getter
+@AllArgsConstructor
 public enum HttpCode implements ErrorCode {
     OK(200, "请求成功"),
     BAD_REQUEST(400, "请求失败"),
@@ -18,11 +20,6 @@ public enum HttpCode implements ErrorCode {
     METHOD_NOT_ALLOWED(405, "不允许使用该方法"),
     INTERNAL_SERVER_ERROR(500, "系统异常"),
     NOT_IMPLEMENTED(501, "功能未实现");
-
-    HttpCode(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
 
     private final int code;
 

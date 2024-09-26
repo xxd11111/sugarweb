@@ -1,21 +1,25 @@
 package com.sugarweb.oss.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.exception.ServerException;
+import com.sugarweb.framework.exception.ServiceException;
+import com.sugarweb.oss.application.FileDto;
 import com.sugarweb.oss.application.FileService;
-import com.sugarweb.framework.common.Result;
-import com.sugarweb.oss.domain.FileInfo;
+import com.sugarweb.oss.application.dto.FileQuery;
+import com.sugarweb.oss.domain.po.FileInfo;
 import com.sugarweb.oss.utils.WebDownloadUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -27,42 +31,56 @@ import java.util.Set;
 @RestController
 @RequestMapping("file")
 @RequiredArgsConstructor
+@Tag(name = "文件管理")
+@Slf4j
 public class FileController {
 
-	private final FileService fileService;
+    private final FileService fileService;
 
-	@GetMapping("download")
-	public void download(HttpServletResponse response, String fileId) {
-		Optional<FileInfo> optionalFileInfo = fileService.findOne(fileId);
-		if (optionalFileInfo.isPresent()) {
-			try(InputStream content = fileService.findContent(fileId)) {
-				FileInfo fileInfo = optionalFileInfo.get();
-				WebDownloadUtil.download(response, content, fileInfo.getFilename(), fileInfo.getContentType());
-			} catch (IOException e) {
-                throw new ServerException(e);
-            }
+    @GetMapping("download")
+    @Operation(operationId = "file:download", summary = "下载")
+    public void download(HttpServletResponse response, @RequestParam String fileId) {
+        FileInfo fileInfo = fileService.getFileInfo(fileId);
+        if (fileInfo == null) {
+            return;
         }
-	}
-
-	@PostMapping("upload")
-	public Result<FileInfo> upload(MultipartFile multipartFile, String fileGroup) {
-        try {
-            return Result.data(fileService.upload(fileGroup, multipartFile.getInputStream(), multipartFile.getContentType(), multipartFile.getOriginalFilename()));
+        try (InputStream content = fileService.getContentByKey(fileInfo.getFileKey())) {
+            WebDownloadUtil.download(response, content, fileInfo.getFilename(), fileInfo.getContentType());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ServerException("文件下载失败", e);
         }
     }
 
-	@PostMapping("batchRemove")
-	public Result<Void> remove(Set<String> fileIds) {
-		fileService.remove(fileIds);
-		return Result.ok();
-	}
+    @PostMapping("upload")
+    @Operation(operationId = "file:upload", summary = "上传")
+    public R<FileDto> upload(MultipartFile multipartFile, String fileGroup) {
+        try (InputStream inputStream = multipartFile.getInputStream()) {
+            FileDto upload = fileService.upload(fileGroup, inputStream, multipartFile.getContentType(), multipartFile.getOriginalFilename());
+            return R.data(upload);
+        } catch (IOException e) {
+            log.error("文件上传失败", e);
+            throw new ServiceException("文件上传失败");
+        }
+    }
 
-	@PostMapping("remove")
-	public Result<Void> remove(String fileId) {
-		fileService.remove(fileId);
-		return Result.ok();
-	}
+    @PostMapping("batchRemove")
+    @Operation(operationId = "file:batchRemove", summary = "批量删除")
+    public R<Void> batchRemove(Set<String> fileIds) {
+        fileService.batchRemove(fileIds);
+        return R.ok();
+    }
+
+    @PostMapping("remove")
+    @Operation(operationId = "file:remove", summary = "删除")
+    public R<Void> remove(String fileId) {
+        fileService.remove(fileId);
+        return R.ok();
+    }
+
+    @PostMapping("page")
+    @Operation(operationId = "file:page", summary = "分页")
+    public R<IPage<FileDto>> page(PageQuery pageQuery, FileQuery query) {
+        return R.data(fileService.page(pageQuery, query));
+    }
 
 }

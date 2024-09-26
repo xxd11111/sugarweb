@@ -1,32 +1,95 @@
 package com.sugarweb.uims.application;
 
-import com.sugarweb.framework.common.PageData;
-import com.sugarweb.uims.application.dto.*;
-import com.sugarweb.uims.application.vo.UserPageVo;
-import com.sugarweb.uims.application.vo.UserVo;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.sugarweb.framework.common.PageQuery;
+import com.sugarweb.framework.orm.PageHelper;
+import com.sugarweb.framework.security.SecurityHelper;
+import com.sugarweb.framework.exception.ValidateException;
+import com.sugarweb.uims.application.dto.NewPasswordDto;
+import com.sugarweb.uims.application.dto.UserDto;
+import com.sugarweb.uims.application.dto.UserQuery;
+import com.sugarweb.uims.application.dto.UserPageVo;
+import com.sugarweb.uims.application.dto.UserVo;
+import com.sugarweb.uims.domain.po.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
- * 用户服务
+ * 用户服务实现类
  *
  * @author xxd
  * @version 1.0
  */
-public interface UserService {
+@Service
+@RequiredArgsConstructor
+public class UserService {
 
-    String save(UserDto userDTO);
+    public String save(UserDto userDto) {
+        User user = new User();
+        BeanUtils.copyProperties(user, userDto);
+        Db.save(user);
+        return user.getId();
+    }
 
-    UserVo findOne(String id);
+    public UserVo findOne(String id) {
+        User user = Optional.ofNullable(Db.getById(id, User.class))
+                .orElseThrow(() -> new ValidateException("not find user"));
+        UserVo target = new UserVo();
+        BeanUtils.copyProperties(user, target);
+        return target;
+    }
 
-    PageData<UserPageVo> page(UserQueryDto userQueryDto);
+    public IPage<UserPageVo> page(PageQuery pageQuery, UserQuery queryDto) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<User>()
+                .eq(User::getUsername, queryDto.getUsername())
+                .eq(User::getNickName, queryDto.getNickName())
+                .eq(User::getMobilePhone, queryDto.getMobilePhone())
+                .eq(User::getEnabled, queryDto.getEnable())
+                .eq(User::getEmail, queryDto.getEmail());
 
-    void modifyPassword(NewPasswordDto newPasswordDto);
+        return Db.page(PageHelper.getPage(pageQuery), lambdaQueryWrapper)
+                .convert(a -> {
+                    UserPageVo userPageVo = new UserPageVo();
+                    BeanUtils.copyProperties(a, userPageVo);
+                    return userPageVo;
+                });
+    }
 
-    void remove(String id);
+    public void modifyPassword(NewPasswordDto newPasswordDto) {
+        String id = SecurityHelper.getLoginUser().getUserId();
+        User user = Optional.ofNullable(Db.getById(id, User.class))
+                .orElseThrow(() -> new ValidateException("not dind user"));
+        String oldPassword = newPasswordDto.getOldPassword();
+        if (!StrUtil.equals(user.getPassword(), oldPassword)) {
+            throw new SecurityException("凭证错误");
+        }
+        user.setPassword(newPasswordDto.getNewPassword());
+        Db.save(user);
+    }
 
-    boolean existUsername(String username);
+    public void remove(String id) {
+        Db.removeById(id,User.class);
+    }
 
-    boolean existMobilePhone(String mobilePhone);
+    public boolean existUsername(String username) {
+        return Db.count(new LambdaQueryWrapper<User>()
+                .eq(User::getUsername, username)) > 0;
+    }
 
-    boolean existEmail(String email);
+    public boolean existMobilePhone(String mobilePhone) {
+        return Db.count(new LambdaQueryWrapper<User>()
+                .eq(User::getMobilePhone, mobilePhone)) > 0;
+    }
 
+    
+    public boolean existEmail(String email) {
+        return Db.count(new LambdaQueryWrapper<User>()
+                .eq(User::getMobilePhone, email)) > 0;
+    }
 }

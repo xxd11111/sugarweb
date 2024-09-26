@@ -1,6 +1,6 @@
 package com.sugarweb.uims.application.dto;
 
-import com.sugarweb.framework.orm.BooleanEnum;
+import com.sugarweb.framework.common.Flag;
 import lombok.Data;
 
 /**
@@ -16,6 +16,6 @@ public class RoleQueryDto {
 
     private String roleCode;
 
-    private BooleanEnum enable;
+    private Flag enable;
 
 }

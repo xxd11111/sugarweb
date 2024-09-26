@@ -31,7 +31,6 @@ public class TaskService {
         task.setTaskCode(dto.getTaskCode());
         task.setTaskName(dto.getTaskName());
         task.setBeanName(dto.getBeanName());
-        task.setMethodName(dto.getMethodName());
         task.setEnabled(dto.getEnabled());
         task.setTaskData(dto.getTaskData());
         taskManager.saveTask(task);
@@ -42,7 +41,6 @@ public class TaskService {
         TaskInfo task = Db.getById(dto.getTaskId(), TaskInfo.class);
         task.setTaskName(dto.getTaskName());
         task.setBeanName(dto.getBeanName());
-        task.setMethodName(dto.getMethodName());
         task.setEnabled(dto.getEnabled());
         task.setTaskData(dto.getTaskData());
         taskManager.updateTask(task);
@@ -105,7 +103,6 @@ public class TaskService {
                     taskDto.setTaskId(a.getTaskId());
                     taskDto.setTaskName(a.getTaskName());
                     taskDto.setBeanName(a.getBeanName());
-                    taskDto.setMethodName(a.getMethodName());
                     taskDto.setEnabled(a.getEnabled());
                     taskDto.setTaskData(a.getTaskData());
                     return taskDto;

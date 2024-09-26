@@ -29,9 +29,7 @@ public class TaskAutoRegistry {
     private boolean forceUpdate = false;
 
     public TaskAutoRegistry(TaskProperties taskProperties) {
-        if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.disabled) {
-            return;
-        } else if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.save) {
+        if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.save) {
             enabled = true;
         } else if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.saveAndUpdate) {
             enabled = true;
@@ -41,7 +39,6 @@ public class TaskAutoRegistry {
             forceUpdate = true;
             reset = true;
         }
-
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -113,6 +110,7 @@ public class TaskAutoRegistry {
         } else {
             taskInfo.setTaskName(innerTask.taskName());
         }
+        taskInfo.setBeanName(beanName);
         taskInfo.setTaskName(innerTask.taskName());
         taskInfo.setEnabled(innerTask.enabled() ? Flag.TRUE.getCode() : Flag.FALSE.getCode());
         taskInfo.setIsDefault(Flag.TRUE.getCode());

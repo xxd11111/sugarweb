@@ -15,10 +15,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 public class TaskProperties {
 
-    @Value("${enable}")
     private boolean enable = true;
 
-    @Value("${auto-register-strategy}")
     private AutoRegisterStrategy autoRegisterStrategy = AutoRegisterStrategy.save;
 
 }

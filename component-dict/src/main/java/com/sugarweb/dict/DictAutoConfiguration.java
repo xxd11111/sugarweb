@@ -3,6 +3,7 @@ package com.sugarweb.dict;
 import com.sugarweb.dict.application.DictService;
 import com.sugarweb.dict.controller.DictController;
 import jakarta.annotation.Resource;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(DictProperties.class)
+@MapperScan({"com.sugarweb.dict.domain.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.dictionary", name = "enable", havingValue = "true", matchIfMissing = true)
 public class DictAutoConfiguration {
 

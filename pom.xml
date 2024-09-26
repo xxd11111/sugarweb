@@ -19,6 +19,7 @@
         <module>component-server</module>
         <module>service-uims</module>
         <module>component-llm</module>
+        <module>service-chatAssistant</module>
     </modules>
 
     <name>${project.artifactId}</name>

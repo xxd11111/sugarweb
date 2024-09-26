@@ -1,22 +1,21 @@
-package com.sugarweb.uims;
+package com.sugarweb.chatAssistant;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.annotation.TypeAlias;
 
 /**
- * 启动类
+ * 聊天助手应用
  *
- * @author xxd
+ * @author 许向东
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan({"com.sugarweb.uims.domain.mapper"})
-public class UimsApplication {
+@MapperScan({"com.sugarweb.**.domain.mapper"})
+public class ChatAssistantApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UimsApplication.class, args);
+        SpringApplication.run(ChatAssistantApplication.class, args);
     }
 
 }

@@ -7,6 +7,7 @@ import com.sugarweb.task.infra.QuartzTaskManager;
 import com.sugarweb.task.infra.SpringbootTaskAdapter;
 import com.sugarweb.task.infra.TaskManager;
 import jakarta.annotation.Resource;
+import org.mybatis.spring.annotation.MapperScan;
 import org.quartz.Scheduler;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -21,7 +22,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(TaskProperties.class)
-// @MapperScan({"com.sugarweb.task.mapper"})
+@MapperScan({"com.sugarweb.task.domain.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.task", name = "enable", havingValue = "true", matchIfMissing = true)
 public class TaskAutoConfiguration {
 

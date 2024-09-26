@@ -4,6 +4,7 @@ import com.sugarweb.param.application.ParamService;
 import com.sugarweb.param.auto.ParamAutoRegistry;
 import com.sugarweb.param.controller.ParamController;
 import jakarta.annotation.Resource;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(ParamProperties.class)
+@MapperScan({"com.sugarweb.param.domain.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.param", name = "enable", havingValue = "true", matchIfMissing = true)
 public class ParamAutoConfiguration {
 

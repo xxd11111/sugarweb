@@ -4,6 +4,7 @@ import com.sugarweb.framework.exception.GlobalExceptionHandler;
 import com.sugarweb.server.application.ApiCallLogService;
 import com.sugarweb.server.aspect.ApiLogAspect;
 import com.sugarweb.server.controller.ApiCallLogController;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(ServerProperties.class)
+@MapperScan({"com.sugarweb.server.domain.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true", matchIfMissing = true)
 public class ServerAutoConfiguration {
 

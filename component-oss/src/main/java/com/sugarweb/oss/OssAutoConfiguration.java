@@ -15,6 +15,7 @@ import com.sugarweb.oss.application.FileLinkService;
 import com.sugarweb.oss.application.FileService;
 import com.sugarweb.oss.controller.FileController;
 import jakarta.annotation.Resource;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -29,6 +30,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(OssProperties.class)
+@MapperScan({"com.sugarweb.oss.domain.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.oss", name = "enable", havingValue = "true", matchIfMissing = true)
 public class OssAutoConfiguration {
 

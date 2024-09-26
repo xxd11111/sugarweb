@@ -1,4 +1,4 @@
-package com.sugarweb.task.auto;
+package com.sugarweb.task.infra.auto;
 
 import java.lang.annotation.*;
 

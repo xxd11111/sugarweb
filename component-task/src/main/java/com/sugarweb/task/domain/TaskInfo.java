@@ -21,8 +21,6 @@ public class TaskInfo {
 
     private String beanName;
 
-    private String methodName;
-
     private String enabled;
 
     private String taskData;

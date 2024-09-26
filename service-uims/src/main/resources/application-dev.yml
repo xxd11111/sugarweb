@@ -211,6 +211,8 @@ sugarweb:
     endPoint: x
     accessKey: x
     secretKey: x
+  task:
+    auto-register-strategy: reset
 
 
 

@@ -1,6 +1,6 @@
 package com.sugarweb.task.infra;
 
-import com.sugarweb.task.auto.TaskAutoRegistry;
+import com.sugarweb.task.infra.auto.TaskAutoRegistry;
 import jakarta.annotation.Resource;
 import org.quartz.Scheduler;
 import org.springframework.beans.BeansException;
@@ -20,7 +20,8 @@ import java.util.Map;
 public class SpringbootTaskAdapter implements ApplicationRunner, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
-
+    @Resource
+    private TaskAutoRegistry taskAutoRegistry;
     @Resource
     private TaskManager taskManager;
     @Resource
@@ -33,7 +34,6 @@ public class SpringbootTaskAdapter implements ApplicationRunner, ApplicationCont
         TaskBeanFactory.load(beansOfType);
 
         //导入默认任务
-        TaskAutoRegistry taskAutoRegistry = new TaskAutoRegistry();
         taskAutoRegistry.run();
 
         //启动定时任务

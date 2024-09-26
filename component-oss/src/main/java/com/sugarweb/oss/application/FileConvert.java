@@ -1,6 +1,6 @@
 package com.sugarweb.oss.application;
 
-import com.sugarweb.oss.domain.FileInfo;
+import com.sugarweb.oss.domain.po.FileInfo;
 
 /**
  * TODO

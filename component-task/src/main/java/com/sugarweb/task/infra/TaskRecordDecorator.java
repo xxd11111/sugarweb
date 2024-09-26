@@ -2,9 +2,9 @@ package com.sugarweb.task.infra;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.task.domain.TaskInfo;
-import com.sugarweb.task.domain.TaskTrigger;
-import com.sugarweb.task.domain.TaskTriggerLog;
+import com.sugarweb.task.domain.po.TaskInfo;
+import com.sugarweb.task.domain.po.TaskTrigger;
+import com.sugarweb.task.domain.po.TaskTriggerLog;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;

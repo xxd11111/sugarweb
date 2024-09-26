@@ -12,7 +12,7 @@ import com.sugarweb.uims.application.dto.UserDto;
 import com.sugarweb.uims.application.dto.UserQuery;
 import com.sugarweb.uims.application.dto.UserPageVo;
 import com.sugarweb.uims.application.dto.UserVo;
-import com.sugarweb.uims.domain.User;
+import com.sugarweb.uims.domain.po.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;

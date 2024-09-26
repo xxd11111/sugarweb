@@ -9,7 +9,7 @@ import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.uims.application.dto.MenuDto;
 import com.sugarweb.uims.application.dto.MenuTreeVo;
 import com.sugarweb.uims.application.dto.MenuQueryDto;
-import com.sugarweb.uims.domain.Menu;
+import com.sugarweb.uims.domain.po.Menu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;

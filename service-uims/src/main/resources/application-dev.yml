@@ -121,9 +121,9 @@ spring:
         metricType: COSINE
 mybatis-plus:
   # mapper扫描路径
-  mapperLocations: classpath*:com/thinvent/cataloging/mapper/*Mapper.xml
+  mapperLocations: classpath*:com/sugarweb/*/domain/mapper/*Mapper.xml
   # 实体扫描，多个package用逗号或分号分隔
-  typeAliasesPackage: com.sugarweb.uims.domain
+  typeAliasesPackage: com.sugarweb.uims.domain.po,com.sugarweb.task.domain.po
   # 全局配置
   global-config:
     # 关闭自带banner

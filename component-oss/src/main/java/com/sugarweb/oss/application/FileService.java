@@ -12,8 +12,8 @@ import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.exception.ServerException;
 import com.sugarweb.framework.orm.PageHelper;
 import com.sugarweb.oss.application.dto.FileQuery;
-import com.sugarweb.oss.domain.FileInfo;
-import com.sugarweb.oss.domain.FileLink;
+import com.sugarweb.oss.domain.po.FileInfo;
+import com.sugarweb.oss.domain.po.FileLink;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;

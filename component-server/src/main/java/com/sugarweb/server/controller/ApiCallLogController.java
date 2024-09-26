@@ -3,7 +3,7 @@ package com.sugarweb.server.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
-import com.sugarweb.server.domain.ApiCallLog;
+import com.sugarweb.server.domain.po.ApiCallLog;
 import com.sugarweb.server.application.dto.ApiCallLogQuery;
 import com.sugarweb.server.application.ApiCallLogService;
 import io.swagger.v3.oas.annotations.Operation;

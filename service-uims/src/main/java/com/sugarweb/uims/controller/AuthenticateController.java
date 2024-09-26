@@ -10,13 +10,12 @@ import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.security.LoginUser;
 import com.sugarweb.framework.security.SecurityHelper;
 import com.sugarweb.uims.application.dto.PasswordLoginDto;
-import com.sugarweb.uims.domain.RoleMenu;
-import com.sugarweb.uims.domain.User;
-import com.sugarweb.uims.domain.UserRole;
+import com.sugarweb.uims.domain.po.RoleMenu;
+import com.sugarweb.uims.domain.po.User;
+import com.sugarweb.uims.domain.po.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

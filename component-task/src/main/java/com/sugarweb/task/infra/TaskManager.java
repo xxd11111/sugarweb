@@ -1,7 +1,7 @@
 package com.sugarweb.task.infra;
 
-import com.sugarweb.task.domain.TaskInfo;
-import com.sugarweb.task.domain.TaskTrigger;
+import com.sugarweb.task.domain.po.TaskInfo;
+import com.sugarweb.task.domain.po.TaskTrigger;
 
 /**
  * TaskManager

@@ -4,8 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.oss.domain.FileInfo;
-import com.sugarweb.oss.domain.FileLink;
+import com.sugarweb.oss.domain.po.FileInfo;
+import com.sugarweb.oss.domain.po.FileLink;
 
 import java.util.ArrayList;
 import java.util.List;

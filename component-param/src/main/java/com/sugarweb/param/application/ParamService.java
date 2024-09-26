@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.exception.ServiceException;
 import com.sugarweb.framework.orm.PageHelper;
-import com.sugarweb.param.domain.Param;
+import com.sugarweb.param.domain.po.Param;
 
 import java.util.List;
 import java.util.Set;

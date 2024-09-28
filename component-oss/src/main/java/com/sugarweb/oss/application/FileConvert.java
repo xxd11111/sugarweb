@@ -5,7 +5,7 @@ import com.sugarweb.oss.domain.po.FileInfo;
 /**
  * TODO
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class FileConvert {

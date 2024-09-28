@@ -1,9 +1,9 @@
-package com.sugarweb;
+package com.sugarweb.chatAssistant.demo;
 
 /**
  * TODO
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class RagService {

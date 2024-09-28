@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * ScanRegisterHandler
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public abstract class AbstractAutoRegistry<T> implements Registry, Scanner<T>, ApplicationRunner {

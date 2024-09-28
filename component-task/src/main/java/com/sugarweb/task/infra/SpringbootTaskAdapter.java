@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * TaskBeanAdapter
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class SpringbootTaskAdapter implements ApplicationRunner, ApplicationContextAware {

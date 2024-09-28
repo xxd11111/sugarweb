@@ -6,7 +6,7 @@ import com.sugarweb.dict.domain.po.DictGroup;
 /**
  * DictGroupMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface DictGroupMapper extends BaseMapper<DictGroup> {

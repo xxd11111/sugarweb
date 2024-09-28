@@ -1,11 +1,9 @@
-package com.sugarweb.chatAssistant.application;
+package com.sugarweb.chatAssistant.demo;
 
-import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentParser;
 import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.parser.TextDocumentParser;
 import dev.langchain4j.data.document.splitter.DocumentSplitters;
-import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.ChatMemory;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
@@ -23,10 +21,8 @@ import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static com.sugarweb.chatAssistant.application.Utils.startConversationWith;
-import static com.sugarweb.chatAssistant.application.Utils.toPath;
+import static com.sugarweb.chatAssistant.demo.Utils.startConversationWith;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 public class Naive_RAG_Example2 {

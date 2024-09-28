@@ -6,7 +6,7 @@ import com.sugarweb.task.domain.po.TaskTrigger;
 /**
  * TaskManager
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface TaskManager {

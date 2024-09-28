@@ -6,7 +6,7 @@ import com.sugarweb.uims.domain.po.User;
 /**
  * UserMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface UserMapper extends BaseMapper<User> {

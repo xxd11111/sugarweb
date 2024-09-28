@@ -6,7 +6,7 @@ import com.sugarweb.oss.domain.po.FileInfo;
 /**
  * FileInfoMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface FileInfoMapper extends BaseMapper<FileInfo> {

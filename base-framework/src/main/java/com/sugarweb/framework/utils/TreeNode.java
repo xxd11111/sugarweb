@@ -9,7 +9,7 @@ import java.util.function.Function;
 /**
  * 树构造器
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @Getter

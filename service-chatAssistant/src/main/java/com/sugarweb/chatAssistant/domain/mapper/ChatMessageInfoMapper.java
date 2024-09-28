@@ -6,7 +6,7 @@ import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
 /**
  * ChatMessageMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface ChatMessageInfoMapper extends BaseMapper<ChatMessageInfo> {

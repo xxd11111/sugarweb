@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * 邮箱属性
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarweb.email")

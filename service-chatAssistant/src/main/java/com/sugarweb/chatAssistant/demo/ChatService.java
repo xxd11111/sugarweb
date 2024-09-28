@@ -1,4 +1,4 @@
-package com.sugarweb;
+package com.sugarweb.chatAssistant.demo;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 /**
  * TODO
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @Service

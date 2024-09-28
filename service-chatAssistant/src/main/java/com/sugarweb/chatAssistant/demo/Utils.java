@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.application;
+package com.sugarweb.chatAssistant.demo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

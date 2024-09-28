@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * oss配置类
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "sugarweb.oss")

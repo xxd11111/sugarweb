@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.application;
+package com.sugarweb.chatAssistant.demo;
 
 /**
  * This is an "AI Service". It is a Java service with AI capabilities/features.

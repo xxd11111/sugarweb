@@ -6,7 +6,7 @@ import com.sugarweb.task.domain.po.TaskInfo;
 /**
  * TaskInfoMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface TaskInfoMapper extends BaseMapper<TaskInfo> {

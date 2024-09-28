@@ -6,7 +6,7 @@ import com.sugarweb.uims.domain.po.UserRole;
 /**
  * UserRoleMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface UserRoleMapper extends BaseMapper<UserRole> {

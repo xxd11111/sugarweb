@@ -6,7 +6,7 @@ import com.sugarweb.uims.domain.po.Role;
 /**
  * RoleMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface RoleMapper extends BaseMapper<Role> {

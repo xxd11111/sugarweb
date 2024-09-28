@@ -1,4 +1,4 @@
-package com.sugarweb;
+package com.sugarweb.chatAssistant.demo;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

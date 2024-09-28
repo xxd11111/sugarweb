@@ -1,4 +1,4 @@
-package com.sugarweb;
+package com.sugarweb.chatAssistant.demo;
 
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * TODO
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class LangChain4jDemo {

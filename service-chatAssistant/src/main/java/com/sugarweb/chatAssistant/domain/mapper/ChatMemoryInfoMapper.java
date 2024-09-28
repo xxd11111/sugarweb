@@ -6,7 +6,7 @@ import com.sugarweb.chatAssistant.domain.po.ChatMemoryInfo;
 /**
  * ChatSessionMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface ChatMemoryInfoMapper extends BaseMapper<ChatMemoryInfo> {

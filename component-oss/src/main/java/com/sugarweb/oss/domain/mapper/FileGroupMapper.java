@@ -6,7 +6,7 @@ import com.sugarweb.oss.domain.po.FileGroup;
 /**
  * FileGroupMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface FileGroupMapper extends BaseMapper<FileGroup> {

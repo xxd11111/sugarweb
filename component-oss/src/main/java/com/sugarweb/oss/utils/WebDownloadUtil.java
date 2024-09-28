@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * web下载工具
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class WebDownloadUtil {

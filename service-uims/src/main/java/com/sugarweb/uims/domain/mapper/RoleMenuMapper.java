@@ -6,7 +6,7 @@ import com.sugarweb.uims.domain.po.RoleMenu;
 /**
  * RoleMenuMapper
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface RoleMenuMapper extends BaseMapper<RoleMenu> {

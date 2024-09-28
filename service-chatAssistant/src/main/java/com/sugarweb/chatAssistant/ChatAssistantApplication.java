@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * 聊天助手应用
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @SpringBootApplication

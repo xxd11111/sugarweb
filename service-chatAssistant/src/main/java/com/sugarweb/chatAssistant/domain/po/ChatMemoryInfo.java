@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * ChatSession
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @Data

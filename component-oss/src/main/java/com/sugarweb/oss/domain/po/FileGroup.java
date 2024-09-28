@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * 文件组
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @Data

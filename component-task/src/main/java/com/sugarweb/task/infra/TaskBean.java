@@ -3,7 +3,7 @@ package com.sugarweb.task.infra;
 /**
  * TaskExecutor
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface TaskBean {

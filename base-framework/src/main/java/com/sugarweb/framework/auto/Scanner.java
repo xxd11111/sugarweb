@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * 扫描者
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface Scanner<T> {

@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.application;
+package com.sugarweb.chatAssistant.demo;
 
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentParser;
@@ -21,8 +21,8 @@ import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 
 import java.util.List;
 
-import static com.sugarweb.chatAssistant.application.Utils.startConversationWith;
-import static com.sugarweb.chatAssistant.application.Utils.toPath;
+import static com.sugarweb.chatAssistant.demo.Utils.startConversationWith;
+import static com.sugarweb.chatAssistant.demo.Utils.toPath;
 import static dev.langchain4j.data.document.loader.FileSystemDocumentLoader.loadDocument;
 
 public class Naive_RAG_Example {

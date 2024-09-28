@@ -7,7 +7,7 @@ import com.sugarweb.framework.common.PageQuery;
 /**
  * PageUtil
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class PageHelper {

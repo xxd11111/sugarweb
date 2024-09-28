@@ -3,7 +3,7 @@ package com.sugarweb.framework.auto;
 /**
  * 注册者
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface Registry {

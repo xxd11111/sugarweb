@@ -5,7 +5,7 @@ import java.io.InputStream;
 /**
  * EmailFileService
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public interface EmailFileService {

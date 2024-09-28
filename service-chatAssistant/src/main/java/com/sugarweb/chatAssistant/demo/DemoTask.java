@@ -1,4 +1,4 @@
-package com.sugarweb;
+package com.sugarweb.chatAssistant.demo;
 
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 /**
  * TODO
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @Component

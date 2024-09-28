@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * TaskAutoRegistry
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class TaskAutoRegistry {

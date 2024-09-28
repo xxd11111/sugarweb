@@ -15,7 +15,7 @@ import java.util.*;
 /**
  * 参数自动注册
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class ParamAutoRegistry extends AbstractAutoRegistry<ParamDto> {

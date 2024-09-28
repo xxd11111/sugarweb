@@ -10,7 +10,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 /**
  * ServletUtil
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 public class ServletUtil {

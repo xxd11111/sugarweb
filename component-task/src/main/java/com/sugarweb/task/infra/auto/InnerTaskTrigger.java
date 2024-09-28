@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * InnerTaskMethod
  *
- * @author 许向东
+ * @author xxd
  * @version 1.0
  */
 @Target({ ElementType.TYPE })

@@ -6,24 +6,18 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * ChatMessage
+ * AiAgent
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class ChatMessageInfo {
+public class AiAgent {
 
     @TableId
-    private String messageId;
+    private String agentId;
 
-    private String memoryId;
-
-    private String content;
-
-    private String messageType;
-
-    private String sendUserId;
+    private String agentName;
 
     private LocalDateTime createTime;
 

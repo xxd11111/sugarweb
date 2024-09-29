@@ -3,8 +3,10 @@ package com.sugarweb.chatAssistant.domain.po;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
- * ChatSession
+ * 聊天记忆
  *
  * @author xxd
  * @version 1.0
@@ -17,8 +19,10 @@ public class ChatMemoryInfo {
 
     private String userId;
 
-    private String createTime;
+    private String title;
 
-    private String updateTime;
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 
 }

@@ -1,5 +1,12 @@
 package com.sugarweb.chatAssistant.application;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.sugarweb.chatAssistant.domain.po.BlblUser;
+import com.sugarweb.chatAssistant.domain.po.ChatMemoryInfo;
+import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
+import com.sugarweb.chatAssistant.domain.po.StageMemory;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
@@ -20,10 +27,8 @@ import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
-import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
-import io.milvus.common.clientenum.ConsistencyLevelEnum;
-import io.milvus.param.MetricType;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,11 +41,14 @@ import java.util.List;
  */
 public class RagPipeline {
 
+    private static PromptService promptService = new PromptService();
+
     private static final InMemoryEmbeddingStore<TextSegment> inMemoryEmbeddingStore = new InMemoryEmbeddingStore<>();
-    private static boolean userInMemoryVectorStore = true;
+    private static boolean useInMemoryVectorStore = true;
     private static final ChatLanguageModel chatLanguageModel = OllamaChatModel.builder()
             .logRequests(true)
             .logResponses(true)
+            .temperature(0.75)
             .listeners(List.of(new ChatModelListener() {
                 @Override
                 public void onResponse(ChatModelResponseContext responseContext) {
@@ -50,7 +58,7 @@ public class RagPipeline {
             .modelName("qwen2.5:7b")
             .build();
 
-    private static final EmbeddingModel embeddingModel =OllamaEmbeddingModel.builder()
+    private static final EmbeddingModel embeddingModel = OllamaEmbeddingModel.builder()
             .baseUrl("http://localhost:11434")
             .modelName("nomic-embed-text")
             .build();
@@ -67,84 +75,185 @@ public class RagPipeline {
     //         .metricType(MetricType.COSINE)
     //         .build();
 
-    public String chat(String eventMessage) {
-        //获取参考文档
+    public String bilibiliAiChat(String eventMessage, String sendUserId, String stageId) {
 
-        //获取嵌入模型
-        EmbeddingModel embeddingModel = getEmbeddingModel();
-        TextSegment textSegment = TextSegment.from(eventMessage);
-        Response<Embedding> embeddingResponse = embeddingModel.embed(textSegment);
-        //获取嵌入向量
-        Embedding embedding = embeddingResponse.content();
-        //获取向量库
-        EmbeddingStore<TextSegment> vectorStore = getEmbeddingStore();
-        //根据内容获取相关文档
-        EmbeddingSearchRequest embeddingSearchRequest = EmbeddingSearchRequest.builder()
-                .queryEmbedding(embedding)
-                .maxResults(10)
-                .minScore(0.7)
-                .build();
-        EmbeddingSearchResult<TextSegment> embeddingSearchResult = vectorStore.search(embeddingSearchRequest);
-        List<EmbeddingMatch<TextSegment>> embeddingMatchList = embeddingSearchResult.matches();
-        StringBuilder documentStr = new StringBuilder();
-        //装载文档
-        for (EmbeddingMatch<TextSegment> textSegmentEmbeddingMatch : embeddingMatchList) {
-            String text = textSegmentEmbeddingMatch.embedded().text();
-            documentStr.append(text).append("\n");
+        BlblUser blblUser = Db.getById(sendUserId, BlblUser.class);
+        if (blblUser == null) {
+            blblUser = new BlblUser();
+            blblUser.setBlblUid(sendUserId);
+            blblUser.setUserName(eventMessage);
+            blblUser.setCreateTime(LocalDateTime.now());
+            blblUser.setUpdateTime(LocalDateTime.now());
+            Db.save(blblUser);
         }
 
-        ChatLanguageModel chatModel = getChatModel();
+        StageMemory stageMemory = Db.getOne(new LambdaQueryWrapper<>(StageMemory.class)
+                .eq(StageMemory::getStageId, stageId)
+                .eq(StageMemory::getUserId, sendUserId));
+        if (stageMemory == null) {
+
+            ChatMemoryInfo chatMemoryInfo = new ChatMemoryInfo();
+            chatMemoryInfo.setUserId(sendUserId);
+            //标题设置为第一次的提问
+            chatMemoryInfo.setTitle(eventMessage);
+            chatMemoryInfo.setCreateTime(LocalDateTime.now());
+            chatMemoryInfo.setUpdateTime(LocalDateTime.now());
+            Db.save(chatMemoryInfo);
+            String memoryId = chatMemoryInfo.getMemoryId();
+            stageMemory = new StageMemory();
+            stageMemory.setStageId(stageId);
+            stageMemory.setMemoryId(memoryId);
+            stageMemory.setUserId(sendUserId);
+            Db.save(stageMemory);
+
+            return firstChat(eventMessage, memoryId, sendUserId);
+        } else {
+            return chatWithMemory(eventMessage, stageMemory.getMemoryId(), sendUserId);
+        }
+    }
+
+    //单用户场景
+    private String chatWithMemory(String eventMessage, String memoryId, String sendUserId) {
+        //获取相关召回文档
+        String retrievalSegment = getRetrievalSegment(eventMessage);
         //组装发送给大模型的消息
-        List<ChatMessage> messages = new ArrayList<>();
-        //配置系统消息
-        String text = """
-                你现在是个直播机器人【炫东】，请根据事件消息做出互动,要求活泼，搞怪。
-                                
-                以下是参考文档：
-                {{documents}}
-                """;
-        PromptTemplate promptTemplate = new PromptTemplate(text);
-
-        HashMap<String, Object> variables = new HashMap<>();
-        variables.put("documents", documentStr);
-        Prompt prompt = promptTemplate.apply(variables);
-
-        SystemMessage systemMessage = new SystemMessage(prompt.text());
-        messages.add(systemMessage);
-        //配置用户消息
-        UserMessage userMessage = new UserMessage(eventMessage);
-        messages.add(userMessage);
+        List<ChatMessage> messageList = new ArrayList<>();
+        //第一步，配置系统消息
+        PromptTemplate systemPromptTemplate = new PromptTemplate(promptService.getSystemPrompt());
+        HashMap<String, Object> systemVariables = new HashMap<>();
+        //装载召回片段
+        systemVariables.put("documents", retrievalSegment);
+        Prompt systemPrompt = systemPromptTemplate.apply(systemVariables);
+        SystemMessage systemMessage = new SystemMessage(systemPrompt.text());
+        messageList.add(systemMessage);
+        String systemMessageId = null;
+        //第二步，获取用户和ai对话历史消息
+        int maxMessageCount = 10;
+        List<ChatMessageInfo> list = Db.lambdaQuery(ChatMessageInfo.class)
+                .eq(ChatMessageInfo::getMemoryId, memoryId)
+                .orderByAsc(ChatMessageInfo::getCreateTime)
+                .last("limit " + (maxMessageCount + 1))
+                .list();
+        for (ChatMessageInfo chatMessageInfo : list) {
+            ChatMessage chatMessage = getChatMessage(chatMessageInfo);
+            if (!"system".equals(chatMessageInfo.getMessageType())) {
+                messageList.add(chatMessage);
+            } else {
+                systemMessageId = chatMessageInfo.getMessageId();
+            }
+        }
+        //第三步，配置当前提问的用户消息
+        PromptTemplate userPromptTemplate = new PromptTemplate(promptService.getPrompt());
+        HashMap<String, Object> userVariables = new HashMap<>();
+        userVariables.put("question", eventMessage);
+        Prompt userPrompt = userPromptTemplate.apply(userVariables);
+        UserMessage userMessage = new UserMessage(userPrompt.text());
+        messageList.add(userMessage);
 
         //获取生成结果
-        Response<AiMessage> generate = chatModel.generate(messages);
-        AiMessage content = generate.content();
+        Response<AiMessage> generate = getChatModel().generate(messageList);
+        AiMessage aiMessage = generate.content();
+        String aiMessageText = aiMessage.text();
 
-        //todo 将Message结果入库
-        return content.text();
+        Db.lambdaUpdate(ChatMessageInfo.class)
+                .set(ChatMessageInfo::getContent, systemPrompt.text())
+                .set(ChatMessageInfo::getUpdateTime, LocalDateTime.now())
+                .eq(ChatMessageInfo::getMessageId, systemMessageId)
+                .update();
+        //保存对话消息
+        ChatMessageInfo userChatMessageInfo = createChatMessageInfo("user", eventMessage, memoryId, sendUserId);
+        ChatMessageInfo aiChatMessageInfo = createChatMessageInfo("ai", aiMessageText, memoryId, "");
+        List<ChatMessageInfo> batchSaveList = new ArrayList<>();
+        batchSaveList.add(userChatMessageInfo);
+        batchSaveList.add(aiChatMessageInfo);
+        Db.saveBatch(batchSaveList);
+
+        return aiMessageText;
+    }
+
+    private String firstChat(String eventMessage, String memoryId, String sendUserId) {
+        //获取相关召回文档
+        String retrievalSegment = getRetrievalSegment(eventMessage);
+        //组装发送给大模型的消息
+        List<ChatMessage> messageList = new ArrayList<>();
+        //第一步，配置系统消息
+        PromptTemplate systemPromptTemplate = new PromptTemplate(promptService.getSystemPrompt());
+        HashMap<String, Object> systemVariables = new HashMap<>();
+        //装载召回片段
+        systemVariables.put("documents", retrievalSegment);
+        Prompt systemPrompt = systemPromptTemplate.apply(systemVariables);
+        SystemMessage systemMessage = new SystemMessage(systemPrompt.text());
+        messageList.add(systemMessage);
+        //配置当前提问的用户消息
+        PromptTemplate userPromptTemplate = new PromptTemplate(promptService.getPrompt());
+        HashMap<String, Object> userVariables = new HashMap<>();
+        userVariables.put("question", eventMessage);
+        Prompt userPrompt = userPromptTemplate.apply(userVariables);
+        UserMessage userMessage = new UserMessage(userPrompt.text());
+        messageList.add(userMessage);
+
+        //获取生成结果
+        Response<AiMessage> generate = getChatModel().generate(messageList);
+        AiMessage aiMessage = generate.content();
+        String aiMessageText = aiMessage.text();
+
+        //保存对话消息
+        ChatMessageInfo systemChatMessageInfo = createChatMessageInfo("system", systemMessage.text(), memoryId, "");
+        ChatMessageInfo userChatMessageInfo = createChatMessageInfo("user", eventMessage, memoryId, sendUserId);
+        ChatMessageInfo aiChatMessageInfo = createChatMessageInfo("ai", aiMessageText, memoryId, "");
+        List<ChatMessageInfo> batchSaveList = new ArrayList<>();
+        batchSaveList.add(systemChatMessageInfo);
+        batchSaveList.add(userChatMessageInfo);
+        batchSaveList.add(aiChatMessageInfo);
+        Db.saveBatch(batchSaveList);
+
+        return aiMessageText;
+
+    }
+
+
+    private ChatMessageInfo createChatMessageInfo(String type, String content, String memoryId, String sendUserId) {
+        ChatMessageInfo chatMessageInfo = new ChatMessageInfo();
+        chatMessageInfo.setMemoryId(memoryId);
+        chatMessageInfo.setContent(content);
+        chatMessageInfo.setMessageType(type);
+        chatMessageInfo.setSendUserId(sendUserId);
+        chatMessageInfo.setCreateTime(LocalDateTime.now());
+        chatMessageInfo.setUpdateTime(LocalDateTime.now());
+        return chatMessageInfo;
+    }
+
+    private ChatMessage getChatMessage(ChatMessageInfo chatMessageInfo) {
+        if ("user".equals(chatMessageInfo.getMessageType())) {
+            return new UserMessage(chatMessageInfo.getContent());
+        } else if ("ai".equals(chatMessageInfo.getMessageType())) {
+            return new AiMessage(chatMessageInfo.getContent());
+        } else if ("system".equals(chatMessageInfo.getMessageType())) {
+            return new SystemMessage(chatMessageInfo.getContent());
+        }
+        throw new IllegalArgumentException(StrUtil.format("不支持的消息类型,messageId:{}", chatMessageInfo.getMessageId()));
     }
 
     /**
      * 获取聊天大模型
      */
-    public ChatLanguageModel getChatModel(){
+    public ChatLanguageModel getChatModel() {
         return chatLanguageModel;
     }
 
     /**
      * 获取Embedding模型
      */
-    public EmbeddingModel getEmbeddingModel(){
+    public EmbeddingModel getEmbeddingModel() {
         return embeddingModel;
     }
 
     /**
      * 获取向量存储库
      */
-    public EmbeddingStore<TextSegment> getEmbeddingStore(){
+    public EmbeddingStore<TextSegment> getEmbeddingStore() {
         return inMemoryEmbeddingStore;
-
-
-        // if (userInMemoryVectorStore){
+        // if (useInMemoryVectorStore){
         //     return inMemoryEmbeddingStore;
         // }else {
         //     return embeddingStore;
@@ -154,22 +263,26 @@ public class RagPipeline {
     /**
      * 获取召回片段
      */
-    public void getRetrievalSegment(){
-
-    }
-
-    /**
-     * 获取提示词
-     */
-    public void getPrompt(){
-
-    }
-
-    /**
-     * 获取系统提示词
-     */
-    public void getSystemPrompt(){
-
+    public String getRetrievalSegment(String queryMessage) {
+        EmbeddingModel embeddingModel = getEmbeddingModel();
+        TextSegment textSegment = TextSegment.from(queryMessage);
+        Response<Embedding> embeddingResponse = embeddingModel.embed(textSegment);
+        //获取嵌入向量
+        Embedding embedding = embeddingResponse.content();
+        EmbeddingSearchRequest embeddingSearchRequest = EmbeddingSearchRequest.builder()
+                .queryEmbedding(embedding)
+                .maxResults(10)
+                .minScore(0.7)
+                .build();
+        EmbeddingSearchResult<TextSegment> embeddingSearchResult = getEmbeddingStore().search(embeddingSearchRequest);
+        List<EmbeddingMatch<TextSegment>> embeddingMatchList = embeddingSearchResult.matches();
+        StringBuilder documentStr = new StringBuilder();
+        //装载文档
+        for (EmbeddingMatch<TextSegment> textSegmentEmbeddingMatch : embeddingMatchList) {
+            String text = textSegmentEmbeddingMatch.embedded().text();
+            documentStr.append(text).append("\n");
+        }
+        return documentStr.toString();
     }
 
 

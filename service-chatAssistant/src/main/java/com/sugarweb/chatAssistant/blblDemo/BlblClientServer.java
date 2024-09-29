@@ -1,7 +1,7 @@
 package com.sugarweb.chatAssistant.blblDemo;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.chatAssistant.application.RagPipeline;
+import com.sugarweb.chatAssistant.application.SingleUserRagPipeline;
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient;
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig;
 import tech.ordinaryroad.live.chat.client.bilibili.listener.IBilibiliMsgListener;
@@ -12,12 +12,12 @@ import tech.ordinaryroad.live.chat.client.commons.client.enums.ClientStatusEnums
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class BilibiliClientServer {
+public class BlblClientServer {
 
     String stageId = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
     public void run(){
-        RagPipeline ragPipeline = new RagPipeline();
+        SingleUserRagPipeline singleUserRagPipeline = new SingleUserRagPipeline();
 
         // 1. 创建配置
         BilibiliLiveChatClientConfig config = BilibiliLiveChatClientConfig.builder()
@@ -41,7 +41,7 @@ public class BilibiliClientServer {
                 String eventMsg = StrUtil.format("事件:收到用户发送的弹幕;用户名:{};弹幕内容:{};",msg.getUsername(),msg.getContent());
                 String r = StrUtil.format("{},您的消息正在回复中。", msg.getUsername());
                 DmUtil.sendDm(r);
-                String chat = ragPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
+                String chat = singleUserRagPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
                 System.out.println("-----------------------------------------------");
                 System.out.println(eventMsg);
                 System.out.println(chat);
@@ -52,7 +52,7 @@ public class BilibiliClientServer {
                 String eventMsg = StrUtil.format("事件:收到用户赠送的礼物;用户名:{};礼物名:{};礼物价格:{};礼物数量:{};",msg.getUsername(), msg.getGiftName(),msg.getGiftPrice(),msg.getGiftPrice());
                 String r = StrUtil.format("{},您的消息正在回复中。", msg.getUsername());
                 DmUtil.sendDm(r);
-                String chat = ragPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
+                String chat = singleUserRagPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
                 System.out.println("-----------------------------------------------");
                 System.out.println(eventMsg);
                 System.out.println(chat);
@@ -66,7 +66,7 @@ public class BilibiliClientServer {
             @Override
             public void onEnterRoomMsg(InteractWordMsg msg) {
                 String eventMsg = StrUtil.format("事件:用户进入直播间;用户名:{};",msg.getUsername());
-                String chat = ragPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
+                String chat = singleUserRagPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
                 System.out.println("-----------------------------------------------");
                 System.out.println(eventMsg);
                 System.out.println(chat);
@@ -75,7 +75,7 @@ public class BilibiliClientServer {
             @Override
             public void onLikeMsg(BilibiliBinaryFrameHandler binaryFrameHandler, LikeInfoV3ClickMsg msg) {
                 String eventMsg = StrUtil.format("事件:用户点赞;用户名:{};",msg.getUsername());
-                String chat = ragPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
+                String chat = singleUserRagPipeline.bilibiliAiChat(eventMsg, msg.getUid(), stageId);
                 System.out.println("-----------------------------------------------");
                 System.out.println(eventMsg);
                 System.out.println(chat);
@@ -107,7 +107,7 @@ public class BilibiliClientServer {
     }
 
     public static void main(String[] args) {
-        new BilibiliClientServer().run();
+        new BlblClientServer().run();
     }
 
     public static class DmUtil{

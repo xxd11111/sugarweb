@@ -39,7 +39,7 @@ import java.util.List;
  * @author xxd
  * @version 1.0
  */
-public class RagPipeline {
+public class SingleUserRagPipeline {
 
     private static PromptService promptService = new PromptService();
 

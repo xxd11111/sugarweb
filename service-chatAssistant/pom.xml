@@ -8,6 +8,7 @@
         <artifactId>sugar-web</artifactId>
         <version>1.0.0</version>
     </parent>
+    <packaging>jar</packaging>
 
     <artifactId>service-chatAssistant</artifactId>
 
@@ -110,4 +111,12 @@
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

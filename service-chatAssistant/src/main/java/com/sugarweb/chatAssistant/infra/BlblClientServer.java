@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.blblDemo;
+package com.sugarweb.chatAssistant.infra;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.chatAssistant.application.SingleUserRagPipeline;

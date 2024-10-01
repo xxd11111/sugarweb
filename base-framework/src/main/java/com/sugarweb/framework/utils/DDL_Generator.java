@@ -1,4 +1,4 @@
-package com.sugarweb.uims;
+package com.sugarweb.framework.utils;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ClassUtil;
@@ -19,7 +19,7 @@ import java.util.Set;
  * 根据实体类生成表生成语句
  */
 @Slf4j
-class DDL_Generator {
+public class DDL_Generator {
 
     /**
      * 是否使用`
@@ -58,18 +58,6 @@ class DDL_Generator {
     //排除的字段
     private static final List<String> exculudeList = List.of("serialVersionUID");
 
-    public static void main(String[] args) {
-        System.out.println("a踩踩踩踩踩");
-        Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain.po."));
-        StringBuilder sqlStr = new StringBuilder();
-        // 获取包下的所有类名称
-        for (Class<?> clazz : classes) {
-            String sql = generateSql(clazz);
-            sqlStr.append("\n").append(sql);
-        }
-        System.out.println(sqlStr);
-        // writeFile(sqlStr.toString(), "D:\\temp\\sql.sql");
-    }
 
     private static String getColumnSurround() {
         return useSurround ? "`" : "";

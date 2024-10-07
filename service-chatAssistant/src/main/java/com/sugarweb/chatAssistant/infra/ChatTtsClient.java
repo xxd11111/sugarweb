@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO
+ * ChatTtsClient
  *
  * @author xxd
  * @since 2024/9/30 22:01
@@ -24,14 +24,6 @@ public class ChatTtsClient {
 
     /**
      * # API调用代码
-     *
-     *
-     *
-     *
-     *
-     *
-
-     *
      * import requests
      *
      *

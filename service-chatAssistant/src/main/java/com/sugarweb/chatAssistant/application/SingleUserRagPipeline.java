@@ -27,9 +27,12 @@ import dev.langchain4j.store.embedding.EmbeddingSearchRequest;
 import dev.langchain4j.store.embedding.EmbeddingSearchResult;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,6 +42,7 @@ import java.util.List;
  * @author xxd
  * @version 1.0
  */
+@Component
 public class SingleUserRagPipeline {
 
     private static PromptService promptService = new PromptService();
@@ -75,6 +79,7 @@ public class SingleUserRagPipeline {
     //         .metricType(MetricType.COSINE)
     //         .build();
 
+    @Transactional(rollbackFor = Exception.class)
     public String bilibiliAiChat(String eventMessage, String sendUserId, String stageId) {
 
         BlblUser blblUser = Db.getById(sendUserId, BlblUser.class);
@@ -131,9 +136,12 @@ public class SingleUserRagPipeline {
         int maxMessageCount = 10;
         List<ChatMessageInfo> list = Db.lambdaQuery(ChatMessageInfo.class)
                 .eq(ChatMessageInfo::getMemoryId, memoryId)
-                .orderByAsc(ChatMessageInfo::getCreateTime)
+                .orderByDesc(ChatMessageInfo::getCreateTime)
                 .last("limit " + (maxMessageCount + 1))
                 .list();
+        //注意逆序
+        Collections.reverse(list);
+
         for (ChatMessageInfo chatMessageInfo : list) {
             ChatMessage chatMessage = getChatMessage(chatMessageInfo);
             if (!"system".equals(chatMessageInfo.getMessageType())) {

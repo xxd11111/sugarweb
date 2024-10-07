@@ -36,7 +36,7 @@ public class TtsResponse {
 
     private List<TtsAudioFile> audio_files;
 
-    private boolean success(){
+    public boolean success(){
         return code == 0;
     }
 }

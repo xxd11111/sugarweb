@@ -3,6 +3,7 @@ package com.sugarweb.chatAssistant;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 
 /**
  * 聊天助手应用
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @MapperScan({"com.sugarweb.**.domain.mapper"})
+@EnableWebSocket
 public class ChatAssistantApplication {
 
     public static void main(String[] args) {

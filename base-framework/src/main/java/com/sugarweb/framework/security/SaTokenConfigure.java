@@ -15,7 +15,7 @@ public class SaTokenConfigure implements WebMvcConfigurer {
 
     public void addInterceptors(InterceptorRegistry registry) {
 
-        List<String> excludePathPatterns = List.of("/authenticate/login", "/favicon.ico", "/v3/api-docs");
+        List<String> excludePathPatterns = List.of("/authenticate/login", "/favicon.ico", "/v3/api-docs", "/msg");
 
 
         // 注册 Sa-Token 拦截器，定义详细认证规则

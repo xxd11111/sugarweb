@@ -101,6 +101,7 @@ public class DDL_Generator {
                 .filter(StrUtil::isNotEmpty)
                 .orElse(Optional.of(field)
                         .map(f -> f.getAnnotation(TableField.class))
+                        .filter(TableField::exist)
                         .map(TableField::value)
                         .filter(StrUtil::isNotEmpty)
                         .orElse(humpToUnderline(field.getName()))

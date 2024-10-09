@@ -1,7 +1,10 @@
 package com.sugarweb.chatAssistant.domain.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * PromptTemplateInfo
@@ -19,4 +22,6 @@ public class PromptTemplateInfo {
     private String templateContent;
     private String createTime;
     private String updateTime;
+    @TableField(exist = false)
+    private List<TemplateVariableInfo> templateVariableList;
 }

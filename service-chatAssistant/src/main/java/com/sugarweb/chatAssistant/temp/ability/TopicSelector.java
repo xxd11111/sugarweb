@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.application;
+package com.sugarweb.chatAssistant.temp.ability;
 
 /**
  * TODO
@@ -8,7 +8,7 @@ package com.sugarweb.chatAssistant.application;
  */
 public class TopicSelector {
 
-    public String selectTopic(String userInput){
+    public String currentTopic(){
         return "topic";
     }
 

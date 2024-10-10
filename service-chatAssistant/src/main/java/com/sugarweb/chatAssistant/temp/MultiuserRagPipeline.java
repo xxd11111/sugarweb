@@ -1,16 +1,19 @@
-package com.sugarweb.chatAssistant.application;
+package com.sugarweb.chatAssistant.temp;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.chatAssistant.domain.po.*;
+import com.sugarweb.chatAssistant.application.ChatMemoryService;
+import com.sugarweb.chatAssistant.application.PromptService;
+import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
+import com.sugarweb.chatAssistant.domain.po.PromptTemplateInfo;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
 import dev.langchain4j.data.segment.TextSegment;
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.StreamingResponseHandler;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
@@ -22,10 +25,14 @@ import dev.langchain4j.store.embedding.EmbeddingStore;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * RagPipeline
@@ -37,13 +44,13 @@ import java.util.*;
 public class MultiuserRagPipeline {
     private PromptService promptService = new PromptService();
     @Resource
-    private ChatLanguageModel chatLanguageModel;
+    private StreamingChatLanguageModel chatLanguageModel;
     @Resource
     private EmbeddingModel embeddingModel;
     @Resource
     private EmbeddingStore<TextSegment> embeddingStore;
 
-    private SystemMessage getSystemMessage(String agentId, Map<String, String> contextVariables){
+    private SystemMessage getSystemMessage(String agentId, Map<String, String> contextVariables) {
         PromptTemplateInfo promptTemplateInfo = promptService.getSystemPrompt(agentId);
         String templateContent = promptTemplateInfo.getTemplateContent();
 
@@ -52,7 +59,7 @@ public class MultiuserRagPipeline {
         return new SystemMessage(systemPrompt.text());
     }
 
-    private UserMessage getUserMessage(String agentId, Map<String, String> contextVariables){
+    private UserMessage getUserMessage(String agentId, Map<String, String> contextVariables) {
         PromptTemplateInfo promptTemplateInfo = promptService.getUserPrompt(agentId);
         PromptTemplate userPromptTemplate = new PromptTemplate(promptTemplateInfo.getTemplateContent());
         Prompt userPrompt = userPromptTemplate.apply(contextVariables);
@@ -60,46 +67,72 @@ public class MultiuserRagPipeline {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public String chat(String question) {
-        Map<String, String> contextVariables = new HashMap<>();
-        contextVariables.put("question", question);
-        //获取相关召回文档
-        String retrievalSegment = getRetrievalSegment(question);
-        contextVariables.put("documents", retrievalSegment);
+    public void chat(List<BaseMsg> msgList, Consumer<String> tokenConsumer, Consumer<Response<AiMessage>> responseConsumer) {
+        String agentId = "1";
+        String memoryId = "1";
 
+        Map<String, String> contextVariables = new HashMap<>();
+        StringBuilder questionSb = new StringBuilder();
+        for (BaseMsg baseMsg : msgList) {
+            questionSb.append(baseMsg.getContent()).append("\n");
+        }
+        contextVariables.put("question", questionSb.toString());
+
+        StringBuilder retrievalSegmentSb = new StringBuilder();
+        for (BaseMsg baseMsg : msgList) {
+            //获取相关召回文档
+            retrievalSegmentSb.append(getRetrievalSegment(baseMsg.getContent())).append("\n");
+        }
+        contextVariables.put("documents", retrievalSegmentSb.toString());
 
         //组装发送给大模型的消息
         List<ChatMessage> messageList = new ArrayList<>();
         //第一步，配置系统消息
-        SystemMessage systemMessage = getSystemMessage("1", contextVariables);
+        SystemMessage systemMessage = getSystemMessage(agentId, contextVariables);
         messageList.add(systemMessage);
 
-        //第二步，获取用户和ai对话历史消息
+        //第二步，获取ai对话历史消息
         ChatMemoryService chatMemoryService = new ChatMemoryService();
-        List<ChatMessageInfo> chatMemoryInfos = chatMemoryService.listChatMessage("1", 10);
+        List<ChatMessageInfo> chatMemoryInfos = chatMemoryService.listChatMessage(memoryId, 10);
         //组装历史消息
         for (ChatMessageInfo chatMessageInfo : chatMemoryInfos) {
             ChatMessage chatMessage = getChatMessage(chatMessageInfo);
             messageList.add(chatMessage);
         }
-        //第三步，配置当前提问的用户消息
-        UserMessage userMessage = getUserMessage("1", contextVariables);
+        //第三步，配置当前提问的消息
+        UserMessage userMessage = getUserMessage(agentId, contextVariables);
         messageList.add(userMessage);
 
         //获取生成结果
-        Response<AiMessage> generate = chatLanguageModel.generate(messageList);
-        AiMessage aiMessage = generate.content();
-        String aiMessageText = aiMessage.text();
+        StreamingResponseHandler<AiMessage> baseHandler = new StreamingResponseHandler<>() {
+            @Override
+            public void onComplete(Response<AiMessage> response) {
+                StreamingResponseHandler.super.onComplete(response);
+                AiMessage aiMessage = response.content();
+                String aiMessageText = aiMessage.text();
+                //保存对话消息
+                ChatMessageInfo userChatMessageInfo = createChatMessageInfo("user", questionSb.toString(), memoryId);
+                ChatMessageInfo aiChatMessageInfo = createChatMessageInfo("ai", aiMessageText, memoryId);
+                List<ChatMessageInfo> batchSaveList = new ArrayList<>();
+                batchSaveList.add(userChatMessageInfo);
+                batchSaveList.add(aiChatMessageInfo);
+                Db.saveBatch(batchSaveList);
 
-        //保存对话消息
-        ChatMessageInfo userChatMessageInfo = createChatMessageInfo("user", question, "1");
-        ChatMessageInfo aiChatMessageInfo = createChatMessageInfo("ai", aiMessageText, "1");
-        List<ChatMessageInfo> batchSaveList = new ArrayList<>();
-        batchSaveList.add(userChatMessageInfo);
-        batchSaveList.add(aiChatMessageInfo);
-        Db.saveBatch(batchSaveList);
+                responseConsumer.accept(response);
+            }
 
-        return aiMessageText;
+            @Override
+            public void onNext(String token) {
+                tokenConsumer.accept(token);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                throw new RuntimeException("大模型响应错误:" + error.getMessage(), error);
+            }
+        };
+        chatLanguageModel.generate(messageList, baseHandler);
+
     }
 
     private ChatMessageInfo createChatMessageInfo(String type, String question, String memoryId) {

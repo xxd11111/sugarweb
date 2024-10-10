@@ -1,4 +1,6 @@
-package com.sugarweb.chatAssistant.application;
+package com.sugarweb.chatAssistant.temp;
+
+import com.sugarweb.chatAssistant.temp.BaseMsg;
 
 /**
  * TODO

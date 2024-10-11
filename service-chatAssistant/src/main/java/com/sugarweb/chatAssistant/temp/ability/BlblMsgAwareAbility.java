@@ -2,6 +2,7 @@ package com.sugarweb.chatAssistant.temp.ability;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.chatAssistant.temp.BaseMsg;
+import com.sugarweb.framework.exception.FrameworkException;
 import lombok.extern.slf4j.Slf4j;
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient;
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig;
@@ -11,11 +12,13 @@ import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.*;
 import tech.ordinaryroad.live.chat.client.commons.client.enums.ClientStatusEnums;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * 消息收集器
+ * blbl消息收集器
  *
  * @author xxd
  * @version 1.0
@@ -29,9 +32,9 @@ public class BlblMsgAwareAbility {
 
     private BilibiliLiveChatClient client;
 
-    private final CopyOnWriteArrayList<BaseMsg> msgList = new CopyOnWriteArrayList<>();
+    private final BlockingQueue<BaseMsg> msgList = new LinkedBlockingQueue<>();
 
-    public void aware() {
+    public void init() {
         // 1. 创建配置
         BilibiliLiveChatClientConfig config = BilibiliLiveChatClientConfig.builder()
                 // 消息转发地址
@@ -56,7 +59,6 @@ public class BlblMsgAwareAbility {
                         .msgType("danmu")
                         .content(eventMsg)
                         .time(LocalDateTime.now())
-                        .msgWeight(0.0f)
                         .build();
                 msgList.add(baseMsg);
             }
@@ -67,6 +69,14 @@ public class BlblMsgAwareAbility {
                     return;
                 }
                 String eventMsg = StrUtil.format("事件:收到用户赠送的礼物;用户名:{};礼物名:{};礼物价格:{};礼物数量:{};", msg.getUsername(), msg.getGiftName(), msg.getGiftPrice(), msg.getGiftPrice());
+                BaseMsg gift = BaseMsg.builder()
+                        .uid(msg.getUid())
+                        .username(msg.getUsername())
+                        .msgType("gift")
+                        .content(eventMsg)
+                        .time(LocalDateTime.now())
+                        .build();
+                msgList.add(gift);
             }
 
             @Override
@@ -75,6 +85,14 @@ public class BlblMsgAwareAbility {
                     return;
                 }
                 String eventMsg = StrUtil.format("事件:收到醒目留言;留言用户:{};留言内容:{}", msg.getUsername(), msg.getContent());
+                BaseMsg gift = BaseMsg.builder()
+                        .uid(msg.getUid())
+                        .username(msg.getUsername())
+                        .msgType("msg")
+                        .content(eventMsg)
+                        .time(LocalDateTime.now())
+                        .build();
+                msgList.add(gift);
             }
 
             @Override
@@ -82,7 +100,15 @@ public class BlblMsgAwareAbility {
                 if (ignoreUid(msg.getUid())) {
                     return;
                 }
-                String eventMsg = StrUtil.format("事件:用户进入直播间;用户名:{};", msg.getUsername());
+                String content = StrUtil.format("事件:用户进入直播间;用户名:{};", msg.getUsername());
+                BaseMsg baseMsg = BaseMsg.builder()
+                        .uid(msg.getUid())
+                        .username(msg.getUsername())
+                        .msgType("enterRoom")
+                        .content(content)
+                        .time(LocalDateTime.now())
+                        .build();
+                msgList.add(baseMsg);
             }
 
             @Override
@@ -91,6 +117,14 @@ public class BlblMsgAwareAbility {
                     return;
                 }
                 String eventMsg = StrUtil.format("事件:用户点赞;用户名:{};", msg.getUsername());
+                BaseMsg baseMsg = BaseMsg.builder()
+                        .uid(msg.getUid())
+                        .username(msg.getUsername())
+                        .msgType("like")
+                        .content(eventMsg)
+                        .time(LocalDateTime.now())
+                        .build();
+                msgList.add(baseMsg);
             }
 
             @Override
@@ -110,19 +144,27 @@ public class BlblMsgAwareAbility {
                 log.info("blbl websocket连接成功");
             }
         });
-        client.connect();
     }
 
-    private boolean ignoreUid(String uid) {
-        return StrUtil.equals(uid, yourSelfUid);
+    public void start() {
+        if (client == null) {
+            throw new FrameworkException("BlblMsgAwareAbility client is null");
+        }
+        client.connect();
     }
 
     public void stop() {
         client.disconnect(true);
     }
 
-    public List<BaseMsg> getMsg() {
-        return msgList;
+    private boolean ignoreUid(String uid) {
+        return StrUtil.equals(uid, yourSelfUid);
+    }
+
+    public List<BaseMsg> consumeMsg() {
+        ArrayList<BaseMsg> result = new ArrayList<>();
+        msgList.drainTo(result);
+        return result;
     }
 
 }

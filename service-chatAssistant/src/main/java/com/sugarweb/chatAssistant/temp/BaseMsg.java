@@ -1,7 +1,9 @@
 package com.sugarweb.chatAssistant.temp;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class BaseMsg {
 
@@ -24,7 +28,5 @@ public class BaseMsg {
     private String content;
 
     private LocalDateTime time;
-
-    private float msgWeight;
 
 }

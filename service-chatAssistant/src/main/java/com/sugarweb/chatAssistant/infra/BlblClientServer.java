@@ -2,6 +2,7 @@ package com.sugarweb.chatAssistant.infra;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.chatAssistant.application.SingleUserRagPipeline;
+import com.sugarweb.chatAssistant.temp.ability.VlcComponent;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -141,7 +142,7 @@ public class BlblClientServer implements ApplicationRunner {
                     .map(TtsAudioFile::getUrl)
                     .orElse("");
             if (StrUtil.isNotEmpty(filePath)) {
-                VlcUtil.playAudio(filePath);
+                VlcComponent.playAudio(filePath);
             }
         }
     }

@@ -12,52 +12,54 @@ import java.time.LocalDateTime;
 @Data
 public class FileInfo {
 
-	/**
-	 * 主键
-	 */
-	@Size(max = 32)
-	@TableId
-	private String fileId;
+    /**
+     * 主键
+     */
+    @Size(max = 32)
+    @TableId
+    private String fileId;
 
-	/**
-	 * 文件组
-	 */
-	@Size(max = 32)
-	private String groupCode;
+    /**
+     * 文件组
+     */
+    @Size(max = 32)
+    private String groupCode;
 
-	/**
-	 * 路径
-	 */
-	@Size(max = 100)
-	private String fileKey;
+    /**
+     * 路径
+     */
+    @Size(max = 100)
+    private String fileKey;
 
-	/**
-	 * 文件全名
-	 */
-	@Size(max = 50)
-	private String filename;
+    /**
+     * 文件全名
+     */
+    @Size(max = 50)
+    private String filename;
 
-	/**
-	 * 文件类型
-	 */
-	@Size(max = 1)
-	private String fileType;
+    /**
+     * 文件类型
+     */
+    @Size(max = 1)
+    private String fileType;
 
     /**
      * 内容类型
-	 */
-	@Size(max = 50)
-	private String contentType;
+     */
+    @Size(max = 50)
+    private String contentType;
 
-	/**
-	 * 文件大小
-	 */
-	@Size(max = 32)
-	private long fileSize;
+    /**
+     * 文件大小
+     */
+    @Size(max = 32)
+    private long fileSize;
 
-	/**
-	 * 上传时间
-	 */
-	private LocalDateTime uploadTime;
+    /**
+     * 上传时间
+     */
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 
 }

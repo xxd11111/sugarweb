@@ -18,7 +18,7 @@ public class FileConvert {
                 .fileType(fileInfo.getFileType())
                 .contentType(fileInfo.getContentType())
                 .fileSize(fileInfo.getFileSize())
-                .uploadTime(fileInfo.getUploadTime())
+                .uploadTime(fileInfo.getCreateTime())
                 .build();
     }
 

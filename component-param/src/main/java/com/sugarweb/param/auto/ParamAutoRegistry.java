@@ -103,7 +103,7 @@ public class ParamAutoRegistry extends AbstractAutoRegistry<ParamDto> {
                 paramDto.setParamCode(code);
                 paramDto.setParamName(name);
                 paramDto.setParamValue(value);
-                paramDto.setParamComment(name);
+                paramDto.setDescription(name);
                 paramDtos.add(paramDto);
             }
         }

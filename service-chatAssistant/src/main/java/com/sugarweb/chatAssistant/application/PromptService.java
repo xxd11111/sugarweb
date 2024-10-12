@@ -1,47 +1,47 @@
 package com.sugarweb.chatAssistant.application;
 
-import com.sugarweb.chatAssistant.domain.po.PromptTemplateInfo;
-import com.sugarweb.chatAssistant.domain.po.TemplateVariableInfo;
+import com.sugarweb.chatAssistant.domain.po.PromptInfo;
+import com.sugarweb.chatAssistant.domain.po.PromptVariableInfo;
 
 import java.util.List;
 
 /**
- * TODO
+ * PromptService
  *
  * @author xxd
  * @version 1.0
  */
 public class PromptService {
 
-    public PromptTemplateInfo getSystemPrompt(String agentId){
+    public PromptInfo getSystemPrompt(String promptId){
         //todo 目前写死
-        PromptTemplateInfo templateInfo = new PromptTemplateInfo();
+        PromptInfo templateInfo = new PromptInfo();
         String text = """
                 你现在是友好的人类【炫妹】，接下来请根据事件消息做出回答；
                 要求：你的每句回答都会以语音的形式直接展现给观众，结果以口语化的形式表达，不能用书面语言，返回结果只能是中文。
-                                
+                
                 以下是参考文档：
                 {{documents}}
                 """;
-        templateInfo.setTemplateContent(text);
+        templateInfo.setContent(text);
 
-        TemplateVariableInfo variableInfo = new TemplateVariableInfo();
+        PromptVariableInfo variableInfo = new PromptVariableInfo();
         variableInfo.setVariableCode("documents");
-        templateInfo.setTemplateVariableList(List.of(variableInfo));
+        templateInfo.setPromptVariableList(List.of(variableInfo));
         return templateInfo;
     }
 
-    public PromptTemplateInfo getUserPrompt(String agentId){
+    public PromptInfo getUserPrompt(String promptId){
         //todo 目前写死
-        PromptTemplateInfo templateInfo = new PromptTemplateInfo();
+        PromptInfo templateInfo = new PromptInfo();
         String text = """
                 {{question}}
                 """;
-        templateInfo.setTemplateContent(text);
+        templateInfo.setContent(text);
 
-        TemplateVariableInfo variableInfo = new TemplateVariableInfo();
+        PromptVariableInfo variableInfo = new PromptVariableInfo();
         variableInfo.setVariableCode("question");
-        templateInfo.setTemplateVariableList(List.of(variableInfo));
+        templateInfo.setPromptVariableList(List.of(variableInfo));
         return templateInfo;
     }
 

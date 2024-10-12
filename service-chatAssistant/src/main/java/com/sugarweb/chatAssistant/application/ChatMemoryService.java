@@ -1,12 +1,5 @@
 package com.sugarweb.chatAssistant.application;
 
-import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.chatAssistant.domain.po.ChatMemoryInfo;
-import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
-
-import java.util.Collections;
-import java.util.List;
-
 /**
  * TODO
  *
@@ -24,16 +17,6 @@ public class ChatMemoryService {
     // 3.技术记忆，构建学习能力
     // 隐私机制
     // 1.用户隐私数据不公开
-
-    public List<ChatMessageInfo> listChatMessage(String memoryId, int limit) {
-        List<ChatMessageInfo> chatMemoryInfos = Db.lambdaQuery(ChatMessageInfo.class)
-                .eq(ChatMessageInfo::getMemoryId, memoryId)
-                .orderByDesc(ChatMessageInfo::getCreateTime)
-                .last(limit > 0, "limit " + limit)
-                .list();
-        Collections.reverse(chatMemoryInfos);
-        return chatMemoryInfos;
-    }
 
 
 }

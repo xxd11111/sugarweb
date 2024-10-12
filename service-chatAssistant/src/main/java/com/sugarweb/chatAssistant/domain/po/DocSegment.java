@@ -6,20 +6,25 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * bilibili用户信息
+ * 片段
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class BlblUser {
-    
+public class DocSegment {
+
     @TableId
-    private String blblUid;
-    
-    private String username;
-    
+    private String segmentId;
+
+    private String content;
+
+    private String documentId;
+
+    private String syncStatus;
+
     private LocalDateTime createTime;
-    
+
     private LocalDateTime updateTime;
+
 }

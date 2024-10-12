@@ -10,11 +10,12 @@ import lombok.Data;
 @Data
 public class FileLink {
 
+    @TableId
+    private String linkId;
     /**
      * 文件主键
      */
     @Size(max = 32)
-    @TableId
     private String fileId;
 
     /**

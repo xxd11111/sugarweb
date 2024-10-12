@@ -6,20 +6,21 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * bilibili用户信息
+ * AiAgent
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class BlblUser {
-    
+public class AgentInfo {
+
     @TableId
-    private String blblUid;
-    
-    private String username;
-    
+    private String agentId;
+
+    private String agentName;
+
     private LocalDateTime createTime;
-    
+
     private LocalDateTime updateTime;
+
 }

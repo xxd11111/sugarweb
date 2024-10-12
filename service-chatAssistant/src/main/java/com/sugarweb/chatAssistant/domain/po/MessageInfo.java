@@ -6,20 +6,28 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * bilibili用户信息
+ * ChatMessage
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class BlblUser {
-    
+public class MessageInfo {
+
     @TableId
-    private String blblUid;
-    
-    private String username;
-    
+    private String msgId;
+
+    private String memoryId;
+
+    private String content;
+
+    /**
+     * system: 系统消息 user: 用户消息 agent: 机器人消息
+     */
+    private String msgType;
+
     private LocalDateTime createTime;
-    
+
     private LocalDateTime updateTime;
+
 }

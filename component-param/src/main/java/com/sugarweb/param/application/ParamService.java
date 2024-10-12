@@ -27,7 +27,7 @@ public class ParamService {
         param.setParamCode(paramDto.getParamCode());
         param.setParamName(paramDto.getParamName());
         param.setParamValue(paramDto.getParamValue());
-        param.setParamComment(paramDto.getParamComment());
+        param.setDescription(paramDto.getDescription());
         Db.save(param);
     }
 
@@ -39,7 +39,7 @@ public class ParamService {
         param.setParamCode(paramDto.getParamCode());
         param.setParamName(paramDto.getParamName());
         param.setParamValue(paramDto.getParamValue());
-        param.setParamComment(paramDto.getParamComment());
+        param.setDescription(paramDto.getDescription());
         Db.save(param);
     }
 

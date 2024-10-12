@@ -34,6 +34,6 @@ public class ParamDto {
     /**
      * 备注
      */
-    private String paramComment;
+    private String description;
 
 }

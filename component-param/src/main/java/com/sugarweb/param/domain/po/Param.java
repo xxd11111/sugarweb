@@ -35,6 +35,6 @@ public class Param {
     /**
      * 备注
      */
-    private String paramComment;
+    private String description;
 
 }

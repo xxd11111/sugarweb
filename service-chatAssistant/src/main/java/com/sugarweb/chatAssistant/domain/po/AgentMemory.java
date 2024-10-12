@@ -6,20 +6,24 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * bilibili用户信息
+ * StageMemory
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class BlblUser {
-    
+public class AgentMemory {
     @TableId
-    private String blblUid;
-    
-    private String username;
-    
+    private String memoryId;
+
+    private String agentId;
+
+    private String stageId;
+
+    private String sceneId;
+
     private LocalDateTime createTime;
-    
+
     private LocalDateTime updateTime;
+
 }

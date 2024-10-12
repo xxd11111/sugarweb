@@ -16,7 +16,7 @@ public class ParamConvert {
 		paramDto.setParamName(param.getParamName());
 		paramDto.setParamCode(param.getParamCode());
 		paramDto.setParamValue(param.getParamValue());
-		paramDto.setParamComment(param.getParamComment());
+		paramDto.setDescription(param.getDescription());
 		return paramDto;
 
 	}
@@ -27,7 +27,7 @@ public class ParamConvert {
 		param.setParamName(paramDto.getParamName());
 		param.setParamCode(paramDto.getParamCode());
 		param.setParamValue(paramDto.getParamValue());
-		param.setParamComment(paramDto.getParamComment());
+		param.setDescription(paramDto.getDescription());
 		return param;
 	}
 

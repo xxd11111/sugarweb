@@ -6,20 +6,27 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * bilibili用户信息
+ * 知识库信息
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class BlblUser {
-    
+public class KnowledgeBase {
+
     @TableId
-    private String blblUid;
-    
-    private String username;
-    
+    private String kbId;
+
+    private String kbName;
+
+    private String collectionName;
+
+    private String embeddingModel;
+
+    private String description;
+
     private LocalDateTime createTime;
-    
+
     private LocalDateTime updateTime;
+
 }

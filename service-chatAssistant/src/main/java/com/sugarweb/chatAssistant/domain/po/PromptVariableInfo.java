@@ -6,20 +6,24 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * bilibili用户信息
+ * 提示词变量信息
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class BlblUser {
-    
+public class PromptVariableInfo {
     @TableId
-    private String blblUid;
-    
-    private String username;
-    
+    private String variableId;
+
+    private String templateId;
+
+    private String variableCode;
+
+    private String variableName;
+
     private LocalDateTime createTime;
-    
+
     private LocalDateTime updateTime;
+
 }

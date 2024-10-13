@@ -12,10 +12,10 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Data
-public class MessageInfo {
+public class ChatMessageInfo {
 
     @TableId
-    private String msgId;
+    private String chatId;
 
     private String memoryId;
 
@@ -24,7 +24,7 @@ public class MessageInfo {
     /**
      * system: 系统消息 user: 用户消息 agent: 机器人消息
      */
-    private String msgType;
+    private String chatRole;
 
     private LocalDateTime createTime;
 

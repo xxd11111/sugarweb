@@ -2,15 +2,18 @@ package com.sugarweb.chatAssistant.agent;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.chatAssistant.agent.ability.*;
-import com.sugarweb.chatAssistant.domain.po.AgentInfo;
-import com.sugarweb.chatAssistant.domain.po.MessageInfo;
-import com.sugarweb.chatAssistant.domain.po.PromptInfo;
+import com.sugarweb.chatAssistant.domain.po.*;
+import com.sun.nio.sctp.MessageInfo;
 import dev.langchain4j.data.message.AiMessage;
+import dev.langchain4j.model.StreamingResponseHandler;
+import dev.langchain4j.model.input.Prompt;
+import dev.langchain4j.model.input.PromptTemplate;
+import dev.langchain4j.model.output.Response;
+import org.jetbrains.annotations.NotNull;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +35,12 @@ public class AutoAgent {
     private Thread runningThread = null;
 
     private AgentInfo agentInfo;
-    private PromptInfo promptInfo;
+    private PromptInfo userPromptInfo;
+    private PromptInfo systemPromptInfo;
+    private StageInfo stageInfo;
+    private SceneInfo sceneInfo;
+    private AgentMemory agentMemory;
+
 
     public void init() {
         speakAbility = new SpeakAbility(executor);
@@ -78,41 +86,88 @@ public class AutoAgent {
                     String content = assemblyBlblMsg(msg);
                     if (StrUtil.isNotEmpty(content)){
                         question.append(content);
+                        contextVariables.put("question", question.toString());
                     }
                 }
-                ThinkContent thinkContent = new ThinkContent();
-                thinkContent.setHistoryMessage(new ArrayList<>());
-                //todo 处理
-                // thinkContent.setCurrentQuestion(contextVariables);
-                // thinkContent.setSystemMessage(question.toString());
+                PromptTemplate userPromptTemplate = new PromptTemplate(userPromptInfo.getContent());
+                Prompt userPrompt = userPromptTemplate.apply(contextVariables);
+                String userPromptText = userPrompt.text();
 
-                contextVariables.put("question", question.toString());
+                ThinkContent thinkContent = new ThinkContent();
+                List<ChatMessageInfo> chatMessageInfos = memoryAbility.listLastChatMessage(agentMemory.getMemoryId(), 10);
+                thinkContent.setHistoryMessage(chatMessageInfos);
+                ChatMessageInfo userChatMessageInfo = new ChatMessageInfo();
+                userChatMessageInfo.setChatId(chatId+"");
+                userChatMessageInfo.setMemoryId(agentMemory.getMemoryId());
+                userChatMessageInfo.setContent(userPromptText);
+                userChatMessageInfo.setChatRole("user");
+                userChatMessageInfo.setCreateTime(LocalDateTime.now());
+                userChatMessageInfo.setUpdateTime(LocalDateTime.now());
+                thinkContent.setCurrentQuestion(userChatMessageInfo);
 
                 //获取相关召回文档
-                String retrievalSegment = memoryAbility.getRetrievalSegment(question.toString());
-                if (StrUtil.isEmpty(retrievalSegment)) {
-                    retrievalSegment = "无";
-                }
-                contextVariables.put("documents", retrievalSegment);
+                String documents = "无";
+                //暂时不使用
+                // String retrievalSegment = memoryAbility.getRetrievalSegment(question.toString());
+                // if (StrUtil.isNotEmpty(retrievalSegment)) {
+                //     documents = retrievalSegment;
+                // }
+                contextVariables.put("documents", documents);
 
-
-                // AiMessage aiMessage = response.content();
-                // String aiMessageText = aiMessage.text();
-                // //保存对话消息
-                // MessageInfo userMessageInfo = createChatMessageInfo("user", question, memoryId);
-                // MessageInfo aiMessageInfo = createChatMessageInfo("ai", aiMessageText, memoryId);
-                // List<MessageInfo> batchSaveList = new ArrayList<>();
-                // batchSaveList.add(userMessageInfo);
-                // batchSaveList.add(aiMessageInfo);
-                // Db.saveBatch(batchSaveList);
-
+                ChatMessageInfo systemChatMessageInfo = new ChatMessageInfo();
+                systemChatMessageInfo.setChatId(chatId+"");
+                systemChatMessageInfo.setMemoryId(agentMemory.getMemoryId());
+                systemChatMessageInfo.setContent(systemPromptInfo.getContent());
+                systemChatMessageInfo.setChatRole("system");
+                systemChatMessageInfo.setCreateTime(LocalDateTime.now());
+                systemChatMessageInfo.setUpdateTime(LocalDateTime.now());
+                thinkContent.setSystemMessage(systemChatMessageInfo);
 
                 if (!msgList.isEmpty()) {
-                    StreamThinkSpeakAdapt streamThinkSpeakAdapt = new StreamThinkSpeakAdapt(chatId, speakAbility);
-                    thinkAbility.streamThink(thinkContent, streamThinkSpeakAdapt);
+                    StreamingResponseHandler<AiMessage> streamingResponseHandler = getStreamingResponseHandler(chatId);
+                    thinkAbility.streamThink(thinkContent, streamingResponseHandler);
                 }
             }
         });
+    }
+
+    @NotNull
+    private StreamingResponseHandler<AiMessage> getStreamingResponseHandler(long chatId) {
+        StreamThinkSpeakAdapt streamThinkSpeakAdapt = new StreamThinkSpeakAdapt(chatId, speakAbility);
+        //保存对话消息
+        return new StreamingResponseHandler<AiMessage>(){
+            @Override
+            public void onNext(String token) {
+                streamThinkSpeakAdapt.onNext(token);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                streamThinkSpeakAdapt.onError(error);
+            }
+
+            @Override
+            public void onComplete(Response<AiMessage> response) {
+
+                AiMessage aiMessage = response.content();
+                String aiMessageText = aiMessage.text();
+                //保存对话消息
+                ChatMessageInfo aiMessageInfo = createChatMessageInfo("ai", aiMessageText, agentMemory.getMemoryId());
+                memoryAbility.saveChatMessage(aiMessageInfo);
+
+                streamThinkSpeakAdapt.onComplete(response);
+            }
+        };
+    }
+
+    private ChatMessageInfo createChatMessageInfo(String type, String question, String memoryId) {
+        ChatMessageInfo chatMessageInfo = new ChatMessageInfo();
+        chatMessageInfo.setMemoryId(memoryId);
+        chatMessageInfo.setContent(question);
+        chatMessageInfo.setChatRole(type);
+        chatMessageInfo.setCreateTime(LocalDateTime.now());
+        chatMessageInfo.setUpdateTime(LocalDateTime.now());
+        return chatMessageInfo;
     }
 
     private void limitThinkSpeed(long lastTime, long limit) {

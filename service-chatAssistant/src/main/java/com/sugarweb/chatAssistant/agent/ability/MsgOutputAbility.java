@@ -69,6 +69,7 @@ public class MsgOutputAbility {
      * 向客户端发送消息
      */
     public void sendMessage(String sid, String message) throws IOException {
+         //  status 0 思考 1 说话 2 等待中 3打招呼 
         Session session = sessions.get(sid);
         //同步发消息
         session.getBasicRemote().sendText(message);

@@ -3,7 +3,7 @@ package com.sugarweb.chatAssistant.agent.ability;
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.chatAssistant.application.PromptService;
 import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
-import com.sugarweb.chatAssistant.domain.po.PromptInfo;
+import com.sugarweb.chatAssistant.domain.po.PromptTemplateInfo;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
@@ -42,8 +42,8 @@ public class ThinkAbility {
     private EmbeddingStore<TextSegment> embeddingStore;
 
     private SystemMessage getSystemMessage(String promptId, Map<String, String> contextVariables) {
-        PromptInfo promptInfo = promptService.getSystemPrompt(promptId);
-        String templateContent = promptInfo.getContent();
+        PromptTemplateInfo promptTemplateInfo = promptService.getSystemPrompt(promptId);
+        String templateContent = promptTemplateInfo.getContent();
 
         PromptTemplate systemPromptTemplate = new PromptTemplate(templateContent);
         Prompt systemPrompt = systemPromptTemplate.apply(contextVariables);
@@ -51,8 +51,8 @@ public class ThinkAbility {
     }
 
     private UserMessage getUserMessage(String promptId, Map<String, String> contextVariables) {
-        PromptInfo promptInfo = promptService.getUserPrompt(promptId);
-        PromptTemplate userPromptTemplate = new PromptTemplate(promptInfo.getContent());
+        PromptTemplateInfo promptTemplateInfo = promptService.getUserPrompt(promptId);
+        PromptTemplate userPromptTemplate = new PromptTemplate(promptTemplateInfo.getContent());
         Prompt userPrompt = userPromptTemplate.apply(contextVariables);
         return new UserMessage(userPrompt.text());
     }
@@ -88,14 +88,14 @@ public class ThinkAbility {
 
 
     private ChatMessage getChatMessage(ChatMessageInfo chatMessageInfo) {
-        if ("user".equals(chatMessageInfo.getChatRole())) {
+        if (ChatRole.USER.getCode().equals(chatMessageInfo.getChatRole())) {
             return new UserMessage(chatMessageInfo.getContent());
-        } else if ("ai".equals(chatMessageInfo.getChatRole())) {
+        } else if (ChatRole.ASSISTANT.getCode().equals(chatMessageInfo.getChatRole())) {
             return new AiMessage(chatMessageInfo.getContent());
-        } else if ("system".equals(chatMessageInfo.getChatRole())) {
+        } else if (ChatRole.SYSTEM.getCode().equals(chatMessageInfo.getChatRole())) {
             return new SystemMessage(chatMessageInfo.getContent());
         }
-        throw new IllegalArgumentException(StrUtil.format("不支持的消息类型,messageId:{}", chatMessageInfo.getChatId()));
+        throw new IllegalArgumentException(StrUtil.format("不支持的消息类型,messageId:{}", chatMessageInfo.getMsgId()));
     }
 
 

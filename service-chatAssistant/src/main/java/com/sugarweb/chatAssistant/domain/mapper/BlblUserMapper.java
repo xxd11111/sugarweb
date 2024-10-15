@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sugarweb.chatAssistant.domain.po.BlblUser;
 
 /**
- * TODO
+ * BlblUser
  *
  * @author xxd
- * @since 2024/10/3 14:13
+ * @since 2024/10/15
  */
 public interface BlblUserMapper extends BaseMapper<BlblUser> {
+
 }

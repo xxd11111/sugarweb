@@ -2,7 +2,7 @@ package com.sugarweb.chatAssistant.agent.ability;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.chatAssistant.application.PromptService;
-import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
+import com.sugarweb.chatAssistant.domain.po.ChatMsg;
 import com.sugarweb.chatAssistant.domain.po.PromptTemplateInfo;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
@@ -62,17 +62,17 @@ public class ThinkAbility {
         //组装发送给大模型的消息
         List<ChatMessage> messageList = new ArrayList<>();
         //第一步，配置系统消息
-        ChatMessageInfo systemChatMessageInfo = thinkContent.getSystemMessage();
-        if (systemChatMessageInfo != null) {
-            ChatMessage systemMessage = new SystemMessage(systemChatMessageInfo.getContent());
+        ChatMsg systemChatMsg = thinkContent.getSystemMessage();
+        if (systemChatMsg != null) {
+            ChatMessage systemMessage = new SystemMessage(systemChatMsg.getContent());
             messageList.add(systemMessage);
         }
 
         //第二步，获取ai对话历史消息
-        List<ChatMessageInfo> historyMessage = thinkContent.getHistoryMessage();
+        List<ChatMsg> historyMessage = thinkContent.getHistoryMessage();
         if (historyMessage != null && !historyMessage.isEmpty()) {
-            for (ChatMessageInfo chatMessageInfo : historyMessage) {
-                ChatMessage chatMessage = getChatMessage(chatMessageInfo);
+            for (ChatMsg chatMsg : historyMessage) {
+                ChatMessage chatMessage = getChatMessage(chatMsg);
                 messageList.add(chatMessage);
             }
         }
@@ -87,15 +87,15 @@ public class ThinkAbility {
 
 
 
-    private ChatMessage getChatMessage(ChatMessageInfo chatMessageInfo) {
-        if (ChatRole.USER.getCode().equals(chatMessageInfo.getChatRole())) {
-            return new UserMessage(chatMessageInfo.getContent());
-        } else if (ChatRole.ASSISTANT.getCode().equals(chatMessageInfo.getChatRole())) {
-            return new AiMessage(chatMessageInfo.getContent());
-        } else if (ChatRole.SYSTEM.getCode().equals(chatMessageInfo.getChatRole())) {
-            return new SystemMessage(chatMessageInfo.getContent());
+    private ChatMessage getChatMessage(ChatMsg chatMsg) {
+        if (ChatRole.USER.getCode().equals(chatMsg.getChatRole())) {
+            return new UserMessage(chatMsg.getContent());
+        } else if (ChatRole.ASSISTANT.getCode().equals(chatMsg.getChatRole())) {
+            return new AiMessage(chatMsg.getContent());
+        } else if (ChatRole.SYSTEM.getCode().equals(chatMsg.getChatRole())) {
+            return new SystemMessage(chatMsg.getContent());
         }
-        throw new IllegalArgumentException(StrUtil.format("不支持的消息类型,messageId:{}", chatMessageInfo.getMsgId()));
+        throw new IllegalArgumentException(StrUtil.format("不支持的消息类型,messageId:{}", chatMsg.getMsgId()));
     }
 
 

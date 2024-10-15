@@ -1,6 +1,6 @@
 package com.sugarweb.chatAssistant.agent.ability;
 
-import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
+import com.sugarweb.chatAssistant.domain.po.ChatMsg;
 import lombok.Data;
 
 import java.util.List;
@@ -14,10 +14,10 @@ import java.util.List;
 @Data
 public class ThinkContent {
 
-    private List<ChatMessageInfo> historyMessage;
+    private List<ChatMsg> historyMessage;
 
-    private ChatMessageInfo currentQuestion;
+    private ChatMsg currentQuestion;
 
-    private ChatMessageInfo systemMessage;
+    private ChatMsg systemMessage;
 
 }

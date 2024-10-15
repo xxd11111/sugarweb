@@ -1,6 +1,8 @@
 package com.sugarweb.chatAssistant.domain.po;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.sugarweb.chatAssistant.agent.ability.ChatRole;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -22,6 +24,10 @@ public class KnowledgeBase {
     private String collectionName;
 
     private String embeddingModel;
+
+    private String dimension;
+
+    private String status;
 
     private String description;
 

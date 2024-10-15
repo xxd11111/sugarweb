@@ -1,7 +1,7 @@
 package com.sugarweb.chatAssistant.agent.ability;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.chatAssistant.domain.po.ChatMessageInfo;
+import com.sugarweb.chatAssistant.domain.po.ChatMsg;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.embedding.EmbeddingModel;
@@ -26,21 +26,21 @@ public class MemoryAbility {
 
     private EmbeddingStore<TextSegment> embeddingStore;
 
-    public List<ChatMessageInfo> listLastChatMessage(String memoryId, int limit) {
-        List<ChatMessageInfo> chatMemoryInfos = Db.lambdaQuery(ChatMessageInfo.class)
-                .eq(ChatMessageInfo::getMemoryId, memoryId)
-                .orderByDesc(ChatMessageInfo::getCreateTime)
+    public List<ChatMsg> listLastChatMessage(String memoryId, int limit) {
+        List<ChatMsg> chatMemoryInfos = Db.lambdaQuery(ChatMsg.class)
+                .eq(ChatMsg::getMemoryId, memoryId)
+                .orderByDesc(ChatMsg::getCreateTime)
                 .last(limit > 0, "limit " + limit)
                 .list();
         Collections.reverse(chatMemoryInfos);
         return chatMemoryInfos;
     }
 
-    public void saveBatchChatMessage(List<ChatMessageInfo> chatMemoryInfo) {
+    public void saveBatchChatMessage(List<ChatMsg> chatMemoryInfo) {
         Db.saveBatch(chatMemoryInfo);
     }
 
-    public void saveChatMessage(ChatMessageInfo chatMemoryInfo) {
+    public void saveChatMessage(ChatMsg chatMemoryInfo) {
         Db.save(chatMemoryInfo);
     }
 

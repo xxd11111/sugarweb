@@ -9,7 +9,6 @@ import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.output.Response;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,28 +76,19 @@ public class AutoAgent {
                 contextVariables.put("documents", documents);
 
                 ThinkContent thinkContent = new ThinkContent();
+                // 系统提示语
                 String systemPrompt = systemPromptTemplateInfo.getPrompt(contextVariables);
-                ChatMessageInfo systemChatMessageInfo = new ChatMessageInfo();
-                systemChatMessageInfo.setMemoryId(agentMemory.getMemoryId());
-                systemChatMessageInfo.setContent(systemPrompt);
-                systemChatMessageInfo.setChatRole(ChatRole.SYSTEM.getCode());
-                systemChatMessageInfo.setCreateTime(LocalDateTime.now());
-                systemChatMessageInfo.setUpdateTime(LocalDateTime.now());
-                thinkContent.setSystemMessage(systemChatMessageInfo);
-                Db.save(systemChatMessageInfo);
-
-                List<ChatMessageInfo> chatMessageInfos = memoryAbility.listLastChatMessage(agentMemory.getMemoryId(), 10);
-                thinkContent.setHistoryMessage(chatMessageInfos);
-
+                ChatMsg systemChatMsg = ChatMsg.of(ChatRole.SYSTEM, systemPrompt, agentMemory.getMemoryId());
+                thinkContent.setSystemMessage(systemChatMsg);
+                Db.save(systemChatMsg);
+                // 历史消息
+                List<ChatMsg> chatMsgs = memoryAbility.listLastChatMessage(agentMemory.getMemoryId(), 10);
+                thinkContent.setHistoryMessage(chatMsgs);
+                // 用户提问
                 String userPrompt = userPromptTemplateInfo.getPrompt(contextVariables);
-                ChatMessageInfo userChatMessageInfo = new ChatMessageInfo();
-                userChatMessageInfo.setMemoryId(agentMemory.getMemoryId());
-                userChatMessageInfo.setContent(userPrompt);
-                userChatMessageInfo.setChatRole(ChatRole.USER.getCode());
-                userChatMessageInfo.setCreateTime(LocalDateTime.now());
-                userChatMessageInfo.setUpdateTime(LocalDateTime.now());
-                thinkContent.setCurrentQuestion(userChatMessageInfo);
-                Db.save(userChatMessageInfo);
+                ChatMsg userChatMsg = ChatMsg.of(ChatRole.USER, userPrompt, agentMemory.getMemoryId());
+                thinkContent.setCurrentQuestion(userChatMsg);
+                Db.save(userChatMsg);
 
                 StreamingResponseHandler<AiMessage> streamingResponseHandler = getStreamingResponseHandler(thinkId);
                 thinkAbility.streamThink(thinkContent, streamingResponseHandler);
@@ -126,7 +116,7 @@ public class AutoAgent {
                 AiMessage aiMessage = response.content();
                 String aiMessageText = aiMessage.text();
                 //保存对话消息
-                ChatMessageInfo aiMessageInfo = ChatMessageInfo.of(ChatRole.ASSISTANT, aiMessageText, agentMemory.getMemoryId());
+                ChatMsg aiMessageInfo = ChatMsg.of(ChatRole.ASSISTANT, aiMessageText, agentMemory.getMemoryId());
                 memoryAbility.saveChatMessage(aiMessageInfo);
 
                 streamThinkSpeakAdapt.onComplete(response);

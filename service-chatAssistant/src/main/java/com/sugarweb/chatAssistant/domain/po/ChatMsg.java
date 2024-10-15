@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Data
-public class ChatMessageInfo {
+public class ChatMsg {
 
     @TableId
     private String msgId;
@@ -33,15 +33,15 @@ public class ChatMessageInfo {
 
     private String userId;
 
-    public static ChatMessageInfo of(ChatRole chatRole, String prompt, String memoryId) {
-        ChatMessageInfo chatMessageInfo = new ChatMessageInfo();
-        chatMessageInfo.setMemoryId(memoryId);
-        chatMessageInfo.setContent(prompt);
-        chatMessageInfo.setChatRole(chatRole.getCode());
+    public static ChatMsg of(ChatRole chatRole, String prompt, String memoryId) {
+        ChatMsg chatMsg = new ChatMsg();
+        chatMsg.setMemoryId(memoryId);
+        chatMsg.setContent(prompt);
+        chatMsg.setChatRole(chatRole.getCode());
         LocalDateTime now = LocalDateTime.now();
-        chatMessageInfo.setCreateTime(now);
-        chatMessageInfo.setUpdateTime(now);
-        return chatMessageInfo;
+        chatMsg.setCreateTime(now);
+        chatMsg.setUpdateTime(now);
+        return chatMsg;
     }
 
 

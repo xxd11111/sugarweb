@@ -1,14 +1,14 @@
 package com.sugarweb.chatAssistant.domain.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.chatAssistant.domain.po.ChatMsg;
+import com.sugarweb.chatAssistant.domain.po.StageInfo;
 
 /**
- * ChatMessageInfo
+ * StageInfo
  *
  * @author xxd
  * @since 2024/10/15
  */
-public interface ChatMessageInfoMapper extends BaseMapper<ChatMsg> {
+public interface StageInfoMapper extends BaseMapper<StageInfo> {
 
 }

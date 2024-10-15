@@ -13,13 +13,13 @@ import java.time.LocalDateTime;
  */
 @Data
 public class BlblUser {
-    
+
     @TableId
     private String blblUid;
-    
+
     private String username;
-    
+
     private LocalDateTime createTime;
-    
+
     private LocalDateTime updateTime;
 }

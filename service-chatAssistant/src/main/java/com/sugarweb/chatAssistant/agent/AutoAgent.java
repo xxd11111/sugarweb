@@ -1,14 +1,11 @@
 package com.sugarweb.chatAssistant.agent;
 
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.chatAssistant.agent.ability.*;
 import com.sugarweb.chatAssistant.domain.po.*;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
-import dev.langchain4j.model.input.Prompt;
-import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.output.Response;
 import org.jetbrains.annotations.NotNull;
 
@@ -57,15 +54,17 @@ public class AutoAgent {
         runningThread = Thread.startVirtualThread(() -> {
             long lastTime = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
-                Map<String, String> contextVariables = new HashMap<>();
+                Map<String, Object> contextVariables = new HashMap<>();
 
                 // 限制最快100ms 思考一次
                 limitThinkSpeed(lastTime, 100);
                 lastTime = System.currentTimeMillis();
                 long thinkId = System.currentTimeMillis();
-                // 从消息队列中获取消息
-                List<Object> msgList = blblMsgAwareAbility.consumeMsg();
-                String question = BlblMsgAdaptor.assemblyMultiMsg(msgList);
+                // 从消息队列中获取弹幕消息
+                Object blblMsg = blblMsgAwareAbility.consumeMsg();
+                BlblUser blblUser = BlblMsgAdaptor.getBlblUserByMsg(blblMsg);
+                contextVariables.put("user", blblUser);
+                String question = BlblMsgAdaptor.getMsgPrompt(blblMsg);
                 contextVariables.put("question", question);
 
                 //获取相关召回文档
@@ -86,6 +85,7 @@ public class AutoAgent {
                 systemChatMessageInfo.setCreateTime(LocalDateTime.now());
                 systemChatMessageInfo.setUpdateTime(LocalDateTime.now());
                 thinkContent.setSystemMessage(systemChatMessageInfo);
+                Db.save(systemChatMessageInfo);
 
                 List<ChatMessageInfo> chatMessageInfos = memoryAbility.listLastChatMessage(agentMemory.getMemoryId(), 10);
                 thinkContent.setHistoryMessage(chatMessageInfos);
@@ -100,10 +100,8 @@ public class AutoAgent {
                 thinkContent.setCurrentQuestion(userChatMessageInfo);
                 Db.save(userChatMessageInfo);
 
-                if (!msgList.isEmpty()) {
-                    StreamingResponseHandler<AiMessage> streamingResponseHandler = getStreamingResponseHandler(thinkId);
-                    thinkAbility.streamThink(thinkContent, streamingResponseHandler);
-                }
+                StreamingResponseHandler<AiMessage> streamingResponseHandler = getStreamingResponseHandler(thinkId);
+                thinkAbility.streamThink(thinkContent, streamingResponseHandler);
             }
         });
     }
@@ -135,7 +133,6 @@ public class AutoAgent {
             }
         };
     }
-
 
 
     private void limitThinkSpeed(long lastTime, long limit) {

@@ -1,6 +1,8 @@
 package com.sugarweb.chatAssistant.agent.ability;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.sugarweb.chatAssistant.domain.po.BlblUser;
 import com.sugarweb.framework.exception.FrameworkException;
 import lombok.extern.slf4j.Slf4j;
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient;
@@ -65,6 +67,7 @@ public class BlblMsgAwareAbility {
                 if (ignoreUid(msg.getUid())) {
                     return;
                 }
+
                 BlblGiftMsg gift = BlblGiftMsg.builder()
                         .blblUid(msg.getUid())
                         .username(msg.getUsername())
@@ -86,6 +89,21 @@ public class BlblMsgAwareAbility {
                 if (ignoreUid(msg.getUid())) {
                     return;
                 }
+                BlblUser blblUser = Db.getById(msg.getUid(), BlblUser.class);
+                if (blblUser == null) {
+                    blblUser = new BlblUser();
+                    blblUser.setBlblUid(msg.getUid());
+                    blblUser.setUsername(msg.getUsername());
+                    blblUser.setCreateTime(LocalDateTime.now());
+                    blblUser.setUpdateTime(LocalDateTime.now());
+                    Db.save(blblUser);
+                } else {
+                    //更新用户信息
+                    blblUser.setUsername(msg.getUsername());
+                    blblUser.setUpdateTime(LocalDateTime.now());
+                    Db.updateById(blblUser);
+                }
+
                 BlblEnterRoomMsg blblDmMsg = BlblEnterRoomMsg.builder()
                         .blblUid(msg.getUid())
                         .username(msg.getUsername())
@@ -147,10 +165,14 @@ public class BlblMsgAwareAbility {
         return StrUtil.equals(uid, yourSelfUid);
     }
 
-    public List<Object> consumeMsg() {
+    public List<Object> batchConsumeMsg() {
         ArrayList<Object> result = new ArrayList<>();
         msgList.drainTo(result);
         return result;
+    }
+
+    public Object consumeMsg() {
+        return msgList.poll();
     }
 
 }

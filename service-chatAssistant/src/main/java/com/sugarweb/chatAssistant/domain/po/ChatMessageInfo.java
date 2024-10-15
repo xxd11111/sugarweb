@@ -23,13 +23,15 @@ public class ChatMessageInfo {
     private String content;
 
     /**
-     * system: 系统消息 user: 用户消息 agent: 机器人消息
+     * system: 系统消息 user: 用户消息 assistant: 机器人消息
      */
     private String chatRole;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
+    private String userId;
 
     public static ChatMessageInfo of(ChatRole chatRole, String prompt, String memoryId) {
         ChatMessageInfo chatMessageInfo = new ChatMessageInfo();

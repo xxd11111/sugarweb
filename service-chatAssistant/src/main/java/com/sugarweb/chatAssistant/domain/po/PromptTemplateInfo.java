@@ -8,6 +8,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 提示词模板信息
@@ -36,12 +37,12 @@ public class PromptTemplateInfo {
     @TableField(exist = false)
     private List<PromptTemplateVariableInfo> promptVariableList;
 
-    public String getPrompt(Map<String, String> contextVariables) {
+    public String getPrompt(Map<String, Object> contextVariables) {
         String content = this.content;
         for (PromptTemplateVariableInfo variableInfo : promptVariableList) {
             String variableCode = "{{" + variableInfo.getVariableCode() + "}}";
-            String variableValue = contextVariables.get(variableCode);
-            content = StrUtil.replace(content, variableCode, variableValue == null ? "" : variableValue);
+            Object variableValue = contextVariables.get(variableCode);
+            content = StrUtil.replace(content, variableCode, variableValue == null ? "" : variableValue.toString());
         }
         return content;
     }

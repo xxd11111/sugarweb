@@ -5,11 +5,11 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.chatAssistant.agent.ability.aware.BlblMsgAdaptor;
 import com.sugarweb.chatAssistant.agent.ability.memory.MemoryAbility;
+import com.sugarweb.chatAssistant.agent.ability.speak.SpeakAbility;
 import com.sugarweb.chatAssistant.agent.ability.speak.StreamThinkSpeakAdapt;
 import com.sugarweb.chatAssistant.agent.constans.ChatRole;
 import com.sugarweb.chatAssistant.application.PromptService;
-import com.sugarweb.chatAssistant.domain.BlblUser;
-import com.sugarweb.chatAssistant.domain.ChatMsg;
+import com.sugarweb.chatAssistant.domain.*;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
@@ -28,8 +28,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * TODO
@@ -39,7 +41,17 @@ import java.util.concurrent.Future;
  */
 public class ThinkAbility {
 
-    private ExecutorService executor;
+    private final ExecutorService executor;
+
+    private final ThinkInputQueue inputQueue;
+
+    private final SpeakAbility speakAbility;
+
+    private final PromptTemplateInfo systemPromptTemplateInfo;
+
+    private final PromptTemplateInfo userPromptTemplateInfo;
+
+    private final AgentMemory agentMemory;
 
     @Resource
     private MemoryAbility memoryAbility;
@@ -52,6 +64,15 @@ public class ThinkAbility {
 
     private Future<?> runningThread = null;
 
+    public ThinkAbility(ExecutorService executor, ThinkInputQueue inputQueue, SpeakAbility speakAbility, PromptTemplateInfo systemPromptTemplateInfo, PromptTemplateInfo userPromptTemplateInfo, AgentMemory agentMemory) {
+        this.executor = executor;
+        this.inputQueue = inputQueue;
+        this.speakAbility = speakAbility;
+        this.systemPromptTemplateInfo = systemPromptTemplateInfo;
+        this.userPromptTemplateInfo = userPromptTemplateInfo;
+        this.agentMemory = agentMemory;
+    }
+
     public void start() {
         runningThread = executor.submit(() -> {
             long lastTime = System.currentTimeMillis();
@@ -63,7 +84,7 @@ public class ThinkAbility {
                 lastTime = System.currentTimeMillis();
                 long thinkId = System.currentTimeMillis();
                 // 从消息队列中获取弹幕消息
-                Object blblMsg = blblMsgAwareAbility.consumeMsg();
+                Object blblMsg = inputQueue.poll();
                 BlblUser blblUser = BlblMsgAdaptor.getBlblUserByMsg(blblMsg);
                 contextVariables.put("user", blblUser);
                 String question = BlblMsgAdaptor.getMsgPrompt(blblMsg);
@@ -174,6 +195,12 @@ public class ThinkAbility {
             return new SystemMessage(chatMsg.getContent());
         }
         throw new IllegalArgumentException(StrUtil.format("不支持的消息类型,messageId:{}", chatMsg.getMsgId()));
+    }
+
+    public void stop() {
+        if (runningThread != null) {
+            runningThread.cancel(true);
+        }
     }
 
 

@@ -77,8 +77,5 @@ public class StreamThinkSpeakAdapt implements StreamingResponseHandler<AiMessage
         }
     }
 
-    private void addSpeakStreamContent(String token) throws InterruptedException {
-
-    }
 
 }

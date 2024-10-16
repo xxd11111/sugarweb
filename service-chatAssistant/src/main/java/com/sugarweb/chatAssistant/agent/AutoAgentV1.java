@@ -9,7 +9,9 @@ import com.sugarweb.chatAssistant.agent.ability.speak.SpeakAbility;
 import com.sugarweb.chatAssistant.agent.ability.speak.StreamThinkSpeakAdapt;
 import com.sugarweb.chatAssistant.agent.ability.think.ThinkAbility;
 import com.sugarweb.chatAssistant.agent.ability.think.ThinkContent;
+import com.sugarweb.chatAssistant.agent.ability.think.ThinkInputQueue;
 import com.sugarweb.chatAssistant.agent.constans.ChatRole;
+import com.sugarweb.chatAssistant.application.PromptService;
 import com.sugarweb.chatAssistant.domain.*;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
@@ -35,22 +37,24 @@ public class AutoAgentV1 {
     private ThinkAbility thinkAbility;
     private MemoryAbility memoryAbility;
     private BlblMsgAwareAbility blblMsgAwareAbility;
-    private Future<?> runningThread = null;
 
     private AgentInfo agentInfo;
-    private PromptTemplateInfo userPromptTemplateInfo;
-    private PromptTemplateInfo systemPromptTemplateInfo;
     private StageInfo stageInfo;
     private SceneInfo sceneInfo;
     private AgentMemory agentMemory;
-
+    private PromptTemplateInfo systemPromptTemplateInfo;
+    private PromptTemplateInfo userPromptTemplateInfo;
 
     public void init() {
+        PromptService promptService = new PromptService();
+        systemPromptTemplateInfo = promptService.getSystemPrompt("1");
+        systemPromptTemplateInfo = promptService.getUserPrompt("1");
         speakAbility = new SpeakAbility(executor);
         speakAbility.init();
-        thinkAbility = new ThinkAbility();
+        ThinkInputQueue thinkInputQueue = new ThinkInputQueue();
+        thinkAbility = new ThinkAbility(executor, thinkInputQueue, speakAbility, systemPromptTemplateInfo, userPromptTemplateInfo, agentMemory);
         memoryAbility = new MemoryAbility();
-        blblMsgAwareAbility = new BlblMsgAwareAbility();
+        blblMsgAwareAbility = new BlblMsgAwareAbility(thinkInputQueue);
         blblMsgAwareAbility.init();
     }
 
@@ -59,15 +63,15 @@ public class AutoAgentV1 {
         speakAbility.start();
         blblMsgAwareAbility.start();
         thinkAbility.start();
-
     }
 
 
 
     public void stop() {
-        if (runningThread != null) {
-            runningThread.interrupt();
-        }
+        speakAbility.stop();
+        blblMsgAwareAbility.stop();
+        thinkAbility.stop();
+        executor.shutdown();
     }
 
 

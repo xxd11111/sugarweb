@@ -2,7 +2,7 @@ package com.sugarweb.uims;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.framework.utils.DDL_Generator;
+import com.sugarweb.framework.utils.GeneratorUtil;
 
 import java.util.Set;
 
@@ -18,7 +18,7 @@ public class DDL_start {
         StringBuilder sqlStr = new StringBuilder();
         // 获取包下的所有类名称
         for (Class<?> clazz : classes) {
-            String sql = DDL_Generator.generateSql(clazz);
+            String sql = GeneratorUtil.generateSql(clazz);
             sqlStr.append("\n").append(sql);
         }
         System.out.println(sqlStr);

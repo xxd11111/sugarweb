@@ -1,7 +1,8 @@
 package com.sugarweb.chatAssistant.application;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.chatAssistant.domain.po.AgentInfo;
+import com.sugarweb.chatAssistant.domain.AgentInfo;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * @author xxd
  * @since 2024/10/15 22:40
  */
+@Service
 public class AgentService {
 
     public AgentInfo getAgentInfo(String agentId) {
@@ -28,12 +30,17 @@ public class AgentService {
     }
 
     public AgentInfo defaultAgentInfo() {
-        AgentInfo agentInfo = new AgentInfo();
-        agentInfo.setAgentId("1");
-        agentInfo.setAgentName("炫妹");
-        agentInfo.setCreateTime(LocalDateTime.now());
-        agentInfo.setUpdateTime(LocalDateTime.now());
-        return agentInfo;
+        AgentInfo agentInfo = getAgentInfo("1");
+        if (agentInfo != null) {
+            return agentInfo;
+        } else {
+            agentInfo = new AgentInfo();
+            agentInfo.setAgentId("1");
+            agentInfo.setAgentName("炫妹");
+            agentInfo.setCreateTime(LocalDateTime.now());
+            agentInfo.setUpdateTime(LocalDateTime.now());
+            return save(agentInfo);
+        }
     }
 
 }

@@ -1,7 +1,8 @@
 package com.sugarweb.chatAssistant.application;
 
-import com.sugarweb.chatAssistant.domain.po.PromptTemplateInfo;
-import com.sugarweb.chatAssistant.domain.po.PromptTemplateVariableInfo;
+import com.sugarweb.chatAssistant.domain.PromptTemplateInfo;
+import com.sugarweb.chatAssistant.domain.PromptTemplateVariableInfo;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,9 +12,10 @@ import java.util.List;
  * @author xxd
  * @version 1.0
  */
+@Service
 public class PromptService {
 
-    public PromptTemplateInfo getSystemPrompt(String promptId){
+    public PromptTemplateInfo getSystemPrompt(String promptId) {
         //todo 目前写死
         PromptTemplateInfo templateInfo = new PromptTemplateInfo();
         String text = """
@@ -31,7 +33,7 @@ public class PromptService {
         return templateInfo;
     }
 
-    public PromptTemplateInfo getUserPrompt(String promptId){
+    public PromptTemplateInfo getUserPrompt(String promptId) {
         //todo 目前写死
         PromptTemplateInfo templateInfo = new PromptTemplateInfo();
         String text = """
@@ -44,31 +46,5 @@ public class PromptService {
         templateInfo.setPromptVariableList(List.of(variableInfo));
         return templateInfo;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

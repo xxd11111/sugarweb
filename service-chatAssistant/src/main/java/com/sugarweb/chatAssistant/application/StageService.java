@@ -1,8 +1,8 @@
 package com.sugarweb.chatAssistant.application;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.chatAssistant.domain.po.SceneInfo;
-import com.sugarweb.chatAssistant.domain.po.StageInfo;
+import com.sugarweb.chatAssistant.domain.SceneInfo;
+import com.sugarweb.chatAssistant.domain.StageInfo;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

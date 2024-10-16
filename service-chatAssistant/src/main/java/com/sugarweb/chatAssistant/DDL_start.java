@@ -3,7 +3,7 @@ package com.sugarweb.chatAssistant;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.framework.utils.DDL_Generator;
+import com.sugarweb.framework.utils.GeneratorUtil;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,49 +24,19 @@ public class DDL_start {
         StringBuilder sqlStr = new StringBuilder();
         // 获取包下的所有类名称
         for (Class<?> clazz : classes) {
-            String sql = DDL_Generator.generateSql(clazz);
+            String sql = GeneratorUtil.generateSql(clazz);
             sqlStr.append("\n").append(sql);
         }
 
-        generateMapper();
-
-    }
-
-    public static void generateMapper() {
-        String mapperTemplate = """
-                package {mapperPackageName};
-                
-                import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-                import {poPackageName}.{poClassName};
-                
-                /**
-                 * {poClassName}
-                 *
-                 * @author xxd
-                 * @since {date}
-                 */
-                public interface {poClassName}Mapper extends BaseMapper<{poClassName}> {
-                
-                }
-                """;
-        String mapperPackageName = "com.sugarweb.chatAssistant.domain.mapper";
         String poPackageName = "com.sugarweb.chatAssistant.domain.po";
+        String mapperPackageName = "com.sugarweb.chatAssistant.domain.mapper";
         String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-chatAssistant\\src\\main\\java\\com\\sugarweb\\chatAssistant\\domain\\mapper";
-        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-
-        Set<Class<?>> classes = ClassUtil.scanPackage(poPackageName);
-        // 获取包下的所有类名称
-        for (Class<?> clazz : classes) {
-            String poClassName = clazz.getSimpleName();
-            String content = StrUtil.replace(mapperTemplate, "{poClassName}", poClassName)
-                    .replace("{poPackageName}", poPackageName)
-                    .replace("{mapperPackageName}", mapperPackageName)
-                    .replace("{date}", date);
-            FileUtil.writeString(content, writePath + "\\" + poClassName + "Mapper.java", "UTF-8");
-        }
+        GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
     }
 
 
+
+    //todo
     public static void generateClass() {
         String templateClass = """
                 package {packageName};

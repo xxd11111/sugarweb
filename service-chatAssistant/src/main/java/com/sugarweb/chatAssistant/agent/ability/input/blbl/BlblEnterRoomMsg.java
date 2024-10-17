@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.aware;
+package com.sugarweb.chatAssistant.agent.ability.input.blbl;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * blbl定时统计信息
+ * 进入房间消息
  *
  * @author xxd
  * @version 1.0
@@ -17,13 +17,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BlblCountMsg {
+public class BlblEnterRoomMsg {
 
-    private String watchedCount;
+    private String blblUid;
 
-    private String watchingCount;
-
-    private String likeCount;
+    private String username;
 
     private LocalDateTime time;
 

@@ -20,4 +20,6 @@ public class ThinkContent {
 
     private ChatMsg systemMessage;
 
+    private long thinkId;
+
 }

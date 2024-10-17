@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.aware;
+package com.sugarweb.chatAssistant.agent.ability.input.blbl;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,13 +17,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BlblLikeMsg {
+public class BlblGiftMsg {
 
     private String blblUid;
 
     private String username;
 
-    private String likeNum;
+    private String gifyName;
+
+    private String giftPrice;
+
+    private String giftNum;
 
     private LocalDateTime time;
 

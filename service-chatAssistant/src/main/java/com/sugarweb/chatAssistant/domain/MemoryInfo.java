@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Data
-public class AgentMemory {
+public class MemoryInfo {
     @TableId
     private String memoryId;
 

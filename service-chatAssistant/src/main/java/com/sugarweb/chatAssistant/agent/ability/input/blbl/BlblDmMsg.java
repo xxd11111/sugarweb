@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.aware;
+package com.sugarweb.chatAssistant.agent.ability.input.blbl;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

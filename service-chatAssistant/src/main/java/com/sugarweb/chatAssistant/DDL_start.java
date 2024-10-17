@@ -20,16 +20,17 @@ public class DDL_start {
     public static String packageName = "com.sugarweb.chatAssistant.domain.po";
 
     public static void main(String[] args) {
-        Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain.po."));
+        Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb.chatAssistant.domain");
         StringBuilder sqlStr = new StringBuilder();
         // 获取包下的所有类名称
         for (Class<?> clazz : classes) {
             String sql = GeneratorUtil.generateSql(clazz);
             sqlStr.append("\n").append(sql);
         }
+        System.out.println(sqlStr);
 
-        String poPackageName = "com.sugarweb.chatAssistant.domain.po";
-        String mapperPackageName = "com.sugarweb.chatAssistant.domain.mapper";
+        String poPackageName = "com.sugarweb.chatAssistant.domain";
+        String mapperPackageName = "com.sugarweb.chatAssistant.mapper";
         String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-chatAssistant\\src\\main\\java\\com\\sugarweb\\chatAssistant\\domain\\mapper";
         GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
     }

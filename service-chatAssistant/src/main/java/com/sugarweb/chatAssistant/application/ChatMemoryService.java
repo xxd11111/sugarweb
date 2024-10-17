@@ -1,11 +1,14 @@
 package com.sugarweb.chatAssistant.application;
 
+import org.springframework.stereotype.Service;
+
 /**
- * TODO
+ * 聊天记忆服务
  *
  * @author xxd
  * @since 2024/9/28 10:02
  */
+@Service
 public class ChatMemoryService {
 
     // 瞬时记忆场景

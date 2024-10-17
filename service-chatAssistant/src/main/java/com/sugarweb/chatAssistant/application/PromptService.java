@@ -15,8 +15,7 @@ import java.util.List;
 @Service
 public class PromptService {
 
-    public PromptTemplateInfo getSystemPrompt(String promptId) {
-        //todo 目前写死
+    public PromptTemplateInfo defaultSystemPrompt() {
         PromptTemplateInfo templateInfo = new PromptTemplateInfo();
         String text = """
                 你现在是友好的人类【炫妹】，接下来请根据事件消息做出回答；
@@ -33,8 +32,7 @@ public class PromptService {
         return templateInfo;
     }
 
-    public PromptTemplateInfo getUserPrompt(String promptId) {
-        //todo 目前写死
+    public PromptTemplateInfo defaultUserPrompt() {
         PromptTemplateInfo templateInfo = new PromptTemplateInfo();
         String text = """
                 {{question}}

@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.output;
+package com.sugarweb.chatAssistant.agent.ability.output.websocket;
 
 import jakarta.websocket.*;
 import lombok.extern.slf4j.Slf4j;
@@ -7,10 +7,14 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+
+/**
+ * websocket输出
+ */
 // @ServerEndpoint("/msg")
 @Slf4j
 // @Component
-public class MsgOutputAbility {
+public class WebsocketOutputAbility {
 
     private static final ConcurrentHashMap<String, Session> sessions = new ConcurrentHashMap<>();
 
@@ -69,7 +73,7 @@ public class MsgOutputAbility {
      * 向客户端发送消息
      */
     public void sendMessage(String sid, String message) throws IOException {
-         //  status 0 思考 1 说话 2 等待中 3打招呼 
+        //  status 0 思考 1 说话 2 等待中 3打招呼
         Session session = sessions.get(sid);
         //同步发消息
         session.getBasicRemote().sendText(message);

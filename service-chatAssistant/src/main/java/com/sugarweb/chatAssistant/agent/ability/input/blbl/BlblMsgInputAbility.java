@@ -1,8 +1,8 @@
-package com.sugarweb.chatAssistant.agent.ability.aware;
+package com.sugarweb.chatAssistant.agent.ability.input.blbl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.chatAssistant.agent.ability.think.ThinkInputQueue;
+import com.sugarweb.chatAssistant.agent.ability.adaptor.ThinkInputAdaptor;
 import com.sugarweb.chatAssistant.domain.BlblUser;
 import com.sugarweb.framework.exception.FrameworkException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +14,6 @@ import tech.ordinaryroad.live.chat.client.codec.bilibili.msg.*;
 import tech.ordinaryroad.live.chat.client.commons.client.enums.ClientStatusEnums;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * blbl消息收集器
@@ -26,7 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @version 1.0
  */
 @Slf4j
-public class BlblMsgAwareAbility {
+public class BlblMsgInputAbility {
 
     private String yourSelfUid = "20047313";
 
@@ -34,10 +30,10 @@ public class BlblMsgAwareAbility {
 
     private BilibiliLiveChatClient client;
 
-    private final ThinkInputQueue thinkInputQueue;
+    private final ThinkInputAdaptor thinkInputAdaptor;
 
-    public BlblMsgAwareAbility(ThinkInputQueue thinkInputQueue) {
-        this.thinkInputQueue = thinkInputQueue;
+    public BlblMsgInputAbility(ThinkInputAdaptor thinkInputAdaptor) {
+        this.thinkInputAdaptor = thinkInputAdaptor;
     }
 
     public void init() {
@@ -64,7 +60,7 @@ public class BlblMsgAwareAbility {
                         .content(msg.getContent())
                         .time(LocalDateTime.now())
                         .build();
-                thinkInputQueue.add(blblDmMsg);
+                thinkInputAdaptor.add(blblDmMsg);
             }
 
             @Override
@@ -81,7 +77,7 @@ public class BlblMsgAwareAbility {
                         .giftPrice(msg.getGiftCount() + "")
                         .time(LocalDateTime.now())
                         .build();
-                thinkInputQueue.add(gift);
+                thinkInputAdaptor.add(gift);
             }
 
             @Override
@@ -114,7 +110,7 @@ public class BlblMsgAwareAbility {
                         .username(msg.getUsername())
                         .time(LocalDateTime.now())
                         .build();
-                thinkInputQueue.add(blblDmMsg);
+                thinkInputAdaptor.add(blblDmMsg);
             }
 
             @Override
@@ -128,7 +124,7 @@ public class BlblMsgAwareAbility {
                         .likeNum(msg.getClickCount() + "")
                         .time(LocalDateTime.now())
                         .build();
-                thinkInputQueue.add(blblDmMsg);
+                thinkInputAdaptor.add(blblDmMsg);
             }
 
             @Override
@@ -138,7 +134,7 @@ public class BlblMsgAwareAbility {
 
             @Override
             public void onRoomStatsMsg(BilibiliBinaryFrameHandler binaryFrameHandler, BilibiliRoomStatsMsg msg) {
-                thinkInputQueue.add(BlblCountMsg.builder()
+                thinkInputAdaptor.add(BlblCountMsg.builder()
                         .watchingCount(msg.getWatchedCount())
                         .watchedCount(msg.getLikedCount())
                         .likeCount(msg.getLikedCount())

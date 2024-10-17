@@ -69,20 +69,20 @@ public class RagBeanConfiguration {
                 .build();
     }
 
-    @Bean
-    public EmbeddingStore<TextSegment> milvusEmbeddingStore() {
-        return MilvusEmbeddingStore.builder()
-                .uri("http://192.168.193.151:19530")
-                .username("root")
-                .password("milvus")
-                .databaseName("default")
-                .collectionName("vector_store4")
-                .dimension(768)
-                .consistencyLevel(ConsistencyLevelEnum.STRONG)
-                // .indexType(IndexType.IVF_FLAT)
-                .metricType(MetricType.COSINE)
-                .build();
-    }
+    // @Bean
+    // public EmbeddingStore<TextSegment> milvusEmbeddingStore() {
+    //     return MilvusEmbeddingStore.builder()
+    //             .uri("http://192.168.193.151:19530")
+    //             .username("root")
+    //             .password("milvus")
+    //             .databaseName("default")
+    //             .collectionName("vector_store4")
+    //             .dimension(768)
+    //             .consistencyLevel(ConsistencyLevelEnum.STRONG)
+    //             // .indexType(IndexType.IVF_FLAT)
+    //             .metricType(MetricType.COSINE)
+    //             .build();
+    // }
 
     @Bean
     @ConditionalOnMissingBean(EmbeddingStore.class)

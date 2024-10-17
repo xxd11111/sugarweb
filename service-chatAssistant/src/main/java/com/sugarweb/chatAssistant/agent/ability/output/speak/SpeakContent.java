@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.speak;
+package com.sugarweb.chatAssistant.agent.ability.output.speak;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

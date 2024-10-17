@@ -140,6 +140,11 @@ public class GeneratorUtil {
             if (exculudeList.contains(field.getName())) {
                 continue;
             }
+            TableField annotation = field.getAnnotation(TableField.class);
+            if (annotation != null && !annotation.exist()){
+                continue;
+            }
+
             //根据字段名称，获取数据库字段名称
             String filedTypeName = field.getType().getName();
             String suffix = filedTypeName.substring(filedTypeName.lastIndexOf(".") + 1);
@@ -159,7 +164,7 @@ public class GeneratorUtil {
             //获取字段类型
             String dataType = javaToJdbcMap.get(suffix.toLowerCase());
             if (StrUtil.isBlank(dataType)) {
-                log.error("字段类型未匹配：{}", suffix);
+                log.error("字段类型未匹配：{},{}", suffix, clazz.getSimpleName());
                 continue;
             }
             //获取字段是否允许为空

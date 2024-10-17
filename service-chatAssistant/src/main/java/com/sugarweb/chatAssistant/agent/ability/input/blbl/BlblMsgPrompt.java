@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.aware;
+package com.sugarweb.chatAssistant.agent.ability.input.blbl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
@@ -13,7 +13,7 @@ import java.util.List;
  * @author xxd
  * @version 1.0
  */
-public class BlblMsgAdaptor {
+public class BlblMsgPrompt {
 
     /**
      * 相当于写死的提示词
@@ -38,7 +38,7 @@ public class BlblMsgAdaptor {
     public static String getMultiMsgPrompt(List<Object> msgList) {
         StringBuilder multiText = new StringBuilder();
         for (Object msg : msgList) {
-            String text = BlblMsgAdaptor.getMsgPrompt(msg);
+            String text = BlblMsgPrompt.getMsgPrompt(msg);
             if (StrUtil.isNotEmpty(text)) {
                 multiText.append(text).append("\n");
             }

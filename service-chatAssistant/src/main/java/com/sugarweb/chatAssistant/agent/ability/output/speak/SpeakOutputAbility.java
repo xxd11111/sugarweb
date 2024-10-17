@@ -29,6 +29,7 @@ public class SpeakOutputAbility {
 
     private final ThinkOutputAdaptor thinkOutputAdaptor;
 
+    //todo 音频播放异常待处理
     private final AudioPlayerComponent mediaPlayerComponent;
 
     private final ReentrantLock speakingLock = new ReentrantLock();
@@ -91,6 +92,7 @@ public class SpeakOutputAbility {
         String filePath;
         try {
             filePath = filePathFuture.get();
+            log.info("filePath: {}", filePath);
             mediaPlay(filePath);
         } catch (ExecutionException e) {
             log.error("Error getting file path: {}", e.getCause(), e);
@@ -106,6 +108,7 @@ public class SpeakOutputAbility {
             //注意此方法是异步执行，调用vlc播放(这一步要严格保证没问题)，否则死锁
             mediaPlayerComponent.mediaPlayer().media().play(localFilePath);
         } catch (Exception e) {
+            log.error("Error playing media: {}", e.getMessage(), e);
             speakingLock.unlock();
         }
     }

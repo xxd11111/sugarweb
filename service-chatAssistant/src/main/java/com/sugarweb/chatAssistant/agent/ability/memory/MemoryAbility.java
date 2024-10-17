@@ -1,6 +1,7 @@
 package com.sugarweb.chatAssistant.agent.ability.memory;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.sugarweb.chatAssistant.agent.constans.ChatRole;
 import com.sugarweb.chatAssistant.domain.ChatMsg;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
@@ -22,14 +23,19 @@ import java.util.List;
  */
 public class MemoryAbility {
 
-    private EmbeddingModel embeddingModel;
+    private final EmbeddingModel embeddingModel;
+    private final EmbeddingStore<TextSegment> embeddingStore;
 
-    private EmbeddingStore<TextSegment> embeddingStore;
+    public MemoryAbility(EmbeddingModel embeddingModel, EmbeddingStore<TextSegment> embeddingStore) {
+        this.embeddingModel = embeddingModel;
+        this.embeddingStore = embeddingStore;
+    }
 
     public List<ChatMsg> listLastChatMessage(String memoryId, int limit) {
         List<ChatMsg> chatMemoryInfos = Db.lambdaQuery(ChatMsg.class)
                 .eq(ChatMsg::getMemoryId, memoryId)
                 .orderByDesc(ChatMsg::getCreateTime)
+                .in(ChatMsg::getChatRole, ChatRole.USER.getCode(), ChatRole.ASSISTANT.getCode())
                 .last(limit > 0, "limit " + limit)
                 .list();
         Collections.reverse(chatMemoryInfos);

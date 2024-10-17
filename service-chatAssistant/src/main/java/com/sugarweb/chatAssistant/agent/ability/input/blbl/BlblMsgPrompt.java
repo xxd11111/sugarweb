@@ -29,7 +29,7 @@ public class BlblMsgPrompt {
         } else if (o instanceof BlblEnterRoomMsg enterRoomMsg) {
             return StrUtil.format("时间：{}，用户进入房间，用户：{}", enterRoomMsg.getTime().format(formatter), enterRoomMsg.getUsername());
         } else if (o instanceof BlblCountMsg countMsg) {
-            return StrUtil.format("时间：{}，房价定时统计，累计观看人数：{}，正在观看人数：{}，累计点赞数：{}", countMsg.getTime().format(formatter), countMsg.getWatchedCount(), countMsg.getWatchingCount(), countMsg.getLikeCount());
+            return StrUtil.format("时间：{}，房间定时统计，累计观看人数：{}，正在观看人数：{}，累计点赞数：{}", countMsg.getTime().format(formatter), countMsg.getWatchedCount(), countMsg.getWatchingCount(), countMsg.getLikeCount());
         }
         return "";
     }

@@ -41,15 +41,17 @@ public class AutoAgent {
         //装载输出能力
         speakOutputAbility = new SpeakOutputAbility(executor, thinkOutputAdaptor);
         //装载记忆能力
-        memoryAbility = new MemoryAbility();
-
+        memoryAbility = new MemoryAbility(environmentInfo.getEmbeddingModel(), environmentInfo.getEmbeddingStore());
         //装载输入能力
         blblMsgInputAbility = new BlblMsgInputAbility(thinkInputAdaptor);
         //装载思考能力
-        streamingThinkAbility = new StreamingThinkAbility(executor, environmentInfo, thinkInputAdaptor, thinkOutputAdaptor);
+        streamingThinkAbility = new StreamingThinkAbility(executor, environmentInfo, thinkInputAdaptor, thinkOutputAdaptor,memoryAbility, environmentInfo.getStreamingChatLanguageModel());
     }
 
     public void start() {
+        if (isRunning()){
+            return;
+        }
         speakOutputAbility.start();
         blblMsgInputAbility.start();
         streamingThinkAbility.start();
@@ -60,7 +62,6 @@ public class AutoAgent {
         speakOutputAbility.stop();
         blblMsgInputAbility.stop();
         streamingThinkAbility.stop();
-        executor.shutdown();
     }
 
     public boolean isRunning() {

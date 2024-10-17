@@ -22,12 +22,10 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.output.Response;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -37,6 +35,7 @@ import java.util.concurrent.Future;
  * @author xxd
  * @version 1.0
  */
+@Slf4j
 public class StreamingThinkAbility {
 
     private final ExecutorService executor;
@@ -48,73 +47,73 @@ public class StreamingThinkAbility {
     private final ThinkInputAdaptor inputAdaptor;
 
     private final ThinkOutputAdaptor outputAdaptor;
-    @Resource
-    private MemoryAbility memoryAbility;
-    @Resource
-    private StreamingChatLanguageModel chatLanguageModel;
-    @Resource
-    private EmbeddingModel embeddingModel;
-    @Resource
-    private EmbeddingStore<TextSegment> embeddingStore;
+    private final MemoryAbility memoryAbility;
+    private final StreamingChatLanguageModel chatLanguageModel;
 
 
-    public StreamingThinkAbility(ExecutorService executor, EnvironmentInfo envInfo, ThinkInputAdaptor inputAdaptor, ThinkOutputAdaptor outputAdaptor) {
+    public StreamingThinkAbility(ExecutorService executor, EnvironmentInfo envInfo, ThinkInputAdaptor inputAdaptor, ThinkOutputAdaptor outputAdaptor, MemoryAbility memoryAbility, StreamingChatLanguageModel chatLanguageModel) {
         this.envInfo = envInfo;
         this.executor = executor;
         this.inputAdaptor = inputAdaptor;
         this.outputAdaptor = outputAdaptor;
+        this.memoryAbility = memoryAbility;
+        this.chatLanguageModel = chatLanguageModel;
     }
 
     public void start() {
         runningThread = executor.submit(() -> {
             long lastTime = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
-                Map<String, Object> contextVariables = new HashMap<>();
+                try {
+                    Map<String, Object> contextVariables = new HashMap<>();
 
-                // 限制最快100ms 思考一次
-                limitThinkSpeed(lastTime, 100);
-                lastTime = System.currentTimeMillis();
-                long thinkId = System.currentTimeMillis();
-                // 从消息队列中获取弹幕消息
-                Object blblMsg = inputAdaptor.poll();
-                BlblUser blblUser = BlblMsgPrompt.getBlblUserByMsg(blblMsg);
-                contextVariables.put("user", blblUser);
-                String question = BlblMsgPrompt.getMsgPrompt(blblMsg);
-                contextVariables.put("question", question);
+                    // 限制最快100ms 思考一次
+                    limitThinkSpeed(lastTime, 100);
+                    lastTime = System.currentTimeMillis();
+                    long thinkId = System.currentTimeMillis();
+                    // 从消息队列中获取弹幕消息
+                    Object blblMsg = inputAdaptor.poll();
+                    if (blblMsg == null) {
+                        continue;
+                    }
+                    BlblUser blblUser = BlblMsgPrompt.getBlblUserByMsg(blblMsg);
+                    contextVariables.put("user", blblUser);
+                    String question = BlblMsgPrompt.getMsgPrompt(blblMsg);
+                    contextVariables.put("question", question);
 
-                //获取相关召回文档
-                String documents = "无";
-                //暂时不使用
-                // String retrievalSegment = memoryAbility.getRetrievalSegment(question.toString());
-                // if (StrUtil.isNotEmpty(retrievalSegment)) {
-                //     documents = retrievalSegment;
-                // }
-                contextVariables.put("documents", documents);
+                    //获取相关召回文档
+                    String documents = "无";
+                    //暂时不使用
+                    // String retrievalSegment = memoryAbility.getRetrievalSegment(question.toString());
+                    // if (StrUtil.isNotEmpty(retrievalSegment)) {
+                    //     documents = retrievalSegment;
+                    // }
+                    contextVariables.put("documents", documents);
 
-                ThinkContent thinkContent = new ThinkContent();
-                thinkContent.setThinkId(thinkId);
-                // 系统提示语
-                String systemPrompt = envInfo.getSystemPrompt(contextVariables);
-                ChatMsg systemChatMsg = ChatMsg.of(ChatRole.SYSTEM, systemPrompt, envInfo.getCurrentMemoryId());
-                thinkContent.setSystemMessage(systemChatMsg);
-                Db.save(systemChatMsg);
-                // 历史消息
-                List<ChatMsg> chatMsgs = memoryAbility.listLastChatMessage(envInfo.getCurrentMemoryId(), 10);
-                thinkContent.setHistoryMessage(chatMsgs);
-                // 用户提问
-                String userPrompt = envInfo.getUserPrompt(contextVariables);
-                ChatMsg userChatMsg = ChatMsg.of(ChatRole.USER, userPrompt, envInfo.getCurrentMemoryId());
-                thinkContent.setCurrentQuestion(userChatMsg);
-                Db.save(userChatMsg);
-
-                streamThink(thinkContent);
+                    ThinkContent thinkContent = new ThinkContent();
+                    thinkContent.setThinkId(thinkId);
+                    // 系统提示语
+                    String systemPrompt = envInfo.getSystemPrompt(contextVariables);
+                    ChatMsg systemChatMsg = ChatMsg.of(ChatRole.SYSTEM, systemPrompt, envInfo.getCurrentMemoryId());
+                    thinkContent.setSystemMessage(systemChatMsg);
+                    // 历史消息
+                    List<ChatMsg> chatMsgs = memoryAbility.listLastChatMessage(envInfo.getCurrentMemoryId(), 10);
+                    thinkContent.setHistoryMessage(chatMsgs);
+                    // 用户提问
+                    String userPrompt = envInfo.getUserPrompt(contextVariables);
+                    ChatMsg userChatMsg = ChatMsg.of(ChatRole.USER, userPrompt, envInfo.getCurrentMemoryId());
+                    thinkContent.setCurrentQuestion(userChatMsg);
+                    streamThink(thinkContent);
+                } catch (Exception e) {
+                    log.error("ai思考异常 error:{}", e);
+                }
             }
         });
     }
 
-    private StreamingResponseHandler<AiMessage> multiHandler(long thinkId) {
+    private StreamingResponseHandler<AiMessage> multiHandler(long thinkId, ThinkContent thinkContent) {
         StreamingResponseHandler<AiMessage> outputHandler = outputAdaptor.streamingOutputHandler(thinkId);
-        StreamingResponseHandler<AiMessage> storeMemoryHandler = storeMemoryHandler();
+        StreamingResponseHandler<AiMessage> storeMemoryHandler = storeMemoryHandler(thinkContent);
         return new StreamingResponseHandler<>() {
             @Override
             public void onComplete(Response<AiMessage> response) {
@@ -137,7 +136,7 @@ public class StreamingThinkAbility {
     }
 
     @NotNull
-    private StreamingResponseHandler<AiMessage> storeMemoryHandler() {
+    private StreamingResponseHandler<AiMessage> storeMemoryHandler(ThinkContent thinkContent) {
         //保存对话消息
         return new StreamingResponseHandler<>() {
             @Override
@@ -150,12 +149,15 @@ public class StreamingThinkAbility {
 
             @Override
             public void onComplete(Response<AiMessage> response) {
+                //保存对话消息
+                ChatMsg currentQuestion = thinkContent.getCurrentQuestion();
                 AiMessage aiMessage = response.content();
                 String aiMessageText = aiMessage.text();
-                //保存对话消息
                 ChatMsg aiMessageInfo = ChatMsg.of(ChatRole.ASSISTANT, aiMessageText, envInfo.getCurrentMemoryId());
-                memoryAbility.saveChatMessage(aiMessageInfo);
-
+                List<ChatMsg> chatMsgs = new ArrayList<>();
+                chatMsgs.add(currentQuestion);
+                chatMsgs.add(aiMessageInfo);
+                memoryAbility.saveBatchChatMessage(chatMsgs);
             }
         };
     }
@@ -192,7 +194,7 @@ public class StreamingThinkAbility {
         String question = thinkContent.getCurrentQuestion().getContent();
         messageList.add(new UserMessage(question));
 
-        chatLanguageModel.generate(messageList, multiHandler(thinkContent.getThinkId()));
+        chatLanguageModel.generate(messageList, multiHandler(thinkContent.getThinkId(), thinkContent));
 
     }
 

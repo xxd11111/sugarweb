@@ -4,6 +4,10 @@ import com.sugarweb.chatAssistant.application.AgentService;
 import com.sugarweb.chatAssistant.application.PromptService;
 import com.sugarweb.chatAssistant.application.StageService;
 import com.sugarweb.chatAssistant.domain.SceneInfo;
+import com.sugarweb.framework.utils.BeanUtil;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.store.embedding.EmbeddingStore;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
@@ -76,12 +80,12 @@ public class AgentManager implements DisposableBean {
     private AutoAgent createAndStartNewAgent(String agentId) {
         EnvironmentInfo agentEnvironmentInfo = defaultEnvironmentInfo();
         if (agentEnvironmentInfo == null) {
-            throw new IllegalStateException("Failed to create default environment info");
+            String errorMessage = "Failed to create default environment info for agentId: " + agentId;
+            log.error(errorMessage);
+            throw new IllegalStateException(errorMessage);
         }
         AutoAgent autoAgent = new AutoAgent(executor, agentEnvironmentInfo);
-        autoAgent.start();
-        autoAgentMap.put(agentId, autoAgent);
-        log.info("New agent created and started: {}", agentId);
+        log.info("New agent created and started: {}, at time: {}", agentId, System.currentTimeMillis());
         return autoAgent;
     }
 
@@ -97,6 +101,9 @@ public class AgentManager implements DisposableBean {
                 .currentMemory(stageService.defaultWithSceneMemory(sceneInfo.getSceneId()))
                 .systemPromptTemplateInfo(promptService.defaultSystemPrompt())
                 .userPromptTemplateInfo(promptService.defaultUserPrompt())
+                .streamingChatLanguageModel(BeanUtil.getBean(StreamingChatLanguageModel.class))
+                .embeddingModel(BeanUtil.getBean(EmbeddingModel.class))
+                .embeddingStore(BeanUtil.getBean(EmbeddingStore.class))
                 .build();
     }
 

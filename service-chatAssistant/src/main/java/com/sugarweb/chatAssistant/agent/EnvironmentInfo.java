@@ -1,6 +1,10 @@
 package com.sugarweb.chatAssistant.agent;
 
 import com.sugarweb.chatAssistant.domain.*;
+import dev.langchain4j.data.segment.TextSegment;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.store.embedding.EmbeddingStore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +35,12 @@ public class EnvironmentInfo {
     private PromptTemplateInfo systemPromptTemplateInfo;
 
     private PromptTemplateInfo userPromptTemplateInfo;
+
+    private StreamingChatLanguageModel streamingChatLanguageModel;
+
+    private EmbeddingModel embeddingModel;
+
+    private EmbeddingStore<TextSegment> embeddingStore;
 
     public String getSystemPrompt(Map<String, Object> contextVariables) {
         return systemPromptTemplateInfo.getPrompt(contextVariables);

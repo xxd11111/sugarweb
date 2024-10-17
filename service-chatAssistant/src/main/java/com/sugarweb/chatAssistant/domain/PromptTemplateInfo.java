@@ -39,9 +39,10 @@ public class PromptTemplateInfo {
     public String getPrompt(Map<String, Object> contextVariables) {
         String content = this.content;
         for (PromptTemplateVariableInfo variableInfo : promptVariableList) {
-            String variableCode = "{{" + variableInfo.getVariableCode() + "}}";
+            String variableCode = variableInfo.getVariableCode();
+            String variableReplace = "{{" + variableInfo.getVariableCode() + "}}";
             Object variableValue = contextVariables.get(variableCode);
-            content = StrUtil.replace(content, variableCode, variableValue == null ? "" : variableValue.toString());
+            content = StrUtil.replace(content, variableReplace, variableValue == null ? "" : variableValue.toString());
         }
         return content;
     }

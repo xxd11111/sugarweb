@@ -2,6 +2,7 @@ package com.sugarweb.chatAssistant.agent.ability.input.blbl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sugarweb.chatAssistant.agent.ability.adaptor.ThinkInputAdaptor;
 import com.sugarweb.chatAssistant.domain.BlblUser;
 import com.sugarweb.framework.exception.FrameworkException;
@@ -28,21 +29,24 @@ public class BlblMsgInputAbility {
 
     private int roomId = 2470538;
 
+    private String cookie = "";
+
     private BilibiliLiveChatClient client;
 
     private final ThinkInputAdaptor thinkInputAdaptor;
 
     public BlblMsgInputAbility(ThinkInputAdaptor thinkInputAdaptor) {
         this.thinkInputAdaptor = thinkInputAdaptor;
+        initBlblClient();
     }
 
-    public void init() {
+    private void initBlblClient() {
         // 1. 创建配置
         BilibiliLiveChatClientConfig config = BilibiliLiveChatClientConfig.builder()
                 // 消息转发地址
                 // .forwardWebsocketUri("")
                 // 浏览器Cookie（一大串都要）,发送弹幕时候需要填写
-                // .cookie("")
+                .cookie(cookie)
                 //直播间id
                 .roomId(roomId)
                 .build();
@@ -61,6 +65,7 @@ public class BlblMsgInputAbility {
                         .time(LocalDateTime.now())
                         .build();
                 thinkInputAdaptor.add(blblDmMsg);
+                log.info("danmuMsg:{}", blblDmMsg);
             }
 
             @Override
@@ -69,7 +74,7 @@ public class BlblMsgInputAbility {
                     return;
                 }
 
-                BlblGiftMsg gift = BlblGiftMsg.builder()
+                BlblGiftMsg giftMsg = BlblGiftMsg.builder()
                         .blblUid(msg.getUid())
                         .username(msg.getUsername())
                         .giftNum(msg.getGiftId())
@@ -77,7 +82,8 @@ public class BlblMsgInputAbility {
                         .giftPrice(msg.getGiftCount() + "")
                         .time(LocalDateTime.now())
                         .build();
-                thinkInputAdaptor.add(gift);
+                thinkInputAdaptor.add(giftMsg);
+                log.info("giftMsg:{}", giftMsg);
             }
 
             @Override
@@ -111,6 +117,7 @@ public class BlblMsgInputAbility {
                         .time(LocalDateTime.now())
                         .build();
                 thinkInputAdaptor.add(blblDmMsg);
+                log.info("enterRoomMsg:{}", blblDmMsg);
             }
 
             @Override
@@ -118,13 +125,14 @@ public class BlblMsgInputAbility {
                 if (ignoreUid(msg.getUid())) {
                     return;
                 }
-                BlblLikeMsg blblDmMsg = BlblLikeMsg.builder()
+                BlblLikeMsg blblLikeMsg = BlblLikeMsg.builder()
                         .blblUid(msg.getUid())
                         .username(msg.getUsername())
                         .likeNum(msg.getClickCount() + "")
                         .time(LocalDateTime.now())
                         .build();
-                thinkInputAdaptor.add(blblDmMsg);
+                thinkInputAdaptor.add(blblLikeMsg);
+                log.info("likeMsg:{}", blblLikeMsg);
             }
 
             @Override
@@ -134,12 +142,18 @@ public class BlblMsgInputAbility {
 
             @Override
             public void onRoomStatsMsg(BilibiliBinaryFrameHandler binaryFrameHandler, BilibiliRoomStatsMsg msg) {
-                thinkInputAdaptor.add(BlblCountMsg.builder()
+                BlblCountMsg blblCountMsg = BlblCountMsg.builder()
                         .watchingCount(msg.getWatchedCount())
-                        .watchedCount(msg.getLikedCount())
+                        .watchedCount(msg.getWatchedCount())
                         .likeCount(msg.getLikedCount())
                         .time(LocalDateTime.now())
-                        .build());
+                        .build();
+                JsonNode countNode = msg.getData().get("count_text");
+                String countText = countNode.asText();
+                JsonNode onlineCountNode = msg.getData().get("online_count_text");
+                String onlineCountText = onlineCountNode.asText();
+                thinkInputAdaptor.add(blblCountMsg);
+                log.info("blblCountMsg:{}", blblCountMsg);
             }
         });
 
@@ -163,7 +177,8 @@ public class BlblMsgInputAbility {
     }
 
     private boolean ignoreUid(String uid) {
-        return StrUtil.equals(uid, yourSelfUid);
+        return false;
+        // return StrUtil.equals(uid, yourSelfUid);
     }
 
 }

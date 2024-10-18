@@ -43,20 +43,30 @@ public class ThinkOutputAdaptor {
                 if (StrUtil.isBlank(token)) {
                     return;
                 }
-                if (sb.length() + token.length() > 10) {
-                    //判断token是否有中断符号 '。' 有的话截断
-                    if (token.contains("。")) {
-                        String[] split = token.split("。");
-                        sb.append(split[0]);
-                        addSpeakContent(thinkId, currentSplitId++, sb.toString());
-                        String last = split[split.length - 1];
-                        sb.append(last);
-                    } else {
-                        sb.append(token);
-                    }
+                if (sb.length() + token.length() > 20) {
+                    handleTokenWithPunctuation(token);
                 } else {
                     sb.append(token);
                 }
+            }
+
+            private void handleTokenWithPunctuation(String token) {
+                String[] punctuationMarks = {"。", "！", "!", "？", "?"};
+                for (String mark : punctuationMarks) {
+                    if (token.contains(mark)) {
+                        String[] split = token.split(mark, 2); // 限制分割次数为2，避免创建过多数组
+                        if (split.length > 1) {
+                            sb.append(split[0]).append(mark);
+                            addSpeakContent(thinkId, currentSplitId++, sb.toString());
+                            sb.setLength(0); // 清空StringBuilder
+                            sb.append(split[1]);
+                            return;
+                        }
+                        // 只分割一次
+                        break;
+                    }
+                }
+                sb.append(token);
             }
 
             @Override
@@ -69,6 +79,7 @@ public class ThinkOutputAdaptor {
 
             @Override
             public void onError(Throwable error) {
+                log.error("onError", error);
                 addSpeakContent(thinkId, currentSplitId, "大脑宕机了。");
             }
         };

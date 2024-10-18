@@ -3,14 +3,15 @@ package com.sugarweb.chatAssistant.agent.ability.output.speak;
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.chatAssistant.agent.ability.adaptor.ThinkOutputAdaptor;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.caprica.vlcj.media.callback.CallbackMedia;
+import uk.co.caprica.vlcj.media.callback.seekable.RandomAccessFileMedia;
 import uk.co.caprica.vlcj.player.base.EventApi;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.component.AudioPlayerComponent;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.io.File;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -29,27 +30,43 @@ public class SpeakOutputAbility {
 
     private final ThinkOutputAdaptor thinkOutputAdaptor;
 
-    //todo 音频播放异常待处理
-    private final AudioPlayerComponent mediaPlayerComponent;
+    private final AudioPlayerComponent audioPlayerComponent;
 
     private final ReentrantLock speakingLock = new ReentrantLock();
+    //信号量
+    private final CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
+
 
     public SpeakOutputAbility(ExecutorService executor, ThinkOutputAdaptor thinkOutputAdaptor) {
         this.executor = executor;
         this.thinkOutputAdaptor = thinkOutputAdaptor;
 
-        mediaPlayerComponent = new AudioPlayerComponent();
-        MediaPlayer mediaPlayer = mediaPlayerComponent.mediaPlayer();
-        EventApi events = mediaPlayer.events();
-        events.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+        audioPlayerComponent = new AudioPlayerComponent();
+        audioPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
-                speakingLock.unlock();
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    log.error("Interrupted while waiting for barrier", e);
+                    Thread.currentThread().interrupt();
+                } catch (BrokenBarrierException e) {
+                    cyclicBarrier.reset();
+                    log.error("Barrier broken", e);
+                }
             }
 
             @Override
             public void error(MediaPlayer mediaPlayer) {
-                speakingLock.unlock();
+                try {
+                    cyclicBarrier.await();
+                } catch (InterruptedException e) {
+                    log.error("Interrupted while waiting for barrier", e);
+                    Thread.currentThread().interrupt();
+                } catch (BrokenBarrierException e) {
+                    cyclicBarrier.reset();
+                    log.error("Barrier broken", e);
+                }
             }
         });
     }
@@ -68,13 +85,37 @@ public class SpeakOutputAbility {
             Future<?> newThread = executor.submit(() -> {
                 try {
                     while (!Thread.currentThread().isInterrupted()) {
-                        output();
+                        audioPlay();
                     }
                 } catch (Exception e) {
                     log.error("Error in speak thread", e);
                 }
             });
             speakThread.compareAndSet(currentThread, newThread);
+        }
+    }
+    public void audioPlay() throws InterruptedException {
+        SpeakContent speakContent = thinkOutputAdaptor.take();
+        Future<String> filePathFuture = speakContent.getFilePath();
+        String filePath;
+        try {
+            filePath = filePathFuture.get();
+        } catch (ExecutionException e) {
+            log.error("Error getting file path: {}", e.getCause(), e);
+            return;
+        }
+        log.info("filePath: {}", filePath);
+        if (StrUtil.isEmpty(filePath)) {
+            return;
+        }
+        try {
+            log.info("localFilePath: {}", filePath);
+            CallbackMedia media = new RandomAccessFileMedia(new File(filePath));
+            //注意此方法是异步执行，调用vlc播放(这一步要严格保证没问题)，否则死锁
+            audioPlayerComponent.mediaPlayer().media().play(media);
+            cyclicBarrier.await();
+        } catch (BrokenBarrierException e) {
+            cyclicBarrier.reset();
         }
     }
 
@@ -85,33 +126,5 @@ public class SpeakOutputAbility {
             speakThread.compareAndSet(currentThread, null);
         }
     }
-
-    public void output() throws InterruptedException {
-        SpeakContent speakContent = thinkOutputAdaptor.take();
-        Future<String> filePathFuture = speakContent.getFilePath();
-        String filePath;
-        try {
-            filePath = filePathFuture.get();
-            log.info("filePath: {}", filePath);
-            mediaPlay(filePath);
-        } catch (ExecutionException e) {
-            log.error("Error getting file path: {}", e.getCause(), e);
-        }
-    }
-
-    private void mediaPlay(String localFilePath) {
-        if (StrUtil.isEmpty(localFilePath)) {
-            return;
-        }
-        speakingLock.lock();
-        try {
-            //注意此方法是异步执行，调用vlc播放(这一步要严格保证没问题)，否则死锁
-            mediaPlayerComponent.mediaPlayer().media().play(localFilePath);
-        } catch (Exception e) {
-            log.error("Error playing media: {}", e.getMessage(), e);
-            speakingLock.unlock();
-        }
-    }
-
 
 }

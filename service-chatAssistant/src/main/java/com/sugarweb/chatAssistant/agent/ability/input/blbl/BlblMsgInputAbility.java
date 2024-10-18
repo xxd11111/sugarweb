@@ -29,7 +29,7 @@ public class BlblMsgInputAbility {
 
     private int roomId = 2470538;
 
-    private String cookie = "";
+    private String cookie = "buvid3=9D364EC2-5E90-CD2D-1673-7A5764DA1FEB22057infoc; buvid4=F4FF10CB-EF04-06EA-088C-26B9554DC3C622810-023012111-KFBfGLWm3YRJM50PziW5Rg%3D%3D; rpdid=|(YYlJl~RmJ0J'uY~Rk~klkJ; buvid_fp_plain=undefined; CURRENT_BLACKGAP=0; enable_web_push=DISABLE; header_theme_version=CLOSE; b_nut=100; _uuid=8BD467DD-5562-D1C2-96A9-6E2237437CA567978infoc; is-2022-channel=1; FEED_LIVE_VERSION=V_WATCHLATER_PIP_WINDOW3; DedeUserID=20047313; DedeUserID__ckMd5=a3663c8815a28502; CURRENT_QUALITY=116; LIVE_BUVID=AUTO9117279467884429; PVID=1; CURRENT_FNVAL=4048; fingerprint=b6e4d2afbc3bd4672f0b7b6b8b23b7c0; SESSDATA=2685ee1a%2C1744637268%2Cdc181%2Aa1CjBjfsT9VwXU2C5nN5OdVkMPoSmmRpZIiKUDkjSZVhTxcEY22YfV33R5AaH5ImU3Rz0SVjR5d0dDVmFjUWJtLWhMZmhvTnZaSS1qREpQSEozYmludlhDV0M5dFlsQkh5RXc2d2hFRFlxMzFlX1dNcG9GQ1ZYY01NVlEyTjYwc2NHblFmbFNHZ2tRIIEC; bili_jct=cf9b668e1717481315dc65261c3a6988; bili_ticket=eyJhbGciOiJIUzI1NiIsImtpZCI6InMwMyIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjkzNDQ0NjksImlhdCI6MTcyOTA4NTIwOSwicGx0IjotMX0.fw5VRbRhlctvuW7_b1J8CL-77P2bU8R--JirtQrydjs; bili_ticket_expires=1729344409; buvid_fp=b6e4d2afbc3bd4672f0b7b6b8b23b7c0; b_lsid=54647B46_1929FD9ADA1; bmg_af_switch=1; bmg_src_def_domain=i1.hdslb.com; sid=flinb4ka; bp_t_offset_20047313=989647734438887424; home_feed_column=4; browser_resolution=1060-2101";
 
     private BilibiliLiveChatClient client;
 
@@ -150,11 +150,6 @@ public class BlblMsgInputAbility {
                         .likeCount(msg.getLikedCount())
                         .time(LocalDateTime.now())
                         .build();
-                JsonNode countNode = msg.getData().get("count_text");
-                String countText = countNode.asText();
-                JsonNode onlineCountNode = msg.getData().get("online_count_text");
-                String onlineCountText = onlineCountNode.asText();
-                // thinkInputAdaptor.add(blblCountMsg);
                 log.info("blblCountMsg:{}", blblCountMsg);
             }
         });

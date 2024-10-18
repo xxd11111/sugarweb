@@ -45,12 +45,11 @@ public class BlblMsgInputAbility {
         BilibiliLiveChatClientConfig config = BilibiliLiveChatClientConfig.builder()
                 // 消息转发地址
                 // .forwardWebsocketUri("")
-                // 浏览器Cookie（一大串都要）,发送弹幕时候需要填写
+                // 浏览器Cookie（一大串都要）,发送弹幕时候需要必填，注意未配置cookie会导致5分钟后读取到脱敏用户名，脱敏uid
                 .cookie(cookie)
                 //直播间id
                 .roomId(roomId)
                 .build();
-
         // 2. 创建Client并传入配置、添加消息回调
         client = new BilibiliLiveChatClient(config, new IBilibiliMsgListener() {
             @Override
@@ -58,6 +57,7 @@ public class BlblMsgInputAbility {
                 if (ignoreUid(msg.getUid())) {
                     return;
                 }
+                //todo 兼容点歌 等互动聊天功能
                 BlblDmMsg blblDmMsg = BlblDmMsg.builder()
                         .blblUid(msg.getUid())
                         .username(msg.getUsername())
@@ -93,6 +93,7 @@ public class BlblMsgInputAbility {
 
             @Override
             public void onEnterRoomMsg(InteractWordMsg msg) {
+                //todo 记录是否关注，是否有勋章
                 if (ignoreUid(msg.getUid())) {
                     return;
                 }
@@ -142,6 +143,7 @@ public class BlblMsgInputAbility {
 
             @Override
             public void onRoomStatsMsg(BilibiliBinaryFrameHandler binaryFrameHandler, BilibiliRoomStatsMsg msg) {
+                //统计消息不做记录
                 BlblCountMsg blblCountMsg = BlblCountMsg.builder()
                         .watchingCount(msg.getWatchedCount())
                         .watchedCount(msg.getWatchedCount())
@@ -152,7 +154,7 @@ public class BlblMsgInputAbility {
                 String countText = countNode.asText();
                 JsonNode onlineCountNode = msg.getData().get("online_count_text");
                 String onlineCountText = onlineCountNode.asText();
-                thinkInputAdaptor.add(blblCountMsg);
+                // thinkInputAdaptor.add(blblCountMsg);
                 log.info("blblCountMsg:{}", blblCountMsg);
             }
         });

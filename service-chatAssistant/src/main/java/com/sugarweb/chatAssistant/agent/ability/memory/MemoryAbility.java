@@ -1,7 +1,8 @@
 package com.sugarweb.chatAssistant.agent.ability.memory;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.chatAssistant.agent.constans.ChatRole;
+import com.sugarweb.chatAssistant.constans.ChatRole;
+import com.sugarweb.chatAssistant.domain.BlblUserAction;
 import com.sugarweb.chatAssistant.domain.ChatMsg;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;
@@ -72,6 +73,16 @@ public class MemoryAbility {
             documentStr.append(text).append("\n");
         }
         return documentStr.toString();
+    }
+
+    public void saveBlblUserAction(BlblUserAction object) {
+        Db.save(object);
+    }
+
+    public List<BlblUserAction> listUserAction(String blblUid) {
+        return Db.lambdaQuery(BlblUserAction.class)
+                .eq(BlblUserAction::getBlblUid, blblUid)
+                .list();
     }
 
 }

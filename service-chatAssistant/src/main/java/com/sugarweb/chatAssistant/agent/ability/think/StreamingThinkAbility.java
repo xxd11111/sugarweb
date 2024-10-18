@@ -2,26 +2,21 @@ package com.sugarweb.chatAssistant.agent.ability.think;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.chatAssistant.agent.EnvironmentInfo;
 import com.sugarweb.chatAssistant.agent.ability.adaptor.ThinkInputAdaptor;
 import com.sugarweb.chatAssistant.agent.ability.adaptor.ThinkOutputAdaptor;
 import com.sugarweb.chatAssistant.agent.ability.input.blbl.BlblMsgPrompt;
 import com.sugarweb.chatAssistant.agent.ability.memory.MemoryAbility;
-import com.sugarweb.chatAssistant.agent.constans.ChatRole;
+import com.sugarweb.chatAssistant.constans.ChatRole;
 import com.sugarweb.chatAssistant.domain.BlblUser;
 import com.sugarweb.chatAssistant.domain.ChatMsg;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
-import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
-import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.output.Response;
-import dev.langchain4j.store.embedding.EmbeddingStore;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 

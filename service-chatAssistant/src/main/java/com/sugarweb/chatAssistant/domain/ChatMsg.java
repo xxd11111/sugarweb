@@ -1,7 +1,7 @@
 package com.sugarweb.chatAssistant.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.sugarweb.chatAssistant.agent.constans.ChatRole;
+import com.sugarweb.chatAssistant.constans.ChatRole;
 import lombok.Data;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.constans;
+package com.sugarweb.chatAssistant.constans;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

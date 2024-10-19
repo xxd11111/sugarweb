@@ -42,17 +42,19 @@ public class TtsRequest {
     
     public Map<String, Object> toFormData() {
         Map<String, Object> formData = new HashMap<>();
+
+        formData.put("speed", 5);
         // * text: str| 必须， 要合成语音的文字
         formData.put("text", this.getText());
         // * prompt: str| 可选，默认 空， 设定 笑声、停顿，例如 [oral_2][laugh_0][break_6]
         if (StrUtil.isEmpty(this.getPrompt())){
-            formData.put("prompt", "");
+            formData.put("prompt", "[break_6]");
         }else {
             formData.put("prompt", this.getPrompt());
         }
         // * voice: 可选，默认 2222, 决定音色的数字， 2222 | 7869 | 6653 | 4099 | 5099，可选其一，或者任意传入将随机使用音色
         if (StrUtil.isEmpty(this.getVoice())){
-            formData.put("voice", "2222");
+            formData.put("voice", "1031.pt");
         }else {
             formData.put("voice", this.getVoice());
         }
@@ -74,7 +76,7 @@ public class TtsRequest {
         }else {
             formData.put("top_k", this.getTop_k());
         }
-        // * skip_refine: int| 可选， 默认0， 1=跳过 refine text，0=不跳过
+        // * skip_refine: int| 可选， 默认1， 1=跳过 refine text，0=不跳过
         if (null == this.getSkip_refine()){
             formData.put("skip_refine", 0);
         }else {

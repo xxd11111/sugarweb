@@ -1,15 +1,17 @@
 package com.sugarweb.chatAssistant.agent;
 
-import com.sugarweb.chatAssistant.agent.ability.adaptor.ThinkInputAdaptor;
-import com.sugarweb.chatAssistant.agent.ability.adaptor.ThinkOutputAdaptor;
+import com.sugarweb.chatAssistant.agent.ability.input.InputContainer;
 import com.sugarweb.chatAssistant.agent.ability.input.blbl.BlblMsgInputAbility;
 import com.sugarweb.chatAssistant.agent.ability.memory.MemoryAbility;
-import com.sugarweb.chatAssistant.agent.ability.output.speak.SpeakOutputAbility;
-import com.sugarweb.chatAssistant.agent.ability.think.StreamingThinkAbility;
+import com.sugarweb.chatAssistant.agent.ability.memory.MemoryOutputListener;
+import com.sugarweb.chatAssistant.agent.ability.output.OutputContainer;
+import com.sugarweb.chatAssistant.agent.ability.output.audio.AudioOutputAbility;
+import com.sugarweb.chatAssistant.agent.ability.output.audio.AudioOutputListener;
+import com.sugarweb.chatAssistant.agent.ability.think.StreamListener;
+import com.sugarweb.chatAssistant.agent.ability.think.StreamThinkAbility;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -22,11 +24,11 @@ import java.util.concurrent.ExecutorService;
 public class AutoAgent {
 
     private final ExecutorService executor;
-    private final boolean isRunning = false;
+    private boolean isRunning = false;
     private final EnvironmentInfo environmentInfo;
     //装载的能力
-    private final StreamingThinkAbility streamingThinkAbility;
-    private final SpeakOutputAbility speakOutputAbility;
+    private final StreamThinkAbility streamThinkAbility;
+    private final AudioOutputAbility audioOutputAbility;
     private final MemoryAbility memoryAbility;
     private final BlblMsgInputAbility blblMsgInputAbility;
 
@@ -34,34 +36,51 @@ public class AutoAgent {
         this.executor = executor;
         this.environmentInfo = environmentInfo;
 
-        //创建输入适配器
-        ThinkInputAdaptor thinkInputAdaptor = new ThinkInputAdaptor();
-        //创建输出适配器
-        ThinkOutputAdaptor thinkOutputAdaptor = new ThinkOutputAdaptor(executor);
-        //装载输出能力
-        speakOutputAbility = new SpeakOutputAbility(executor, thinkOutputAdaptor);
         //装载记忆能力
         memoryAbility = new MemoryAbility(environmentInfo.getEmbeddingModel(), environmentInfo.getEmbeddingStore());
+        //创建记忆输出监听器
+        StreamListener memoryOutputListener = new MemoryOutputListener(memoryAbility);
+        //创建输入适配器
+        InputContainer inputContainer = new InputContainer();
+
+        OutputContainer outputContainer = new OutputContainer();
+        //装载输出能力
+        audioOutputAbility = new AudioOutputAbility(executor, outputContainer);
+        //创建输出监听器
+        StreamListener audioOutputListener = new AudioOutputListener(outputContainer);
         //装载输入能力
-        blblMsgInputAbility = new BlblMsgInputAbility(thinkInputAdaptor);
+        blblMsgInputAbility = new BlblMsgInputAbility(inputContainer);
+
+        List<StreamListener> streamListeners = List.of(memoryOutputListener, audioOutputListener);
         //装载思考能力
-        streamingThinkAbility = new StreamingThinkAbility(executor, environmentInfo, thinkInputAdaptor, thinkOutputAdaptor,memoryAbility, environmentInfo.getStreamingChatLanguageModel());
+        streamThinkAbility = new StreamThinkAbility(
+                executor,
+                environmentInfo,
+                inputContainer,
+                memoryAbility,
+                environmentInfo.getStreamingChatLanguageModel(),
+                streamListeners);
     }
 
     public void start() {
-        if (isRunning()){
+        if (isRunning()) {
             return;
         }
-        speakOutputAbility.start();
+        isRunning = true;
+        audioOutputAbility.start();
         blblMsgInputAbility.start();
-        streamingThinkAbility.start();
+        streamThinkAbility.start();
     }
 
 
     public void stop() {
-        speakOutputAbility.stop();
+        if (!isRunning()) {
+            return;
+        }
+        isRunning = false;
+        audioOutputAbility.stop();
         blblMsgInputAbility.stop();
-        streamingThinkAbility.stop();
+        streamThinkAbility.stop();
     }
 
     public boolean isRunning() {

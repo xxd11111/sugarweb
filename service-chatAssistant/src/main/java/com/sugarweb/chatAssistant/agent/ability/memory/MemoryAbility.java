@@ -43,7 +43,19 @@ public class MemoryAbility {
         return chatMemoryInfos;
     }
 
-    public void saveBatchChatMessage(List<ChatMsg> chatMemoryInfo) {
+    public List<ChatMsg> listLastChatMessage(String memoryId, String userId, int limit) {
+        List<ChatMsg> chatMemoryInfos = Db.lambdaQuery(ChatMsg.class)
+                .eq(ChatMsg::getMemoryId, memoryId)
+                .eq(ChatMsg::getUserId, userId)
+                .orderByDesc(ChatMsg::getCreateTime)
+                .in(ChatMsg::getChatRole, ChatRole.USER.getCode(), ChatRole.ASSISTANT.getCode())
+                .last(limit > 0, "limit " + limit)
+                .list();
+        Collections.reverse(chatMemoryInfos);
+        return chatMemoryInfos;
+    }
+
+    public void saveBatchChatMsg(List<ChatMsg> chatMemoryInfo) {
         Db.saveBatch(chatMemoryInfo);
     }
 

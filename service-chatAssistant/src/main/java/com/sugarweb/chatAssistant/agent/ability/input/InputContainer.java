@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.adaptor;
+package com.sugarweb.chatAssistant.agent.ability.input;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -11,7 +11,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author xxd
  * @since 2024/10/16 21:31
  */
-public class ThinkInputAdaptor {
+public class InputContainer {
 
     private final BlockingQueue<Object> msgList = new LinkedBlockingQueue<>();
 

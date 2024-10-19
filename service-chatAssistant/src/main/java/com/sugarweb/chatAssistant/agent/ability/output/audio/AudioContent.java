@@ -1,4 +1,4 @@
-package com.sugarweb.chatAssistant.agent.ability.output.speak;
+package com.sugarweb.chatAssistant.agent.ability.output.audio;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +17,9 @@ import java.util.concurrent.Future;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SpeakContent {
+public class AudioContent {
 
-    private long chatId;
+    private long thinkId;
 
     private int splitId;
 

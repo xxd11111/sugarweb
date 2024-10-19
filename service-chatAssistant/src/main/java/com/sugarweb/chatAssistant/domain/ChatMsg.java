@@ -33,9 +33,10 @@ public class ChatMsg {
 
     private String userId;
 
-    public static ChatMsg of(ChatRole chatRole, String prompt, String memoryId) {
+    public static ChatMsg of(ChatRole chatRole, String prompt, String memoryId, String userId) {
         ChatMsg chatMsg = new ChatMsg();
         chatMsg.setMemoryId(memoryId);
+        chatMsg.setUserId(userId);
         chatMsg.setContent(prompt);
         chatMsg.setChatRole(chatRole.getCode());
         LocalDateTime now = LocalDateTime.now();

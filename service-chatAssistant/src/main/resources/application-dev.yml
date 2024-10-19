@@ -1,7 +1,7 @@
 server:
   port: 8080
 
-#localhost:8889/v3/api-docs
+#localhost:8080/v3/api-docs
 
 spring:
   threads:
@@ -139,7 +139,8 @@ mybatis-plus:
   configuration:
     mapUnderscoreToCamelCase: true
     cacheEnabled: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #开启sql日志
+
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
   # token 名称（同时也是 cookie 名称）

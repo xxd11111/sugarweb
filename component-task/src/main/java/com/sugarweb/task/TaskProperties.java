@@ -2,7 +2,6 @@ package com.sugarweb.task;
 
 import com.sugarweb.task.infra.auto.AutoRegisterStrategy;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -17,6 +16,6 @@ public class TaskProperties {
 
     private boolean enable = true;
 
-    private AutoRegisterStrategy autoRegisterStrategy = AutoRegisterStrategy.save;
+    private AutoRegisterStrategy autoRegisterStrategy = AutoRegisterStrategy.SAVE;
 
 }

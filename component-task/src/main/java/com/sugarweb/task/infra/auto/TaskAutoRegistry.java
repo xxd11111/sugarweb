@@ -29,12 +29,12 @@ public class TaskAutoRegistry {
     private boolean forceUpdate = false;
 
     public TaskAutoRegistry(TaskProperties taskProperties) {
-        if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.save) {
+        if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.SAVE) {
             enabled = true;
-        } else if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.saveAndUpdate) {
+        } else if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.SAVE_AND_UPDATE) {
             enabled = true;
             forceUpdate = true;
-        } else if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.reset) {
+        } else if (taskProperties.getAutoRegisterStrategy() == AutoRegisterStrategy.RESET) {
             enabled = true;
             forceUpdate = true;
             reset = true;

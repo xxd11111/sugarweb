@@ -213,7 +213,7 @@ sugarweb:
     secretKey: x
   task:
 #    默认是save，生产环境使用，reset 会清空所有任务,根据注解重新生成
-    auto-register-strategy: reset
+    auto-register-strategy: RESET
 
 
 

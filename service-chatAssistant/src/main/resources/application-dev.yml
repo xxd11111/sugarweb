@@ -8,7 +8,7 @@ spring:
     virtual:
       enabled: true
   application:
-    name: uims
+    name: chatAssistant
   jackson:
     time-zone: GMT+8
   datasource:
@@ -187,8 +187,8 @@ sugarweb:
       subscriptionConnectionPoolSize: 50
   # redis 单机配置(单机与集群只能开启一个另一个需要注释掉)
   openapi:
-    title: 用户界面管理系统
-    description: 用户界面管理系统
+    title: sugarweb
+    description: sugarweb
     version: V1.0
     url: http://localhost:${server.port}${server.servlet.context-path}
     email: sugarcoatx@qq.com
@@ -197,7 +197,7 @@ sugarweb:
   dictionary:
     scanPackage: com.sugarweb.uims
     enableCache: true
-    cachePrefix: 'sugarweb:dictionary:'
+    cachePrefix: 'sugarweb:dict:'
   param:
     enableRegister: true
     scanPackage: com.sugarweb.uims
@@ -213,10 +213,37 @@ sugarweb:
     accessKey: x
     secretKey: x
   task:
-#    默认是save，生产环境使用，reset 会清空所有任务,根据注解重新生成
-    auto-register-strategy: reset
+    # 默认是save(生产环境使用)，reset(会清空所有任务,根据注解重新生成)
+    auto-register-strategy: save_and_update
 
-
-
-
+  chat-assistant:
+    llm-type: ollama
+    ollama:
+      base-url: 'http://localhost:11434'
+      chat-model:
+        model-name: 'qwen2.5:7b'
+        temperature: 0.75
+        timeout: 60000
+      embedding-model:
+        model-name: 'nomic-embed-text'
+        timeout: 60000
+    vector-store-type: in_memory
+    # milvus向量库配置方式
+    # vector-store-type: milvus
+    # milvus:
+    #   url: 'http://192.168.193.151:19530'
+    #   username: 'root'
+    #   password: 'milvus'
+    #   database-name: 'default'
+    #   collection-name: 'vector_store'
+    #   dimension: 768
+    #   consistency-level: strong
+    #   metric-type: COSINE
+    blbl-client:
+      # 进blbl浏览器上的cookie
+      cookie:
+      # 直播房间号
+      room-id: 2470538
+      # 自己的uid
+      self-uid: 20047313
 

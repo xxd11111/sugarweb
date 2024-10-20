@@ -3,8 +3,10 @@ package com.sugarweb.chatAssistant.agent.ability.input.blbl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.chatAssistant.agent.ability.input.InputContainer;
+import com.sugarweb.chatAssistant.config.BlblClientProperties;
 import com.sugarweb.chatAssistant.domain.BlblUser;
 import com.sugarweb.framework.exception.FrameworkException;
+import com.sugarweb.framework.utils.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
 import tech.ordinaryroad.live.chat.client.bilibili.client.BilibiliLiveChatClient;
 import tech.ordinaryroad.live.chat.client.bilibili.config.BilibiliLiveChatClientConfig;
@@ -24,17 +26,22 @@ import java.time.LocalDateTime;
 @Slf4j
 public class BlblMsgInputAbility {
 
-    private String yourSelfUid = "20047313";
+    private Integer selfUid;
 
-    private int roomId = 2470538;
+    private Integer roomId;
 
-    private String cookie = "";
+    private String cookie;
 
     private BilibiliLiveChatClient client;
 
     private final InputContainer inputContainer;
 
     public BlblMsgInputAbility(InputContainer inputContainer) {
+        BlblClientProperties clientProperties = BeanUtil.getBean(BlblClientProperties.class);
+        cookie = clientProperties.getCookie();
+        roomId = clientProperties.getRoomId();
+        selfUid = clientProperties.getSelfUid();
+
         this.inputContainer = inputContainer;
         initBlblClient();
     }

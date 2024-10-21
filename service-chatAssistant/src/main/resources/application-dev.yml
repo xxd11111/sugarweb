@@ -98,27 +98,28 @@ spring:
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
 
+# sping ai的配置
+#  ai:
+#    ollama:
+#      base-url: 'http://192.168.193.151:11434'
+#      chat:
+#        model: 'qwen:4b'
+#      embedding:
+#        options:
+#          model: 'nomic-embed-text'
+#    vectorstore:
+#      milvus:
+#        client:
+#          host: "192.168.193.151"
+#          port: 19530
+#          username: "root"
+#          password: "milvus"
+#        databaseName: "default"
+#        collectionName: "vector_store"
+#        embeddingDimension: 768
+#        indexType: IVF_FLAT
+#        metricType: COSINE
 
-  ai:
-    ollama:
-      base-url: 'http://192.168.193.151:11434'
-      chat:
-        model: 'qwen:4b'
-      embedding:
-        options:
-          model: 'nomic-embed-text'
-    vectorstore:
-      milvus:
-        client:
-          host: "192.168.193.151"
-          port: 19530
-          username: "root"
-          password: "milvus"
-        databaseName: "default"
-        collectionName: "vector_store"
-        embeddingDimension: 768
-        indexType: IVF_FLAT
-        metricType: COSINE
 mybatis-plus:
   # mapper扫描路径
   mapperLocations: classpath*:com/sugarweb/*/domain/mapper/*Mapper.xml

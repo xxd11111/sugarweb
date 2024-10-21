@@ -54,9 +54,54 @@ sugarweb采用组件化构架设计，整合了web应用所需通用组件。
 3. 启动服务后，使用接口信息url配合接口调用工具进行测试，http://localhost:8080/v3/api-docs
 
 ### service-chatAssistant(数字人平台, 可独立使用)
+1. 开发环境
+```angular2html
+jdk21, maven3.8.8, redis6.x, mysql8.x
+ollama安装，关于ollama的使用请参考ollama官网，项目使用的模型为qwen2.5:7b，nomic-embed-text，读者可以根据自己的配置调整。
+语音播报部分api使用的是VLC播放器，请自行安装。https://www.videolan.org/vlc/  https://get.videolan.org/vlc/3.0.21/win64/vlc-3.0.21-win64.exe
+文本转语音api使用的是chattts项目，请自行安装。https://github.com/jianchang512/ChatTTS-ui/releases/tag/v1.0
+```
+2. 修改启动模块下的application-dev.yml，配置mysql（必填），redis（必填），milvus(可选)，ollama，tts，blbl配置。
+```angular2html
+目前只适配ollama，milvus向量库，如果需要其他模型及向量库，请修改ChatAssistantConfiguration类；
+blbl的cookie，登录账号网页打开F12查看 
+  chat-assistant:
+    # 大模型配置
+    llm-type: ollama
+    ollama:
+      base-url: 'http://localhost:11434'
+      chat-model:
+        model-name: 'qwen2.5:7b'
+        temperature: 0.75
+        timeout: 60000
+      embedding-model:
+        model-name: 'nomic-embed-text'
+        timeout: 60000
 
-1. 修改启动模块下的application-dev.yml，配置mysql（必填），redis（必填），milvus(可选)，ollama，tts，blbl配置。
-2. 进入数据库执行sql脚本, scripts/ChatAssisitant-DDL.sql
+    # 向量库配置，默认设置的是内存向量库。
+    vector-store-type: in_memory
+    # milvus向量库配置方式
+    # vector-store-type: milvus
+    # milvus:
+    #   url: 'http://192.168.193.151:19530'
+    #   username: 'root'
+    #   password: 'milvus'
+    #   database-name: 'default'
+    #   collection-name: 'vector_store'
+    #   dimension: 768
+    #   consistency-level: strong
+    #   metric-type: COSINE
+
+    # blbl客户端配置
+    blbl-client:
+      # 进blbl浏览器上的cookie
+      cookie:
+      # 直播房间号
+      room-id: 2470538
+      # 自己的uid
+      self-uid: 20047313
+```
+3. 进入数据库执行sql脚本, scripts/ChatAssisitant-DDL.sql
 
 ## 交流与讨论
 

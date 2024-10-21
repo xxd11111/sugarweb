@@ -1,12 +1,9 @@
 package com.sugarweb.chatAssistant;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.framework.utils.GeneratorUtil;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 /**
@@ -22,19 +19,28 @@ public class DDL_start {
     public static void main(String[] args) {
         Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb.chatAssistant.domain");
         StringBuilder sqlStr = new StringBuilder();
-        // 获取包下的所有类名称
+        // 获取chatAssistant项目的实体类
         for (Class<?> clazz : classes) {
             String sql = GeneratorUtil.generateSql(clazz);
             sqlStr.append("\n").append(sql);
         }
         System.out.println(sqlStr);
 
-        String poPackageName = "com.sugarweb.chatAssistant.domain";
-        String mapperPackageName = "com.sugarweb.chatAssistant.mapper";
-        String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-chatAssistant\\src\\main\\java\\com\\sugarweb\\chatAssistant\\domain\\mapper";
-        GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
-    }
+        // 获取各个组件的实体类
+        Set<Class<?>> componentClazzSet = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain.po."));
+        StringBuilder componentSql = new StringBuilder();
+        // 获取包下的所有类名称
+        for (Class<?> clazz : componentClazzSet) {
+            String sql = GeneratorUtil.generateSql(clazz);
+            componentSql.append("\n").append(sql);
+        }
+        System.out.println(componentSql);
 
+        // String poPackageName = "com.sugarweb.chatAssistant.domain";
+        // String mapperPackageName = "com.sugarweb.chatAssistant.mapper";
+        // String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-chatAssistant\\src\\main\\java\\com\\sugarweb\\chatAssistant\\domain\\mapper";
+        // GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
+    }
 
 
     //todo
@@ -67,7 +73,7 @@ public class DDL_start {
                     @Schema(description = "{description}")
                     private {fieldType} {fieldName};
                 """;
-        
+
         //获取表结构
         String sql = """
                 SELECT

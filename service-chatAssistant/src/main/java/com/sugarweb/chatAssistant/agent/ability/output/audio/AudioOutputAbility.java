@@ -183,6 +183,7 @@ public class AudioOutputAbility {
      * @return 音频文件路径
      */
     private String tts(String content) {
+        // todo 存在[uv_break]问题 https://github.com/jianchang512/ChatTTS-ui/issues/240
         log.info("未清洗数据 content: {}", content);
         // 只允许使用汉字，句号，逗号，感叹号；其他的替换为空白；
         //将特殊符合处理

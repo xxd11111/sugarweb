@@ -12,12 +12,13 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
-    "element-plus": "^2.8.6",
     "pinia": "^2.2.4",
     "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.4.5",
+    "vuetify": "^3.7.3"
   },
   "devDependencies": {
+    "@mdi/font": "^7.4.47",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.16.11",
     "@vitejs/plugin-vue": "^5.1.4",
@@ -26,6 +27,8 @@
     "eslint": "^9.12.0",
     "eslint-plugin-vue": "^9.29.0",
     "npm-run-all2": "^6.2.3",
+    "sass": "^1.80.3",
+    "sass-loader": "^16.0.2",
     "typescript": "~5.5.4",
     "vite": "^5.4.8",
     "vue-tsc": "^2.1.6"

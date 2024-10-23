@@ -17,11 +17,16 @@
         color="grey-darken-2"
         centered
       >
-        <v-tab
-          v-for="link in links"
-          :key="link"
-          :text="link"
-        ></v-tab>
+        <router-link
+          v-for="(link, index) in links"
+          :key="index"
+          :to="link"
+          class="bg-grey-lighten-3"
+        >
+          <v-tab>
+            {{ link }}
+          </v-tab>
+        </router-link>
       </v-tabs>
       <v-spacer></v-spacer>
 
@@ -34,57 +39,22 @@
 
     <v-main class="bg-grey-lighten-3">
       <v-container>
-        <v-row>
-          <v-col
-            cols="12"
-            md="2"
-          >
-            <v-sheet
-              min-height="268"
-              rounded="lg"
-            >
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="8"
-          >
-            <v-sheet
-              min-height="70vh"
-              rounded="lg"
-            >
-              <!--  -->
-            </v-sheet>
-          </v-col>
-
-          <v-col
-            cols="12"
-            md="2"
-          >
-            <v-sheet
-              min-height="268"
-              rounded="lg"
-            >
-              <!--  -->
-            </v-sheet>
-          </v-col>
-        </v-row>
+        <router-view/>
       </v-container>
     </v-main>
   </v-app>
-  <div style="width:100%;height:100%;z-index: -1000;">
-    <!-- <canvas id="canvas" style="position:absolute;top: 50px;background-color: #A9C931;" ></canvas> -->
-    <canvas id="canvas_view"></canvas>
-  </div>
 </template>
 
 <script setup lang="ts">
+import {RouterLink, RouterView} from 'vue-router'
+
 const links = [
-  'Dashboard',
-  'Messages',
-  'Profile',
-  'Updates',
+  'demo',
+  'systemParam',
+  'demo',
+  'demo',
 ]
 </script>
+
+<style scoped>
+</style>

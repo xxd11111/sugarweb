@@ -6,18 +6,19 @@ import router from './router'
 
 // Vuetify
 import "vuetify/styles";
-import { createVuetify } from "vuetify";
+import {createVuetify} from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 // Vuetify icons font
-import { aliases, mdi } from "vuetify/iconsets/mdi";
+import {aliases, mdi} from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
+import myIndex from "@/router";
 
 const vuetify = createVuetify({
   components,
   directives,
   theme: {
-    defaultTheme: 'dark',
+    defaultTheme: 'light',
   },
   icons: {
     defaultSet: "mdi",
@@ -28,4 +29,4 @@ const vuetify = createVuetify({
   },
 });
 
-createApp(App).use(createPinia()).use(router).use(vuetify).mount('#app')
+createApp(App).use(createPinia()).use(myIndex).use(vuetify).mount('#app')

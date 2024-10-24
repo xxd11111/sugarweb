@@ -12,15 +12,11 @@ import lombok.Data;
 @Data
 public class PageQuery {
 
-    private static final Integer DEFAULT_PAGE = 1;
-
-    private static final Integer DEFAULT_SIZE = 10;
-
     @Min(value = 1, message = "页码最小值为 1")
-    private Integer pageNumber = DEFAULT_PAGE;
+    private Integer pageNumber = 1;
 
     @Min(value = 1, message = "每页条数最小值为 1")
-    private Integer pageSize = DEFAULT_SIZE;
+    private Integer pageSize = 10;
 
 
     public int startIndex() {

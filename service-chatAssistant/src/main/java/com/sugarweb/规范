@@ -1,0 +1,7 @@
+接口命名(service相同)：
+xxx/page表示分页，
+xxx/list表示列表，
+xxx/detail表示详情
+xxx/save新增
+xxx/update编辑
+

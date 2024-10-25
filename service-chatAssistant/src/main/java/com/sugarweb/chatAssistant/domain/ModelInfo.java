@@ -1,26 +1,32 @@
 package com.sugarweb.chatAssistant.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
- * AiAgent
+ * 大模型信息
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class AgentInfo {
-
+public class ModelInfo {
     @TableId
-    private String agentId;
+    private String modelId;
 
-    private String agentName;
+    private String modelPlatform;
 
-    private String agentType;
+    private String modelName;
+
+    private String modelType;
+
+    private String baseUrl;
+
+    private String apiKey;
+
+    private String enabled;
 
     private LocalDateTime createTime;
 

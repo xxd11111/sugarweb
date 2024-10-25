@@ -28,7 +28,12 @@ public class DocInfo {
 
     private String docSize;
 
+    // 手动创建，文件上传
+    private String sourceType;
+
     private String docStatus;
+
+    private String parseStatus;
 
     private LocalDateTime createTime;
 

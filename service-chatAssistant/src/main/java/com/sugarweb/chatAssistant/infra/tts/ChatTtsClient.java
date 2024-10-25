@@ -21,6 +21,12 @@ import java.util.Map;
 @Slf4j
 public class ChatTtsClient {
 
+    private final String url;
+
+    public ChatTtsClient(String url) {
+        this.url = url;
+    }
+
     /**
      * # API调用代码
      * res = requests.post('http://127.0.0.1:9966/tts', data={
@@ -44,7 +50,7 @@ public class ChatTtsClient {
 
     public TtsResponse tts(TtsRequest ttsRequest) {
         Map<String, Object> formData = ttsRequest.toFormData();
-        HttpResponse execute = HttpUtil.createRequest(Method.POST, "http://127.0.0.1:9966/tts")
+        HttpResponse execute = HttpUtil.createRequest(Method.POST, url)
                 .form(formData)
                 .contentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .execute();

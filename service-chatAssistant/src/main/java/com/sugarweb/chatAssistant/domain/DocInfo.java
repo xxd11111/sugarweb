@@ -19,6 +19,8 @@ public class DocInfo {
     @TableId
     private String docId;
 
+    private String kbId;
+
     private String docName;
 
     @TableField(exist = false)

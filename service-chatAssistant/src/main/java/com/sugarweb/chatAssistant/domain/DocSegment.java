@@ -19,9 +19,9 @@ public class DocSegment {
 
     private String content;
 
-    private String documentId;
+    private String doctId;
 
-    private String syncStatus;
+    private String parseStatus;
 
     private LocalDateTime createTime;
 

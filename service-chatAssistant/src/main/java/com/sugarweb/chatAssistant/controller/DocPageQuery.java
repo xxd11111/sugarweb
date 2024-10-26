@@ -1,16 +1,10 @@
 package com.sugarweb.chatAssistant.controller;
 
-import lombok.Data;
-
 /**
- * TODO
+ * DocPageQuery
  *
  * @author xxd
  * @version 1.0
  */
-@Data
-public class KbPageQuery {
-
-    private String kbName;
-
+public class DocPageQuery {
 }

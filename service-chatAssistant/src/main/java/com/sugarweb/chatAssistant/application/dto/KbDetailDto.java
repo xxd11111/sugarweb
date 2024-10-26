@@ -1,11 +1,11 @@
-package com.sugarweb.chatAssistant.controller;
+package com.sugarweb.chatAssistant.application.dto;
 
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
- * TODO
+ * KbDetailDto
  *
  * @author xxd
  * @version 1.0

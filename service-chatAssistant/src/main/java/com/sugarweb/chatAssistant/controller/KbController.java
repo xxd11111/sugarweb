@@ -1,6 +1,11 @@
 package com.sugarweb.chatAssistant.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.sugarweb.chatAssistant.application.KbService;
+import com.sugarweb.chatAssistant.application.dto.KbDetailDto;
+import com.sugarweb.chatAssistant.application.dto.KbPageQuery;
+import com.sugarweb.chatAssistant.application.dto.KbSaveDto;
+import com.sugarweb.chatAssistant.application.dto.KbUpdateDto;
 import com.sugarweb.framework.common.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class KbController {
 
     @Resource
-    private com.sugarweb.chatAssistant.controller.KbService kbService;
+    private KbService kbService;
 
     @GetMapping("/page")
     @Operation(operationId = "kb:page", summary = "分页查询代理列表")

@@ -1,36 +1,31 @@
-package com.sugarweb.chatAssistant.domain;
+package com.sugarweb.chatAssistant.controller;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.sugarweb.oss.domain.po.FileInfo;
+import com.sugarweb.oss.application.FileDto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
- * Document
+ * DocDetailDto
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class DocInfo {
+public class DocDetailDto {
 
-    @TableId
     private String docId;
 
     private String kbId;
 
     private String docName;
 
-    @TableField(exist = false)
-    private FileInfo fileInfo;
+    private FileDto fileInfo;
 
     private String docType;
 
     private String docSize;
 
-    // 手动创建，文件上传
     private String sourceType;
 
     private String docStatus;

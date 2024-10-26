@@ -1,17 +1,18 @@
-package com.sugarweb.chatAssistant.controller;
+package com.sugarweb.chatAssistant.application.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 /**
- * TODO
+ * kb更新参数
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class KbSaveDto {
+public class KbUpdateDto {
+
+    private String kbId;
 
     private String kbName;
 

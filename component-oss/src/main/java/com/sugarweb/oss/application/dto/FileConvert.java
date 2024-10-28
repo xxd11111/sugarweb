@@ -1,4 +1,4 @@
-package com.sugarweb.oss.application;
+package com.sugarweb.oss.application.dto;
 
 import com.sugarweb.oss.domain.po.FileInfo;
 
@@ -9,8 +9,8 @@ import com.sugarweb.oss.domain.po.FileInfo;
  * @version 1.0
  */
 public class FileConvert {
-    public static FileDto toDto(FileInfo fileInfo) {
-        return FileDto.builder()
+    public static FileDetailDto toDto(FileInfo fileInfo) {
+        return FileDetailDto.builder()
                 .fileId(fileInfo.getFileId())
                 .groupCode(fileInfo.getGroupCode())
                 .fileKey(fileInfo.getFileKey())

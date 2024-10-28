@@ -4,6 +4,8 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.sugarweb.oss.application.dto.FileConvert;
+import com.sugarweb.oss.application.dto.FileDetailDto;
 import com.sugarweb.oss.domain.po.FileInfo;
 import com.sugarweb.oss.domain.po.FileLink;
 
@@ -63,7 +65,7 @@ public class FileLinkService {
                 .eq(FileLink::getBizId, bizId));
     }
 
-    public List<FileDto> getAllLinkFiles(String bizId) {
+    public List<FileDetailDto> getAllLinkFiles(String bizId) {
         List<FileLink> list = Db.list(new LambdaQueryWrapper<FileLink>()
                 .eq(FileLink::getBizId, bizId));
         List<String> fileIds = list.stream().map(FileLink::getFileId).collect(Collectors.toList());
@@ -74,7 +76,7 @@ public class FileLinkService {
         }
     }
 
-    public List<FileDto> getGroupLinkFiles(String bizId, String groupCode) {
+    public List<FileDetailDto> getGroupLinkFiles(String bizId, String groupCode) {
         List<FileLink> list = Db.list(new LambdaQueryWrapper<FileLink>()
                 .eq(FileLink::getGroupCode, groupCode)
                 .eq(FileLink::getBizId, bizId));

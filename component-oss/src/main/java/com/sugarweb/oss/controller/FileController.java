@@ -5,7 +5,7 @@ import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.exception.ServerException;
 import com.sugarweb.framework.exception.ServiceException;
-import com.sugarweb.oss.application.FileDto;
+import com.sugarweb.oss.application.dto.FileDetailDto;
 import com.sugarweb.oss.application.FileService;
 import com.sugarweb.oss.application.dto.FileQuery;
 import com.sugarweb.oss.domain.po.FileInfo;
@@ -53,9 +53,9 @@ public class FileController {
 
     @PostMapping("upload")
     @Operation(operationId = "file:upload", summary = "上传")
-    public R<FileDto> upload(MultipartFile multipartFile, String fileGroup) {
+    public R<FileDetailDto> upload(MultipartFile multipartFile, String fileGroup) {
         try (InputStream inputStream = multipartFile.getInputStream()) {
-            FileDto upload = fileService.upload(fileGroup, inputStream, multipartFile.getContentType(), multipartFile.getOriginalFilename());
+            FileDetailDto upload = fileService.upload(fileGroup, inputStream, multipartFile.getContentType(), multipartFile.getOriginalFilename());
             return R.data(upload);
         } catch (IOException e) {
             log.error("文件上传失败", e);
@@ -79,7 +79,7 @@ public class FileController {
 
     @PostMapping("page")
     @Operation(operationId = "file:page", summary = "分页")
-    public R<IPage<FileDto>> page(PageQuery pageQuery, FileQuery query) {
+    public R<IPage<FileDetailDto>> page(PageQuery pageQuery, FileQuery query) {
         return R.data(fileService.page(pageQuery, query));
     }
 

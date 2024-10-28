@@ -1,12 +1,15 @@
-package com.sugarweb.chatAssistant.controller;
+package com.sugarweb.chatAssistant.application.dto;
+
+import lombok.Data;
 
 /**
- * DocUpdateDto
+ * DocDetailDto
  *
  * @author xxd
  * @version 1.0
  */
-public class DocUpdateDto {
+@Data
+public class DocDetailDto {
 
     private String docId;
 

@@ -17,9 +17,9 @@ public class DocSegment {
     @TableId
     private String segmentId;
 
-    private String content;
+    private String docId;
 
-    private String doctId;
+    private String content;
 
     private String parseStatus;
 

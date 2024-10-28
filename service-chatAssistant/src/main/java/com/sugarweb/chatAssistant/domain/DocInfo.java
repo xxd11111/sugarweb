@@ -26,10 +26,6 @@ public class DocInfo {
     @TableField(exist = false)
     private FileInfo fileInfo;
 
-    private String docType;
-
-    private String docSize;
-
     // 手动创建，文件上传
     private String sourceType;
 

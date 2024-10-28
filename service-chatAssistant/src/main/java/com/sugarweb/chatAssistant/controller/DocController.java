@@ -2,6 +2,10 @@ package com.sugarweb.chatAssistant.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.chatAssistant.application.DocService;
+import com.sugarweb.chatAssistant.application.dto.DocDetailDto;
+import com.sugarweb.chatAssistant.application.dto.DocPageQuery;
+import com.sugarweb.chatAssistant.application.dto.DocSaveDto;
+import com.sugarweb.chatAssistant.application.dto.DocUpdateDto;
 import com.sugarweb.framework.common.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

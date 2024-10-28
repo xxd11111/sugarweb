@@ -1,4 +1,4 @@
-package com.sugarweb.oss.application;
+package com.sugarweb.oss.application.dto;
 
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -7,14 +7,14 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * FileDto
+ * 文件详情信息
  *
  * @author xxd
  * @version 1.0
  */
 @Data
 @Builder
-public class FileDto {
+public class FileDetailDto {
 
     /**
      * 主键

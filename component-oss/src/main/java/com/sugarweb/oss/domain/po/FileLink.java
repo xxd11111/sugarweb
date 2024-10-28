@@ -1,5 +1,6 @@
 package com.sugarweb.oss.domain.po;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -29,5 +30,8 @@ public class FileLink {
      */
     @Size(max = 32)
     private String groupCode;
+
+    @TableField(exist = false)
+    private FileInfo fileInfo;
 
 }

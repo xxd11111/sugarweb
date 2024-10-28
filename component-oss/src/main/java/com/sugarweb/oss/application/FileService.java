@@ -11,6 +11,8 @@ import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.exception.ServerException;
 import com.sugarweb.framework.orm.PageHelper;
+import com.sugarweb.oss.application.dto.FileConvert;
+import com.sugarweb.oss.application.dto.FileDetailDto;
 import com.sugarweb.oss.application.dto.FileQuery;
 import com.sugarweb.oss.domain.po.FileInfo;
 import com.sugarweb.oss.domain.po.FileLink;
@@ -41,7 +43,7 @@ public class FileService {
      * 文件上传
      */
     @Transactional(rollbackFor = Exception.class)
-    public FileDto upload(String groupCode, InputStream inputStream, String contentType, String filename) {
+    public FileDetailDto upload(String groupCode, InputStream inputStream, String contentType, String filename) {
         String key = generateFileKey(groupCode, filename);
         long size;
         try {
@@ -132,7 +134,7 @@ public class FileService {
         }
     }
 
-    public IPage<FileDto> page(PageQuery pageQuery, FileQuery query) {
+    public IPage<FileDetailDto> page(PageQuery pageQuery, FileQuery query) {
         return Db.page(PageHelper.getPage(pageQuery), new LambdaQueryWrapper<FileInfo>()
                 .like(StrUtil.isNotEmpty(query.getFilename()), FileInfo::getFilename, query.getFilename())
                 .in(CollUtil.isNotEmpty(query.getFileGroups()), FileInfo::getGroupCode, query.getFileGroups())

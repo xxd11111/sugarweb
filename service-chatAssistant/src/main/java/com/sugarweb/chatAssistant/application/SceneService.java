@@ -69,4 +69,8 @@ public class SceneService {
         sceneDetailDto.setUpdateTime(sceneInfo.getUpdateTime());
         return sceneDetailDto;
     }
+
+    public void remove(String sceneId) {
+        Db.removeById(sceneId, SceneInfo.class);
+    }
 }

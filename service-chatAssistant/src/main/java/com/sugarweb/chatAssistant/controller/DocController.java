@@ -30,27 +30,34 @@ public class DocController {
     private DocService docService;
 
     @GetMapping("/page")
-    @Operation(operationId = "doc:page", summary = "分页查询代理列表")
+    @Operation(operationId = "doc:page", summary = "查询文档分页列表")
     public R<IPage<DocDetailDto>> page(DocPageQuery query) {
         return R.data(docService.page(query));
     }
 
     @GetMapping("/detail")
-    @Operation(operationId = "doc:detail", summary = "查询代理详情")
+    @Operation(operationId = "doc:detail", summary = "查询文档详情")
     public R<DocDetailDto> detail(String docId) {
         return R.data(docService.detail(docId));
     }
 
     @PostMapping("/save")
-    @Operation(operationId = "doc:save", summary = "新增代理")
+    @Operation(operationId = "doc:save", summary = "新增文档")
     public R<DocDetailDto> save(DocSaveDto saveDto) {
         return R.data(docService.save(saveDto));
     }
 
     @PostMapping("/update")
-    @Operation(operationId = "doc:update", summary = "更新代理")
+    @Operation(operationId = "doc:update", summary = "更新文档")
     public R<DocDetailDto> update(DocUpdateDto updateDto) {
         return R.data(docService.update(updateDto));
+    }
+
+    @PostMapping("/parse")
+    @Operation(operationId = "doc:parse", summary = "解析文档")
+    public R<Void> parse(DocParseDto docParseDto) {
+        //todo
+        return R.ok();
     }
 
 }

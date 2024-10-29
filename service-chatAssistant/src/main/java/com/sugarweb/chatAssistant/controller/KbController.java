@@ -23,34 +23,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/kb")
-@Tag(name = "kb管理")
+@Tag(name = "知识库管理")
 public class KbController {
 
     @Resource
     private KbService kbService;
 
     @GetMapping("/page")
-    @Operation(operationId = "kb:page", summary = "分页查询代理列表")
+    @Operation(operationId = "kb:page", summary = "查询知识库分页列表")
     public R<IPage<KbDetailDto>> page(KbPageQuery query) {
         return R.data(kbService.page(query));
     }
 
     @GetMapping("/detail")
-    @Operation(operationId = "kb:detail", summary = "查询代理详情")
+    @Operation(operationId = "kb:detail", summary = "查询知识库详情")
     public R<KbDetailDto> detail(String kbId) {
         return R.data(kbService.detail(kbId));
     }
 
     @PostMapping("/save")
-    @Operation(operationId = "kb:save", summary = "新增代理")
+    @Operation(operationId = "kb:save", summary = "新增知识库")
     public R<KbDetailDto> save(KbSaveDto saveDto) {
         return R.data(kbService.save(saveDto));
     }
 
     @PostMapping("/update")
-    @Operation(operationId = "kb:update", summary = "更新代理")
+    @Operation(operationId = "kb:update", summary = "更新知识库")
     public R<KbDetailDto> update(KbUpdateDto updateDto) {
         return R.data(kbService.update(updateDto));
+    }
+
+    @PostMapping("/remove")
+    @Operation(operationId = "kb:remove", summary = "删除知识库")
+    public R<Void> remove(String kbId) {
+        kbService.remove(kbId);
+        return R.ok();
     }
 
 }

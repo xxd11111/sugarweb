@@ -53,4 +53,11 @@ public class AgentController {
         return R.data(agentService.update(updateDto));
     }
 
+    @PostMapping("/remove")
+    @Operation(operationId = "agent:remove", summary = "删除代理")
+    public R<Void> remove(String agentId) {
+        agentService.remove(agentId);
+        return R.ok();
+    }
+
 }

@@ -92,4 +92,8 @@ public class AgentService {
         agentDetailDto.setUpdateTime(agentInfo.getUpdateTime());
         return agentDetailDto;
     }
+
+    public void remove(String agentId) {
+        Db.removeById(agentId, AgentInfo.class);
+    }
 }

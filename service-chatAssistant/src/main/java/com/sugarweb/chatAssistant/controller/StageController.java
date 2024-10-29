@@ -30,27 +30,34 @@ public class StageController {
     private StageService stageService;
 
     @GetMapping("/page")
-    @Operation(operationId = "stage:page", summary = "分页查询")
+    @Operation(operationId = "stage:page", summary = "舞台分页列表")
     public R<IPage<StageDetailDto>> page(StagePageQuery query) {
         return R.data(stageService.page(query));
     }
 
     @GetMapping("/detail")
-    @Operation(operationId = "stage:detail", summary = "详情")
+    @Operation(operationId = "stage:detail", summary = "舞台详情")
     public R<StageDetailDto> detail(String stageId) {
         return R.data(stageService.detail(stageId));
     }
 
     @PostMapping("/save")
-    @Operation(operationId = "stage:save", summary = "新增")
+    @Operation(operationId = "stage:save", summary = "新增舞台")
     public R<StageDetailDto> save(StageSaveDto saveDto) {
         return R.data(stageService.save(saveDto));
     }
 
     @PostMapping("/update")
-    @Operation(operationId = "stage:update", summary = "更新")
+    @Operation(operationId = "stage:update", summary = "更新舞台")
     public R<StageDetailDto> update(StageUpdateDto updateDto) {
         return R.data(stageService.update(updateDto));
+    }
+
+    @PostMapping("/remove")
+    @Operation(operationId = "stage:remove", summary = "删除舞台")
+    public R<Void> remove(String stageId) {
+        stageService.remove(stageId);
+        return R.ok();
     }
 
 }

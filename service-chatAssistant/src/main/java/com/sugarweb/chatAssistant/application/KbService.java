@@ -74,4 +74,7 @@ public class KbService {
     }
 
 
+    public void remove(String kbId) {
+        Db.removeById(kbId, KbInfo.class);
+    }
 }

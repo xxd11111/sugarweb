@@ -53,4 +53,12 @@ public class SceneController {
         return R.data(sceneService.update(updateDto));
     }
 
+    @PostMapping("/remove")
+    @Operation(operationId = "scene:remove", summary = "删除场景")
+    public R<Void> remove(String sceneId) {
+        sceneService.remove(sceneId);
+        return R.ok();
+    }
+
+
 }

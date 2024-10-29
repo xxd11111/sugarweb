@@ -62,4 +62,17 @@ public class DocService {
         BeanUtil.copyProperties(docInfo, docDetailDto);
         return docDetailDto;
     }
+
+    public void remove(String docId) {
+        Db.removeById(docId, DocInfo.class);
+    }
+
+    public void parseStart(String docId) {
+
+    }
+
+    public void parseStop(String docId) {
+
+    }
+
 }

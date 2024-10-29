@@ -128,4 +128,9 @@ public class StageService {
         stageDetailDto.setUpdateTime(stageInfo.getUpdateTime());
         return stageDetailDto;
     }
+
+    public void remove(String stageId) {
+        Db.removeById(stageId, StageInfo.class);
+    }
+
 }

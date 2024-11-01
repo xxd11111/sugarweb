@@ -12,6 +12,7 @@ import com.sugarweb.chatAssistant.domain.DocInfo;
 import com.sugarweb.framework.orm.PageHelper;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * DocService
@@ -67,11 +68,11 @@ public class DocService {
         Db.removeById(docId, DocInfo.class);
     }
 
-    public void parseStart(String docId) {
+    public void parseStart(List<String> docIds) {
 
     }
 
-    public void parseStop(String docId) {
+    public void parseStop(List<String> docIds) {
 
     }
 

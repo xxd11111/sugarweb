@@ -1,5 +1,7 @@
 package com.sugarweb.chatAssistant.controller;
 
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -8,10 +10,11 @@ import java.util.List;
  * @author xxd
  * @version 1.0
  */
+@Data
 public class DocParseDto {
 
     private List<String> docIds;
 
-    private String parseStatus;
+    private String parseOperate;
 
 }

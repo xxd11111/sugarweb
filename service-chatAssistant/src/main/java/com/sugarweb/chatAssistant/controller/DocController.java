@@ -56,7 +56,11 @@ public class DocController {
     @PostMapping("/parse")
     @Operation(operationId = "doc:parse", summary = "解析文档")
     public R<Void> parse(DocParseDto docParseDto) {
-        //todo
+        if ("start".equals(docParseDto.getParseOperate())) {
+            docService.parseStart(docParseDto.getDocIds());
+        } else if ("stop".equals(docParseDto.getParseOperate())){
+            docService.parseStop(docParseDto.getDocIds());
+        }
         return R.ok();
     }
 

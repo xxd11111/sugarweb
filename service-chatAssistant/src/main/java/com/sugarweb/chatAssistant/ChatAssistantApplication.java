@@ -2,7 +2,6 @@ package com.sugarweb.chatAssistant;
 
 import com.sugarweb.chatAssistant.agent.AgentManager;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

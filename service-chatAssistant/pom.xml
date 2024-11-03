@@ -20,28 +20,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>co.elastic.clients</groupId>
-            <artifactId>elasticsearch-java</artifactId>
-            <version>8.11.3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-client</artifactId> <!-- is Apache 2-->
-            <version>8.11.3</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>uk.co.caprica</groupId>
             <artifactId>vlcj</artifactId>
             <version>4.8.2</version>
@@ -51,12 +29,6 @@
             <artifactId>native-streams</artifactId>
             <version>2.0.0</version>
         </dependency>
-
-        <!-- <dependency> -->
-        <!--     <groupId>io.milvus</groupId> -->
-        <!--     <artifactId>milvus-sdk-java</artifactId> -->
-        <!--     <version>2.4.5</version> -->
-        <!-- </dependency> -->
 
         <!--WebSocket-->
         <dependency>
@@ -70,6 +42,23 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-document-parser-apache-poi</artifactId>
+            <version>0.35.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-document-parser-apache-tika</artifactId>
+            <version>0.35.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-document-parser-apache-pdfbox</artifactId>
+            <version>0.35.0</version>
+        </dependency>
 
         <dependency>
             <groupId>dev.langchain4j</groupId>

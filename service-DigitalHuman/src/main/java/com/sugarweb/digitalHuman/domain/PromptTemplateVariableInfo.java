@@ -20,8 +20,6 @@ public class PromptTemplateVariableInfo {
 
     private String variableCode;
 
-    private String variableName;
-
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;

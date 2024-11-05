@@ -1,6 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.output;
-
-import com.sugarweb.digitalHuman.agent.ability.output.audio.AudioContent;
+package com.sugarweb.digitalHuman.agent.component.output.audio;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -11,10 +9,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author xxd
  * @since 2024/10/19 14:45
  */
-public class OutputContainer {
+public class AudioOutputContainer {
 
     private final BlockingQueue<AudioContent> outputQueue = new LinkedBlockingQueue<>();
-
 
     public int size() {
         return outputQueue.size();

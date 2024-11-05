@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -19,7 +20,15 @@ public class AgentInfo {
 
     private String agentName;
 
-    private String agentType;
+    private String systemPromptId;
+
+    private String chatModelId;
+
+    @TableField(exist = false)
+    private PromptTemplateInfo systemPrompt;
+
+    @TableField(exist = false)
+    private ModelInfo chatModelInfo;
 
     private LocalDateTime createTime;
 

@@ -49,7 +49,6 @@ public class KbService {
     public KbDetailDto save(KbSaveDto saveDto) {
         KbInfo kbInfo = new KbInfo();
         kbInfo.setKbName(saveDto.getKbName());
-        kbInfo.setStatus(saveDto.getStatus());
         kbInfo.setDescription(saveDto.getDescription());
         kbInfo.setCreateTime(LocalDateTime.now());
         kbInfo.setUpdateTime(LocalDateTime.now());

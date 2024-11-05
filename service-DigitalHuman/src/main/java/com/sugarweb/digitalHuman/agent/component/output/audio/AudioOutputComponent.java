@@ -1,7 +1,6 @@
-package com.sugarweb.digitalHuman.agent.ability.output.audio;
+package com.sugarweb.digitalHuman.agent.component.output.audio;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.digitalHuman.agent.ability.output.OutputContainer;
 import com.sugarweb.digitalHuman.infra.llm.ChatTtsModel;
 import com.sugarweb.digitalHuman.infra.llm.TtsModel;
 import lombok.extern.slf4j.Slf4j;
@@ -35,14 +34,14 @@ public class AudioOutputComponent {
 
     private final BlockingQueue<AudioContent> audioPlayList = new LinkedBlockingQueue<>();
 
-    private final OutputContainer outputContainer;
+    private final AudioOutputContainer audioOutputContainer;
 
     //todo 根据配置文件动态配置
     private final TtsModel ttsModel = new ChatTtsModel("http://127.0.0.1:9966/tts");
 
-    public AudioOutputComponent(ExecutorService executor, OutputContainer outputContainer) {
+    public AudioOutputComponent(ExecutorService executor, AudioOutputContainer audioOutputContainer) {
         this.executor = executor;
-        this.outputContainer = outputContainer;
+        this.audioOutputContainer = audioOutputContainer;
 
         audioPlayerComponent = new AudioPlayerComponent();
         audioPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
@@ -142,13 +141,13 @@ public class AudioOutputComponent {
                 try {
                     //顺序并行处理
                     int maxTtsThread = 2;
-                    int size = outputContainer.size();
+                    int size = audioOutputContainer.size();
                     //实际并行数量
                     int parallelNum = Math.min(maxTtsThread, size);
                     CountDownLatch countDownLatch = new CountDownLatch(parallelNum);
                     for (int i = 0; i < parallelNum; i++) {
                         //控制顺序
-                        AudioContent audioContent = outputContainer.take();
+                        AudioContent audioContent = audioOutputContainer.take();
                         Future<String> filePath = executor.submit(() -> {
                             try {
                                 return ttsModel.tts(audioContent.getContent());

@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.input.blbl;
+package com.sugarweb.digitalHuman.agent.component.input.blbl;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * BlblMsg
+ * 弹幕信息
  *
  * @author xxd
  * @version 1.0
@@ -17,13 +17,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BlblLikeMsg {
+public class BlblDmMsg {
 
     private String blblUid;
 
     private String username;
 
-    private String likeNum;
+    private String content;
 
     private LocalDateTime time;
 

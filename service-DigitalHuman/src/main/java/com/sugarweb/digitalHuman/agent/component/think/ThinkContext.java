@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.think;
+package com.sugarweb.digitalHuman.agent.component.think;
 
 import com.sugarweb.digitalHuman.domain.BlblUser;
 import com.sugarweb.digitalHuman.domain.ChatMsg;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 思考内容封装
+ * 思考内容上下文
  *
  * @author xxd
  * @version 1.0

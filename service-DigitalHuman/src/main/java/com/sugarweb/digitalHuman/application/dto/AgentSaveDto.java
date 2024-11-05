@@ -13,4 +13,8 @@ public class AgentSaveDto {
 
     private String agentName;
 
+    private String chatModelId;
+
+    private PromptTemplateSaveDto systemPrompt;
+
 }

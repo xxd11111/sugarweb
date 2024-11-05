@@ -78,13 +78,13 @@ public class AgentManager implements DisposableBean {
     }
 
     private AutoAgent createAndStartNewAgent(String agentId) {
-        EnvironmentInfo agentEnvironmentInfo = defaultEnvironmentInfo();
-        if (agentEnvironmentInfo == null) {
+        EnvironmentInfo environmentInfo = defaultEnvironmentInfo();
+        if (environmentInfo == null) {
             String errorMessage = "Failed to create default environment info for agentId: " + agentId;
             log.error(errorMessage);
             throw new IllegalStateException(errorMessage);
         }
-        AutoAgent autoAgent = new AutoAgent(executor, agentEnvironmentInfo);
+        AutoAgent autoAgent = new AutoAgent(executor, environmentInfo);
         log.info("New agent created and started: {}, at time: {}", agentId, System.currentTimeMillis());
         return autoAgent;
     }

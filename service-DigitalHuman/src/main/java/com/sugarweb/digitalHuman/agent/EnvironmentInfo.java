@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 /**
  * TODO
@@ -24,6 +25,8 @@ import java.util.Map;
 @Builder
 public class EnvironmentInfo {
 
+    private ExecutorService executor;
+
     private AgentInfo agentInfo;
 
     private StageInfo stageInfo;
@@ -34,20 +37,10 @@ public class EnvironmentInfo {
 
     private PromptTemplateInfo systemPromptTemplateInfo;
 
-    private PromptTemplateInfo userPromptTemplateInfo;
-
-    private StreamingChatLanguageModel streamingChatLanguageModel;
-
-    private EmbeddingModel embeddingModel;
-
-    private EmbeddingStore<TextSegment> embeddingStore;
+    private KbInfo kbInfo;
 
     public String getSystemPrompt(Map<String, Object> contextVariables) {
         return systemPromptTemplateInfo.getPrompt(contextVariables);
-    }
-
-    public String getUserPrompt(Map<String, Object> contextVariables) {
-        return userPromptTemplateInfo.getPrompt(contextVariables);
     }
 
     public String getCurrentMemoryId() {

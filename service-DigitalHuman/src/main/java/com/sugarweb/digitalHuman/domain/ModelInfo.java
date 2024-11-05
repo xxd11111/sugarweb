@@ -28,8 +28,6 @@ public class ModelInfo {
 
     private Integer dimension;
 
-    private String enabled;
-
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;

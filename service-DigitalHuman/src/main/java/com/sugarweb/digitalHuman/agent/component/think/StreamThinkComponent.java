@@ -1,14 +1,14 @@
-package com.sugarweb.digitalHuman.agent.ability.think;
+package com.sugarweb.digitalHuman.agent.component.think;
 
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.digitalHuman.agent.EnvironmentInfo;
-import com.sugarweb.digitalHuman.agent.ability.input.InputContainer;
-import com.sugarweb.digitalHuman.agent.ability.input.blbl.BlblMsgPrompt;
-import com.sugarweb.digitalHuman.agent.ability.memory.MemoryComponent;
+import com.sugarweb.digitalHuman.agent.component.input.InputContainer;
+import com.sugarweb.digitalHuman.agent.component.input.blbl.BlblMsgPrompt;
+import com.sugarweb.digitalHuman.agent.component.memory.MemoryComponent;
 import com.sugarweb.digitalHuman.constans.ChatRole;
-import com.sugarweb.digitalHuman.domain.BlblUser;
-import com.sugarweb.digitalHuman.domain.ChatMsg;
+import com.sugarweb.digitalHuman.domain.*;
+import com.sugarweb.digitalHuman.infra.llm.ModelFactory;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -38,24 +39,32 @@ public class StreamThinkComponent {
 
     private Future<?> thinkThread = null;
 
-    private final EnvironmentInfo envInfo;
-
     private final InputContainer inputContainer;
 
     private final MemoryComponent memoryComponent;
 
-    //todo 应该根据envInfo构建大模型调用工具
     private final StreamingChatLanguageModel chatLanguageModel;
 
     private final List<StreamListener> listeners;
 
-    public StreamThinkComponent(ExecutorService executor, EnvironmentInfo envInfo, InputContainer inputContainer, MemoryComponent memoryComponent, StreamingChatLanguageModel chatLanguageModel, List<StreamListener> listeners) {
-        this.envInfo = envInfo;
-        this.executor = executor;
+    private final String memoryId;
+
+    private final PromptTemplateInfo answerSystemPrompt;
+
+    private final PromptTemplateInfo topicSystemPrompt;
+
+    public StreamThinkComponent(EnvironmentInfo envInfo, InputContainer inputContainer, MemoryComponent memoryComponent, List<StreamListener> listeners) {
+        this.executor = envInfo.getExecutor();
         this.inputContainer = inputContainer;
         this.memoryComponent = memoryComponent;
-        this.chatLanguageModel = chatLanguageModel;
+        AgentInfo agentInfo = envInfo.getAgentInfo();
+        this.answerSystemPrompt = agentInfo.getSystemPrompt();
+        ModelInfo chatModelInfo = agentInfo.getChatModelInfo();
+        this.chatLanguageModel = ModelFactory.creatStreamingChatLanguageModel(chatModelInfo);
         this.listeners = listeners;
+        this.memoryId = envInfo.getCurrentMemoryId();
+        //todo 设置聊天主题提示词
+        this.topicSystemPrompt = new PromptTemplateInfo();
     }
 
     public void start() {
@@ -67,51 +76,69 @@ public class StreamThinkComponent {
             SpeedLimiter speedLimiter = new SpeedLimiter(0);
             while (!Thread.currentThread().isInterrupted()) {
                 try {
-                    // 限制最快100ms 思考一次
-                    speedLimiter.limit(100);
+                    // 限制最快1000ms 思考一次
+                    speedLimiter.limit(1000);
                     long thinkId = System.currentTimeMillis();
-                    // 从消息队列中获取弹幕消息
-                    Object blblMsg = inputContainer.poll();
-                    if (blblMsg == null) {
-                        continue;
+                    //判断是否需要回答
+                    if (shouldAnswer()) {
+                        //响应用户问题
+                        answer(thinkId);
+                    } else {
+                        //继续下个话题
+                        nextTopic(thinkId);
                     }
-
-                    ThinkContext thinkContext = new ThinkContext();
-                    thinkContext.setStartTime(LocalDateTime.now());
-
-                    BlblUser blblUser = BlblMsgPrompt.getBlblUserByMsg(blblMsg);
-                    thinkContext.put("user", blblUser);
-                    String question = BlblMsgPrompt.getMsgPrompt(blblMsg);
-                    thinkContext.put("question", question);
-
-                    //获取相关召回文档
-                    String documents = "无";
-                    //暂时不使用
-                    // String retrievalSegment = memoryAbility.getRetrievalSegment(question.toString());
-                    // if (StrUtil.isNotEmpty(retrievalSegment)) {
-                    //     documents = retrievalSegment;
-                    // }
-                    thinkContext.put("documents", documents);
-
-                    thinkContext.setThinkId(thinkId);
-                    thinkContext.setMemoryId(envInfo.getCurrentMemoryId());
-                    // 系统提示语
-                    String systemPrompt = envInfo.getSystemPrompt(thinkContext.getContextVariables());
-                    ChatMsg systemChatMsg = ChatMsg.of(ChatRole.SYSTEM, systemPrompt, envInfo.getCurrentMemoryId(), blblUser.getBlblUid());
-                    thinkContext.setSystemMsg(systemChatMsg);
-                    // 历史消息
-                    List<ChatMsg> chatMsgs = memoryComponent.listLastChatMessage(envInfo.getCurrentMemoryId(), blblUser.getBlblUid(), 10);
-                    thinkContext.setHistoryMsgList(chatMsgs);
-                    // 用户提问
-                    String userPrompt = envInfo.getUserPrompt(thinkContext.getContextVariables());
-                    ChatMsg userChatMsg = ChatMsg.of(ChatRole.USER, userPrompt, envInfo.getCurrentMemoryId(), blblUser.getBlblUid());
-                    thinkContext.setQuestionMsg(userChatMsg);
-                    streamThink(thinkContext);
                 } catch (Exception e) {
-                    log.error("ai思考异常 error:{}", e);
+                    log.error("ai思考异常 error:{}", e.getMessage(), e);
                 }
             }
         });
+    }
+
+    public void nextTopic(long thinkId) {
+        String prompt = topicSystemPrompt.getPrompt(new HashMap<>());
+    }
+
+    public boolean shouldAnswer() {
+        //todo
+        return false;
+    }
+
+    public void answer(long thinkId) {
+        // 从消息队列中获取弹幕消息
+        Object blblMsg = inputContainer.poll();
+        if (blblMsg == null) {
+            return;
+        }
+        ThinkContext thinkContext = new ThinkContext();
+        thinkContext.setStartTime(LocalDateTime.now());
+
+        BlblUser blblUser = BlblMsgPrompt.getBlblUserByMsg(blblMsg);
+        thinkContext.put("user", blblUser);
+        String question = BlblMsgPrompt.getMsgPrompt(blblMsg);
+        thinkContext.put("question", question);
+
+        //获取相关召回文档
+        String documents = "无";
+        //暂时不使用
+        // String retrievalSegment = memoryAbility.getRetrievalSegment(question.toString());
+        // if (StrUtil.isNotEmpty(retrievalSegment)) {
+        //     documents = retrievalSegment;
+        // }
+        thinkContext.put("documents", documents);
+
+        thinkContext.setThinkId(thinkId);
+        thinkContext.setMemoryId(memoryId);
+        // 系统提示语
+        String systemPrompt = answerSystemPrompt.getPrompt(thinkContext.getContextVariables());
+        ChatMsg systemChatMsg = ChatMsg.of(ChatRole.SYSTEM, systemPrompt, memoryId, blblUser.getBlblUid());
+        thinkContext.setSystemMsg(systemChatMsg);
+        // 历史消息
+        List<ChatMsg> chatMsgs = memoryComponent.listLastChatMessage(memoryId, blblUser.getBlblUid(), 10);
+        thinkContext.setHistoryMsgList(chatMsgs);
+        // 用户提问
+        ChatMsg userChatMsg = ChatMsg.of(ChatRole.USER, question, memoryId, blblUser.getBlblUid());
+        thinkContext.setQuestionMsg(userChatMsg);
+        streamThink(thinkContext);
     }
 
     public static class SpeedLimiter {
@@ -174,7 +201,7 @@ public class StreamThinkComponent {
                 log.info("thinkId:{},推理耗时；{}毫秒", thinkContext.getThinkId(), Duration.between(thinkContext.getStartTime(), thinkContext.getEndTime()).toMillis());
                 StreamingResponseHandler.super.onComplete(response);
                 AiMessage aiMessage = response.content();
-                ChatMsg aiChatMsg = ChatMsg.of(ChatRole.ASSISTANT, aiMessage.text(), envInfo.getCurrentMemoryId(), thinkContext.getBlblUid());
+                ChatMsg aiChatMsg = ChatMsg.of(ChatRole.ASSISTANT, aiMessage.text(), memoryId, thinkContext.getBlblUid());
                 thinkContext.setAssistantMsg(aiChatMsg);
                 for (StreamListener listener : listeners) {
                     listener.onComplete(thinkContext);

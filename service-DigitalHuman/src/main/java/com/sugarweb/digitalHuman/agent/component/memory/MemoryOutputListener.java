@@ -1,7 +1,7 @@
-package com.sugarweb.digitalHuman.agent.ability.memory;
+package com.sugarweb.digitalHuman.agent.component.memory;
 
-import com.sugarweb.digitalHuman.agent.ability.think.StreamListener;
-import com.sugarweb.digitalHuman.agent.ability.think.ThinkContext;
+import com.sugarweb.digitalHuman.agent.component.think.StreamListener;
+import com.sugarweb.digitalHuman.agent.component.think.ThinkContext;
 import com.sugarweb.digitalHuman.domain.ChatMsg;
 import lombok.extern.slf4j.Slf4j;
 

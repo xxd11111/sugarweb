@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.memory;
+package com.sugarweb.digitalHuman.agent.component.memory;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.constans.ChatRole;

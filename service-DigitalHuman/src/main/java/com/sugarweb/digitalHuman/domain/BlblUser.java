@@ -19,6 +19,16 @@ public class BlblUser {
 
     private String username;
 
+    /**
+     * ai对用户的描述
+     */
+    private String summary;
+
+    /**
+     * 当前场景动作
+     */
+    private String currentSceneAction;
+
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;

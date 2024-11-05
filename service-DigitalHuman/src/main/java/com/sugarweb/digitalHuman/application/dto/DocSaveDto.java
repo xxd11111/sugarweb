@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman.application.dto;
 
+import com.sugarweb.oss.application.dto.FileDetailDto;
 import com.sugarweb.oss.domain.po.FileInfo;
 import lombok.Data;
 
@@ -19,8 +20,6 @@ public class DocSaveDto {
     // 手动创建，文件上传
     private String sourceType;
 
-    private String docStatus;
-
-    private FileInfo fileInfo;
+    private FileDetailDto fileInfo;
 
 }

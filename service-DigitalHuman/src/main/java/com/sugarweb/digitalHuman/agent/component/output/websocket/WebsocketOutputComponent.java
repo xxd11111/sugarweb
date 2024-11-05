@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.output.websocket;
+package com.sugarweb.digitalHuman.agent.component.output.websocket;
 
 import jakarta.websocket.*;
 import lombok.extern.slf4j.Slf4j;

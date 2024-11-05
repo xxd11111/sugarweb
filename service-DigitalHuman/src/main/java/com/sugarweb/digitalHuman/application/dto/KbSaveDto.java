@@ -15,8 +15,6 @@ public class KbSaveDto {
 
     private String embeddingModelId;
 
-    private String status;
-
     private String description;
 
 }

@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.think;
+package com.sugarweb.digitalHuman.agent.component.think;
 
 /**
  * SteamThinkHandler

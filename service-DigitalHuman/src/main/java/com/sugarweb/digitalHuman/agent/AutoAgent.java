@@ -1,14 +1,21 @@
 package com.sugarweb.digitalHuman.agent;
 
-import com.sugarweb.digitalHuman.agent.ability.input.InputContainer;
-import com.sugarweb.digitalHuman.agent.ability.input.blbl.BlblMsgInputComponent;
-import com.sugarweb.digitalHuman.agent.ability.memory.MemoryComponent;
-import com.sugarweb.digitalHuman.agent.ability.memory.MemoryOutputListener;
-import com.sugarweb.digitalHuman.agent.ability.output.OutputContainer;
-import com.sugarweb.digitalHuman.agent.ability.output.audio.AudioOutputComponent;
-import com.sugarweb.digitalHuman.agent.ability.output.audio.AudioOutputListener;
-import com.sugarweb.digitalHuman.agent.ability.think.StreamListener;
-import com.sugarweb.digitalHuman.agent.ability.think.StreamThinkComponent;
+import com.sugarweb.digitalHuman.agent.component.input.InputContainer;
+import com.sugarweb.digitalHuman.agent.component.input.blbl.BlblMsgInputComponent;
+import com.sugarweb.digitalHuman.agent.component.memory.MemoryComponent;
+import com.sugarweb.digitalHuman.agent.component.memory.MemoryOutputListener;
+import com.sugarweb.digitalHuman.agent.component.output.audio.AudioOutputContainer;
+import com.sugarweb.digitalHuman.agent.component.output.audio.AudioOutputComponent;
+import com.sugarweb.digitalHuman.agent.component.output.audio.AudioOutputListener;
+import com.sugarweb.digitalHuman.agent.component.think.StreamListener;
+import com.sugarweb.digitalHuman.agent.component.think.StreamThinkComponent;
+import com.sugarweb.digitalHuman.domain.AgentInfo;
+import com.sugarweb.digitalHuman.domain.KbInfo;
+import com.sugarweb.digitalHuman.domain.ModelInfo;
+import com.sugarweb.digitalHuman.infra.MilvusEmbeddingStoreFactory;
+import com.sugarweb.digitalHuman.infra.llm.ModelFactory;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -36,20 +43,26 @@ public class AutoAgent {
         this.executor = executor;
         this.environmentInfo = environmentInfo;
 
+        KbInfo kbInfo = environmentInfo.getKbInfo();
+        ModelInfo embeddingModelInfo = kbInfo.getEmbeddingModelInfo();
+        EmbeddingModel embeddingModel = ModelFactory.creatEmbeddingModel(embeddingModelInfo);
+        MilvusEmbeddingStore milvusEmbeddingStore = MilvusEmbeddingStoreFactory.create(kbInfo);
+
         //装载记忆能力
-        memoryComponent = new MemoryComponent(environmentInfo.getEmbeddingModel(), environmentInfo.getEmbeddingStore());
+        memoryComponent = new MemoryComponent(embeddingModel, milvusEmbeddingStore);
         //创建记忆输出监听器
         StreamListener memoryOutputListener = new MemoryOutputListener(memoryComponent);
         //创建输入适配器
         InputContainer inputContainer = new InputContainer();
 
-        OutputContainer outputContainer = new OutputContainer();
+        AudioOutputContainer audioOutputContainer = new AudioOutputContainer();
         //装载输出能力
-        audioOutputComponent = new AudioOutputComponent(executor, outputContainer);
+        audioOutputComponent = new AudioOutputComponent(executor, audioOutputContainer);
         //创建输出监听器
-        StreamListener audioOutputListener = new AudioOutputListener(outputContainer);
+        StreamListener audioOutputListener = new AudioOutputListener(audioOutputContainer);
         //装载输入能力
         blblMsgInputComponent = new BlblMsgInputComponent(inputContainer);
+
 
         List<StreamListener> streamListeners = List.of(memoryOutputListener, audioOutputListener);
         //装载思考能力
@@ -58,7 +71,6 @@ public class AutoAgent {
                 environmentInfo,
                 inputContainer,
                 memoryComponent,
-                environmentInfo.getStreamingChatLanguageModel(),
                 streamListeners);
     }
 

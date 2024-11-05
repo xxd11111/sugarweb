@@ -86,7 +86,6 @@ public class DocService {
         docInfo.setKbId(saveDto.getKbId());
         docInfo.setDocName(saveDto.getDocName());
         docInfo.setSourceType(saveDto.getSourceType());
-        docInfo.setDocStatus(saveDto.getDocStatus());
         docInfo.setParseStatus(DocParseStatus.NOT_PARSED.getValue());
         docInfo.setCreateTime(LocalDateTime.now());
         docInfo.setUpdateTime(LocalDateTime.now());

@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.output.audio;
+package com.sugarweb.digitalHuman.agent.component.output.audio;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

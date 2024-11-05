@@ -18,6 +18,6 @@ public enum ModelType {
     TTS("tts"),
     ;
 
-    private final String code;
+    private final String value;
 
 }

@@ -1,9 +1,8 @@
-package com.sugarweb.digitalHuman.agent.ability.output.audio;
+package com.sugarweb.digitalHuman.agent.component.output.audio;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.digitalHuman.agent.ability.output.OutputContainer;
-import com.sugarweb.digitalHuman.agent.ability.think.StreamListener;
-import com.sugarweb.digitalHuman.agent.ability.think.ThinkContext;
+import com.sugarweb.digitalHuman.agent.component.think.StreamListener;
+import com.sugarweb.digitalHuman.agent.component.think.ThinkContext;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -15,12 +14,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AudioOutputListener implements StreamListener {
 
-    private final OutputContainer outputContainer;
+    private final AudioOutputContainer audioOutputContainer;
     private final StringBuilder sb = new StringBuilder();
     private int currentSplitId = 0;
 
-    public AudioOutputListener(OutputContainer outputContainer) {
-        this.outputContainer = outputContainer;
+    public AudioOutputListener(AudioOutputContainer audioOutputContainer) {
+        this.audioOutputContainer = audioOutputContainer;
     }
 
     @Override
@@ -55,10 +54,10 @@ public class AudioOutputListener implements StreamListener {
     }
 
     private void addSpeakContent(long thinkId, int spiltId, String content) {
-        if (StrUtil.isBlank(content)){
+        if (StrUtil.isBlank(content)) {
             return;
         }
-        outputContainer.offer(AudioContent.builder()
+        audioOutputContainer.offer(AudioContent.builder()
                 .thinkId(thinkId)
                 .splitId(spiltId)
                 .content(content)

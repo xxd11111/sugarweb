@@ -1,8 +1,8 @@
-package com.sugarweb.digitalHuman.agent.ability.input.blbl;
+package com.sugarweb.digitalHuman.agent.component.input.blbl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.agent.ability.input.InputContainer;
+import com.sugarweb.digitalHuman.agent.component.input.InputContainer;
 import com.sugarweb.digitalHuman.config.BlblClientProperties;
 import com.sugarweb.digitalHuman.domain.BlblUser;
 import com.sugarweb.framework.exception.FrameworkException;

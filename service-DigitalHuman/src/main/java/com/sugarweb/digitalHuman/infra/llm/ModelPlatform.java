@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ModelPlatform {
 
-    OLLAM("OLLAMA"),
+    OLLAMA("OLLAMA"),
     ZHI_PU("ZHI_PU"),
     TONG_YI("TONG_YI")
 
     ;
 
-    private final String code;
+    private final String value;
 
 }

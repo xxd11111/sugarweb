@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.agent.ability.input;
+package com.sugarweb.digitalHuman.agent.component.input;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

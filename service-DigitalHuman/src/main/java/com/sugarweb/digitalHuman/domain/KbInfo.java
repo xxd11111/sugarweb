@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -26,6 +27,12 @@ public class KbInfo {
     private String embeddingModelId;
 
     private String embeddingModelName;
+
+    /**
+     * 模型信息
+     */
+    @TableField(exist = false)
+    private ModelInfo embeddingModelInfo;
 
     private String status;
 

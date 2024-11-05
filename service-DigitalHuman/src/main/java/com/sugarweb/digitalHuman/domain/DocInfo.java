@@ -29,7 +29,7 @@ public class DocInfo {
     // 手动创建，文件上传
     private String sourceType;
 
-    private String docStatus;
+    private String status;
 
     private String parseStatus;
 

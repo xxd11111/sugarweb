@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Slf4j
-public class BlblMsgInputAbility {
+public class BlblMsgInputComponent {
 
     private Integer selfUid;
 
@@ -36,7 +36,7 @@ public class BlblMsgInputAbility {
 
     private final InputContainer inputContainer;
 
-    public BlblMsgInputAbility(InputContainer inputContainer) {
+    public BlblMsgInputComponent(InputContainer inputContainer) {
         BlblClientProperties clientProperties = BeanUtil.getBean(BlblClientProperties.class);
         cookie = clientProperties.getCookie();
         roomId = clientProperties.getRoomId();

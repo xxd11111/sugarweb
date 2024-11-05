@@ -21,7 +21,7 @@ public class KbDetailDto {
 
     private String embeddingModel;
 
-    private String dimension;
+    private Integer dimension;
 
     private String status;
 

@@ -10,6 +10,7 @@ import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import dev.langchain4j.store.embedding.EmbeddingStore;
 import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
+import io.milvus.param.IndexType;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -87,7 +88,7 @@ public class ChatAssistantConfiguration {
                 .collectionName(vectorStore.getCollectionName())
                 .dimension(vectorStore.getDimension())
                 .consistencyLevel(vectorStore.getConsistencyLevel())
-                // .indexType(IndexType.IVF_FLAT)
+                .indexType(IndexType.HNSW)
                 .metricType(vectorStore.getMetricType())
                 .build();
     }

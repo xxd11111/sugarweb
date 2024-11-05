@@ -21,9 +21,11 @@ public class KbInfo {
 
     private String collectionName;
 
+    private Integer dimension;
+
     private String embeddingModelId;
 
-    private String dimension;
+    private String embeddingModelName;
 
     private String status;
 

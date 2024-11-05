@@ -17,10 +17,10 @@ import java.util.List;
 @Slf4j
 public class MemoryOutputListener implements StreamListener {
 
-    private final MemoryAbility memoryAbility;
+    private final MemoryComponent memoryComponent;
 
-    public MemoryOutputListener(MemoryAbility memoryAbility) {
-        this.memoryAbility = memoryAbility;
+    public MemoryOutputListener(MemoryComponent memoryComponent) {
+        this.memoryComponent = memoryComponent;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class MemoryOutputListener implements StreamListener {
         List<ChatMsg> chatMsgList = new ArrayList<>();
         chatMsgList.add(currentQuestion);
         chatMsgList.add(aiMessage);
-        memoryAbility.saveBatchChatMsg(chatMsgList);
+        memoryComponent.saveBatchChatMsg(chatMsgList);
     }
 
     @Override

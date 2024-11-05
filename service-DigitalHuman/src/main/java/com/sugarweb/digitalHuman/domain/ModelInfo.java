@@ -26,6 +26,8 @@ public class ModelInfo {
 
     private String apiKey;
 
+    private Integer dimension;
+
     private String enabled;
 
     private LocalDateTime createTime;

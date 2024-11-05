@@ -19,6 +19,6 @@ public enum ChatRole {
 
     SYSTEM("system");
 
-    private final String code;
+    private final String value;
 
 }

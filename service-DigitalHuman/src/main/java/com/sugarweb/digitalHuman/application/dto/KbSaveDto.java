@@ -13,7 +13,7 @@ public class KbSaveDto {
 
     private String kbName;
 
-    private String embeddingModel;
+    private String embeddingModelId;
 
     private String status;
 

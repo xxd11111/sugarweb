@@ -1,14 +1,14 @@
 package com.sugarweb.digitalHuman.agent;
 
 import com.sugarweb.digitalHuman.agent.ability.input.InputContainer;
-import com.sugarweb.digitalHuman.agent.ability.input.blbl.BlblMsgInputAbility;
-import com.sugarweb.digitalHuman.agent.ability.memory.MemoryAbility;
+import com.sugarweb.digitalHuman.agent.ability.input.blbl.BlblMsgInputComponent;
+import com.sugarweb.digitalHuman.agent.ability.memory.MemoryComponent;
 import com.sugarweb.digitalHuman.agent.ability.memory.MemoryOutputListener;
 import com.sugarweb.digitalHuman.agent.ability.output.OutputContainer;
-import com.sugarweb.digitalHuman.agent.ability.output.audio.AudioOutputAbility;
+import com.sugarweb.digitalHuman.agent.ability.output.audio.AudioOutputComponent;
 import com.sugarweb.digitalHuman.agent.ability.output.audio.AudioOutputListener;
 import com.sugarweb.digitalHuman.agent.ability.think.StreamListener;
-import com.sugarweb.digitalHuman.agent.ability.think.StreamThinkAbility;
+import com.sugarweb.digitalHuman.agent.ability.think.StreamThinkComponent;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -27,37 +27,37 @@ public class AutoAgent {
     private boolean isRunning = false;
     private final EnvironmentInfo environmentInfo;
     //装载的能力
-    private final StreamThinkAbility streamThinkAbility;
-    private final AudioOutputAbility audioOutputAbility;
-    private final MemoryAbility memoryAbility;
-    private final BlblMsgInputAbility blblMsgInputAbility;
+    private final StreamThinkComponent streamThinkComponent;
+    private final AudioOutputComponent audioOutputComponent;
+    private final MemoryComponent memoryComponent;
+    private final BlblMsgInputComponent blblMsgInputComponent;
 
     public AutoAgent(ExecutorService executor, EnvironmentInfo environmentInfo) {
         this.executor = executor;
         this.environmentInfo = environmentInfo;
 
         //装载记忆能力
-        memoryAbility = new MemoryAbility(environmentInfo.getEmbeddingModel(), environmentInfo.getEmbeddingStore());
+        memoryComponent = new MemoryComponent(environmentInfo.getEmbeddingModel(), environmentInfo.getEmbeddingStore());
         //创建记忆输出监听器
-        StreamListener memoryOutputListener = new MemoryOutputListener(memoryAbility);
+        StreamListener memoryOutputListener = new MemoryOutputListener(memoryComponent);
         //创建输入适配器
         InputContainer inputContainer = new InputContainer();
 
         OutputContainer outputContainer = new OutputContainer();
         //装载输出能力
-        audioOutputAbility = new AudioOutputAbility(executor, outputContainer);
+        audioOutputComponent = new AudioOutputComponent(executor, outputContainer);
         //创建输出监听器
         StreamListener audioOutputListener = new AudioOutputListener(outputContainer);
         //装载输入能力
-        blblMsgInputAbility = new BlblMsgInputAbility(inputContainer);
+        blblMsgInputComponent = new BlblMsgInputComponent(inputContainer);
 
         List<StreamListener> streamListeners = List.of(memoryOutputListener, audioOutputListener);
         //装载思考能力
-        streamThinkAbility = new StreamThinkAbility(
+        streamThinkComponent = new StreamThinkComponent(
                 executor,
                 environmentInfo,
                 inputContainer,
-                memoryAbility,
+                memoryComponent,
                 environmentInfo.getStreamingChatLanguageModel(),
                 streamListeners);
     }
@@ -67,9 +67,9 @@ public class AutoAgent {
             return;
         }
         isRunning = true;
-        audioOutputAbility.start();
-        blblMsgInputAbility.start();
-        streamThinkAbility.start();
+        audioOutputComponent.start();
+        blblMsgInputComponent.start();
+        streamThinkComponent.start();
     }
 
 
@@ -78,9 +78,9 @@ public class AutoAgent {
             return;
         }
         isRunning = false;
-        audioOutputAbility.stop();
-        blblMsgInputAbility.stop();
-        streamThinkAbility.stop();
+        audioOutputComponent.stop();
+        blblMsgInputComponent.stop();
+        streamThinkComponent.stop();
     }
 
     public boolean isRunning() {

@@ -5,7 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.sugarweb.digitalHuman.agent.EnvironmentInfo;
 import com.sugarweb.digitalHuman.agent.ability.input.InputContainer;
 import com.sugarweb.digitalHuman.agent.ability.input.blbl.BlblMsgPrompt;
-import com.sugarweb.digitalHuman.agent.ability.memory.MemoryAbility;
+import com.sugarweb.digitalHuman.agent.ability.memory.MemoryComponent;
 import com.sugarweb.digitalHuman.constans.ChatRole;
 import com.sugarweb.digitalHuman.domain.BlblUser;
 import com.sugarweb.digitalHuman.domain.ChatMsg;
@@ -32,7 +32,7 @@ import java.util.concurrent.Future;
  * @version 1.0
  */
 @Slf4j
-public class StreamThinkAbility {
+public class StreamThinkComponent {
 
     private final ExecutorService executor;
 
@@ -42,18 +42,18 @@ public class StreamThinkAbility {
 
     private final InputContainer inputContainer;
 
-    private final MemoryAbility memoryAbility;
+    private final MemoryComponent memoryComponent;
 
     //todo 应该根据envInfo构建大模型调用工具
     private final StreamingChatLanguageModel chatLanguageModel;
 
     private final List<StreamListener> listeners;
 
-    public StreamThinkAbility(ExecutorService executor, EnvironmentInfo envInfo, InputContainer inputContainer, MemoryAbility memoryAbility, StreamingChatLanguageModel chatLanguageModel, List<StreamListener> listeners) {
+    public StreamThinkComponent(ExecutorService executor, EnvironmentInfo envInfo, InputContainer inputContainer, MemoryComponent memoryComponent, StreamingChatLanguageModel chatLanguageModel, List<StreamListener> listeners) {
         this.envInfo = envInfo;
         this.executor = executor;
         this.inputContainer = inputContainer;
-        this.memoryAbility = memoryAbility;
+        this.memoryComponent = memoryComponent;
         this.chatLanguageModel = chatLanguageModel;
         this.listeners = listeners;
     }
@@ -100,7 +100,7 @@ public class StreamThinkAbility {
                     ChatMsg systemChatMsg = ChatMsg.of(ChatRole.SYSTEM, systemPrompt, envInfo.getCurrentMemoryId(), blblUser.getBlblUid());
                     thinkContext.setSystemMsg(systemChatMsg);
                     // 历史消息
-                    List<ChatMsg> chatMsgs = memoryAbility.listLastChatMessage(envInfo.getCurrentMemoryId(), blblUser.getBlblUid(), 10);
+                    List<ChatMsg> chatMsgs = memoryComponent.listLastChatMessage(envInfo.getCurrentMemoryId(), blblUser.getBlblUid(), 10);
                     thinkContext.setHistoryMsgList(chatMsgs);
                     // 用户提问
                     String userPrompt = envInfo.getUserPrompt(thinkContext.getContextVariables());
@@ -185,11 +185,11 @@ public class StreamThinkAbility {
 
 
     private ChatMessage convertToLangChain4jMsg(ChatMsg chatMsg) {
-        if (ChatRole.USER.getCode().equals(chatMsg.getChatRole())) {
+        if (ChatRole.USER.getValue().equals(chatMsg.getChatRole())) {
             return new UserMessage(chatMsg.getContent());
-        } else if (ChatRole.ASSISTANT.getCode().equals(chatMsg.getChatRole())) {
+        } else if (ChatRole.ASSISTANT.getValue().equals(chatMsg.getChatRole())) {
             return new AiMessage(chatMsg.getContent());
-        } else if (ChatRole.SYSTEM.getCode().equals(chatMsg.getChatRole())) {
+        } else if (ChatRole.SYSTEM.getValue().equals(chatMsg.getChatRole())) {
             return new SystemMessage(chatMsg.getContent());
         }
         throw new IllegalArgumentException(StrUtil.format("不支持的消息类型,messageId:{}", chatMsg.getMsgId()));

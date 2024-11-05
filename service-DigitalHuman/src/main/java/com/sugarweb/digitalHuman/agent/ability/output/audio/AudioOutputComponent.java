@@ -21,7 +21,7 @@ import java.util.concurrent.*;
  * @version 1.0
  */
 @Slf4j
-public class AudioOutputAbility {
+public class AudioOutputComponent {
 
     private final ExecutorService executor;
 
@@ -40,7 +40,7 @@ public class AudioOutputAbility {
     //todo 根据配置文件动态配置
     private final TtsModel ttsModel = new ChatTtsModel("http://127.0.0.1:9966/tts");
 
-    public AudioOutputAbility(ExecutorService executor, OutputContainer outputContainer) {
+    public AudioOutputComponent(ExecutorService executor, OutputContainer outputContainer) {
         this.executor = executor;
         this.outputContainer = outputContainer;
 

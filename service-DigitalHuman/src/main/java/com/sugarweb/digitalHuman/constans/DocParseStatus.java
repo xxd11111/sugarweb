@@ -4,19 +4,18 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * BlblUserActionType
+ * 文档解析状态
  *
  * @author xxd
  * @version 1.0
  */
 @Getter
 @RequiredArgsConstructor
-public enum BlblUserActionType {
-    ENTER_ROOM("1"),
-    DAN_MU("2"),
-    GIFT("3"),
-    LIKE("4"),
-    GUAN_ZHU("5");
+public enum DocParseStatus {
+    NOT_PARSED("1"),
+    PARSING("2"),
+    PARSED("3"),
+    FAILED("4");
 
     private final String value;
 

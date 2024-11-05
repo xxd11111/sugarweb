@@ -4,19 +4,24 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * BlblUserActionType
+ * 文档来源类型
  *
  * @author xxd
  * @version 1.0
  */
 @Getter
 @RequiredArgsConstructor
-public enum BlblUserActionType {
-    ENTER_ROOM("1"),
-    DAN_MU("2"),
-    GIFT("3"),
-    LIKE("4"),
-    GUAN_ZHU("5");
+public enum DocSourceType {
+
+    /**
+     * 文件上传
+     */
+    FILE_UPLOAD("1"),
+
+    /**
+     * 手动输入
+     */
+    MANUAL_INPUT("2");
 
     private final String value;
 

@@ -22,12 +22,12 @@ import java.util.List;
  * @author xxd
  * @version 1.0
  */
-public class MemoryAbility {
+public class MemoryComponent {
 
     private final EmbeddingModel embeddingModel;
     private final EmbeddingStore<TextSegment> embeddingStore;
 
-    public MemoryAbility(EmbeddingModel embeddingModel, EmbeddingStore<TextSegment> embeddingStore) {
+    public MemoryComponent(EmbeddingModel embeddingModel, EmbeddingStore<TextSegment> embeddingStore) {
         this.embeddingModel = embeddingModel;
         this.embeddingStore = embeddingStore;
     }
@@ -36,7 +36,7 @@ public class MemoryAbility {
         List<ChatMsg> chatMemoryInfos = Db.lambdaQuery(ChatMsg.class)
                 .eq(ChatMsg::getMemoryId, memoryId)
                 .orderByDesc(ChatMsg::getCreateTime)
-                .in(ChatMsg::getChatRole, ChatRole.USER.getCode(), ChatRole.ASSISTANT.getCode())
+                .in(ChatMsg::getChatRole, ChatRole.USER.getValue(), ChatRole.ASSISTANT.getValue())
                 .last(limit > 0, "limit " + limit)
                 .list();
         Collections.reverse(chatMemoryInfos);
@@ -48,7 +48,7 @@ public class MemoryAbility {
                 .eq(ChatMsg::getMemoryId, memoryId)
                 .eq(ChatMsg::getUserId, userId)
                 .orderByDesc(ChatMsg::getCreateTime)
-                .in(ChatMsg::getChatRole, ChatRole.USER.getCode(), ChatRole.ASSISTANT.getCode())
+                .in(ChatMsg::getChatRole, ChatRole.USER.getValue(), ChatRole.ASSISTANT.getValue())
                 .last(limit > 0, "limit " + limit)
                 .list();
         Collections.reverse(chatMemoryInfos);

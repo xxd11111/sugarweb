@@ -16,7 +16,7 @@ public class KbUpdateDto {
 
     private String kbName;
 
-    private String embeddingModel;
+    private String embeddingModelId;
 
     private String status;
 

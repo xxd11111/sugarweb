@@ -88,4 +88,52 @@ public class FileLinkService {
         }
     }
 
+    public List<FileLink> listFileLinkByGroup(String bizId, String groupCode) {
+        List<FileLink> fileLink = Db.list(new LambdaQueryWrapper<FileLink>()
+                .eq(FileLink::getGroupCode, groupCode)
+                .eq(FileLink::getBizId, bizId));
+        List<String> fileIds = fileLink.stream().map(FileLink::getFileId).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(fileIds)) {
+            List<FileInfo> fileInfos = Db.listByIds(fileIds, FileInfo.class);
+            for (FileLink link : fileLink) {
+                link.setFileInfo(fileInfos.stream().filter(a -> StrUtil.equals(a.getFileId(), link.getFileId())).findFirst().orElse(null));
+            }
+            return fileLink;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public FileLink getFileLinkByGroup(String bizId, String groupCode) {
+        List<FileLink> fileLinkList = Db.list(new LambdaQueryWrapper<FileLink>()
+                .eq(FileLink::getGroupCode, groupCode)
+                .eq(FileLink::getBizId, bizId));
+        int size = CollUtil.size(fileLinkList);
+        if (size > 1) {
+            throw new IllegalArgumentException("bizId:" + bizId + " groupCode:" + groupCode + " 存在多个文件, 请联系系统管理员");
+        }
+        if (size == 0) {
+            return null;
+        }
+        FileLink fileLink = fileLinkList.getFirst();
+        FileInfo fileInfo = Db.getById(fileLink.getFileId(), FileInfo.class);
+        fileLink.setFileInfo(fileInfo);
+        return fileLink;
+    }
+
+    public FileInfo getFileInfoByGroup(String bizId, String groupCode) {
+        List<FileLink> fileLinkList = Db.list(new LambdaQueryWrapper<FileLink>()
+                .eq(FileLink::getGroupCode, groupCode)
+                .eq(FileLink::getBizId, bizId));
+        int size = CollUtil.size(fileLinkList);
+        if (size > 1) {
+            throw new IllegalArgumentException("bizId:" + bizId + " groupCode:" + groupCode + " 存在多个文件, 请联系系统管理员");
+        }
+        if (size == 0) {
+            return null;
+        }
+        FileLink fileLink = fileLinkList.getFirst();
+        return Db.getById(fileLink.getFileId(), FileInfo.class);
+    }
+
 }

@@ -19,9 +19,15 @@ public class DocSegment {
 
     private String docId;
 
+    private String kbId;
+
+    private String vectorId;
+
     private String content;
 
-    private String parseStatus;
+    private Integer position;
+
+    private String status;
 
     private LocalDateTime createTime;
 

@@ -13,6 +13,8 @@ import java.util.List;
 @Data
 public class DocParseDto {
 
+    private String kbId;
+
     private List<String> docIds;
 
 }

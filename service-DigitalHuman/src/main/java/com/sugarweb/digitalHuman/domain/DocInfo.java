@@ -33,6 +33,10 @@ public class DocInfo {
 
     private String parseStatus;
 
+    private String errorMsg;
+
+    private Integer segmentCount;
+
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;

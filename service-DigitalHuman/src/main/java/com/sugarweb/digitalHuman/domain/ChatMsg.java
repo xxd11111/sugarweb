@@ -38,7 +38,7 @@ public class ChatMsg {
         chatMsg.setMemoryId(memoryId);
         chatMsg.setUserId(userId);
         chatMsg.setContent(prompt);
-        chatMsg.setChatRole(chatRole.getCode());
+        chatMsg.setChatRole(chatRole.getValue());
         LocalDateTime now = LocalDateTime.now();
         chatMsg.setCreateTime(now);
         chatMsg.setUpdateTime(now);

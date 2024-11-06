@@ -10,6 +10,7 @@ import com.sugarweb.digitalHuman.application.dto.SceneSaveDto;
 import com.sugarweb.digitalHuman.application.dto.SceneUpdateDto;
 import com.sugarweb.digitalHuman.domain.SceneInfo;
 import com.sugarweb.framework.orm.PageHelper;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @author xxd
  * @version 1.0
  */
+@Service
 public class SceneService {
 
     public IPage<SceneDetailDto> page(ScenePageQuery query) {
@@ -35,7 +37,6 @@ public class SceneService {
 
     public SceneDetailDto save(SceneSaveDto saveDto) {
         SceneInfo sceneInfo = new SceneInfo();
-        sceneInfo.setStageId(saveDto.getStageId());
         sceneInfo.setSceneName(saveDto.getSceneName());
         sceneInfo.setDescription(saveDto.getDescription());
         sceneInfo.setCreateTime(LocalDateTime.now());
@@ -47,7 +48,6 @@ public class SceneService {
     public SceneDetailDto update(SceneUpdateDto updateDto) {
         SceneInfo sceneInfo = Db.getById(updateDto.getSceneId(), SceneInfo.class);
         if (sceneInfo != null) {
-            sceneInfo.setStageId(updateDto.getStageId());
             sceneInfo.setSceneName(updateDto.getSceneName());
             sceneInfo.setDescription(updateDto.getDescription());
             sceneInfo.setUpdateTime(LocalDateTime.now());
@@ -62,7 +62,6 @@ public class SceneService {
         }
         SceneDetailDto sceneDetailDto = new SceneDetailDto();
         sceneDetailDto.setSceneId(sceneInfo.getSceneId());
-        sceneDetailDto.setStageId(sceneInfo.getStageId());
         sceneDetailDto.setSceneName(sceneInfo.getSceneName());
         sceneDetailDto.setDescription(sceneInfo.getDescription());
         sceneDetailDto.setCreateTime(sceneInfo.getCreateTime());

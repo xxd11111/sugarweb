@@ -22,13 +22,18 @@ public class AgentInfo {
 
     private String systemPromptId;
 
-    private String chatModelId;
-
     @TableField(exist = false)
     private PromptTemplateInfo systemPrompt;
 
+    private String chatModelId;
+
     @TableField(exist = false)
     private ModelInfo chatModelInfo;
+
+    private String kbId;
+
+    @TableField(exist = false)
+    private KbInfo kbInfo;
 
     private LocalDateTime createTime;
 

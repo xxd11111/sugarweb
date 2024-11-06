@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,25 +21,19 @@ public class PromptTemplateInfo {
 
     private String agentId;
 
-    /**
-     * system, user
-     */
-    private String promptType;
-
     private String content;
+
+    @TableField(exist = false)
+    private String[] variables;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
-    @TableField(exist = false)
-    private List<PromptTemplateVariableInfo> promptVariableList;
-
     public String getPrompt(Map<String, Object> contextVariables) {
         String content = this.content;
-        for (PromptTemplateVariableInfo variableInfo : promptVariableList) {
-            String variableCode = variableInfo.getVariableCode();
-            String variableReplace = "{{" + variableInfo.getVariableCode() + "}}";
+        for (String variableCode : variables) {
+            String variableReplace = "{{" + variableCode + "}}";
             Object variableValue = contextVariables.get(variableCode);
             content = StrUtil.replace(content, variableReplace, variableValue == null ? "" : variableValue.toString());
         }

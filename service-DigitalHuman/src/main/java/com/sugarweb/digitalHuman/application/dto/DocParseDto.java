@@ -2,22 +2,19 @@ package com.sugarweb.digitalHuman.application.dto;
 
 import lombok.Data;
 
+import java.util.List;
 
 /**
- * kb更新参数
+ * DocParseDto
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class KbUpdateDto {
+public class DocParseDto {
 
     private String kbId;
 
-    private String kbName;
-
-    private String status;
-
-    private String description;
+    private List<String> docIds;
 
 }

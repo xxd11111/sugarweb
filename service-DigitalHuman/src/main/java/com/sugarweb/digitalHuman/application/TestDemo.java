@@ -11,6 +11,7 @@ import com.sugarweb.oss.application.dto.FileDetailDto;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Collections;
 
 /**
@@ -67,7 +68,7 @@ public class TestDemo {
         return save;
     }
 
-    public DocDetailDto step4(KbDetailDto kbDetailDto) {
+    public DocDetailDto step4(KbDetailDto kbDetailDto) throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("D:\\test.txt");
         FileDetailDto docFile = fileService.upload("doc_file", fileInputStream, "text/plain", "test.txt");
 

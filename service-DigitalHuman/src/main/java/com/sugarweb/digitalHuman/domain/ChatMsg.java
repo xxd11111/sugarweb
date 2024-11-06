@@ -18,7 +18,7 @@ public class ChatMsg {
     @TableId
     private String msgId;
 
-    private String memoryId;
+    private String performanceId;
 
     private String content;
 
@@ -33,9 +33,8 @@ public class ChatMsg {
 
     private String userId;
 
-    public static ChatMsg of(ChatRole chatRole, String prompt, String memoryId, String userId) {
+    public static ChatMsg of(ChatRole chatRole, String prompt, String userId) {
         ChatMsg chatMsg = new ChatMsg();
-        chatMsg.setMemoryId(memoryId);
         chatMsg.setUserId(userId);
         chatMsg.setContent(prompt);
         chatMsg.setChatRole(chatRole.getValue());

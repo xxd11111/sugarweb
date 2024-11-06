@@ -1,36 +1,41 @@
 package com.sugarweb.digitalHuman.domain;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 /**
- * StageInfo
+ * PerformanceInfo
  *
  * @author xxd
  * @version 1.0
  */
 @Data
-public class StageInfo {
+public class PerformanceInfo {
 
     @TableId
+    private String performanceId;
+
+    private String title;
+
     private String stageId;
 
     private String stageName;
 
-    private String description;
+    private String sceneId;
+
+    private String sceneName;
 
     private String agentId;
 
-    @TableField(exist = false)
-    private AgentInfo agentInfo;
+    private String agentName;
 
-    private String sceneId;
+    private String status;
 
-    @TableField(exist = false)
-    private SceneInfo sceneInfo;
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
 
     private LocalDateTime createTime;
 

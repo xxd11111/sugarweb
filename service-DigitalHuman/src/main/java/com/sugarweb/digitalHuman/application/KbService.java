@@ -31,7 +31,7 @@ import java.time.LocalDateTime;
 public class KbService {
 
     @Resource
-    private ChatAssistantProperties.MilvusVectorStoreProperties vectorStoreProperties;
+    private ChatAssistantProperties chatAssistantProperties;
     @Resource
     private MilvusEmbeddingStore embeddingStore;
 
@@ -76,14 +76,6 @@ public class KbService {
             kbInfo.setStatus(updateDto.getStatus());
             kbInfo.setDescription(updateDto.getDescription());
             kbInfo.setUpdateTime(LocalDateTime.now());
-
-            ModelInfo modelInfo = Db.getById(updateDto.getEmbeddingModelId(), ModelInfo.class);
-            if (modelInfo == null) {
-                throw new ValidateException("模型未配置");
-            }
-            kbInfo.setEmbeddingModelId(updateDto.getEmbeddingModelId());
-            kbInfo.setEmbeddingModelName(modelInfo.getModelName());
-            kbInfo.setDimension(modelInfo.getDimension());
             Db.updateById(kbInfo);
         }
         return buildKbDetailDto(kbInfo);

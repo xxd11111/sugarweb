@@ -24,7 +24,8 @@ import java.time.LocalDateTime;
 public class AgentService {
 
     public AgentInfo getAgentInfo(String agentId) {
-        return Db.getById(agentId, AgentInfo.class);
+        AgentInfo agentInfo = Db.getById(agentId, AgentInfo.class);
+        return agentInfo;
     }
 
     public AgentInfo save(AgentInfo agentInfo) {
@@ -35,20 +36,6 @@ public class AgentService {
     public AgentInfo update(AgentInfo agentInfo) {
         Db.updateById(agentInfo);
         return agentInfo;
-    }
-
-    public AgentInfo defaultAgentInfo() {
-        AgentInfo agentInfo = getAgentInfo("1");
-        if (agentInfo != null) {
-            return agentInfo;
-        } else {
-            agentInfo = new AgentInfo();
-            agentInfo.setAgentId("1");
-            agentInfo.setAgentName("炫妹");
-            agentInfo.setCreateTime(LocalDateTime.now());
-            agentInfo.setUpdateTime(LocalDateTime.now());
-            return save(agentInfo);
-        }
     }
 
     public IPage<AgentDetailDto> page(AgentPageQuery query) {

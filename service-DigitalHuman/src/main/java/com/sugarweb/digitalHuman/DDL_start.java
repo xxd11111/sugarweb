@@ -16,10 +16,13 @@ public class DDL_start {
 
     public static String packageName = "com.sugarweb.chatAssistant.domain.po";
 
+    /**
+     * code first 模式生成建表脚本
+     */
     public static void main(String[] args) {
         Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb.chatAssistant.domain");
         StringBuilder sqlStr = new StringBuilder();
-        // 获取chatAssistant项目的实体类
+        // 获取项目的实体类
         for (Class<?> clazz : classes) {
             String sql = GeneratorUtil.generateSql(clazz);
             sqlStr.append("\n").append(sql);

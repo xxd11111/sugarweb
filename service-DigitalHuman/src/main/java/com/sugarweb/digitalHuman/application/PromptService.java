@@ -25,23 +25,7 @@ public class PromptService {
                 {{documents}}
                 """;
         templateInfo.setContent(text);
-
-        PromptTemplateVariableInfo variableInfo = new PromptTemplateVariableInfo();
-        variableInfo.setVariableCode("documents");
-        templateInfo.setPromptVariableList(List.of(variableInfo));
-        return templateInfo;
-    }
-
-    public PromptTemplateInfo defaultUserPrompt() {
-        PromptTemplateInfo templateInfo = new PromptTemplateInfo();
-        String text = """
-                {{question}}
-                """;
-        templateInfo.setContent(text);
-
-        PromptTemplateVariableInfo variableInfo = new PromptTemplateVariableInfo();
-        variableInfo.setVariableCode("question");
-        templateInfo.setPromptVariableList(List.of(variableInfo));
+        templateInfo.setVariables(new String[]{"documents"});
         return templateInfo;
     }
 

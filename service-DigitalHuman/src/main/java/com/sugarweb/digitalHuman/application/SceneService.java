@@ -8,11 +8,14 @@ import com.sugarweb.digitalHuman.application.dto.SceneDetailDto;
 import com.sugarweb.digitalHuman.application.dto.ScenePageQuery;
 import com.sugarweb.digitalHuman.application.dto.SceneSaveDto;
 import com.sugarweb.digitalHuman.application.dto.SceneUpdateDto;
+import com.sugarweb.digitalHuman.domain.PromptTemplateInfo;
 import com.sugarweb.digitalHuman.domain.SceneInfo;
+import com.sugarweb.digitalHuman.domain.SceneTopic;
 import com.sugarweb.framework.orm.PageHelper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * SceneService
@@ -71,5 +74,18 @@ public class SceneService {
 
     public void remove(String sceneId) {
         Db.removeById(sceneId, SceneInfo.class);
+    }
+
+    public SceneInfo getById(String sceneId) {
+        SceneInfo sceneInfo = Db.getById(sceneId, SceneInfo.class);
+        List<SceneTopic> sceneTopicList = Db.lambdaQuery(SceneTopic.class)
+                .eq(SceneTopic::getSceneId, sceneId)
+                .list();
+        sceneInfo.setSceneTopicList(sceneTopicList);
+        if (StrUtil.isNotEmpty(sceneInfo.getSystemPromptId())){
+            PromptTemplateInfo promptTemplateInfo = Db.getById(sceneInfo.getSystemPromptId(), PromptTemplateInfo.class);
+            sceneInfo.setSystemPrompt(promptTemplateInfo);
+        }
+        return sceneInfo;
     }
 }

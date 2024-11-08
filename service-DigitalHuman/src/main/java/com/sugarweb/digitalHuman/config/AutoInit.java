@@ -6,7 +6,7 @@ import com.sugarweb.digitalHuman.application.dto.DocDetailDto;
 import com.sugarweb.digitalHuman.application.dto.DocSaveDto;
 import com.sugarweb.digitalHuman.application.dto.KbDetailDto;
 import com.sugarweb.digitalHuman.application.dto.KbSaveDto;
-import com.sugarweb.digitalHuman.constans.DocSourceType;
+import com.sugarweb.digitalHuman.constants.DocSourceType;
 import com.sugarweb.digitalHuman.domain.AgentInfo;
 import com.sugarweb.digitalHuman.domain.DocInfo;
 import com.sugarweb.digitalHuman.domain.ModelInfo;

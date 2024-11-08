@@ -9,7 +9,11 @@ import com.sugarweb.digitalHuman.application.dto.AgentPageQuery;
 import com.sugarweb.digitalHuman.application.dto.AgentSaveDto;
 import com.sugarweb.digitalHuman.application.dto.AgentUpdateDto;
 import com.sugarweb.digitalHuman.domain.AgentInfo;
+import com.sugarweb.digitalHuman.domain.KbInfo;
+import com.sugarweb.digitalHuman.domain.ModelInfo;
+import com.sugarweb.digitalHuman.domain.PromptTemplateInfo;
 import com.sugarweb.framework.orm.PageHelper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,8 +27,25 @@ import java.time.LocalDateTime;
 @Service
 public class AgentService {
 
-    public AgentInfo getAgentInfo(String agentId) {
+    @Resource
+    private KbService kbService;
+    @Resource
+    private PromptService promptService;
+
+    public AgentInfo getById(String agentId) {
         AgentInfo agentInfo = Db.getById(agentId, AgentInfo.class);
+        if (StrUtil.isNotEmpty(agentInfo.getChatModelId())){
+            ModelInfo modelInfo = Db.getById(agentId, ModelInfo.class);
+            agentInfo.setChatModelInfo(modelInfo);
+        }
+        if (StrUtil.isNotEmpty(agentInfo.getKbId())){
+            KbInfo kbInfo = kbService.getById(agentInfo.getKbId());
+            agentInfo.setKbInfo(kbInfo);
+        }
+        if (StrUtil.isNotEmpty(agentInfo.getSystemPromptId())){
+            PromptTemplateInfo promptTemplateInfo = promptService.getById(agentInfo.getSystemPromptId());
+            agentInfo.setSystemPrompt(promptTemplateInfo);
+        }
         return agentInfo;
     }
 
@@ -46,7 +67,7 @@ public class AgentService {
     }
 
     public AgentDetailDto detail(String agentId) {
-        return buildAgentDetailDto(getAgentInfo(agentId));
+        return buildAgentDetailDto(getById(agentId));
     }
 
     public AgentDetailDto save(AgentSaveDto saveDto) {

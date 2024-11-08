@@ -8,8 +8,11 @@ import com.sugarweb.digitalHuman.application.dto.StageDetailDto;
 import com.sugarweb.digitalHuman.application.dto.StagePageQuery;
 import com.sugarweb.digitalHuman.application.dto.StageSaveDto;
 import com.sugarweb.digitalHuman.application.dto.StageUpdateDto;
+import com.sugarweb.digitalHuman.domain.AgentInfo;
+import com.sugarweb.digitalHuman.domain.SceneInfo;
 import com.sugarweb.digitalHuman.domain.StageInfo;
 import com.sugarweb.framework.orm.PageHelper;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,11 +26,33 @@ import java.time.LocalDateTime;
 @Service
 public class StageService {
 
+    @Resource
+    private AgentService agentService;
+    @Resource
+    private SceneService sceneService;
+
     public IPage<StageDetailDto> page(StagePageQuery query) {
         return Db.page(PageHelper.getPage(query), new LambdaQueryWrapper<StageInfo>()
                 .like(StrUtil.isNotEmpty(query.getStageName()), StageInfo::getStageName, query.getStageName())
                 .orderByDesc(StageInfo::getCreateTime)
         ).convert(this::buildDetail);
+    }
+
+    public StageInfo getById(String stageId) {
+        StageInfo stageInfo = Db.getById(stageId, StageInfo.class);
+        if (stageInfo == null) {
+            return null;
+        }
+        String agentId = stageInfo.getAgentId();
+        if (StrUtil.isNotEmpty(agentId)){
+            AgentInfo agentInfo = agentService.getById(agentId);
+            stageInfo.setAgentInfo(agentInfo);
+        }
+        if (StrUtil.isNotEmpty(stageInfo.getSceneId())){
+            SceneInfo sceneInfo = sceneService.getById(stageInfo.getSceneId());
+            stageInfo.setSceneInfo(sceneInfo);
+        }
+        return stageInfo;
     }
 
     public StageDetailDto detail(String stageId) {

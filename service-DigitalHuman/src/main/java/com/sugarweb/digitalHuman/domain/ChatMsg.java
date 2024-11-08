@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.sugarweb.digitalHuman.constans.ChatRole;
+import com.sugarweb.digitalHuman.constants.ChatRole;
 import lombok.Data;
 
 import java.time.LocalDateTime;

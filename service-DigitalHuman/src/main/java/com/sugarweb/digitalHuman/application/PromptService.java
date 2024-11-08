@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman.application;
 
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.PromptTemplateInfo;
 import com.sugarweb.digitalHuman.domain.PromptTemplateVariableInfo;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,7 @@ public class PromptService {
         return templateInfo;
     }
 
+    public PromptTemplateInfo getById(String systemPromptId) {
+        return Db.getById(systemPromptId, PromptTemplateInfo.class);
+    }
 }

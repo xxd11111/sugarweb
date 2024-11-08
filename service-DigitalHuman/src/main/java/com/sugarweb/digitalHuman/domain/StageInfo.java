@@ -32,6 +32,13 @@ public class StageInfo {
     @TableField(exist = false)
     private SceneInfo sceneInfo;
 
+    /**
+     * 0未表演 1表演中
+     */
+    private String status;
+
+    private String performanceId;
+
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;

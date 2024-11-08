@@ -17,6 +17,8 @@ public class SceneTopic {
     @TableId
     private String topicId;
 
+    private String sceneId;
+
     private String topicName;
 
     private String topicIndex;

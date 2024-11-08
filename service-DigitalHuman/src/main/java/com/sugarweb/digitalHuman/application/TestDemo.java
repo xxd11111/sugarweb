@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.application;
 
 import com.sugarweb.digitalHuman.application.dto.*;
-import com.sugarweb.digitalHuman.constans.DocSourceType;
+import com.sugarweb.digitalHuman.constants.DocSourceType;
 import com.sugarweb.digitalHuman.domain.DocInfo;
 import com.sugarweb.digitalHuman.domain.ModelInfo;
 import com.sugarweb.digitalHuman.infra.llm.ModelPlatform;

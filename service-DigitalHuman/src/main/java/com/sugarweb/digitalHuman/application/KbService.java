@@ -17,6 +17,7 @@ import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.framework.orm.PageHelper;
 import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,6 +35,8 @@ public class KbService {
     private ChatAssistantProperties chatAssistantProperties;
     @Resource
     private MilvusEmbeddingStore embeddingStore;
+    @Autowired
+    private ModelService modelService;
 
     public IPage<KbDetailDto> page(KbPageQuery query) {
         return Db.page(PageHelper.getPage(query), new LambdaQueryWrapper<>(KbInfo.class)
@@ -114,4 +117,12 @@ public class KbService {
         MilvusEmbeddingStoreFactory.create(kbInfo.getCollectionName(), kbInfo.getDimension());
     }
 
+    public KbInfo getById(String kbId) {
+        KbInfo kbInfo = Db.getById(kbId, KbInfo.class);
+        if (StrUtil.isNotEmpty(kbInfo.getEmbeddingModelId())){
+            ModelInfo modelInfo = modelService.getOne(kbInfo.getEmbeddingModelId());
+            kbInfo.setEmbeddingModelInfo(modelInfo);
+        }
+        return kbInfo;
+    }
 }

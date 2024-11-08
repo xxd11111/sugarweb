@@ -21,7 +21,10 @@ public class SceneInfo {
 
     private String sceneName;
 
-    private String systemPrompt;
+    private String systemPromptId;
+
+    @TableField(exist = false)
+    private PromptTemplateInfo systemPrompt;
 
     private String description;
 

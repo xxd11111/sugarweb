@@ -2,10 +2,7 @@ package com.sugarweb.digitalHuman.application;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.PromptTemplateInfo;
-import com.sugarweb.digitalHuman.domain.PromptTemplateVariableInfo;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * PromptService

@@ -33,8 +33,6 @@ public class KbService {
 
     @Resource
     private ChatAssistantProperties chatAssistantProperties;
-    @Resource
-    private MilvusEmbeddingStore embeddingStore;
     @Autowired
     private ModelService modelService;
 
@@ -106,8 +104,9 @@ public class KbService {
         if (kbInfo == null) {
             throw new ValidateException("知识库不存在");
         }
-        embeddingStore.dropCollection(kbInfo.getCollectionName());
         Db.removeById(kbId, KbInfo.class);
+        MilvusEmbeddingStore milvusEmbeddingStore = MilvusEmbeddingStoreFactory.create(kbInfo.getCollectionName(), kbInfo.getDimension());
+        milvusEmbeddingStore.dropCollection(kbInfo.getCollectionName());
     }
 
     private void bindVectorDatabase(KbInfo kbInfo) {

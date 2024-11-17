@@ -2,8 +2,8 @@ package com.sugarweb.digitalHuman.application;
 
 import com.sugarweb.digitalHuman.application.dto.*;
 import com.sugarweb.digitalHuman.constants.DocSourceType;
-import com.sugarweb.digitalHuman.domain.DocInfo;
-import com.sugarweb.digitalHuman.domain.ModelInfo;
+import com.sugarweb.digitalHuman.domain.DatasetDocument;
+import com.sugarweb.digitalHuman.domain.Model;
 import com.sugarweb.digitalHuman.infra.llm.ModelPlatform;
 import com.sugarweb.digitalHuman.infra.llm.ModelType;
 import com.sugarweb.oss.application.FileService;
@@ -24,76 +24,73 @@ import java.util.Collections;
 public class TestDemo {
 
     private final ModelService modelService;
-    private final KbService kbService;
+    private final DatasetService datasetService;
     private final FileService fileService;
-    private final DocService docService;
-    private final AgentService agentService;
+    private final DocumentService documentService;
+    private final ActorService actorService;
 
-    public TestDemo(ModelService modelService, KbService kbService, FileService fileService, DocService docService, AgentService agentService) {
+    public TestDemo(ModelService modelService, DatasetService datasetService, FileService fileService, DocumentService documentService, ActorService actorService) {
         this.modelService = modelService;
-        this.kbService = kbService;
+        this.datasetService = datasetService;
         this.fileService = fileService;
-        this.docService = docService;
-        this.agentService = agentService;
+        this.documentService = documentService;
+        this.actorService = actorService;
     }
 
     // step1 配置问答模型
-    public ModelInfo step1() {
-        ModelInfo modelInfo = new ModelInfo();
-        modelInfo.setModelType(ModelType.CHAT.getValue());
-        modelInfo.setModelPlatform(ModelPlatform.OLLAMA.getValue());
-        modelInfo.setModelName("qwen2.5:3b");
-        modelInfo.setBaseUrl("http://localhost:11434");
-        modelService.save(modelInfo);
-        return modelInfo;
+    public Model step1() {
+        Model model = new Model();
+        model.setModelType(ModelType.CHAT.getValue());
+        model.setModelPlatform(ModelPlatform.OLLAMA.getValue());
+        model.setModelName("qwen2.5:3b");
+        model.setBaseUrl("http://localhost:11434");
+        modelService.save(model);
+        return model;
     }
 
     // step2 配置向量模型
-    public ModelInfo step2() {
-        ModelInfo modelInfo = new ModelInfo();
-        modelInfo.setModelType(ModelType.EMBEDDING.getValue());
-        modelInfo.setModelPlatform(ModelPlatform.OLLAMA.getValue());
-        modelInfo.setModelName("nomic-embed-text");
-        modelInfo.setBaseUrl("http://localhost:11434");
-        modelService.save(modelInfo);
-        return modelInfo;
+    public Model step2() {
+        Model model = new Model();
+        model.setModelType(ModelType.EMBEDDING.getValue());
+        model.setModelPlatform(ModelPlatform.OLLAMA.getValue());
+        model.setModelName("nomic-embed-text");
+        model.setBaseUrl("http://localhost:11434");
+        modelService.save(model);
+        return model;
     }
 
-    public KbDetailDto step3(ModelInfo modelInfo) {
-        KbSaveDto kbSaveDto = new KbSaveDto();
-        kbSaveDto.setKbName("test");
-        kbSaveDto.setEmbeddingModelId(modelInfo.getModelId());
-        kbSaveDto.setDescription("这是一个测试知识库");
-        KbDetailDto save = kbService.save(kbSaveDto);
+    public DatasetDetailDto step3(Model model) {
+        DatasetSaveDto datasetSaveDto = new DatasetSaveDto();
+        datasetSaveDto.setDatasetName("test");
+        datasetSaveDto.setEmbeddingModelId(model.getModelId());
+        datasetSaveDto.setDescription("这是一个测试知识库");
+        DatasetDetailDto save = datasetService.save(datasetSaveDto);
         return save;
     }
 
-    public DocDetailDto step4(KbDetailDto kbDetailDto) throws FileNotFoundException {
+    public DocumentDetailDto step4(DatasetDetailDto datasetDetailDto) throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("D:\\test.txt");
         FileDetailDto docFile = fileService.upload("doc_file", fileInputStream, "text/plain", "test.txt");
 
-        DocInfo docInfo = new DocInfo();
-        docInfo.setDocName(docFile.getFilename());
-        docInfo.setKbId(kbDetailDto.getKbId());
-        docInfo.setSourceType(DocSourceType.FILE_UPLOAD.getValue());
+        DatasetDocument datasetDocument = new DatasetDocument();
+        datasetDocument.setDocumentName(docFile.getFilename());
+        datasetDocument.setDatasetId(datasetDetailDto.getDatasetId());
+        datasetDocument.setSourceType(DocSourceType.FILE_UPLOAD.getValue());
 
-        DocSaveDto saveDto = new DocSaveDto();
-        saveDto.setDocName(docInfo.getDocName());
-        saveDto.setKbId(docInfo.getKbId());
-        saveDto.setSourceType(docInfo.getSourceType());
-        DocDetailDto save = docService.save(saveDto);
-        docService.parseStart(save.getKbId(), Collections.singletonList(save.getDocId()));
+        DocumentSaveDto saveDto = new DocumentSaveDto();
+        saveDto.setDocumentName(datasetDocument.getDocumentName());
+        saveDto.setDatasetId(datasetDocument.getDatasetId());
+        saveDto.setSourceType(datasetDocument.getSourceType());
+        DocumentDetailDto save = documentService.save(saveDto);
+        documentService.parseStart(save.getDatasetId(), Collections.singletonList(save.getDocumentId()));
         return save;
     }
 
-    public void step5(ModelInfo chatModelInfo) {
-        AgentSaveDto saveDto = new AgentSaveDto();
-        saveDto.setAgentName("test_agent");
-        saveDto.setChatModelId(chatModelInfo.getModelId());
-        PromptTemplateSaveDto systemPrompt = new PromptTemplateSaveDto();
-        systemPrompt.setContent("你是一个AI，请回答我的问题");
-        saveDto.setSystemPrompt(systemPrompt);
-        agentService.save(saveDto);
+    public void step5(Model chatModel) {
+        ActorSaveDto saveDto = new ActorSaveDto();
+        saveDto.setActorName("test_actor");
+        saveDto.setChatModelId(chatModel.getModelId());
+        actorService.save(saveDto);
     }
 
 

@@ -1,10 +1,8 @@
 package com.sugarweb.digitalHuman.application;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.domain.PerformanceInfo;
+import com.sugarweb.digitalHuman.domain.StagePerformance;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 表演服务
@@ -12,8 +10,8 @@ import java.util.List;
 @Service
 public class PerformanceService {
 
-    public PerformanceInfo getById(String performanceId) {
-       return Db.getById(performanceId, PerformanceInfo.class);
+    public StagePerformance getById(String performanceId) {
+       return Db.getById(performanceId, StagePerformance.class);
     }
 
 }

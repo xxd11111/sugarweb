@@ -50,7 +50,7 @@ sugarweb采用组件化构架设计，整合了web应用所需通用组件。
 ### service-uims(案例项目)
 
 1. 修改启动模块下的application-dev.yml，配置mysql（必填），redis（必填）信息。
-2. 进入数据库执行sql脚本, scripts/ChatAssisitant-DDL.sql
+2. 进入数据库执行sql脚本, scripts/DigitalHuman-DDL.sql
 3. 启动服务后，使用接口信息url配合接口调用工具进行测试，http://localhost:8080/v3/api-docs
 
 ### service-chatAssistant(数字人平台, 可独立使用)
@@ -101,7 +101,7 @@ blbl的cookie，登录账号网页打开F12查看
       # 自己的uid
       self-uid: 20047313
 ```
-3. 进入数据库执行sql脚本, scripts/ChatAssisitant-DDL.sql
+3. 进入数据库执行sql脚本, scripts/DigitalHuman-DDL.sql
 
 ## 交流与讨论
 

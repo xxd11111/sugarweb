@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.infra;
 
-import com.sugarweb.digitalHuman.config.ChatAssistantProperties;
-import com.sugarweb.digitalHuman.domain.KbInfo;
+import com.sugarweb.digitalHuman.config.ApplicationProperties;
+import com.sugarweb.digitalHuman.domain.Dataset;
 import com.sugarweb.framework.utils.BeanUtil;
 import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
 import io.milvus.param.IndexType;
@@ -15,8 +15,8 @@ import io.milvus.param.IndexType;
 public class MilvusEmbeddingStoreFactory {
 
     public static MilvusEmbeddingStore create(String collectionName, Integer dimension) {
-        ChatAssistantProperties bean = BeanUtil.getBean(ChatAssistantProperties.class);
-        ChatAssistantProperties.MilvusVectorStoreProperties vectorStoreProperties = bean.getMilvus();
+        ApplicationProperties bean = BeanUtil.getBean(ApplicationProperties.class);
+        ApplicationProperties.MilvusVectorStoreProperties vectorStoreProperties = bean.getMilvus();
         return MilvusEmbeddingStore.builder()
                 .uri(vectorStoreProperties.getUrl())
                 .username(vectorStoreProperties.getUsername())
@@ -30,16 +30,16 @@ public class MilvusEmbeddingStoreFactory {
                 .build();
     }
 
-    public static MilvusEmbeddingStore create(KbInfo kbInfo) {
-        ChatAssistantProperties bean = BeanUtil.getBean(ChatAssistantProperties.class);
-        ChatAssistantProperties.MilvusVectorStoreProperties vectorStoreProperties = bean.getMilvus();
+    public static MilvusEmbeddingStore create(Dataset dataset) {
+        ApplicationProperties bean = BeanUtil.getBean(ApplicationProperties.class);
+        ApplicationProperties.MilvusVectorStoreProperties vectorStoreProperties = bean.getMilvus();
         return MilvusEmbeddingStore.builder()
                 .uri(vectorStoreProperties.getUrl())
                 .username(vectorStoreProperties.getUsername())
                 .password(vectorStoreProperties.getPassword())
                 .databaseName(vectorStoreProperties.getDatabaseName())
-                .collectionName(kbInfo.getCollectionName())
-                .dimension(kbInfo.getDimension())
+                .collectionName(dataset.getCollectionName())
+                .dimension(dataset.getDimension())
                 .consistencyLevel(vectorStoreProperties.getConsistencyLevel())
                 .indexType(IndexType.HNSW)
                 .metricType(vectorStoreProperties.getMetricType())

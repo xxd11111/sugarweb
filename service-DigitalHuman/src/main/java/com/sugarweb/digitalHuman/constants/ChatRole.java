@@ -13,11 +13,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ChatRole {
 
-    USER("user"),
+    SYSTEM("1"),
 
-    ASSISTANT("assistant"),
+    USER("2"),
 
-    SYSTEM("system");
+    ASSISTANT("3");
+
 
     private final String value;
 

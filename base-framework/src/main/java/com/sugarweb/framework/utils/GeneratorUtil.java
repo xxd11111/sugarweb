@@ -2,6 +2,7 @@ package com.sugarweb.framework.utils;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.ClassUtil;
+import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -135,7 +137,7 @@ public class GeneratorUtil {
         StringBuilder columnStr = new StringBuilder();
         String primaryKey = null;
         boolean isFirst = true;
-        Field[] fields = clazz.getDeclaredFields();
+        Field[] fields = ReflectUtil.getFieldsDirectly(clazz, true);
         for (Field field : fields) {
             if (exculudeList.contains(field.getName())) {
                 continue;

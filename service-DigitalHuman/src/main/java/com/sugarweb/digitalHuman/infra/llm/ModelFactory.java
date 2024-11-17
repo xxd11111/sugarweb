@@ -1,7 +1,9 @@
 package com.sugarweb.digitalHuman.infra.llm;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.digitalHuman.domain.ModelInfo;
+import com.sugarweb.digitalHuman.domain.Model;
+import com.sugarweb.digitalHuman.infra.llm.tts.ChatTtsModel;
+import com.sugarweb.digitalHuman.infra.llm.tts.TtsModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
@@ -15,48 +17,48 @@ import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
  */
 public class ModelFactory {
 
-    public static StreamingChatLanguageModel creatStreamingChatLanguageModel(ModelInfo modelInfo) {
-        if (!ModelType.CHAT.getValue().equals(modelInfo.getModelType())) {
-            throw new IllegalArgumentException(StrUtil.format("不支持的模型类型,modelId:{},modelName:{}", modelInfo.getModelId(), modelInfo.getModelName()));
+    public static StreamingChatLanguageModel creatStreamingChatLanguageModel(Model model) {
+        if (!ModelType.CHAT.getValue().equals(model.getModelType())) {
+            throw new IllegalArgumentException(StrUtil.format("不支持的模型类型,modelId:{},modelName:{}", model.getModelId(), model.getModelName()));
         }
 
-        if (ModelPlatform.OLLAMA.getValue().equals(modelInfo.getModelPlatform())) {
+        if (ModelPlatform.OLLAMA.getValue().equals(model.getModelPlatform())) {
             return OllamaStreamingChatModel.builder()
-                    .baseUrl(modelInfo.getBaseUrl())
-                    .modelName(modelInfo.getModelName())
+                    .baseUrl(model.getBaseUrl())
+                    .modelName(model.getModelName())
                     .build();
-        } else if (ModelPlatform.ZHI_PU.getValue().equals(modelInfo.getModelPlatform())) {
+        } else if (ModelPlatform.ZHI_PU.getValue().equals(model.getModelPlatform())) {
             throw new IllegalArgumentException("暂不支持该平台");
-        } else if (ModelPlatform.TONG_YI.getValue().equals(modelInfo.getModelPlatform())) {
+        } else if (ModelPlatform.TONG_YI.getValue().equals(model.getModelPlatform())) {
             throw new IllegalArgumentException("暂不支持该平台");
         } else {
             throw new IllegalArgumentException("暂不支持该平台");
         }
     }
 
-    public static EmbeddingModel creatEmbeddingModel(ModelInfo modelInfo) {
-        if (!ModelType.EMBEDDING.getValue().equals(modelInfo.getModelType())) {
-            throw new IllegalArgumentException(StrUtil.format("不支持的模型类型,modelId:{},modelName:{}", modelInfo.getModelId(), modelInfo.getModelName()));
+    public static EmbeddingModel creatEmbeddingModel(Model model) {
+        if (!ModelType.EMBEDDING.getValue().equals(model.getModelType())) {
+            throw new IllegalArgumentException(StrUtil.format("不支持的模型类型,modelId:{},modelName:{}", model.getModelId(), model.getModelName()));
         }
-        if (ModelPlatform.OLLAMA.getValue().equals(modelInfo.getModelPlatform())) {
+        if (ModelPlatform.OLLAMA.getValue().equals(model.getModelPlatform())) {
             return OllamaEmbeddingModel.builder()
-                    .baseUrl(modelInfo.getBaseUrl())
-                    .modelName(modelInfo.getModelName())
+                    .baseUrl(model.getBaseUrl())
+                    .modelName(model.getModelName())
                     .build();
-        } else if (ModelPlatform.ZHI_PU.getValue().equals(modelInfo.getModelPlatform())) {
+        } else if (ModelPlatform.ZHI_PU.getValue().equals(model.getModelPlatform())) {
             throw new IllegalArgumentException("暂不支持该平台");
-        } else if (ModelPlatform.TONG_YI.getValue().equals(modelInfo.getModelPlatform())) {
+        } else if (ModelPlatform.TONG_YI.getValue().equals(model.getModelPlatform())) {
             throw new IllegalArgumentException("暂不支持该平台");
         } else {
             throw new IllegalArgumentException("暂不支持该平台");
         }
     }
 
-    public static TtsModel creatTtsModel(ModelInfo modelInfo) {
-        if (!ModelType.TTS.getValue().equals(modelInfo.getModelType())) {
-            throw new IllegalArgumentException(StrUtil.format("不支持的模型类型,modelId:{},modelName:{}", modelInfo.getModelId(), modelInfo.getModelName()));
+    public static TtsModel creatTtsModel(Model model) {
+        if (!ModelType.TTS.getValue().equals(model.getModelType())) {
+            throw new IllegalArgumentException(StrUtil.format("不支持的模型类型,modelId:{},modelName:{}", model.getModelId(), model.getModelName()));
         }
-        return new ChatTtsModel(modelInfo.getBaseUrl());
+        return new ChatTtsModel(model.getBaseUrl());
     }
 
 }

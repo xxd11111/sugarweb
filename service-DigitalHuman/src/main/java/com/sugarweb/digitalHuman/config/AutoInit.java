@@ -2,15 +2,15 @@ package com.sugarweb.digitalHuman.config;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.application.*;
-import com.sugarweb.digitalHuman.application.dto.DocDetailDto;
-import com.sugarweb.digitalHuman.application.dto.DocSaveDto;
-import com.sugarweb.digitalHuman.application.dto.KbDetailDto;
-import com.sugarweb.digitalHuman.application.dto.KbSaveDto;
+import com.sugarweb.digitalHuman.application.dto.DocumentDetailDto;
+import com.sugarweb.digitalHuman.application.dto.DocumentSaveDto;
+import com.sugarweb.digitalHuman.application.dto.DatasetDetailDto;
+import com.sugarweb.digitalHuman.application.dto.DatasetSaveDto;
 import com.sugarweb.digitalHuman.constants.DocSourceType;
-import com.sugarweb.digitalHuman.domain.AgentInfo;
-import com.sugarweb.digitalHuman.domain.DocInfo;
-import com.sugarweb.digitalHuman.domain.ModelInfo;
-import com.sugarweb.digitalHuman.domain.StageInfo;
+import com.sugarweb.digitalHuman.domain.Actor;
+import com.sugarweb.digitalHuman.domain.DatasetDocument;
+import com.sugarweb.digitalHuman.domain.Model;
+import com.sugarweb.digitalHuman.domain.Stage;
 import com.sugarweb.digitalHuman.infra.llm.ModelPlatform;
 import com.sugarweb.digitalHuman.infra.llm.ModelType;
 import com.sugarweb.oss.application.FileService;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
 import java.util.Collections;
 
 /**
@@ -33,18 +32,18 @@ import java.util.Collections;
 @Component
 public class AutoInit implements ApplicationRunner {
 
-    private final KbService kbService;
-    private final AgentService agentService;
-    private final SceneService sceneService;
-    private final DocService docService;
+    private final DatasetService datasetService;
+    private final ActorService actorService;
+    private final ScriptService scriptService;
+    private final DocumentService documentService;
     private final FileService fileService;
     private final ModelService modelService;
 
-    public AutoInit(KbService kbService, AgentService agentService, SceneService sceneService, DocService docService, FileService fileService, ModelService modelService) {
-        this.kbService = kbService;
-        this.agentService = agentService;
-        this.sceneService = sceneService;
-        this.docService = docService;
+    public AutoInit(DatasetService datasetService, ActorService actorService, ScriptService scriptService, DocumentService documentService, FileService fileService, ModelService modelService) {
+        this.datasetService = datasetService;
+        this.actorService = actorService;
+        this.scriptService = scriptService;
+        this.documentService = documentService;
         this.fileService = fileService;
         this.modelService = modelService;
     }
@@ -52,95 +51,90 @@ public class AutoInit implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
-        defaultChatModelInfo();
-
-        defaultEmbeddingModelInfo();
-
-        defaultKbInfo();
-
-        defaultAgentInfo();
+        // defaultChatModelInfo();
+        //
+        // defaultEmbeddingModelInfo();
+        //
+        // defaultKbInfo();
+        //
+        // defaultActorInfo();
 
     }
 
     private final String defaultChatModelId = "1";
     private final String defaultEmbeddingModelId = "1";
     private final String defaultSystemPromptId = "1";
-    private final String defaultKbId = "1";
+    private final String defaultDatasetId = "1";
     private final String defaultStageId = "1";
-    private final String defaultAgentId = "1";
+    private final String defaultActorId = "1";
 
-    public ModelInfo defaultChatModelInfo() {
-        ModelInfo modelInfo = new ModelInfo();
-        modelInfo.setModelId(defaultChatModelId);
-        modelInfo.setModelType(ModelType.CHAT.getValue());
-        modelInfo.setModelPlatform(ModelPlatform.OLLAMA.getValue());
-        modelInfo.setModelName("qwen2.5:3b");
-        modelInfo.setBaseUrl("http://localhost:11434");
-        Db.saveOrUpdate(modelInfo);
-        return modelInfo;
+    public Model defaultChatModelInfo() {
+        Model model = new Model();
+        model.setModelId(defaultChatModelId);
+        model.setModelType(ModelType.CHAT.getValue());
+        model.setModelPlatform(ModelPlatform.OLLAMA.getValue());
+        model.setModelName("qwen2.5:3b");
+        model.setBaseUrl("http://localhost:11434");
+        Db.saveOrUpdate(model);
+        return model;
     }
 
-    public ModelInfo defaultEmbeddingModelInfo() {
-        ModelInfo modelInfo = new ModelInfo();
-        modelInfo.setModelId(defaultEmbeddingModelId);
-        modelInfo.setModelType(ModelType.EMBEDDING.getValue());
-        modelInfo.setModelPlatform(ModelPlatform.OLLAMA.getValue());
-        modelInfo.setModelName("nomic-embed-text");
-        modelInfo.setBaseUrl("http://localhost:11434");
-        Db.saveOrUpdate(modelInfo);
-        return modelInfo;
+    public Model defaultEmbeddingModelInfo() {
+        Model model = new Model();
+        model.setModelId(defaultEmbeddingModelId);
+        model.setModelType(ModelType.EMBEDDING.getValue());
+        model.setModelPlatform(ModelPlatform.OLLAMA.getValue());
+        model.setModelName("nomic-embed-text");
+        model.setBaseUrl("http://localhost:11434");
+        Db.saveOrUpdate(model);
+        return model;
     }
 
-    public KbDetailDto defaultKbInfo() {
-        KbSaveDto kbSaveDto = new KbSaveDto();
-        kbSaveDto.setKbName("test");
-        kbSaveDto.setEmbeddingModelId(defaultEmbeddingModelId);
-        kbSaveDto.setDescription("这是一个测试知识库");
-        KbDetailDto save = kbService.save(kbSaveDto);
+    public DatasetDetailDto defaultKbInfo() {
+        DatasetSaveDto datasetSaveDto = new DatasetSaveDto();
+        datasetSaveDto.setDatasetName("test");
+        datasetSaveDto.setEmbeddingModelId(defaultEmbeddingModelId);
+        datasetSaveDto.setDescription("这是一个测试知识库");
+        DatasetDetailDto save = datasetService.save(datasetSaveDto);
         return save;
     }
 
-    public DocDetailDto step4(KbDetailDto kbDetailDto) throws FileNotFoundException {
+    public DocumentDetailDto step4(DatasetDetailDto datasetDetailDto) throws FileNotFoundException {
         FileInputStream fileInputStream = new FileInputStream("D:\\test.txt");
         FileDetailDto docFile = fileService.upload("doc_file", fileInputStream, "text/plain", "test.txt");
 
-        DocInfo docInfo = new DocInfo();
-        docInfo.setDocName(docFile.getFilename());
-        docInfo.setKbId(kbDetailDto.getKbId());
-        docInfo.setSourceType(DocSourceType.FILE_UPLOAD.getValue());
+        DatasetDocument datasetDocument = new DatasetDocument();
+        datasetDocument.setDocumentName(docFile.getFilename());
+        datasetDocument.setDatasetId(datasetDetailDto.getDatasetId());
+        datasetDocument.setSourceType(DocSourceType.FILE_UPLOAD.getValue());
 
-        DocSaveDto saveDto = new DocSaveDto();
-        saveDto.setDocName(docInfo.getDocName());
-        saveDto.setKbId(docInfo.getKbId());
-        saveDto.setSourceType(docInfo.getSourceType());
-        DocDetailDto save = docService.save(saveDto);
-        docService.parseStart(save.getKbId(), Collections.singletonList(save.getDocId()));
+        DocumentSaveDto saveDto = new DocumentSaveDto();
+        saveDto.setDocumentName(datasetDocument.getDocumentName());
+        saveDto.setDatasetId(datasetDocument.getDatasetId());
+        saveDto.setSourceType(datasetDocument.getSourceType());
+        DocumentDetailDto save = documentService.save(saveDto);
+        documentService.parseStart(save.getDatasetId(), Collections.singletonList(save.getDocumentId()));
         return save;
     }
 
-    public AgentInfo defaultAgentInfo() {
-        AgentInfo agentInfo = new AgentInfo();
-        agentInfo.setAgentId("1");
-        agentInfo.setAgentName("炫妹");
-        agentInfo.setSystemPromptId(defaultSystemPromptId);
-        agentInfo.setChatModelId(defaultChatModelId);
-        agentInfo.setKbId(defaultKbId);
-        agentInfo.setCreateTime(LocalDateTime.now());
-        agentInfo.setUpdateTime(LocalDateTime.now());
-        Db.saveOrUpdate(agentInfo);
-        return agentInfo;
+    public Actor defaultActorInfo() {
+        Actor actor = new Actor();
+        actor.setActorId("1");
+        actor.setActorName("炫妹");
+        actor.setChatModelId(defaultChatModelId);
+        actor.setDatasetId(defaultDatasetId);
+        Db.saveOrUpdate(actor);
+        return actor;
     }
 
 
-    public StageInfo defaultStage() {
-        StageInfo stageInfo = new StageInfo();
-        stageInfo.setStageId(defaultStageId);
-        stageInfo.setStageName("哔哩哔哩直播");
-        stageInfo.setDescription("哔哩哔哩直播");
-        stageInfo.setCreateTime(LocalDateTime.now());
-        stageInfo.setUpdateTime(LocalDateTime.now());
-        Db.saveOrUpdate(stageInfo);
-        return stageInfo;
+    public Stage defaultStage() {
+        Stage stage = new Stage();
+        stage.setStageId(defaultStageId);
+        stage.setStageName("哔哩哔哩直播");
+        stage.setDescription("哔哩哔哩直播");
+        Db.saveOrUpdate(stage);
+        return stage;
     }
 
 }

@@ -8,14 +8,12 @@ import com.sugarweb.digitalHuman.application.dto.StageDetailDto;
 import com.sugarweb.digitalHuman.application.dto.StagePageQuery;
 import com.sugarweb.digitalHuman.application.dto.StageSaveDto;
 import com.sugarweb.digitalHuman.application.dto.StageUpdateDto;
-import com.sugarweb.digitalHuman.domain.AgentInfo;
-import com.sugarweb.digitalHuman.domain.SceneInfo;
-import com.sugarweb.digitalHuman.domain.StageInfo;
+import com.sugarweb.digitalHuman.domain.Actor;
+import com.sugarweb.digitalHuman.domain.Script;
+import com.sugarweb.digitalHuman.domain.Stage;
 import com.sugarweb.framework.orm.PageHelper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 /**
  * StageService
@@ -27,74 +25,69 @@ import java.time.LocalDateTime;
 public class StageService {
 
     @Resource
-    private AgentService agentService;
+    private ActorService actorService;
     @Resource
-    private SceneService sceneService;
+    private ScriptService scriptService;
 
     public IPage<StageDetailDto> page(StagePageQuery query) {
-        return Db.page(PageHelper.getPage(query), new LambdaQueryWrapper<StageInfo>()
-                .like(StrUtil.isNotEmpty(query.getStageName()), StageInfo::getStageName, query.getStageName())
-                .orderByDesc(StageInfo::getCreateTime)
+        return Db.page(PageHelper.getPage(query), new LambdaQueryWrapper<Stage>()
+                .like(StrUtil.isNotEmpty(query.getStageName()), Stage::getStageName, query.getStageName())
+                .orderByDesc(Stage::getCreateTime)
         ).convert(this::buildDetail);
     }
 
-    public StageInfo getById(String stageId) {
-        StageInfo stageInfo = Db.getById(stageId, StageInfo.class);
-        if (stageInfo == null) {
+    public Stage getById(String stageId) {
+        Stage stage = Db.getById(stageId, Stage.class);
+        if (stage == null) {
             return null;
         }
-        String agentId = stageInfo.getAgentId();
-        if (StrUtil.isNotEmpty(agentId)){
-            AgentInfo agentInfo = agentService.getById(agentId);
-            stageInfo.setAgentInfo(agentInfo);
+        String actorId = stage.getActorId();
+        if (StrUtil.isNotEmpty(actorId)){
+            Actor actor = actorService.getById(actorId);
+            stage.setActor(actor);
         }
-        if (StrUtil.isNotEmpty(stageInfo.getSceneId())){
-            SceneInfo sceneInfo = sceneService.getById(stageInfo.getSceneId());
-            stageInfo.setSceneInfo(sceneInfo);
+        if (StrUtil.isNotEmpty(stage.getScriptId())){
+            Script script = scriptService.getById(stage.getScriptId());
+            stage.setScript(script);
         }
-        return stageInfo;
+        return stage;
     }
 
     public StageDetailDto detail(String stageId) {
-        return buildDetail(Db.getById(stageId, StageInfo.class));
+        return buildDetail(Db.getById(stageId, Stage.class));
     }
 
     public StageDetailDto save(StageSaveDto saveDto) {
-        StageInfo stageInfo = new StageInfo();
-        stageInfo.setStageName(saveDto.getStageName());
-        stageInfo.setDescription(saveDto.getDescription());
-        stageInfo.setCreateTime(LocalDateTime.now());
-        stageInfo.setUpdateTime(LocalDateTime.now());
-        Db.save(stageInfo);
-        return buildDetail(stageInfo);
+        Stage stage = new Stage();
+        stage.setStageName(saveDto.getStageName());
+        stage.setDescription(saveDto.getDescription());
+        Db.save(stage);
+        return buildDetail(stage);
     }
 
     public StageDetailDto update(StageUpdateDto updateDto) {
-        StageInfo stageInfo = Db.getById(updateDto.getStageId(), StageInfo.class);
-        if (stageInfo != null) {
-            stageInfo.setStageName(updateDto.getStageName());
-            stageInfo.setDescription(updateDto.getDescription());
-            stageInfo.setUpdateTime(LocalDateTime.now());
-            Db.updateById(stageInfo);
+        Stage stage = Db.getById(updateDto.getStageId(), Stage.class);
+        if (stage != null) {
+            stage.setStageName(updateDto.getStageName());
+            stage.setDescription(updateDto.getDescription());
+            Db.updateById(stage);
         }
-        return buildDetail(stageInfo);
+        return buildDetail(stage);
     }
 
-    private StageDetailDto buildDetail(StageInfo stageInfo) {
-        if (stageInfo == null) {
+    private StageDetailDto buildDetail(Stage stage) {
+        if (stage == null) {
             return null;
         }
         StageDetailDto stageDetailDto = new StageDetailDto();
-        stageDetailDto.setStageId(stageInfo.getStageId());
-        stageDetailDto.setStageName(stageInfo.getStageName());
-        stageDetailDto.setDescription(stageInfo.getDescription());
-        stageDetailDto.setCreateTime(stageInfo.getCreateTime());
-        stageDetailDto.setUpdateTime(stageInfo.getUpdateTime());
+        stageDetailDto.setStageId(stage.getStageId());
+        stageDetailDto.setStageName(stage.getStageName());
+        stageDetailDto.setDescription(stage.getDescription());
         return stageDetailDto;
     }
 
     public void remove(String stageId) {
-        Db.removeById(stageId, StageInfo.class);
+        Db.removeById(stageId, Stage.class);
     }
 
 }

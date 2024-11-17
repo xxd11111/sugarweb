@@ -1,7 +1,9 @@
 package com.sugarweb.digitalHuman.domain;
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.sugarweb.digitalHuman.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
@@ -11,25 +13,19 @@ import java.time.LocalDateTime;
  * @author xxd
  * @version 1.0
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BlblUser {
+public class BlblUser extends BaseEntity {
 
     @TableId
     private String blblUid;
 
     private String username;
 
-    /**
-     * ai对用户的描述
-     */
-    private String summary;
+    private String level;
 
-    /**
-     * 当前场景动作
-     */
-    private String currentSceneAction;
+    private String avatar;
 
-    private LocalDateTime createTime;
+    private String remark;
 
-    private LocalDateTime updateTime;
 }

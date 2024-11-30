@@ -6,6 +6,7 @@ import cn.hutool.json.JSONUtil;
 import com.sugarweb.digitalHuman.constants.ChatRole;
 import com.sugarweb.digitalHuman.domain.*;
 import com.sugarweb.digitalHuman.infra.PromptUtil;
+import com.sugarweb.digitalHuman.infra.llm.ModelFactory;
 import com.sugarweb.digitalHuman.infra.llm.StageContext;
 import com.sugarweb.digitalHuman.infra.llm.input.InputContainer;
 import com.sugarweb.digitalHuman.infra.llm.input.blbl.BlblMsgPrompt;
@@ -38,111 +39,14 @@ import java.util.concurrent.Future;
 @Slf4j
 public class StreamThoughtComponent {
 
-    private final ExecutorService executor;
-
-    private Future<?> thinkThread = null;
-
-    private final InputContainer inputContainer;
-
-    private final DatasetMemoryComponent datasetMemoryComponent;
-
-    private final PerformanceMemoryComponent performanceMemoryComponent;
-
     private final StreamingChatLanguageModel chatLanguageModel;
 
     private final List<StreamListener> listeners;
 
-    private final Actor actor;
-    private final Script script;
-
     @Builder
-    public StreamThoughtComponent(StageContext stageContext, InputContainer inputContainer, DatasetMemoryComponent datasetMemoryComponent, PerformanceMemoryComponent performanceMemoryComponent, List<StreamListener> listeners) {
-        this.executor = stageContext.getExecutor();
-        this.inputContainer = inputContainer;
-        this.datasetMemoryComponent = datasetMemoryComponent;
-        this.performanceMemoryComponent = performanceMemoryComponent;
-        this.chatLanguageModel = stageContext.getChatLanguageModel();
+    public StreamThoughtComponent(StageContext stageContext, List<StreamListener> listeners) {
+        this.chatLanguageModel = ModelFactory.creatStreamingChatLanguageModel(stageContext.getActor().getChatModelId());
         this.listeners = listeners;
-        this.actor = stageContext.getActor();
-        this.script = stageContext.getScript();
-    }
-
-    public void start() {
-        if (thinkThread != null && !thinkThread.isDone()) {
-            return;
-        }
-
-        thinkThread = executor.submit(() -> {
-            SpeedLimiter speedLimiter = new SpeedLimiter(0);
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    // 限制最快1000ms 思考一次
-                    speedLimiter.limit(1000);
-                    long thinkId = System.currentTimeMillis();
-                    //判断是否需要回答
-                    if (shouldAnswer()) {
-                        //响应用户问题
-                        answer(thinkId);
-                    } else {
-                        //继续下个话题
-                        next(thinkId);
-                    }
-                } catch (Exception e) {
-                    log.error("ai思考异常 error:{}", e.getMessage(), e);
-                }
-            }
-        });
-    }
-
-    public void next(long thinkId) {
-        Script script = new Script();
-        List<ScriptNode> scriptNodeList = script.getScriptNodeList();
-        //todo
-    }
-
-    public boolean shouldAnswer() {
-        //todo
-        return true;
-    }
-
-    public void answer(long thinkId) {
-        // 从消息队列中获取弹幕消息
-        Object blblMsg = inputContainer.poll();
-        if (blblMsg == null) {
-            return;
-        }
-        ThoughtContext thoughtContext = new ThoughtContext();
-        StagePerformanceMsg performanceMsg = new StagePerformanceMsg();
-        performanceMsg.setStartTime(LocalDateTime.now());
-
-        BlblUser blblUser = BlblMsgPrompt.getBlblUserByMsg(blblMsg);
-        thoughtContext.put("user", blblUser);
-        String question = BlblMsgPrompt.getMsgPrompt(blblMsg);
-        thoughtContext.put("question", question);
-        // 用户提问
-        thoughtContext.setQuestionMsg(question);
-
-        //获取相关召回文档
-        String documents = "无";
-        if (datasetMemoryComponent != null) {
-            String retrievalSegment = datasetMemoryComponent.getRetrievalSegment(question);
-            if (StrUtil.isNotEmpty(retrievalSegment)) {
-                documents = retrievalSegment;
-            }
-        }
-        //todo rerank
-        thoughtContext.put("documents", documents);
-
-        thoughtContext.setThoughtId(thinkId);
-        // 系统提示语
-        String systemPrompt = PromptUtil.getPrompt(actor.getPromptTemplate(), actor.getPromptVariables(), thoughtContext.getContextVariables());
-        thoughtContext.setSystemMsg(systemPrompt);
-
-        // 历史消息
-        StagePerformanceMsg lastUserMsg = performanceMemoryComponent.lastUserMsg(performanceMsg.getPerformanceId(), blblUser.getBlblUid());
-        thoughtContext.setHistoryMsg(lastUserMsg);
-
-        streamThink(thoughtContext);
     }
 
     public static class SpeedLimiter {
@@ -236,12 +140,6 @@ public class StreamThoughtComponent {
         chatMessages.add(new AiMessage(lastHistoryMsg.getAnswer()));
 
         return chatMessages;
-    }
-
-    public void stop() {
-        if (thinkThread != null) {
-            thinkThread.cancel(true);
-        }
     }
 
 }

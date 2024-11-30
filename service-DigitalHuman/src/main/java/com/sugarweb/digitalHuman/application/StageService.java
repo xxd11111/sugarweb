@@ -37,20 +37,7 @@ public class StageService {
     }
 
     public Stage getById(String stageId) {
-        Stage stage = Db.getById(stageId, Stage.class);
-        if (stage == null) {
-            return null;
-        }
-        String actorId = stage.getActorId();
-        if (StrUtil.isNotEmpty(actorId)){
-            Actor actor = actorService.getById(actorId);
-            stage.setActor(actor);
-        }
-        if (StrUtil.isNotEmpty(stage.getScriptId())){
-            Script script = scriptService.getById(stage.getScriptId());
-            stage.setScript(script);
-        }
-        return stage;
+        return Db.getById(stageId, Stage.class);
     }
 
     public StageDetailDto detail(String stageId) {

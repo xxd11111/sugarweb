@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman.infra.llm;
 
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.Actor;
 import com.sugarweb.digitalHuman.domain.StagePerformance;
 import com.sugarweb.digitalHuman.domain.Script;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -31,7 +33,7 @@ public class StageManager implements DisposableBean {
     public void startStage(Stage stage) {
         String stageId = stage.getStageId();
         try {
-            AutoStage autoStage = runningStageMap.computeIfAbsent(stageId, a -> loadAutoActor(stage));
+            AutoStage autoStage = runningStageMap.computeIfAbsent(stageId, a -> load(stage));
             if (autoStage.isRunning()) {
                 log.info("Stage already running: {}", stageId);
             } else {
@@ -63,16 +65,30 @@ public class StageManager implements DisposableBean {
     /**
      * 加载AutoActor实例
      */
-    private AutoStage loadAutoActor(Stage stage) {
-        Actor actor = stage.getActor();
-        Script script = stage.getScript();
+    private AutoStage load(Stage stage) {
+        String scriptId = stage.getScriptId();
+        Script script = Db.getById(scriptId, Script.class);
+
+        String actorId = stage.getActorId();
+        Actor actor = Db.getById(actorId, Actor.class);
+
         StagePerformance stagePerformance = new StagePerformance();
+        stagePerformance.setTitle(stage.getStageName());
+        stagePerformance.setStageId(stage.getStageId());
+        stagePerformance.setStageName(stage.getStageName());
+        stagePerformance.setScriptId(stage.getScriptId());
+        stagePerformance.setScriptName(script.getScriptName());
+        stagePerformance.setActorId(actor.getActorId());
+        stagePerformance.setActorName(actor.getActorName());
+        stagePerformance.setStartTime(LocalDateTime.now());
+        // stagePerformance.setEndTime();
+
         StageContext stageContext = StageContext.builder()
-                .executor(executor)
                 .stage(stage)
                 .actor(actor)
                 .script(script)
                 .stagePerformance(stagePerformance)
+                .dataset(null)
                 .build();
         if (stageContext == null) {
             String errorMessage = "Failed to create default environment info for stage: " + stage.getStageId();

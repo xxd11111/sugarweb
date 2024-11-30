@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.util.concurrent.ExecutorService;
 
 /**
- * 主要关注点应该是stage运行时产生的额外相关信息
+ * 主要关注点应该是stage运行时产生的数据信息
  *
  * @author xxd
  * @version 1.0
@@ -21,18 +21,14 @@ import java.util.concurrent.ExecutorService;
 @Builder
 public class StageContext {
 
-    private ExecutorService executor;
-
     private Stage stage;
-
-    private StagePerformance stagePerformance;
 
     private Script script;
 
     private Actor actor;
 
-    private Dataset dataset;
+    private StagePerformance stagePerformance;
 
-    private StreamingChatLanguageModel chatLanguageModel;
+    private Dataset dataset;
 
 }

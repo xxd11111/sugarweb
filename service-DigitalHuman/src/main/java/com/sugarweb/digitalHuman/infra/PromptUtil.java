@@ -2,6 +2,7 @@ package com.sugarweb.digitalHuman.infra;
 
 import cn.hutool.core.util.StrUtil;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -21,4 +22,16 @@ public class PromptUtil {
         return promptTemplate;
     }
 
+    /**
+     * 获得模板变量，模板变量格式为 {{变量名}}
+     */
+    public static String[] parsePromptVariables(String promptTemplate) {
+        return StrUtil.subBetweenAll(promptTemplate, "{{", "}}");
+    }
+
+    public static void main(String[] args) {
+        String template = "{{name}} is a {{age}} years old man.";
+        String[] variables = parsePromptVariables(template);
+        System.out.println(Arrays.toString(variables));
+    }
 }

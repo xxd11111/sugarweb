@@ -1,6 +1,5 @@
 package com.sugarweb.digitalHuman.domain;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.sugarweb.digitalHuman.BaseEntity;
 import lombok.Data;
@@ -25,22 +24,19 @@ public class Stage extends BaseEntity {
 
     private String actorId;
 
-    @TableField(exist = false)
-    private Actor actor;
-
+    /**
+     * 演出脚本id
+     */
     private String scriptId;
-
-    @TableField(exist = false)
-    private Script script;
 
     /**
      * 0未表演 1表演中
      */
     private String status;
 
+    /**
+     * 当前演出id
+     */
     private String performanceId;
-
-    @TableField(exist = false)
-    private StagePerformance stagePerformance;
 
 }

@@ -58,7 +58,6 @@ public class DigitalHumanApplication {
             ttsModel.setModelId("chatTts");
             ttsModel.setModelType(ModelType.TTS.getValue());
 
-            actor.setTtsModel(ttsModel);
             actor.setTtsModelId(ttsModel.getModelId());
             actor.setTtsModelConfig("");
 
@@ -68,12 +67,10 @@ public class DigitalHumanApplication {
             chatModel.setModelName("qwen2.5:7b");
             chatModel.setModelPlatform(ModelPlatform.OLLAMA.getValue());
             chatModel.setBaseUrl("http://localhost:11434");
-            actor.setChatModel(chatModel);
             actor.setChatModelId(chatModel.getModelId());
             actor.setChatModeConfig("");
             // actor.setDatasetId("default");
 
-            stage.setActor(actor);
             stage.setActorId(actor.getActorId());
 
             // //脚本设置
@@ -104,12 +101,11 @@ public class DigitalHumanApplication {
             // stagePerformance.setScriptId(stage.getScriptId());
             // stagePerformance.setScriptName(stage.getScript().getScriptName());
             stagePerformance.setActorId(stage.getActorId());
-            stagePerformance.setActorName(stage.getActor().getActorName());
+            stagePerformance.setActorName(actor.getActorName());
             stagePerformance.setStartTime(LocalDateTime.now());
             stagePerformance.setTitle("默认标题");
 
             stage.setPerformanceId(stagePerformance.getPerformanceId());
-            stage.setStagePerformance(stagePerformance);
             stageManager.startStage(stage);
         };
     }

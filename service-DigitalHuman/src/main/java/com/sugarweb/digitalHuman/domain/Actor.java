@@ -3,6 +3,7 @@ package com.sugarweb.digitalHuman.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.sugarweb.digitalHuman.BaseEntity;
+import com.sugarweb.digitalHuman.infra.PromptUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -26,20 +27,18 @@ public class Actor extends BaseEntity {
     @TableField(exist = false)
     private String[] promptVariables;
 
-    @TableField(exist = false)
-    private Model chatModel;
-
     private String chatModelId;
 
     private String chatModeConfig;
-
-    @TableField(exist = false)
-    private Model ttsModel;
 
     private String ttsModelId;
 
     private String ttsModelConfig;
 
     private String datasetId;
+
+    public void parsePromptVar(){
+        promptVariables = PromptUtil.parsePromptVariables(promptTemplate);
+    }
 
 }

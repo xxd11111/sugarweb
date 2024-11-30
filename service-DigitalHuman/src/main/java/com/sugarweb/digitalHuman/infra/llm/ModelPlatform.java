@@ -16,7 +16,6 @@ public enum ModelPlatform {
     OLLAMA("OLLAMA"),
     ZHI_PU("ZHI_PU"),
     TONG_YI("TONG_YI")
-
     ;
 
     private final String value;

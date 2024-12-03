@@ -6,7 +6,7 @@ package com.sugarweb.digitalHuman.infra.llm.thought;
  * @author xxd
  * @since 2024/10/19 14:02
  */
-public interface StreamListener {
+public interface StreamThoughtListener {
 
     void onNext(ThoughtContext thoughtContext, String token);
 

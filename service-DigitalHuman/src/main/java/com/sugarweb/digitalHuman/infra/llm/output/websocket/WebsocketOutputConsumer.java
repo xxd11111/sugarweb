@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 // @ServerEndpoint("/msg")
 @Slf4j
 // @Component
-public class WebsocketOutputComponent {
+public class WebsocketOutputConsumer {
 
     private static final ConcurrentHashMap<String, Session> sessions = new ConcurrentHashMap<>();
 

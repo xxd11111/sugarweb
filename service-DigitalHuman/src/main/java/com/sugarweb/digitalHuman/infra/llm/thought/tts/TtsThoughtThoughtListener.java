@@ -1,7 +1,9 @@
-package com.sugarweb.digitalHuman.infra.llm.output.audio;
+package com.sugarweb.digitalHuman.infra.llm.thought.tts;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.digitalHuman.infra.llm.thought.StreamListener;
+import com.sugarweb.digitalHuman.infra.llm.output.OutputContainer;
+import com.sugarweb.digitalHuman.infra.llm.output.OutputContent;
+import com.sugarweb.digitalHuman.infra.llm.thought.StreamThoughtListener;
 import com.sugarweb.digitalHuman.infra.llm.thought.ThoughtContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,14 +14,14 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
-public class AudioOutputListener implements StreamListener {
+public class TtsThoughtThoughtListener implements StreamThoughtListener {
 
-    private final AudioOutputContainer audioOutputContainer;
+    private final OutputContainer outputContainer;
     private final StringBuilder sb = new StringBuilder();
     private int currentSplitId = 0;
 
-    public AudioOutputListener(AudioOutputContainer audioOutputContainer) {
-        this.audioOutputContainer = audioOutputContainer;
+    public TtsThoughtThoughtListener(OutputContainer outputContainer) {
+        this.outputContainer = outputContainer;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class AudioOutputListener implements StreamListener {
         if (StrUtil.isBlank(content)) {
             return;
         }
-        audioOutputContainer.offer(AudioContent.builder()
+        outputContainer.offer(OutputContent.builder()
                 .thinkId(thinkId)
                 .splitId(spiltId)
                 .content(content)

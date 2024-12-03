@@ -1,10 +1,6 @@
-package com.sugarweb.digitalHuman.infra.llm.tts;
+package com.sugarweb.digitalHuman.infra.tts;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.digitalHuman.infra.tts.ChatTtsClient;
-import com.sugarweb.digitalHuman.infra.tts.TtsAudioFile;
-import com.sugarweb.digitalHuman.infra.tts.TtsRequest;
-import com.sugarweb.digitalHuman.infra.tts.TtsResponse;
 import com.sugarweb.framework.exception.ServerException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,7 +13,7 @@ import java.util.List;
  * @version 1.0
  */
 @Slf4j
-public class ChatTtsModel implements TtsModel{
+public class ChatTtsModel implements TtsModel {
 
     private ChatTtsClient chatTtsClient;
 

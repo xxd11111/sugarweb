@@ -12,15 +12,7 @@ import com.sugarweb.digitalHuman.domain.StagePerformanceMsg;
  */
 public class PerformanceMemoryComponent {
 
-    public StagePerformanceMsg lastPerformanceMsg(String performanceId) {
-        return Db.lambdaQuery(StagePerformanceMsg.class)
-                .eq(StagePerformanceMsg::getPerformanceId, performanceId)
-                .orderByDesc(StagePerformanceMsg::getCreateTime)
-                .last("limit 1")
-                .one();
-    }
-
-    public StagePerformanceMsg lastUserMsg(String performanceId, String userId) {
+    public StagePerformanceMsg loadMemory(String performanceId, String userId) {
         return Db.lambdaQuery(StagePerformanceMsg.class)
                 .eq(StagePerformanceMsg::getPerformanceId, performanceId)
                 .eq(StagePerformanceMsg::getUserId, userId)

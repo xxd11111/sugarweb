@@ -1,18 +1,19 @@
 package com.sugarweb.digitalHuman.infra.llm;
 
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.digitalHuman.domain.*;
 import com.sugarweb.digitalHuman.infra.PromptUtil;
 import com.sugarweb.digitalHuman.infra.llm.input.InputContainer;
 import com.sugarweb.digitalHuman.infra.llm.input.blbl.BlblMsgInputComponent;
 import com.sugarweb.digitalHuman.infra.llm.input.blbl.BlblMsgPrompt;
-import com.sugarweb.digitalHuman.infra.llm.memory.ChatMemoryStreamListener;
+import com.sugarweb.digitalHuman.infra.llm.memory.MemoryStreamThoughtListener;
 import com.sugarweb.digitalHuman.infra.llm.memory.DatasetMemoryComponent;
 import com.sugarweb.digitalHuman.infra.llm.memory.PerformanceMemoryComponent;
-import com.sugarweb.digitalHuman.infra.llm.output.audio.AudioOutputComponent;
-import com.sugarweb.digitalHuman.infra.llm.output.audio.AudioOutputContainer;
-import com.sugarweb.digitalHuman.infra.llm.output.audio.AudioOutputListener;
-import com.sugarweb.digitalHuman.infra.llm.thought.StreamListener;
+import com.sugarweb.digitalHuman.infra.llm.thought.tts.TtsComponent;
+import com.sugarweb.digitalHuman.infra.llm.output.OutputContainer;
+import com.sugarweb.digitalHuman.infra.llm.thought.tts.TtsThoughtThoughtListener;
+import com.sugarweb.digitalHuman.infra.llm.thought.StreamThoughtListener;
 import com.sugarweb.digitalHuman.infra.llm.thought.StreamThoughtComponent;
 import com.sugarweb.digitalHuman.infra.llm.thought.ThoughtContext;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +36,11 @@ public class AutoStage {
     private final StageContext stageContext;
     //装载的能力
     private final InputContainer inputContainer;
-    private final AudioOutputContainer audioOutputContainer;
+    private final OutputContainer outputContainer;
 
     private final PerformanceMemoryComponent performanceMemoryComponent;
     private final StreamThoughtComponent streamThoughtComponent;
-    private final AudioOutputComponent audioOutputComponent;
+    private final TtsComponent ttsComponent;
     private final DatasetMemoryComponent datasetMemoryComponent;
     private final BlblMsgInputComponent blblMsgInputComponent;
     private Future<?> stageThread = null;
@@ -57,24 +58,40 @@ public class AutoStage {
         performanceMemoryComponent = new PerformanceMemoryComponent();
 
         //创建记忆输出监听器
-        StreamListener memoryOutputListener = new ChatMemoryStreamListener(performanceMemoryComponent);
+        StreamThoughtListener memoryOutputListener = new MemoryStreamThoughtListener(performanceMemoryComponent);
         //创建输入容器
         inputContainer = new InputContainer();
         //创建输出容器
-        audioOutputContainer = new AudioOutputContainer();
+        outputContainer = new OutputContainer();
         //装载输出组件
-        audioOutputComponent = new AudioOutputComponent(executor, audioOutputContainer);
+        ttsComponent = new TtsComponent(executor, outputContainer);
         //创建输出监听器
-        StreamListener audioOutputListener = new AudioOutputListener(audioOutputContainer);
+        StreamThoughtListener audioOutputListener = new TtsThoughtThoughtListener(outputContainer);
         //装载输入能力
         blblMsgInputComponent = new BlblMsgInputComponent(inputContainer);
         //创建流式思考监听者
-        List<StreamListener> streamListeners = List.of(memoryOutputListener, audioOutputListener);
+        List<StreamThoughtListener> streamThoughtListeners = List.of(memoryOutputListener, audioOutputListener);
         //装载思考能力
         streamThoughtComponent = StreamThoughtComponent.builder()
                 .stageContext(stageContext)
-                .listeners(streamListeners)
+                .listeners(streamThoughtListeners)
                 .build();
+    }
+
+    public static class SpeedLimiter {
+        private long lastTime;
+
+        public SpeedLimiter(long lastTime) {
+            this.lastTime = lastTime;
+        }
+
+        public void limit(long limit) {
+            long now = System.currentTimeMillis();
+            if (now - lastTime < limit) {
+                ThreadUtil.sleep(now - lastTime);
+            }
+            lastTime = System.currentTimeMillis();
+        }
     }
 
     public void start() {
@@ -82,9 +99,9 @@ public class AutoStage {
             return;
         }
         blblMsgInputComponent.start();
-        audioOutputComponent.start();
+        ttsComponent.start();
         stageThread = executor.submit(() -> {
-            StreamThoughtComponent.SpeedLimiter speedLimiter = new StreamThoughtComponent.SpeedLimiter(0);
+            SpeedLimiter speedLimiter = new SpeedLimiter(0);
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     // 限制最快1000ms 思考一次
@@ -150,7 +167,7 @@ public class AutoStage {
         thoughtContext.setSystemMsg(systemPrompt);
 
         // 历史消息
-        StagePerformanceMsg lastUserMsg = performanceMemoryComponent.lastUserMsg(performanceMsg.getPerformanceId(), blblUser.getBlblUid());
+        StagePerformanceMsg lastUserMsg = performanceMemoryComponent.loadMemory(performanceMsg.getPerformanceId(), blblUser.getBlblUid());
         thoughtContext.setHistoryMsg(lastUserMsg);
 
         streamThoughtComponent.streamThink(thoughtContext);
@@ -162,7 +179,7 @@ public class AutoStage {
             return;
         }
         blblMsgInputComponent.stop();
-        audioOutputComponent.stop();
+        ttsComponent.stop();
         stageThread.cancel(true);
     }
 

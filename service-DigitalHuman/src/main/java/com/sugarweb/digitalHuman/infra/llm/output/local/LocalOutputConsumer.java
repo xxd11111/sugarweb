@@ -1,8 +1,7 @@
-package com.sugarweb.digitalHuman.infra.llm.output.audio;
+package com.sugarweb.digitalHuman.infra.llm.output.local;
 
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.digitalHuman.infra.llm.tts.ChatTtsModel;
-import com.sugarweb.digitalHuman.infra.llm.tts.TtsModel;
+import com.sugarweb.digitalHuman.infra.llm.output.OutputContent;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.caprica.vlcj.media.callback.CallbackMedia;
 import uk.co.caprica.vlcj.media.callback.seekable.RandomAccessFileMedia;
@@ -14,34 +13,26 @@ import java.io.File;
 import java.util.concurrent.*;
 
 /**
- * SpeakOutputAbility
+ * LocalOutputConsumer 本地消费者
  *
  * @author xxd
  * @version 1.0
  */
 @Slf4j
-public class AudioOutputComponent {
+public class LocalOutputConsumer {
 
     private final ExecutorService executor;
 
     private Future<?> audioPlayThread = null;
 
-    private Future<?> ttsThread = null;
-
     private final AudioPlayerComponent audioPlayerComponent;
 
     private final CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
 
-    private final BlockingQueue<AudioContent> audioPlayList = new LinkedBlockingQueue<>();
+    private final BlockingQueue<OutputContent> audioPlayList = new LinkedBlockingQueue<>();
 
-    private final AudioOutputContainer audioOutputContainer;
-
-    //todo 根据配置文件动态配置
-    private final TtsModel ttsModel = new ChatTtsModel("http://127.0.0.1:9966/tts");
-
-    public AudioOutputComponent(ExecutorService executor, AudioOutputContainer audioOutputContainer) {
+    public LocalOutputConsumer(ExecutorService executor) {
         this.executor = executor;
-        this.audioOutputContainer = audioOutputContainer;
 
         audioPlayerComponent = new AudioPlayerComponent();
         audioPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
@@ -73,10 +64,7 @@ public class AudioOutputComponent {
         });
     }
 
-
     public void start() {
-        startTts();
-
         if (audioPlayThread != null && !audioPlayThread.isDone()) {
             return;
         }
@@ -92,8 +80,8 @@ public class AudioOutputComponent {
     }
 
     private void playNext() throws InterruptedException {
-        AudioContent audioContent = takeAudio();
-        Future<String> filePathFuture = audioContent.getFilePath();
+        OutputContent outputContent = takeAudio();
+        Future<String> filePathFuture = outputContent.getFilePath();
         String filePath;
         try {
             filePath = filePathFuture.get();
@@ -106,7 +94,7 @@ public class AudioOutputComponent {
         }
         try {
             log.info("localFilePath: {}", filePath);
-            log.info("thinkId:{},splitId:{}, 语音内容: {}", audioContent.getThinkId(), audioContent.getSplitId(), audioContent.getContent());
+            log.info("thinkId:{},splitId:{}, 语音内容: {}", outputContent.getThinkId(), outputContent.getSplitId(), outputContent.getContent());
             CallbackMedia media = new RandomAccessFileMedia(new File(filePath));
             //注意此方法是异步执行，调用vlc播放(这一步要严格保证没问题)，否则死锁
             audioPlayerComponent.mediaPlayer().media().play(media);
@@ -122,51 +110,8 @@ public class AudioOutputComponent {
         }
     }
 
-    public void putAudio(AudioContent audioContent) throws InterruptedException {
-        audioPlayList.put(audioContent);
-    }
-
-    public AudioContent takeAudio() throws InterruptedException {
+    public OutputContent takeAudio() throws InterruptedException {
         return audioPlayList.take();
-    }
-
-
-    private void startTts() {
-        if (ttsThread != null && !ttsThread.isDone()) {
-            return;
-        }
-
-        ttsThread = executor.submit(() -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                try {
-                    //顺序并行处理
-                    int maxTtsThread = 2;
-                    int size = audioOutputContainer.size();
-                    //实际并行数量
-                    int parallelNum = Math.min(maxTtsThread, size);
-                    CountDownLatch countDownLatch = new CountDownLatch(parallelNum);
-                    for (int i = 0; i < parallelNum; i++) {
-                        //控制顺序
-                        AudioContent audioContent = audioOutputContainer.take();
-                        Future<String> filePath = executor.submit(() -> {
-                            try {
-                                return ttsModel.tts(audioContent.getContent());
-                            } finally {
-                                //finish
-                                countDownLatch.countDown();
-                            }
-                        });
-                        audioContent.setFilePath(filePath);
-                        putAudio(audioContent);
-                    }
-                    //如果此时并行数量大于2，则等待
-                    countDownLatch.await();
-                } catch (InterruptedException e) {
-                    log.error("ttsTask InterruptedException", e);
-                    Thread.currentThread().interrupt();
-                }
-            }
-        });
     }
 
 }

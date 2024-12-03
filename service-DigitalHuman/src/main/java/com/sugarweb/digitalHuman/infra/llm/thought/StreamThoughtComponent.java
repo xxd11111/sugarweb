@@ -1,17 +1,10 @@
 package com.sugarweb.digitalHuman.infra.llm.thought;
 
-import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.sugarweb.digitalHuman.constants.ChatRole;
-import com.sugarweb.digitalHuman.domain.*;
-import com.sugarweb.digitalHuman.infra.PromptUtil;
+import com.sugarweb.digitalHuman.domain.StagePerformanceMsg;
 import com.sugarweb.digitalHuman.infra.llm.ModelFactory;
 import com.sugarweb.digitalHuman.infra.llm.StageContext;
-import com.sugarweb.digitalHuman.infra.llm.input.InputContainer;
-import com.sugarweb.digitalHuman.infra.llm.input.blbl.BlblMsgPrompt;
-import com.sugarweb.digitalHuman.infra.llm.memory.DatasetMemoryComponent;
-import com.sugarweb.digitalHuman.infra.llm.memory.PerformanceMemoryComponent;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;
 import dev.langchain4j.data.message.SystemMessage;
@@ -24,11 +17,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 /**
  * 思考能力是协调各个能力的中心
@@ -41,28 +31,12 @@ public class StreamThoughtComponent {
 
     private final StreamingChatLanguageModel chatLanguageModel;
 
-    private final List<StreamListener> listeners;
+    private final List<StreamThoughtListener> listeners;
 
     @Builder
-    public StreamThoughtComponent(StageContext stageContext, List<StreamListener> listeners) {
+    public StreamThoughtComponent(StageContext stageContext, List<StreamThoughtListener> listeners) {
         this.chatLanguageModel = ModelFactory.creatStreamingChatLanguageModel(stageContext.getActor().getChatModelId());
         this.listeners = listeners;
-    }
-
-    public static class SpeedLimiter {
-        private long lastTime;
-
-        public SpeedLimiter(long lastTime) {
-            this.lastTime = lastTime;
-        }
-
-        public void limit(long limit) {
-            long now = System.currentTimeMillis();
-            if (now - lastTime < limit) {
-                ThreadUtil.sleep(now - lastTime);
-            }
-            lastTime = System.currentTimeMillis();
-        }
     }
 
     public void streamThink(ThoughtContext thoughtContext) {
@@ -89,14 +63,14 @@ public class StreamThoughtComponent {
         chatLanguageModel.generate(messageList, new StreamingResponseHandler<>() {
             @Override
             public void onNext(String token) {
-                for (StreamListener listener : listeners) {
+                for (StreamThoughtListener listener : listeners) {
                     listener.onNext(thoughtContext, token);
                 }
             }
 
             @Override
             public void onError(Throwable error) {
-                for (StreamListener listener : listeners) {
+                for (StreamThoughtListener listener : listeners) {
                     listener.onError(thoughtContext, error);
                 }
             }
@@ -106,22 +80,11 @@ public class StreamThoughtComponent {
                 StreamingResponseHandler.super.onComplete(response);
                 AiMessage aiMessage = response.content();
                 thoughtContext.setAssistantMsg(aiMessage.text());
-                for (StreamListener listener : listeners) {
+                for (StreamThoughtListener listener : listeners) {
                     listener.onComplete(thoughtContext);
                 }
             }
         });
-    }
-
-
-    @Data
-    @AllArgsConstructor
-    public static class RoleMsg {
-
-        private String role;
-
-        private String content;
-
     }
 
     private List<ChatMessage> buildHisMsg(StagePerformanceMsg lastHistoryMsg) {
@@ -140,6 +103,16 @@ public class StreamThoughtComponent {
         chatMessages.add(new AiMessage(lastHistoryMsg.getAnswer()));
 
         return chatMessages;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class RoleMsg {
+
+        private String role;
+
+        private String content;
+
     }
 
 }

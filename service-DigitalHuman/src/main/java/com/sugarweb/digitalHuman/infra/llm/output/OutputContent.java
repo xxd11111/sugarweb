@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.infra.llm.output.audio;
+package com.sugarweb.digitalHuman.infra.llm.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.concurrent.Future;
 
 /**
- * 媒体内容
+ * tts内容封装
  *
  * @author xxd
  * @version 1.0
@@ -17,7 +17,7 @@ import java.util.concurrent.Future;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AudioContent {
+public class OutputContent {
 
     private long thinkId;
 

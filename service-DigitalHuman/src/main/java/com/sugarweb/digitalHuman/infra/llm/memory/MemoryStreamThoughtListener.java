@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.infra.llm.memory;
 
 import com.sugarweb.digitalHuman.domain.StagePerformanceMsg;
-import com.sugarweb.digitalHuman.infra.llm.thought.StreamListener;
+import com.sugarweb.digitalHuman.infra.llm.thought.StreamThoughtListener;
 import com.sugarweb.digitalHuman.infra.llm.thought.ThoughtContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,11 +14,11 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Slf4j
-public class ChatMemoryStreamListener implements StreamListener {
+public class MemoryStreamThoughtListener implements StreamThoughtListener {
 
     private final PerformanceMemoryComponent performanceMemoryComponent;
 
-    public ChatMemoryStreamListener(PerformanceMemoryComponent performanceMemoryComponent) {
+    public MemoryStreamThoughtListener(PerformanceMemoryComponent performanceMemoryComponent) {
         this.performanceMemoryComponent = performanceMemoryComponent;
     }
 

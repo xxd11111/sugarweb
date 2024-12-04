@@ -1,6 +1,5 @@
 package com.sugarweb.digitalHuman.infra.llm.thought;
 
-import com.sugarweb.digitalHuman.domain.BlblUser;
 import com.sugarweb.digitalHuman.domain.StagePerformanceMsg;
 import lombok.Data;
 
@@ -53,11 +52,6 @@ public class ThoughtContext {
 
     public void put(String key, Object value) {
         contextVariables.put(key, value);
-    }
-
-    public String getBlblUid() {
-        BlblUser user = (BlblUser) contextVariables.get("user");
-        return user.getBlblUid();
     }
 
 }

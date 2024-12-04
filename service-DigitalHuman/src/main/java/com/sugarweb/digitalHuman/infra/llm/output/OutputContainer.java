@@ -21,7 +21,7 @@ public class OutputContainer {
         return outputQueue.take();
     }
 
-    public boolean offer(OutputContent outputContent) {
-        return outputQueue.offer(outputContent);
+    public void put(OutputContent outputContent) throws InterruptedException {
+         outputQueue.put(outputContent);
     }
 }

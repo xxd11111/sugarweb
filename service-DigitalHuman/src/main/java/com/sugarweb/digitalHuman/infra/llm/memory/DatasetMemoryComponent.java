@@ -39,7 +39,7 @@ public class DatasetMemoryComponent {
     }
 
     /**
-     * 获取召回片段
+     * 获取召回片段 todo rerank
      */
     public String getRetrievalSegment(String queryMessage) {
         TextSegment textSegment = TextSegment.from(queryMessage);

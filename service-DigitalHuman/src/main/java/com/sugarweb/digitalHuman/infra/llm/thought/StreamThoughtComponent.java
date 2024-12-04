@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 思考能力是协调各个能力的中心
+ * 思考能力
  *
  * @author xxd
  * @version 1.0
@@ -53,7 +53,6 @@ public class StreamThoughtComponent {
         StagePerformanceMsg historyMessage = thoughtContext.getHistoryMsg();
         List<ChatMessage> hisMsg = buildHisMsg(historyMessage);
         messageList.addAll(hisMsg);
-
 
         //第三步，获取当前提问的消息
         String question = thoughtContext.getQuestionMsg();

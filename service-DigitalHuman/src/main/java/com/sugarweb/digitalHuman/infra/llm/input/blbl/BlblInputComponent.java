@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.config.BlblClientProperties;
 import com.sugarweb.digitalHuman.domain.BlblUser;
 import com.sugarweb.digitalHuman.infra.llm.input.InputContainer;
+import com.sugarweb.digitalHuman.infra.llm.input.InputContent;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.utils.BeanUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Slf4j
-public class BlblMsgInputComponent {
+public class BlblInputComponent {
 
     private Integer selfUid;
 
@@ -36,7 +37,7 @@ public class BlblMsgInputComponent {
 
     private final InputContainer inputContainer;
 
-    public BlblMsgInputComponent(InputContainer inputContainer) {
+    public BlblInputComponent(InputContainer inputContainer) {
         BlblClientProperties clientProperties = BeanUtil.getBean(BlblClientProperties.class);
         cookie = clientProperties.getCookie();
         roomId = clientProperties.getRoomId();
@@ -70,7 +71,15 @@ public class BlblMsgInputComponent {
                         .content(msg.getContent())
                         .time(LocalDateTime.now())
                         .build();
-                inputContainer.add(blblDmMsg);
+                BlblUser user = BlblMsgUtil.getUser(blblDmMsg);
+                String formatContent = BlblMsgUtil.getFormatContent(blblDmMsg);
+
+                InputContent inputContent = new InputContent();
+                inputContent.setUserId(user.getBlblUid());
+                inputContent.setUsername(user.getUsername());
+                inputContent.setContent(formatContent);
+                inputContent.setCreateTime(LocalDateTime.now());
+                inputContainer.add(inputContent);
                 log.info("danmuMsg:{}", blblDmMsg);
             }
 
@@ -88,7 +97,15 @@ public class BlblMsgInputComponent {
                         .giftPrice(msg.getGiftCount() + "")
                         .time(LocalDateTime.now())
                         .build();
-                inputContainer.add(giftMsg);
+                BlblUser user = BlblMsgUtil.getUser(giftMsg);
+                String formatContent = BlblMsgUtil.getFormatContent(giftMsg);
+
+                InputContent inputContent = new InputContent();
+                inputContent.setUserId(user.getBlblUid());
+                inputContent.setUsername(user.getUsername());
+                inputContent.setContent(formatContent);
+                inputContent.setCreateTime(LocalDateTime.now());
+                inputContainer.add(inputContent);
                 log.info("giftMsg:{}", giftMsg);
             }
 
@@ -120,7 +137,15 @@ public class BlblMsgInputComponent {
                         .username(msg.getUsername())
                         .time(LocalDateTime.now())
                         .build();
-                inputContainer.add(blblDmMsg);
+                BlblUser user = BlblMsgUtil.getUser(blblDmMsg);
+                String formatContent = BlblMsgUtil.getFormatContent(blblDmMsg);
+
+                InputContent inputContent = new InputContent();
+                inputContent.setUserId(user.getBlblUid());
+                inputContent.setUsername(user.getUsername());
+                inputContent.setContent(formatContent);
+                inputContent.setCreateTime(LocalDateTime.now());
+                inputContainer.add(inputContent);
                 log.info("enterRoomMsg:{}", blblDmMsg);
             }
 
@@ -135,7 +160,15 @@ public class BlblMsgInputComponent {
                         .likeNum(msg.getClickCount() + "")
                         .time(LocalDateTime.now())
                         .build();
-                inputContainer.add(blblLikeMsg);
+                BlblUser user = BlblMsgUtil.getUser(blblLikeMsg);
+                String formatContent = BlblMsgUtil.getFormatContent(blblLikeMsg);
+
+                InputContent inputContent = new InputContent();
+                inputContent.setUserId(user.getBlblUid());
+                inputContent.setUsername(user.getUsername());
+                inputContent.setContent(formatContent);
+                inputContent.setCreateTime(LocalDateTime.now());
+                inputContainer.add(inputContent);
                 log.info("likeMsg:{}", blblLikeMsg);
             }
 

@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.concurrent.*;
 
 /**
- * LocalOutputConsumer 本地消费者
+ * LocalOutputConsumer 本地消费者，订阅者
  *
  * @author xxd
  * @version 1.0

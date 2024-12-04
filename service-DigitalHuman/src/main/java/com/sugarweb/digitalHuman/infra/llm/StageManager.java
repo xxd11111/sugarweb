@@ -82,6 +82,7 @@ public class StageManager implements DisposableBean {
         stagePerformance.setActorName(actor.getActorName());
         stagePerformance.setStartTime(LocalDateTime.now());
         // stagePerformance.setEndTime();
+        Db.save(stagePerformance);
 
         StageContext stageContext = StageContext.builder()
                 .stage(stage)

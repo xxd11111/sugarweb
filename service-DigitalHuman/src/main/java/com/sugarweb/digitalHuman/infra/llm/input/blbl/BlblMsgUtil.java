@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.BlblUser;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 /**
  * BlblMsgAdapt
@@ -13,12 +12,12 @@ import java.util.List;
  * @author xxd
  * @version 1.0
  */
-public class BlblMsgPrompt {
+public class BlblMsgUtil {
 
     /**
      * 相当于写死的提示词
      */
-    public static String getMsgPrompt(Object o) {
+    public static String getFormatContent(Object o) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         if (o instanceof BlblDmMsg dmMsg) {
             return StrUtil.format("时间：{}，收到一条互动消息，用户：{}，内容：{}", dmMsg.getTime().format(formatter), dmMsg.getUsername(), dmMsg.getContent());
@@ -35,18 +34,7 @@ public class BlblMsgPrompt {
     }
 
 
-    public static String getMultiMsgPrompt(List<Object> msgList) {
-        StringBuilder multiText = new StringBuilder();
-        for (Object msg : msgList) {
-            String text = BlblMsgPrompt.getMsgPrompt(msg);
-            if (StrUtil.isNotEmpty(text)) {
-                multiText.append(text).append("\n");
-            }
-        }
-        return multiText.toString();
-    }
-
-    public static BlblUser getBlblUserByMsg(Object o) {
+    public static BlblUser getUser(Object o) {
         String uid = "";
         if (o instanceof BlblDmMsg dmMsg) {
             uid = dmMsg.getBlblUid();

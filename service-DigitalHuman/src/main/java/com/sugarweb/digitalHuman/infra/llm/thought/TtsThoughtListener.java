@@ -1,11 +1,16 @@
-package com.sugarweb.digitalHuman.infra.llm.thought.tts;
+package com.sugarweb.digitalHuman.infra.llm.thought;
 
 import cn.hutool.core.util.StrUtil;
 import com.sugarweb.digitalHuman.infra.llm.output.OutputContainer;
 import com.sugarweb.digitalHuman.infra.llm.output.OutputContent;
-import com.sugarweb.digitalHuman.infra.llm.thought.StreamThoughtListener;
-import com.sugarweb.digitalHuman.infra.llm.thought.ThoughtContext;
+import com.sugarweb.digitalHuman.infra.tts.ChatTtsModel;
+import com.sugarweb.digitalHuman.infra.tts.TtsModel;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
 
 /**
  * StreamTokenSpeakAdapt
@@ -14,13 +19,13 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
-public class TtsThoughtThoughtListener implements StreamThoughtListener {
+public class TtsThoughtListener implements StreamThoughtListener {
 
     private final OutputContainer outputContainer;
     private final StringBuilder sb = new StringBuilder();
     private int currentSplitId = 0;
 
-    public TtsThoughtThoughtListener(OutputContainer outputContainer) {
+    public TtsThoughtListener(OutputContainer outputContainer) {
         this.outputContainer = outputContainer;
     }
 
@@ -43,7 +48,7 @@ public class TtsThoughtThoughtListener implements StreamThoughtListener {
                 String[] split = token.split(mark, 2); // 限制分割次数为2，避免创建过多数组
                 if (split.length > 1) {
                     sb.append(split[0]).append(mark);
-                    addSpeakContent(thinkId, currentSplitId++, sb.toString());
+                    addOutputContent(thinkId, currentSplitId++, sb.toString());
                     sb.setLength(0); // 清空StringBuilder
                     sb.append(split[1]);
                     return;
@@ -55,20 +60,41 @@ public class TtsThoughtThoughtListener implements StreamThoughtListener {
         sb.append(token);
     }
 
-    private void addSpeakContent(long thinkId, int spiltId, String content) {
+    // 限制同时进行tts的线程数,公平锁，先入先出
+    private final Semaphore maxTtsThread = new Semaphore(2, true);
+    private final TtsModel ttsModel = new ChatTtsModel("http://127.0.0.1:9966/tts");
+    //虚拟线程
+    private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+
+    private void addOutputContent(long thinkId, int spiltId, String content) {
         if (StrUtil.isBlank(content)) {
             return;
         }
-        outputContainer.offer(OutputContent.builder()
-                .thinkId(thinkId)
-                .splitId(spiltId)
-                .content(content)
-                .build());
+        try {
+            //异步处理
+            Future<String> filePath = executor.submit(() -> {
+                try {
+                    maxTtsThread.acquire();
+                    return ttsModel.tts(content);
+                } finally {
+                    maxTtsThread.release();
+                }
+            });
+            outputContainer.put(OutputContent.builder()
+                    .thinkId(thinkId)
+                    .splitId(spiltId)
+                    .content(content)
+                    .filePath(filePath)
+                    .build());
+        } catch (InterruptedException e) {
+            log.error("ttsTask InterruptedException", e);
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override
     public void onComplete(ThoughtContext thoughtContext) {
-        addSpeakContent(thoughtContext.getThoughtId(), currentSplitId++, sb.toString());
+        addOutputContent(thoughtContext.getThoughtId(), currentSplitId++, sb.toString());
         sb.setLength(0);
         currentSplitId = 0;
     }

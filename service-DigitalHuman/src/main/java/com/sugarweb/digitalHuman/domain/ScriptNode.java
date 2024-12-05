@@ -26,6 +26,6 @@ public class ScriptNode extends BaseEntity {
 
     private String scriptId;
 
-    private String description;
+    private String scriptContent;
 
 }

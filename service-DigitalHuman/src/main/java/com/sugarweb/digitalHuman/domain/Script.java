@@ -28,9 +28,6 @@ public class Script extends BaseEntity {
     private String promptTemplate;
 
     @TableField(exist = false)
-    private String[] promptVariables;
-
-    @TableField(exist = false)
     private List<ScriptNode> scriptNodeList;
 
 }

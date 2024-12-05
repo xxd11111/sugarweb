@@ -13,7 +13,8 @@ import java.util.Map;
  */
 public class PromptUtil {
 
-    public static String getPrompt(String promptTemplate, String[] variables, Map<String, Object> contextVariables) {
+    public static String getPrompt(String promptTemplate, Map<String, Object> contextVariables) {
+        String[] variables = parsePromptVariables(promptTemplate);
         for (String variableCode : variables) {
             String variableReplace = "{{" + variableCode + "}}";
             Object variableValue = contextVariables.get(variableCode);
@@ -29,9 +30,4 @@ public class PromptUtil {
         return StrUtil.subBetweenAll(promptTemplate, "{{", "}}");
     }
 
-    public static void main(String[] args) {
-        String template = "{{name}} is a {{age}} years old man.";
-        String[] variables = parsePromptVariables(template);
-        System.out.println(Arrays.toString(variables));
-    }
 }

@@ -154,7 +154,7 @@ public class AutoStage {
     public void script(long thinkId, Script script, ScriptNode scriptNode) {
         String promptTemplate = script.getPromptTemplate();
         HashMap<String, Object> contextVariables = new HashMap<>();
-        String systemPrompt = PromptUtil.getPrompt(promptTemplate, PromptUtil.parsePromptVariables(promptTemplate), contextVariables);
+        String systemPrompt = PromptUtil.getPrompt(promptTemplate, contextVariables);
 
         ThoughtRequest thoughtRequest = new ThoughtRequest();
         thoughtRequest.setThoughtId(thinkId);
@@ -170,7 +170,7 @@ public class AutoStage {
         if (lastUserMsg != null){
             roleMsgList.addAll(lastUserMsg.prepareHistoryMessage());
         }
-        roleMsgList.add(new RoleMsg("user", scriptNode.getDescription()));
+        roleMsgList.add(new RoleMsg("user", scriptNode.getScriptContent()));
 
         //记录当前消息
         StagePerformanceMsg currentMsg = new StagePerformanceMsg();
@@ -183,7 +183,7 @@ public class AutoStage {
         currentMsg.setChatModelId(actor.getChatModelId());
         currentMsg.setActorId(actor.getActorId());
         currentMsg.setSystemMsg(systemPrompt);
-        currentMsg.setQuestion(scriptNode.getDescription());
+        currentMsg.setQuestion(scriptNode.getScriptContent());
         currentMsg.setUserId(null);
         currentMsg.setMsgType("user");
         currentMsg.setStartTime(LocalDateTime.now());
@@ -244,7 +244,7 @@ public class AutoStage {
 
         // 系统提示语
         Actor actor = stageContext.getActor();
-        String systemPrompt = PromptUtil.getPrompt(actor.getPromptTemplate(), PromptUtil.parsePromptVariables(actor.getPromptTemplate()), thoughtRequest.getContextVariables());
+        String systemPrompt = PromptUtil.getPrompt(actor.getPromptTemplate(), thoughtRequest.getContextVariables());
         thoughtRequest.setSystemMsg(systemPrompt);
         // 准备提问消息
         StagePerformanceMsg lastUserMsg = performanceMemoryComponent.loadMemory(stagePerformance.getPerformanceId(), inputContent.getUserId());

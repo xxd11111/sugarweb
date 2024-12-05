@@ -1,26 +1,36 @@
 package com.sugarweb.digitalHuman.infra.llm;
 
+import cn.hutool.core.comparator.CompareUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
+import com.sugarweb.digitalHuman.constants.ChatRole;
 import com.sugarweb.digitalHuman.domain.*;
 import com.sugarweb.digitalHuman.infra.PromptUtil;
 import com.sugarweb.digitalHuman.infra.llm.input.InputContainer;
 import com.sugarweb.digitalHuman.infra.llm.input.InputContent;
 import com.sugarweb.digitalHuman.infra.llm.input.blbl.BlblInputComponent;
+import com.sugarweb.digitalHuman.infra.llm.input.websocket.WebsocketInputServer;
 import com.sugarweb.digitalHuman.infra.llm.memory.DatasetMemoryComponent;
-import com.sugarweb.digitalHuman.infra.llm.memory.MemoryStreamThoughtListener;
 import com.sugarweb.digitalHuman.infra.llm.memory.PerformanceMemoryComponent;
+import com.sugarweb.digitalHuman.infra.llm.output.OutputConsumer;
 import com.sugarweb.digitalHuman.infra.llm.output.OutputContainer;
-import com.sugarweb.digitalHuman.infra.llm.thought.StreamThoughtComponent;
-import com.sugarweb.digitalHuman.infra.llm.thought.StreamThoughtListener;
-import com.sugarweb.digitalHuman.infra.llm.thought.ThoughtContext;
-import com.sugarweb.digitalHuman.infra.llm.thought.TtsThoughtListener;
+import com.sugarweb.digitalHuman.infra.llm.output.websocket.WebsocketOutputConsumer;
+import com.sugarweb.digitalHuman.infra.llm.thought.*;
+import com.sugarweb.framework.common.Flag;
+import com.sugarweb.framework.utils.BeanUtil;
+import com.sugarweb.framework.utils.JsonUtil;
+import com.sugarweb.framework.utils.TreeNode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
@@ -32,7 +42,7 @@ import java.util.concurrent.Future;
 @Slf4j
 public class AutoStage {
 
-    private final ExecutorService executor;
+    private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
     private final StageContext stageContext;
     //装载的能力
     private final InputContainer inputContainer;
@@ -44,8 +54,7 @@ public class AutoStage {
     private final BlblInputComponent blblInputComponent;
     private Future<?> stageThread = null;
 
-    public AutoStage(ExecutorService executor, StageContext stageContext) {
-        this.executor = executor;
+    public AutoStage(StageContext stageContext) {
         this.stageContext = stageContext;
         Dataset dataset = stageContext.getDataset();
         if (dataset == null) {
@@ -55,26 +64,41 @@ public class AutoStage {
             datasetMemoryComponent = new DatasetMemoryComponent(dataset);
         }
         performanceMemoryComponent = new PerformanceMemoryComponent();
+        Stage stage = stageContext.getStage();
 
-        //创建记忆输出监听器
-        StreamThoughtListener memoryOutputListener = new MemoryStreamThoughtListener(performanceMemoryComponent);
+        List<OutputConsumer> outputConsumers = new ArrayList<>();
+        if (Flag.TRUE.equals(stage.getWebsocketMode())) {
+            //准备websocket输出监听器
+            WebsocketInputServer websocketInputServer = BeanUtil.getBean(WebsocketInputServer.class);
+            WebsocketOutputConsumer websocketOutputConsumer = new WebsocketOutputConsumer(websocketInputServer.getSessionMap());
+            outputConsumers.add(websocketOutputConsumer);
+        }
+        //创建输出容器
+        outputContainer = new OutputContainer(outputConsumers);
+
         //创建输入容器
         inputContainer = new InputContainer();
-        //创建输出容器
-        outputContainer = new OutputContainer();
-        //todo tts设置为可选功能
+        if ("blbl".equals(stage.getLivePlatform())) {
+            blblInputComponent = new BlblInputComponent(inputContainer);
+        } else {
+            blblInputComponent = null;
+        }
+        List<StreamThoughtListener> streamThoughtListeners = new ArrayList<>();
         //创建输出监听器
-        StreamThoughtListener ttsThoughtListener = new TtsThoughtListener(outputContainer);
-        //装载输入能力
-        blblInputComponent = new BlblInputComponent(inputContainer);
-        //创建流式思考监听者
-        List<StreamThoughtListener> streamThoughtListeners = List.of(memoryOutputListener, ttsThoughtListener);
+        if (Flag.TRUE.equals(stage.getTtsMode())) {
+            //创建tts输出监听器
+            StreamThoughtListener ttsThoughtListener = new TtsOutputListener(outputContainer);
+            streamThoughtListeners.add(ttsThoughtListener);
+        } else {
+            //创建默认输出监听器
+            StreamThoughtListener defaultOutputListener = new DefaultOutputListener(outputContainer);
+            streamThoughtListeners.add(defaultOutputListener);
+        }
         //装载思考能力
         streamThoughtComponent = StreamThoughtComponent.builder()
-                .stageContext(stageContext)
+                .modelId(stageContext.getActor().getChatModelId())
                 .listeners(streamThoughtListeners)
                 .build();
-        //todo 初始化输出能力
     }
 
     public static class SpeedLimiter {
@@ -97,7 +121,9 @@ public class AutoStage {
         if (isRunning()) {
             return;
         }
-        blblInputComponent.start();
+        if (blblInputComponent != null) {
+            blblInputComponent.start();
+        }
         stageThread = executor.submit(() -> {
             SpeedLimiter speedLimiter = new SpeedLimiter(0);
             while (!Thread.currentThread().isInterrupted()) {
@@ -105,14 +131,18 @@ public class AutoStage {
                     // 限制最快1000ms 思考一次
                     speedLimiter.limit(1000);
                     long thinkId = System.currentTimeMillis();
-                    //判断是否需要回答
-                    if (shouldAnswer()) {
-                        //响应用户问题
-                        answer(thinkId);
-                    } else {
-                        //继续下个话题
-                        next(thinkId);
+                    Script script = stageContext.getScript();
+                    List<ScriptNode> scriptNodeList = script.getScriptNodeList();
+                    List<TreeNode<ScriptNode, String>> nodeList = TreeNode.build(scriptNodeList, ScriptNode::getNodeId, ScriptNode::getNodePid, (a, b) -> CompareUtil.compare(a.getNodeIndex(), b.getNodeIndex()));
+                    for (TreeNode<ScriptNode, String> treeNode : nodeList) {
+                        ScriptNode scriptNode = treeNode.getData();
+                        if (shouldAnswer()) {
+                            answer(thinkId);
+                        } else {
+                            script(thinkId, script, scriptNode);
+                        }
                     }
+                    //结束后重播
                 } catch (Exception e) {
                     log.error("ai思考异常 error:{}", e.getMessage(), e);
                 }
@@ -120,15 +150,67 @@ public class AutoStage {
         });
     }
 
-    public void next(long thinkId) {
-        Script script = stageContext.getScript();
-        List<ScriptNode> scriptNodeList = script.getScriptNodeList();
-        //todo
+
+    public void script(long thinkId, Script script, ScriptNode scriptNode) {
+        String promptTemplate = script.getPromptTemplate();
+        HashMap<String, Object> contextVariables = new HashMap<>();
+        String systemPrompt = PromptUtil.getPrompt(promptTemplate, PromptUtil.parsePromptVariables(promptTemplate), contextVariables);
+
+        ThoughtRequest thoughtRequest = new ThoughtRequest();
+        thoughtRequest.setThoughtId(thinkId);
+        thoughtRequest.setSystemMsg(systemPrompt);
+        List<RoleMsg> roleMsgList = new ArrayList<>();
+        thoughtRequest.setRoleMsgList(roleMsgList);
+        thoughtRequest.put("scriptNode", scriptNode);
+
+        Stage stage = stageContext.getStage();
+        Actor actor = stageContext.getActor();
+        StagePerformanceMsg lastUserMsg = performanceMemoryComponent.loadMemory(stage.getPerformanceId(), null);
+
+        if (lastUserMsg != null){
+            roleMsgList.addAll(lastUserMsg.prepareHistoryMessage());
+        }
+        roleMsgList.add(new RoleMsg("user", scriptNode.getDescription()));
+
+        //记录当前消息
+        StagePerformanceMsg currentMsg = new StagePerformanceMsg();
+        if (lastUserMsg != null) {
+            currentMsg.setMsgPid(lastUserMsg.getMsgId());
+        }
+        currentMsg.setMessage(JsonUtil.toJsonStr(roleMsgList));
+        currentMsg.setPerformanceId(stage.getPerformanceId());
+        currentMsg.setStageId(stage.getStageId());
+        currentMsg.setChatModelId(actor.getChatModelId());
+        currentMsg.setActorId(actor.getActorId());
+        currentMsg.setSystemMsg(systemPrompt);
+        currentMsg.setQuestion(scriptNode.getDescription());
+        currentMsg.setUserId(null);
+        currentMsg.setMsgType("user");
+        currentMsg.setStartTime(LocalDateTime.now());
+
+        Future<String> answerFuture = streamThoughtComponent.streamThink(thoughtRequest);
+        try {
+            String answer = answerFuture.get();
+            currentMsg.setAnswer(answer);
+            currentMsg.setEndTime(LocalDateTime.now());
+            currentMsg.setCostTime(currentMsg.getEndTime().getNano() - currentMsg.getStartTime().getNano());
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("Error getting answer: {}", e.getCause(), e);
+        }
+
     }
 
     public boolean shouldAnswer() {
-        //todo
-        return true;
+        //权重越高，回答概率越高
+        int weight = getAnswerWeight();
+        return new Random().nextInt(10) < weight;
+    }
+
+    public int getAnswerWeight() {
+        //1.根据size判断,size 0-10条，w1 0-10, 最大10
+        int size = inputContainer.size();
+        int w1 = Math.min(size, 10);
+        return w1;
     }
 
     public void answer(long thinkId) {
@@ -138,27 +220,17 @@ public class AutoStage {
             return;
         }
         StagePerformance stagePerformance = stageContext.getStagePerformance();
+        Stage stage = stageContext.getStage();
 
-        ThoughtContext thoughtContext = new ThoughtContext();
+        ThoughtRequest thoughtRequest = new ThoughtRequest();
         //记录思考id
-        thoughtContext.setThoughtId(thinkId);
-
-        StagePerformanceMsg currentMsg = new StagePerformanceMsg();
-        currentMsg.setStartTime(LocalDateTime.now());
-        currentMsg.setUserId(inputContent.getUserId());
-        currentMsg.setQuestion(inputContent.getContent());
-        currentMsg.setMsgType("user");
-        currentMsg.setMsgId(thinkId + "");
-        currentMsg.setPerformanceId(stagePerformance.getPerformanceId());
-        //记录当前消息
-        thoughtContext.setCurrentMsg(currentMsg);
+        thoughtRequest.setThoughtId(thinkId);
 
         //记录上下文变量
-        thoughtContext.put("userId", inputContent.getUserId());
-        thoughtContext.put("username", inputContent.getUsername());
+        thoughtRequest.put("userId", inputContent.getUserId());
+        thoughtRequest.put("username", inputContent.getUsername());
         // 用户提问
-        thoughtContext.put("question", inputContent.getContent());
-        thoughtContext.setQuestionMsg(inputContent.getContent());
+        thoughtRequest.put("question", inputContent.getContent());
 
         //获取相关召回文档
         String documents = "无";
@@ -168,23 +240,60 @@ public class AutoStage {
                 documents = retrievalSegment;
             }
         }
-        thoughtContext.put("documents", documents);
+        thoughtRequest.put("documents", documents);
 
         // 系统提示语
         Actor actor = stageContext.getActor();
-        String systemPrompt = PromptUtil.getPrompt(actor.getPromptTemplate(), PromptUtil.parsePromptVariables(actor.getPromptTemplate()), thoughtContext.getContextVariables());
-        thoughtContext.setSystemMsg(systemPrompt);
-        // 历史消息
+        String systemPrompt = PromptUtil.getPrompt(actor.getPromptTemplate(), PromptUtil.parsePromptVariables(actor.getPromptTemplate()), thoughtRequest.getContextVariables());
+        thoughtRequest.setSystemMsg(systemPrompt);
+        // 准备提问消息
         StagePerformanceMsg lastUserMsg = performanceMemoryComponent.loadMemory(stagePerformance.getPerformanceId(), inputContent.getUserId());
-        thoughtContext.setHistoryMsg(lastUserMsg);
-        streamThoughtComponent.streamThink(thoughtContext);
+        List<RoleMsg> roleMsgList = new ArrayList<>();
+        if (lastUserMsg != null) {
+            List<RoleMsg> historyMessage = lastUserMsg.prepareHistoryMessage();
+            roleMsgList.addAll(historyMessage);
+        }
+        roleMsgList.add(new RoleMsg(ChatRole.USER.name(), inputContent.getContent()));
+        thoughtRequest.setRoleMsgList(roleMsgList);
+
+        //记录当前消息
+        StagePerformanceMsg currentMsg = new StagePerformanceMsg();
+        if (lastUserMsg != null) {
+            currentMsg.setMsgPid(lastUserMsg.getMsgId());
+        }
+        currentMsg.setMessage(JsonUtil.toJsonStr(roleMsgList));
+        currentMsg.setPerformanceId(stagePerformance.getPerformanceId());
+        currentMsg.setStageId(stage.getStageId());
+        currentMsg.setChatModelId(actor.getChatModelId());
+        currentMsg.setActorId(actor.getActorId());
+        currentMsg.setSystemMsg(systemPrompt);
+        currentMsg.setQuestion(inputContent.getContent());
+
+        currentMsg.setUserId(inputContent.getUserId());
+        currentMsg.setMsgType("user");
+        currentMsg.setStartTime(LocalDateTime.now());
+
+        Future<String> answerFuture = streamThoughtComponent.streamThink(thoughtRequest);
+        try {
+            String answer = answerFuture.get();
+            currentMsg.setAnswer(answer);
+            currentMsg.setEndTime(LocalDateTime.now());
+            currentMsg.setCostTime(currentMsg.getEndTime().getNano() - currentMsg.getStartTime().getNano());
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("ai思考异常 error:{}", e.getMessage(), e);
+        }
+        //记录对话
+        performanceMemoryComponent.memorize(currentMsg);
+
     }
 
     public void stop() {
         if (!isRunning()) {
             return;
         }
-        blblInputComponent.stop();
+        if (blblInputComponent != null) {
+            blblInputComponent.stop();
+        }
         stageThread.cancel(true);
         StagePerformance stagePerformance = stageContext.getStagePerformance();
         stagePerformance.setEndTime(LocalDateTime.now());

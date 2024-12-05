@@ -19,7 +19,7 @@ import java.util.concurrent.Future;
 @Builder
 public class OutputContent {
 
-    private long thinkId;
+    private long thoughtId;
 
     private int splitId;
 

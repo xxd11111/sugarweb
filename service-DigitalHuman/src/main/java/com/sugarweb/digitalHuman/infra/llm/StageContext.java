@@ -1,13 +1,10 @@
 package com.sugarweb.digitalHuman.infra.llm;
 
 import com.sugarweb.digitalHuman.domain.*;
-import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.concurrent.ExecutorService;
 
 /**
  * 主要关注点应该是stage运行时产生的数据信息
@@ -30,5 +27,6 @@ public class StageContext {
     private StagePerformance stagePerformance;
 
     private Dataset dataset;
+
 
 }

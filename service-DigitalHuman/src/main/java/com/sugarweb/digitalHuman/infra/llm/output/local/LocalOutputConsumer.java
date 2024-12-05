@@ -1,6 +1,7 @@
 package com.sugarweb.digitalHuman.infra.llm.output.local;
 
 import cn.hutool.core.util.StrUtil;
+import com.sugarweb.digitalHuman.infra.llm.output.OutputConsumer;
 import com.sugarweb.digitalHuman.infra.llm.output.OutputContent;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.caprica.vlcj.media.callback.CallbackMedia;
@@ -13,13 +14,14 @@ import java.io.File;
 import java.util.concurrent.*;
 
 /**
- * LocalOutputConsumer 本地消费者，订阅者
+ * LocalOutputConsumer 本地消费者
+ * vlc播放线程
  *
  * @author xxd
  * @version 1.0
  */
 @Slf4j
-public class LocalOutputConsumer {
+public class LocalOutputConsumer implements OutputConsumer {
 
     private final ExecutorService executor;
 
@@ -27,7 +29,10 @@ public class LocalOutputConsumer {
 
     private final AudioPlayerComponent audioPlayerComponent;
 
-    private final CyclicBarrier cyclicBarrier = new CyclicBarrier(2);
+    /**
+     * 信号量
+     */
+    private final Semaphore semaphore = new Semaphore(1);
 
     private final BlockingQueue<OutputContent> audioPlayList = new LinkedBlockingQueue<>();
 
@@ -38,28 +43,12 @@ public class LocalOutputConsumer {
         audioPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
             @Override
             public void finished(MediaPlayer mediaPlayer) {
-                try {
-                    cyclicBarrier.await();
-                } catch (InterruptedException e) {
-                    log.error("Interrupted while waiting for barrier", e);
-                    Thread.currentThread().interrupt();
-                } catch (BrokenBarrierException e) {
-                    cyclicBarrier.reset();
-                    log.error("Barrier broken", e);
-                }
+                semaphore.release();
             }
 
             @Override
             public void error(MediaPlayer mediaPlayer) {
-                try {
-                    cyclicBarrier.await();
-                } catch (InterruptedException e) {
-                    log.error("Interrupted while waiting for barrier", e);
-                    Thread.currentThread().interrupt();
-                } catch (BrokenBarrierException e) {
-                    cyclicBarrier.reset();
-                    log.error("Barrier broken", e);
-                }
+                semaphore.release();
             }
         });
     }
@@ -80,8 +69,12 @@ public class LocalOutputConsumer {
     }
 
     private void playNext() throws InterruptedException {
-        OutputContent outputContent = takeAudio();
+        OutputContent outputContent = audioPlayList.take();
         Future<String> filePathFuture = outputContent.getFilePath();
+        if (filePathFuture == null) {
+            log.error("filePathFuture is null, thoughtId:{}", outputContent.getThoughtId());
+            return;
+        }
         String filePath;
         try {
             filePath = filePathFuture.get();
@@ -92,16 +85,12 @@ public class LocalOutputConsumer {
         if (StrUtil.isEmpty(filePath)) {
             return;
         }
-        try {
-            log.info("localFilePath: {}", filePath);
-            log.info("thinkId:{},splitId:{}, 语音内容: {}", outputContent.getThinkId(), outputContent.getSplitId(), outputContent.getContent());
-            CallbackMedia media = new RandomAccessFileMedia(new File(filePath));
-            //注意此方法是异步执行，调用vlc播放(这一步要严格保证没问题)，否则死锁
-            audioPlayerComponent.mediaPlayer().media().play(media);
-            cyclicBarrier.await();
-        } catch (BrokenBarrierException e) {
-            cyclicBarrier.reset();
-        }
+        log.info("localFilePath: {}", filePath);
+        log.info("thinkId:{},splitId:{}, 语音内容: {}", outputContent.getThoughtId(), outputContent.getSplitId(), outputContent.getContent());
+        CallbackMedia media = new RandomAccessFileMedia(new File(filePath));
+        //注意此方法是异步执行，调用vlc播放(这一步要严格保证没问题)，否则死锁
+        semaphore.acquire();
+        audioPlayerComponent.mediaPlayer().media().play(media);
     }
 
     public void stop() {
@@ -110,8 +99,11 @@ public class LocalOutputConsumer {
         }
     }
 
-    public OutputContent takeAudio() throws InterruptedException {
-        return audioPlayList.take();
+    @Override
+    public void accept(OutputContent outputContent) {
+        boolean offer = audioPlayList.offer(outputContent);
+        if (!offer) {
+            log.error("播放队列已满，无法插入新的播放内容。thoughtId:{},splitId:{}, content:{}", outputContent.getThoughtId(), outputContent.getSplitId(), outputContent.getContent());
+        }
     }
-
 }

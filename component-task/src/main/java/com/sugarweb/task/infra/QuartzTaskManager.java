@@ -32,9 +32,9 @@ public class QuartzTaskManager implements TaskManager {
             throw new FrameworkException("定时任务clear失败", ex);
         }
         List<TaskInfo> taskInfos = Db.list(new LambdaQueryWrapper<>(TaskInfo.class)
-                .eq(TaskInfo::getEnabled, Flag.TRUE.getCode()));
+                .eq(TaskInfo::getEnabled, Flag.TRUE));
         List<TaskTrigger> triggers = Db.list(new LambdaQueryWrapper<>(TaskTrigger.class)
-                .eq(TaskTrigger::getEnabled, Flag.TRUE.getCode())
+                .eq(TaskTrigger::getEnabled, Flag.TRUE)
         );
         for (TaskInfo taskInfo : taskInfos) {
             loadTask(taskInfo, false);
@@ -47,7 +47,7 @@ public class QuartzTaskManager implements TaskManager {
     @Override
     public void saveTask(TaskInfo taskInfo) {
         Db.save(taskInfo);
-        if (Flag.TRUE.getCode().equals(taskInfo.getEnabled())) {
+        if (Flag.TRUE.equals(taskInfo.getEnabled())) {
             loadTask(taskInfo, false);
         }
     }
@@ -77,7 +77,7 @@ public class QuartzTaskManager implements TaskManager {
     @Override
     public void updateTask(TaskInfo taskInfo) {
         Db.updateById(taskInfo);
-        if (Flag.TRUE.getCode().equals(taskInfo.getEnabled())) {
+        if (Flag.TRUE.equals(taskInfo.getEnabled())) {
             loadTask(taskInfo, true);
         } else {
             cleanTask(taskInfo.getTaskId());
@@ -93,7 +93,7 @@ public class QuartzTaskManager implements TaskManager {
     @Override
     public void enabledTask(String taskId) {
         TaskInfo taskInfo = Db.getById(taskId, TaskInfo.class);
-        taskInfo.setEnabled(Flag.TRUE.getCode());
+        taskInfo.setEnabled(Flag.TRUE);
         Db.updateById(taskInfo);
         loadTask(taskInfo, true);
     }
@@ -101,7 +101,7 @@ public class QuartzTaskManager implements TaskManager {
     @Override
     public void disabledTask(String taskId) {
         TaskInfo taskInfo = Db.getById(taskId, TaskInfo.class);
-        taskInfo.setEnabled(Flag.FALSE.getCode());
+        taskInfo.setEnabled(Flag.FALSE);
         Db.updateById(taskInfo);
         cleanTask(taskId);
     }
@@ -143,7 +143,7 @@ public class QuartzTaskManager implements TaskManager {
     public void enabledTrigger(String triggerId) {
         TaskTrigger taskTrigger = Db.getById(triggerId, TaskTrigger.class);
         TaskInfo taskInfo = Db.getById(taskTrigger.getTaskId(), TaskInfo.class);
-        taskTrigger.setEnabled(Flag.TRUE.getCode());
+        taskTrigger.setEnabled(Flag.TRUE);
         Db.updateById(taskTrigger);
         if (shouldRun(taskInfo.getEnabled(), taskTrigger.getEnabled())) {
             loadTrigger(taskTrigger, true);
@@ -182,13 +182,13 @@ public class QuartzTaskManager implements TaskManager {
     }
 
     private boolean shouldRun(String taskEnabled, String triggerEnabled) {
-        return Flag.TRUE.getCode().equals(taskEnabled) && Flag.TRUE.getCode().equals(triggerEnabled);
+        return Flag.TRUE.equals(taskEnabled) && Flag.TRUE.equals(triggerEnabled);
     }
 
     @Override
     public void disabledTrigger(String triggerId) {
         TaskTrigger taskTrigger = Db.getById(triggerId, TaskTrigger.class);
-        taskTrigger.setEnabled(Flag.FALSE.getCode());
+        taskTrigger.setEnabled(Flag.FALSE);
         Db.updateById(taskTrigger);
         clearTrigger(triggerId);
     }

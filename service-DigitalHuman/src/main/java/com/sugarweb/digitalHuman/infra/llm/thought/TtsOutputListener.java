@@ -13,29 +13,37 @@ import java.util.concurrent.Future;
 import java.util.concurrent.Semaphore;
 
 /**
- * StreamTokenSpeakAdapt
+ * TtsThoughtListener
+ * 非线程安全
  *
  * @author xxd
  * @version 1.0
  */
 @Slf4j
-public class TtsThoughtListener implements StreamThoughtListener {
+public class TtsOutputListener implements StreamThoughtListener {
 
     private final OutputContainer outputContainer;
     private final StringBuilder sb = new StringBuilder();
     private int currentSplitId = 0;
 
-    public TtsThoughtListener(OutputContainer outputContainer) {
+    // 限制同时进行tts的线程数,公平锁，先入先出
+    private final Semaphore maxTtsThread = new Semaphore(2, true);
+    //todo 获取tts模型
+    private final TtsModel ttsModel = new ChatTtsModel("http://127.0.0.1:9966/tts");
+    //虚拟线程
+    private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+
+    public TtsOutputListener(OutputContainer outputContainer) {
         this.outputContainer = outputContainer;
     }
 
     @Override
-    public void onNext(ThoughtContext thoughtContext, String token) {
+    public void onNext(ThoughtRequest thoughtRequest, String token) {
         if (StrUtil.isBlank(token)) {
             return;
         }
         if (sb.length() + token.length() > 20) {
-            handleTokenWithPunctuation(token, thoughtContext.getThoughtId());
+            handleTokenWithPunctuation(token, thoughtRequest.getThoughtId());
         } else {
             sb.append(token);
         }
@@ -60,47 +68,36 @@ public class TtsThoughtListener implements StreamThoughtListener {
         sb.append(token);
     }
 
-    // 限制同时进行tts的线程数,公平锁，先入先出
-    private final Semaphore maxTtsThread = new Semaphore(2, true);
-    private final TtsModel ttsModel = new ChatTtsModel("http://127.0.0.1:9966/tts");
-    //虚拟线程
-    private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
-
     private void addOutputContent(long thinkId, int spiltId, String content) {
         if (StrUtil.isBlank(content)) {
             return;
         }
-        try {
-            //异步处理
-            Future<String> filePath = executor.submit(() -> {
-                try {
-                    maxTtsThread.acquire();
-                    return ttsModel.tts(content);
-                } finally {
-                    maxTtsThread.release();
-                }
-            });
-            outputContainer.put(OutputContent.builder()
-                    .thinkId(thinkId)
-                    .splitId(spiltId)
-                    .content(content)
-                    .filePath(filePath)
-                    .build());
-        } catch (InterruptedException e) {
-            log.error("ttsTask InterruptedException", e);
-            Thread.currentThread().interrupt();
-        }
+        //异步处理
+        Future<String> filePath = executor.submit(() -> {
+            try {
+                maxTtsThread.acquire();
+                return ttsModel.tts(content);
+            } finally {
+                maxTtsThread.release();
+            }
+        });
+        outputContainer.add(OutputContent.builder()
+                .thoughtId(thinkId)
+                .splitId(spiltId)
+                .content(content)
+                .filePath(filePath)
+                .build());
     }
 
     @Override
-    public void onComplete(ThoughtContext thoughtContext) {
-        addOutputContent(thoughtContext.getThoughtId(), currentSplitId++, sb.toString());
+    public void onComplete(ThoughtRequest thoughtRequest) {
+        addOutputContent(thoughtRequest.getThoughtId(), currentSplitId++, sb.toString());
         sb.setLength(0);
         currentSplitId = 0;
     }
 
     @Override
-    public void onError(ThoughtContext thoughtContext, Throwable error) {
+    public void onError(ThoughtRequest thoughtRequest, Throwable error) {
         sb.setLength(0);
         currentSplitId = 0;
     }

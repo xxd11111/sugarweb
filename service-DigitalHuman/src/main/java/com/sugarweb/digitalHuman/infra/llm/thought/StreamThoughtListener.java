@@ -8,10 +8,10 @@ package com.sugarweb.digitalHuman.infra.llm.thought;
  */
 public interface StreamThoughtListener {
 
-    void onNext(ThoughtContext thoughtContext, String token);
+    void onNext(ThoughtRequest thoughtRequest, String token);
 
-    void onComplete(ThoughtContext thoughtContext);
+    void onComplete(ThoughtRequest thoughtRequest);
 
-    void onError(ThoughtContext thoughtContext, Throwable error);
+    void onError(ThoughtRequest thoughtRequest, Throwable error);
 
 }

@@ -2,9 +2,9 @@ package com.sugarweb.digitalHuman.infra.llm;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.Actor;
-import com.sugarweb.digitalHuman.domain.StagePerformance;
 import com.sugarweb.digitalHuman.domain.Script;
 import com.sugarweb.digitalHuman.domain.Stage;
+import com.sugarweb.digitalHuman.domain.StagePerformance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
@@ -12,9 +12,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 /**
  * StageManager
@@ -25,8 +22,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class StageManager implements DisposableBean {
-
-    private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
 
     private final Map<String, AutoStage> runningStageMap = new ConcurrentHashMap<>();
 
@@ -96,7 +91,7 @@ public class StageManager implements DisposableBean {
             log.error(errorMessage);
             throw new IllegalStateException(errorMessage);
         }
-        AutoStage autoStage = new AutoStage(executor, stageContext);
+        AutoStage autoStage = new AutoStage(stageContext);
         log.info("New actor created and started: {}, at time: {}", stage.getStageId(), System.currentTimeMillis());
         return autoStage;
     }
@@ -104,20 +99,5 @@ public class StageManager implements DisposableBean {
     @Override
     public void destroy() {
         runningStageMap.values().forEach(AutoStage::stop);
-        executor.shutdown();
-        try {
-            if (!executor.awaitTermination(10, TimeUnit.SECONDS)) {
-                log.warn("Executor service did not terminate within the specified time. Attempting to force shutdown.");
-                executor.shutdownNow();
-            }
-        } catch (InterruptedException e) {
-            log.error("Interrupted while waiting for executor service to terminate: {}", e.getMessage(), e);
-            executor.shutdownNow();
-            Thread.currentThread().interrupt();
-        } catch (Exception e) {
-            log.error("Unexpected exception while shutting down executor service: {}", e.getMessage(), e);
-        } finally {
-            log.info("Executor service shut down");
-        }
     }
 }

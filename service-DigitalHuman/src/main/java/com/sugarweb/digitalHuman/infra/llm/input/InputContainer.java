@@ -23,4 +23,8 @@ public class InputContainer {
         return inputContentQueue.poll();
     }
 
+    public int size(){
+        return inputContentQueue.size();
+    }
+
 }

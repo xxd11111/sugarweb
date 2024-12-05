@@ -39,4 +39,25 @@ public class Stage extends BaseEntity {
      */
     private String performanceId;
 
+
+    /**
+     * tts模式
+     */
+    private String ttsMode;
+
+    /**
+     * 直播平台
+     */
+    private String livePlatform;
+
+    /**
+     * 本地输出模式
+     */
+    private String localOutputMode;
+
+    /**
+     * 是否开启websocket模式
+     */
+    private String websocketMode;
+
 }

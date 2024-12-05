@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman.infra.llm.output;
 
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -11,17 +12,14 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class OutputContainer {
 
-    private final BlockingQueue<OutputContent> outputQueue = new LinkedBlockingQueue<>();
+    private List<OutputConsumer> outputConsumers;
 
-    public int size() {
-        return outputQueue.size();
+    public OutputContainer(List<OutputConsumer> outputConsumers) {
+        this.outputConsumers = outputConsumers;
     }
 
-    public OutputContent take() throws InterruptedException {
-        return outputQueue.take();
+    public void add(OutputContent outputContent) {
+        outputConsumers.forEach(outputConsumer -> outputConsumer.accept(outputContent));
     }
 
-    public void put(OutputContent outputContent) throws InterruptedException {
-         outputQueue.put(outputContent);
-    }
 }

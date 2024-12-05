@@ -51,9 +51,9 @@ public class TaskAutoRegistry {
         //如果开启重置，则先清空生成的数据
         if (reset) {
             Db.remove(new LambdaQueryWrapper<>(TaskInfo.class)
-                    .eq(TaskInfo::getIsDefault, Flag.TRUE.getCode()));
+                    .eq(TaskInfo::getIsDefault, Flag.TRUE));
             Db.remove(new LambdaQueryWrapper<>(TaskTrigger.class)
-                    .eq(TaskTrigger::getIsDefault, Flag.TRUE.getCode()));
+                    .eq(TaskTrigger::getIsDefault, Flag.TRUE));
         }
         //遍历所有带InnerTask注解的bean
         for (Map.Entry<String, Object> stringObjectEntry : beansWithAnnotation.entrySet()) {
@@ -62,7 +62,7 @@ public class TaskAutoRegistry {
             InnerTask innerTask = beanInstance.getClass().getAnnotation(InnerTask.class);
             TaskInfo taskInfo = Db.getOne(new LambdaQueryWrapper<>(TaskInfo.class)
                     .eq(TaskInfo::getTaskCode, innerTask.taskCode())
-                    .eq(TaskInfo::getIsDefault, Flag.TRUE.getCode())
+                    .eq(TaskInfo::getIsDefault, Flag.TRUE)
             );
             //如果不存在，则创建
             if (taskInfo == null) {
@@ -81,7 +81,7 @@ public class TaskAutoRegistry {
             InnerTaskTrigger innerTaskTrigger = beanInstance.getClass().getAnnotation(InnerTaskTrigger.class);
             if (innerTaskTrigger != null) {
                 TaskTrigger taskTrigger = Db.getOne(new LambdaQueryWrapper<>(TaskTrigger.class)
-                        .eq(TaskTrigger::getIsDefault, Flag.TRUE.getCode())
+                        .eq(TaskTrigger::getIsDefault, Flag.TRUE)
                         .eq(TaskTrigger::getTaskId, taskInfo.getTaskId())
                         .eq(TaskTrigger::getTriggerCode, innerTaskTrigger.triggerCode()));
                 //如果不存在，则创建
@@ -112,8 +112,8 @@ public class TaskAutoRegistry {
         }
         taskInfo.setBeanName(beanName);
         taskInfo.setTaskName(innerTask.taskName());
-        taskInfo.setEnabled(innerTask.enabled() ? Flag.TRUE.getCode() : Flag.FALSE.getCode());
-        taskInfo.setIsDefault(Flag.TRUE.getCode());
+        taskInfo.setEnabled(innerTask.enabled() ? Flag.TRUE : Flag.FALSE);
+        taskInfo.setIsDefault(Flag.TRUE);
     }
 
     private void buildTaskTrigger(TaskTrigger taskTrigger, InnerTaskTrigger innerTaskTrigger, TaskInfo taskInfo) {
@@ -126,13 +126,13 @@ public class TaskAutoRegistry {
             throw new IllegalArgumentException("Cron表达式不合法");
         }
         taskTrigger.setCron(innerTaskTrigger.cron());
-        taskTrigger.setEnabled(innerTaskTrigger.enabled() ? Flag.TRUE.getCode() : Flag.FALSE.getCode());
+        taskTrigger.setEnabled(innerTaskTrigger.enabled() ? Flag.TRUE : Flag.FALSE);
         if (StrUtil.isEmpty(innerTaskTrigger.triggerName())) {
             taskTrigger.setTriggerName(taskInfo.getTaskName() + "-" + innerTaskTrigger.triggerCode());
         } else {
             taskTrigger.setTriggerName(innerTaskTrigger.triggerName());
         }
-        taskTrigger.setIsDefault(Flag.TRUE.getCode());
+        taskTrigger.setIsDefault(Flag.TRUE);
     }
 
     private boolean isValidCron(String cron) {

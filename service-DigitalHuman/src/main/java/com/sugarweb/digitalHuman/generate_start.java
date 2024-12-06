@@ -22,7 +22,6 @@ public class generate_start {
      */
     public static void main(String[] args) {
         //生成sql
-
         Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb.digitalHuman.domain");
         StringBuilder sqlStr = new StringBuilder();
         // 获取项目的实体类

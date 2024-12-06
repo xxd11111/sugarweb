@@ -35,6 +35,9 @@ public class TreeNode<T, R> {
     }
 
     public static <T, R> List<TreeNode<T, R>> build(List<T> data, Function<T, R> functionGetId, Function<T, R> functionGetPid, Comparator<T> comparator) {
+        if(data == null || data.isEmpty()){
+            return Collections.emptyList();
+        }
         Comparator<TreeNode<T, R>> treeNodeComparator = getComparator(comparator);
         List<TreeNode<T, R>> treeNodeList = data.stream()
                 .map(t -> {

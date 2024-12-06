@@ -1,15 +1,13 @@
 package com.sugarweb.digitalHuman.infra.llm;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.domain.Actor;
-import com.sugarweb.digitalHuman.domain.Script;
-import com.sugarweb.digitalHuman.domain.Stage;
-import com.sugarweb.digitalHuman.domain.StagePerformance;
+import com.sugarweb.digitalHuman.domain.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -63,6 +61,8 @@ public class StageManager implements DisposableBean {
     private AutoStage load(Stage stage) {
         String scriptId = stage.getScriptId();
         Script script = Db.getById(scriptId, Script.class);
+        List<ScriptNode> list = Db.lambdaQuery(ScriptNode.class).eq(ScriptNode::getScriptId, scriptId).list();
+        script.setScriptNodeList(list);
 
         String actorId = stage.getActorId();
         Actor actor = Db.getById(actorId, Actor.class);

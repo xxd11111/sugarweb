@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman;
 
+import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.*;
 import com.sugarweb.digitalHuman.infra.llm.ModelPlatform;
 import com.sugarweb.digitalHuman.infra.llm.ModelType;
@@ -42,12 +43,14 @@ public class DigitalHumanApplication {
             chatModel.setModelName("qwen2.5:7b");
             chatModel.setModelPlatform(ModelPlatform.OLLAMA.getValue());
             chatModel.setBaseUrl("http://localhost:11434");
+            Db.saveOrUpdate(chatModel);
 
             // tts模型设置
             Model ttsModel = new Model();
             ttsModel.setModelId("chatTts");
             ttsModel.setModelType(ModelType.TTS.getValue());
             ttsModel.setBaseUrl("http://127.0.0.1:9966/tts");
+            Db.saveOrUpdate(ttsModel);
 
             // 演员设置
             Actor actor = new Actor();
@@ -64,6 +67,7 @@ public class DigitalHumanApplication {
             actor.setTtsModelConfig("");
             actor.setChatModelId(chatModel.getModelId());
             actor.setChatModeConfig("");
+            Db.saveOrUpdate(actor);
             // 暂不使用数据集
             // actor.setDatasetId("default");
 
@@ -77,24 +81,26 @@ public class DigitalHumanApplication {
                     """);
             int index = 1;
             ArrayList<ScriptNode> scriptNodeList = new ArrayList<>();
-            scriptNodeList.add(createScriptNode(index++, "你好，我是小明，请问你有什么问题吗？"));
-            scriptNodeList.add(createScriptNode(index++, "你好，我是小明，请问你有什么问题吗？"));
-            scriptNodeList.add(createScriptNode(index++, "你好，我是小明，请问你有什么问题吗？"));
-            scriptNodeList.add(createScriptNode(index++, "你好，我是小明，请问你有什么问题吗？"));
-            scriptNodeList.add(createScriptNode(index++, "你好，我是小明，请问你有什么问题吗？"));
+            scriptNodeList.add(createScriptNode(index++, "讲3个笑话"));
+            scriptNodeList.add(createScriptNode(index++, "讲下三国演义的故事"));
+            scriptNodeList.add(createScriptNode(index++, "讲下水浒传的故事"));
+            scriptNodeList.add(createScriptNode(index++, "讲下魔兽争霸的故事"));
+            scriptNodeList.add(createScriptNode(index++, "讲下星际争霸的故事"));
             script.setScriptNodeList(scriptNodeList);
+            Db.saveOrUpdateBatch(scriptNodeList);
 
             Stage stage = new Stage();
             stage.setStageId("default");
-            stage.setStageName("哔哩哔哩直播");
-            stage.setDescription("哔哩哔哩直播测试");
+            stage.setStageName("本地测试");
+            stage.setDescription("本地测试");
             stage.setActorId(actor.getActorId());
             stage.setScriptId(script.getScriptId());
             stage.setTtsMode(Flag.FALSE);
             stage.setStatus(Flag.FALSE);
-            stage.setLivePlatform("blbl");
+            // stage.setLivePlatform("blbl");
             stage.setLocalOutputMode(Flag.TRUE);
             stage.setWebsocketMode(Flag.TRUE);
+            Db.saveOrUpdate(stage);
 
             stageManager.startStage(stage);
         };
@@ -102,6 +108,7 @@ public class DigitalHumanApplication {
 
     private ScriptNode createScriptNode(int index, String content) {
         ScriptNode scriptNode = new ScriptNode();
+        scriptNode.setScriptId("default");
         scriptNode.setNodeId("node" + index);
         scriptNode.setNodePid(null);
         scriptNode.setNodeIndex(String.valueOf(index));

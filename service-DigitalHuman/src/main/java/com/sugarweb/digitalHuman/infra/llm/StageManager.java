@@ -2,8 +2,8 @@ package com.sugarweb.digitalHuman.infra.llm;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.*;
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -13,13 +13,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * StageManager
+ * todo 程序关闭结束时候未记录performance-endTime
  *
  * @author xxd
  * @version 1.0
  */
 @Component
 @Slf4j
-public class StageManager implements DisposableBean {
+public class StageManager {
 
     private final Map<String, AutoStage> runningStageMap = new ConcurrentHashMap<>();
 
@@ -78,6 +79,8 @@ public class StageManager implements DisposableBean {
         stagePerformance.setStartTime(LocalDateTime.now());
         // stagePerformance.setEndTime();
         Db.save(stagePerformance);
+        stage.setPerformanceId(stagePerformance.getPerformanceId());
+        Db.updateById(stage);
 
         StageContext stageContext = StageContext.builder()
                 .stage(stage)
@@ -96,7 +99,7 @@ public class StageManager implements DisposableBean {
         return autoStage;
     }
 
-    @Override
+    @PreDestroy
     public void destroy() {
         runningStageMap.values().forEach(AutoStage::stop);
     }

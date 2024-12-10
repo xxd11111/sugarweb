@@ -54,7 +54,7 @@ public class StagePerformanceMsg extends BaseEntity {
     /**
      * 单位：毫秒
      */
-    private Integer costTime;
+    private Long costTime;
 
     /**
      * 0:用户消息，1:系统消息  user script
@@ -65,7 +65,7 @@ public class StagePerformanceMsg extends BaseEntity {
 
     public List<RoleMsg> prepareHistoryMessage() {
         List<RoleMsg> roleMsgList = JSONUtil.toList(getMessage(), RoleMsg.class);
-        roleMsgList.add(new RoleMsg(ChatRole.ASSISTANT.name(), getAnswer()));
+        roleMsgList.add(new RoleMsg(ChatRole.ASSISTANT.getValue(), getAnswer()));
         return roleMsgList;
     }
 }

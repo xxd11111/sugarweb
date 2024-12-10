@@ -59,7 +59,7 @@ public class TreeNode<T, R> {
             }
         }
         return treeNodeList.stream()
-                .filter(t -> t.getParent() != null)
+                .filter(t -> t.getParent() == null)
                 .sorted(treeNodeComparator)
                 .toList();
     }

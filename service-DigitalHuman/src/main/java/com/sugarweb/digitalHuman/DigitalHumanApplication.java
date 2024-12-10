@@ -42,7 +42,7 @@ public class DigitalHumanApplication {
             chatModel.setModelType(ModelType.CHAT.getValue());
             chatModel.setModelName("qwen2.5:7b");
             chatModel.setModelPlatform(ModelPlatform.OLLAMA.getValue());
-            chatModel.setBaseUrl("http://localhost:11434");
+            chatModel.setBaseUrl("http://192.168.193.151:11434");
             Db.saveOrUpdate(chatModel);
 
             // tts模型设置
@@ -55,7 +55,7 @@ public class DigitalHumanApplication {
             // 演员设置
             Actor actor = new Actor();
             actor.setActorId("default");
-            actor.setActorName("小明");
+            actor.setActorName("炫妹");
             actor.setPromptTemplate("""
                     你现在是友好的人类【炫妹】，接下来请根据事件消息做出回答；
                     要求：你的每句回答都会以语音的形式直接展现给观众，结果以口语化的形式表达，不能用书面语言，返回结果只能是中文。
@@ -77,8 +77,9 @@ public class DigitalHumanApplication {
             script.setScriptName("默认脚本");
             script.setDescription("默认脚本");
             script.setPromptTemplate("""
-                    讲三国演义
+                    你现在是个主播，根据提问来回答，每次回答限制500字以内。
                     """);
+            Db.saveOrUpdate(script);
             int index = 1;
             ArrayList<ScriptNode> scriptNodeList = new ArrayList<>();
             scriptNodeList.add(createScriptNode(index++, "讲3个笑话"));
@@ -86,7 +87,6 @@ public class DigitalHumanApplication {
             scriptNodeList.add(createScriptNode(index++, "讲下水浒传的故事"));
             scriptNodeList.add(createScriptNode(index++, "讲下魔兽争霸的故事"));
             scriptNodeList.add(createScriptNode(index++, "讲下星际争霸的故事"));
-            script.setScriptNodeList(scriptNodeList);
             Db.saveOrUpdateBatch(scriptNodeList);
 
             Stage stage = new Stage();

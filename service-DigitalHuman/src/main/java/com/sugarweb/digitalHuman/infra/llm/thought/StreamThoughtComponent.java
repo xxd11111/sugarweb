@@ -53,9 +53,13 @@ public class StreamThoughtComponent {
         if (CollUtil.isNotEmpty(roleMsgList)) {
             for (RoleMsg roleMsg : roleMsgList) {
                 if (ChatRole.USER.getValue().equals(roleMsg.getRole())) {
-                    messageList.add(UserMessage.from(roleMsg.getContent()));
+                    if (StrUtil.isNotEmpty(roleMsg.getContent())){
+                        messageList.add(UserMessage.from(roleMsg.getContent()));
+                    }
                 } else if (ChatRole.ASSISTANT.getValue().equals(roleMsg.getRole())) {
-                    messageList.add(AiMessage.from(roleMsg.getContent()));
+                    if (StrUtil.isNotEmpty(roleMsg.getContent())){
+                        messageList.add(AiMessage.from(roleMsg.getContent()));
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.sugarweb.digitalHuman.infra.llm.memory;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.domain.StagePerformanceMsg;
 
@@ -15,7 +16,7 @@ public class PerformanceMemoryComponent {
     public StagePerformanceMsg loadMemory(String performanceId, String userId) {
         return Db.lambdaQuery(StagePerformanceMsg.class)
                 .eq(StagePerformanceMsg::getPerformanceId, performanceId)
-                .eq(StagePerformanceMsg::getUserId, userId)
+                .eq(StrUtil.isNotEmpty(userId), StagePerformanceMsg::getUserId, userId)
                 .orderByDesc(StagePerformanceMsg::getCreateTime)
                 .last("limit 1")
                 .one();

@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.constants;
 
 /**
- * TODO
+ * 公共配置
  *
  * @author xxd
  * @since 2024/11/16 23:25

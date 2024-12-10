@@ -23,6 +23,7 @@ import com.sugarweb.framework.utils.JsonUtil;
 import com.sugarweb.framework.utils.TreeNode;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -135,6 +136,8 @@ public class AutoStage {
                     List<ScriptNode> scriptNodeList = script.getScriptNodeList();
                     List<TreeNode<ScriptNode, String>> nodeList = TreeNode.build(scriptNodeList, ScriptNode::getNodeId, ScriptNode::getNodePid, (a, b) -> CompareUtil.compare(a.getNodeIndex(), b.getNodeIndex()));
                     for (TreeNode<ScriptNode, String> treeNode : nodeList) {
+                        // 限制最快1000ms 思考一次
+                        speedLimiter.limit(1000);
                         ScriptNode scriptNode = treeNode.getData();
                         if (shouldAnswer()) {
                             answer(thinkId);
@@ -152,6 +155,7 @@ public class AutoStage {
 
 
     public void script(long thinkId, Script script, ScriptNode scriptNode) {
+        log.info("开始执行脚本，thinkId:{}, scriptNode:{}", thinkId, scriptNode);
         String promptTemplate = script.getPromptTemplate();
         HashMap<String, Object> contextVariables = new HashMap<>();
         String systemPrompt = PromptUtil.getPrompt(promptTemplate, contextVariables);
@@ -165,27 +169,29 @@ public class AutoStage {
 
         Stage stage = stageContext.getStage();
         Actor actor = stageContext.getActor();
+        StagePerformance stagePerformance = stageContext.getStagePerformance();
         StagePerformanceMsg lastUserMsg = performanceMemoryComponent.loadMemory(stage.getPerformanceId(), null);
 
-        if (lastUserMsg != null){
+        //组装历史消息
+        if (lastUserMsg != null) {
             roleMsgList.addAll(lastUserMsg.prepareHistoryMessage());
         }
-        roleMsgList.add(new RoleMsg("user", scriptNode.getScriptContent()));
+        roleMsgList.add(new RoleMsg(ChatRole.USER.getValue(), scriptNode.getScriptContent()));
 
-        //记录当前消息
+        //记录消息日志
         StagePerformanceMsg currentMsg = new StagePerformanceMsg();
         if (lastUserMsg != null) {
             currentMsg.setMsgPid(lastUserMsg.getMsgId());
         }
         currentMsg.setMessage(JsonUtil.toJsonStr(roleMsgList));
-        currentMsg.setPerformanceId(stage.getPerformanceId());
+        currentMsg.setPerformanceId(stagePerformance.getPerformanceId());
         currentMsg.setStageId(stage.getStageId());
         currentMsg.setChatModelId(actor.getChatModelId());
         currentMsg.setActorId(actor.getActorId());
         currentMsg.setSystemMsg(systemPrompt);
         currentMsg.setQuestion(scriptNode.getScriptContent());
         currentMsg.setUserId(null);
-        currentMsg.setMsgType("user");
+        currentMsg.setMsgType("script");
         currentMsg.setStartTime(LocalDateTime.now());
 
         Future<String> answerFuture = streamThoughtComponent.streamThink(thoughtRequest);
@@ -193,11 +199,14 @@ public class AutoStage {
             String answer = answerFuture.get();
             currentMsg.setAnswer(answer);
             currentMsg.setEndTime(LocalDateTime.now());
-            currentMsg.setCostTime(currentMsg.getEndTime().getNano() - currentMsg.getStartTime().getNano());
+            //计算耗时毫秒
+            currentMsg.setCostTime(Duration.between(currentMsg.getStartTime(), currentMsg.getEndTime()).toMillis());
         } catch (InterruptedException | ExecutionException e) {
-            log.error("Error getting answer: {}", e.getCause(), e);
+            log.error("无法获取ai响应: {}", e.getCause(), e);
         }
-
+        log.info("currentMsg: {}", currentMsg);
+        //记录对话
+        performanceMemoryComponent.memorize(currentMsg);
     }
 
     public boolean shouldAnswer() {
@@ -214,13 +223,14 @@ public class AutoStage {
     }
 
     public void answer(long thinkId) {
+        log.info("开始执行回答，thinkId:{}", thinkId);
         // 从消息队列中获取消息
         InputContent inputContent = inputContainer.poll();
         if (inputContent == null) {
             return;
         }
-        StagePerformance stagePerformance = stageContext.getStagePerformance();
         Stage stage = stageContext.getStage();
+        StagePerformance stagePerformance = stageContext.getStagePerformance();
 
         ThoughtRequest thoughtRequest = new ThoughtRequest();
         //记录思考id
@@ -278,10 +288,11 @@ public class AutoStage {
             String answer = answerFuture.get();
             currentMsg.setAnswer(answer);
             currentMsg.setEndTime(LocalDateTime.now());
-            currentMsg.setCostTime(currentMsg.getEndTime().getNano() - currentMsg.getStartTime().getNano());
+            currentMsg.setCostTime(Duration.between(currentMsg.getStartTime(), currentMsg.getEndTime()).toMillis());
         } catch (InterruptedException | ExecutionException e) {
             log.error("ai思考异常 error:{}", e.getMessage(), e);
         }
+        log.info("currentMsg: {}", currentMsg);
         //记录对话
         performanceMemoryComponent.memorize(currentMsg);
 

@@ -1,6 +1,6 @@
 package com.sugarweb.digitalHuman.config;
 
-import com.sugarweb.digitalHuman.constants.Common;
+import com.sugarweb.digitalHuman.common.Common;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

@@ -4,13 +4,13 @@ import cn.hutool.core.comparator.CompareUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.constants.ChatRole;
+import com.sugarweb.digitalHuman.common.ChatRole;
 import com.sugarweb.digitalHuman.domain.*;
 import com.sugarweb.digitalHuman.infra.PromptUtil;
 import com.sugarweb.digitalHuman.infra.llm.input.InputContainer;
 import com.sugarweb.digitalHuman.infra.llm.input.InputContent;
 import com.sugarweb.digitalHuman.infra.llm.input.blbl.BlblInputComponent;
-import com.sugarweb.digitalHuman.infra.llm.input.websocket.WebsocketInputServer;
+import com.sugarweb.digitalHuman.infra.llm.input.websocket.PerformanceWebsocketServer;
 import com.sugarweb.digitalHuman.infra.llm.memory.DatasetMemoryComponent;
 import com.sugarweb.digitalHuman.infra.llm.memory.PerformanceMemoryComponent;
 import com.sugarweb.digitalHuman.infra.llm.output.OutputConsumer;
@@ -68,12 +68,7 @@ public class AutoStage {
         Stage stage = stageContext.getStage();
 
         List<OutputConsumer> outputConsumers = new ArrayList<>();
-        if (Flag.TRUE.equals(stage.getWebsocketMode())) {
-            //准备websocket输出监听器
-            WebsocketInputServer websocketInputServer = BeanUtil.getBean(WebsocketInputServer.class);
-            WebsocketOutputConsumer websocketOutputConsumer = new WebsocketOutputConsumer(websocketInputServer.getSessionMap());
-            outputConsumers.add(websocketOutputConsumer);
-        }
+
         //创建输出容器
         outputContainer = new OutputContainer(outputConsumers);
 
@@ -84,6 +79,14 @@ public class AutoStage {
         } else {
             blblInputComponent = null;
         }
+        if (Flag.TRUE.equals(stage.getWebsocketMode())) {
+            //准备websocket输出监听器
+            PerformanceWebsocketServer performanceWebsocketServer = BeanUtil.getBean(PerformanceWebsocketServer.class);
+            WebsocketOutputConsumer websocketOutputConsumer = new WebsocketOutputConsumer(performanceWebsocketServer.getSessionMap());
+            outputConsumers.add(websocketOutputConsumer);
+            performanceWebsocketServer.loadInputContainer(stage.getStageId(), inputContainer);
+        }
+
         List<StreamThoughtListener> streamThoughtListeners = new ArrayList<>();
         //创建输出监听器
         if (Flag.TRUE.equals(stage.getTtsMode())) {
@@ -302,6 +305,8 @@ public class AutoStage {
         if (!isRunning()) {
             return;
         }
+        PerformanceWebsocketServer performanceWebsocketServer = BeanUtil.getBean(PerformanceWebsocketServer.class);
+        performanceWebsocketServer.unloadInputContainer(stageContext.getStage().getStageId());
         if (blblInputComponent != null) {
             blblInputComponent.stop();
         }

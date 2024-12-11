@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,13 +26,12 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint("/performance")
 @Slf4j
 @Component
-public class WebsocketInputServer {
+public class PerformanceWebsocketServer {
 
     @Getter
     private final ConcurrentHashMap<String, Session> sessionMap = new ConcurrentHashMap<>();
 
     private final Map<String, InputContainer> inputContainerMap = new ConcurrentHashMap<>();
-
 
     public void loadInputContainer(String stageId, InputContainer inputContainer) {
         inputContainerMap.put(stageId, inputContainer);
@@ -48,6 +48,11 @@ public class WebsocketInputServer {
     public void onOpen(Session session) {
         // 加入Set中
         sessionMap.put(session.getId(), session);
+        try {
+            session.getBasicRemote().sendText("连接成功");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         log.info("session-{}", session.getId());
     }
 
@@ -65,7 +70,8 @@ public class WebsocketInputServer {
 
     @OnClose
     public void onClose(Session session, CloseReason closeReason) {
-        log.info("session-onClose-{}", session.getId());
+        sessionMap.remove(session.getId());
+        log.info("session-onClose-{}， closeReason:{}", session.getId(), closeReason);
     }
 
     @Data

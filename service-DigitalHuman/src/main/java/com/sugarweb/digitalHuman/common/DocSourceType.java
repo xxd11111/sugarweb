@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.constants;
+package com.sugarweb.digitalHuman.common;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

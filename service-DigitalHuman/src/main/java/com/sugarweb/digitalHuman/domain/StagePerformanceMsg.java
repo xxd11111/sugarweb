@@ -2,18 +2,13 @@ package com.sugarweb.digitalHuman.domain;
 
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.sugarweb.digitalHuman.BaseEntity;
-import com.sugarweb.digitalHuman.constants.ChatRole;
+import com.sugarweb.digitalHuman.common.BaseEntity;
+import com.sugarweb.digitalHuman.common.ChatRole;
 import com.sugarweb.digitalHuman.infra.llm.thought.RoleMsg;
-import dev.langchain4j.data.message.AiMessage;
-import dev.langchain4j.data.message.ChatMessage;
-import dev.langchain4j.data.message.UserMessage;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

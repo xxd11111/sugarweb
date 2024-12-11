@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman.constants;
+package com.sugarweb.digitalHuman.common;
 
 /**
  * 公共配置

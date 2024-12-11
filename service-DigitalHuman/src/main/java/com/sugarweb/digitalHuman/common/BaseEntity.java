@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman;
+package com.sugarweb.digitalHuman.common;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

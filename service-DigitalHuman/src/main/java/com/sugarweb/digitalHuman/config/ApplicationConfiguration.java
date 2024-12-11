@@ -1,6 +1,5 @@
 package com.sugarweb.digitalHuman.config;
 
-import com.sugarweb.digitalHuman.constants.Common;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
@@ -9,13 +8,10 @@ import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaEmbeddingModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.inmemory.InMemoryEmbeddingStore;
 import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
 import io.milvus.param.IndexType;
 import jakarta.annotation.Resource;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;

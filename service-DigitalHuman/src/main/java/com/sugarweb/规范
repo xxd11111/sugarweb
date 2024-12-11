@@ -5,9 +5,10 @@ xxx/detail表示详情
 xxx/save新增
 xxx/update编辑
 
+项目结构
 application应用层
 config配置
-constants常量
+common常量
 controller接口
 domain 对象
 infra 基础层

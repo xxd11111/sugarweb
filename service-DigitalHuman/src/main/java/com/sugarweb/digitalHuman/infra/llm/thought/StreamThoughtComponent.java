@@ -2,7 +2,7 @@ package com.sugarweb.digitalHuman.infra.llm.thought;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
-import com.sugarweb.digitalHuman.constants.ChatRole;
+import com.sugarweb.digitalHuman.common.ChatRole;
 import com.sugarweb.digitalHuman.infra.llm.ModelFactory;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.data.message.ChatMessage;

@@ -34,7 +34,7 @@ public class WebSocketConfig {
             @Override
             public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 
-                List<String> strings = request.getHeaders().get("Sec-WebSocket-Protocol");
+                List<String> strings = request.getHeaders().get("token");
                 if (CollUtil.isEmpty(strings)) {
                     return false;
                 } else {

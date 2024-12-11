@@ -1,6 +1,6 @@
 package com.sugarweb.digitalHuman.config;
 
-import com.sugarweb.digitalHuman.constants.Common;
+import com.sugarweb.digitalHuman.common.Common;
 import io.milvus.common.clientenum.ConsistencyLevelEnum;
 import io.milvus.param.MetricType;
 import lombok.Data;

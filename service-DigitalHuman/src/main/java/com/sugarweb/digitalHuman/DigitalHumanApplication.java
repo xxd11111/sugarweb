@@ -38,9 +38,9 @@ public class DigitalHumanApplication {
         return args -> {
             // 模型设置
             Model chatModel = new Model();
-            chatModel.setModelId("qwen2.5:7b");
+            chatModel.setModelId("qwen2.5:3b");
             chatModel.setModelType(ModelType.CHAT.getValue());
-            chatModel.setModelName("qwen2.5:7b");
+            chatModel.setModelName("qwen2.5:3b");
             chatModel.setModelPlatform(ModelPlatform.OLLAMA.getValue());
             chatModel.setBaseUrl("http://192.168.193.151:11434");
             Db.saveOrUpdate(chatModel);

@@ -53,7 +53,7 @@ public class Stage extends BaseEntity {
     /**
      * 本地输出模式
      */
-    private String localOutputMode;
+    private String outputMode;
 
     /**
      * 是否开启websocket模式

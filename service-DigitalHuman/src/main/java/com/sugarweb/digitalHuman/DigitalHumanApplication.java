@@ -38,11 +38,12 @@ public class DigitalHumanApplication {
         return args -> {
             // 模型设置
             Model chatModel = new Model();
-            chatModel.setModelId("qwen2.5:3b");
+            chatModel.setModelId("qwen2:1.5b");
             chatModel.setModelType(ModelType.CHAT.getValue());
-            chatModel.setModelName("qwen2.5:3b");
+            chatModel.setModelName("qwen2:1.5b");
             chatModel.setModelPlatform(ModelPlatform.OLLAMA.getValue());
-            chatModel.setBaseUrl("http://192.168.193.151:11434");
+            // chatModel.setBaseUrl("http://192.168.193.151:11434");
+            chatModel.setBaseUrl("http://127.0.0.1:11434");
             Db.saveOrUpdate(chatModel);
 
             // tts模型设置
@@ -98,7 +99,7 @@ public class DigitalHumanApplication {
             stage.setTtsMode(Flag.FALSE);
             stage.setStatus(Flag.FALSE);
             // stage.setLivePlatform("blbl");
-            stage.setLocalOutputMode(Flag.TRUE);
+            stage.setOutputMode(Flag.TRUE);
             stage.setWebsocketMode(Flag.TRUE);
             Db.saveOrUpdate(stage);
 

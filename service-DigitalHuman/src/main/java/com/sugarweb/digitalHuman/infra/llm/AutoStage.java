@@ -45,13 +45,16 @@ public class AutoStage {
 
     private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
     private final StageContext stageContext;
-    //装载的能力
+    //输入容器
     private final InputContainer inputContainer;
+    //输出容器
     private final OutputContainer outputContainer;
 
+    //记忆能力
     private final PerformanceMemoryComponent performanceMemoryComponent;
-    private final StreamThoughtComponent streamThoughtComponent;
     private final DatasetMemoryComponent datasetMemoryComponent;
+
+    private final StreamThoughtComponent streamThoughtComponent;
     private final BlblInputComponent blblInputComponent;
     private Future<?> stageThread = null;
 
@@ -81,10 +84,9 @@ public class AutoStage {
         }
         if (Flag.TRUE.equals(stage.getWebsocketMode())) {
             //准备websocket输出监听器
-            PerformanceWebsocketServer performanceWebsocketServer = BeanUtil.getBean(PerformanceWebsocketServer.class);
-            WebsocketOutputConsumer websocketOutputConsumer = new WebsocketOutputConsumer(performanceWebsocketServer.getSessionMap());
+            WebsocketOutputConsumer websocketOutputConsumer = new WebsocketOutputConsumer(PerformanceWebsocketServer.getSessionMap());
             outputConsumers.add(websocketOutputConsumer);
-            performanceWebsocketServer.loadInputContainer(stage.getStageId(), inputContainer);
+            PerformanceWebsocketServer.loadInputContainer(stage.getStageId(), inputContainer);
         }
 
         List<StreamThoughtListener> streamThoughtListeners = new ArrayList<>();

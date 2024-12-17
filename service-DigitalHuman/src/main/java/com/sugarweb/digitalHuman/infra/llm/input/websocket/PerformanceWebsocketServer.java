@@ -29,15 +29,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PerformanceWebsocketServer {
 
     @Getter
-    private final ConcurrentHashMap<String, Session> sessionMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, Session> sessionMap = new ConcurrentHashMap<>();
 
-    private final Map<String, InputContainer> inputContainerMap = new ConcurrentHashMap<>();
+    private static final Map<String, InputContainer> inputContainerMap = new ConcurrentHashMap<>();
 
-    public void loadInputContainer(String stageId, InputContainer inputContainer) {
+    public static void loadInputContainer(String stageId, InputContainer inputContainer) {
         inputContainerMap.put(stageId, inputContainer);
     }
 
-    public void unloadInputContainer(String stageId) {
+    public static void unloadInputContainer(String stageId) {
         inputContainerMap.remove(stageId);
     }
 

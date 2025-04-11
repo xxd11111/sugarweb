@@ -1,10 +1,10 @@
 package com.sugarweb.digitalHuman;
 
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.domain.*;
-import com.sugarweb.digitalHuman.infra.llm.ModelPlatform;
-import com.sugarweb.digitalHuman.infra.llm.ModelType;
-import com.sugarweb.digitalHuman.infra.llm.StageManager;
+import com.sugarweb.digitalHuman.entity.*;
+import com.sugarweb.digitalHuman.component.llm.ModelPlatform;
+import com.sugarweb.digitalHuman.component.llm.ModelType;
+import com.sugarweb.digitalHuman.component.llm.StageManager;
 import com.sugarweb.framework.common.Flag;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.ApplicationRunner;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan({"com.sugarweb.**.domain.mapper", "com.sugarweb.**.infra.mapper", "com.sugarweb.digitalHuman.infra.mapper"})
+@MapperScan({"com.sugarweb.**.entity.mapper", "com.sugarweb.**.infra.mapper", "com.sugarweb.digitalHuman.infra.mapper"})
 @EnableWebSocket
 public class DigitalHumanApplication {
 
@@ -54,21 +54,21 @@ public class DigitalHumanApplication {
             Db.saveOrUpdate(ttsModel);
 
             // 演员设置
-            Actor actor = new Actor();
-            actor.setActorId("default");
-            actor.setActorName("炫妹");
-            actor.setPromptTemplate("""
+            Agent agent = new Agent();
+            agent.setAgentId("default");
+            agent.setAgentName("炫妹");
+            agent.setPrompt("""
                     你现在是友好的人类【炫妹】，接下来请根据事件消息做出回答；
                     要求：你的每句回答都会以语音的形式直接展现给观众，结果以口语化的形式表达，不能用书面语言，返回结果只能是中文。
                     
                     以下是参考文档：
                     {{documents}}
                     """);
-            actor.setTtsModelId(ttsModel.getModelId());
-            actor.setTtsModelConfig("");
-            actor.setChatModelId(chatModel.getModelId());
-            actor.setChatModeConfig("");
-            Db.saveOrUpdate(actor);
+            agent.setTtsModelId(ttsModel.getModelId());
+            agent.setTtsModelConfig("");
+            agent.setChatModelId(chatModel.getModelId());
+            agent.setChatModeConfig("");
+            Db.saveOrUpdate(agent);
             // 暂不使用数据集
             // actor.setDatasetId("default");
 
@@ -94,7 +94,7 @@ public class DigitalHumanApplication {
             stage.setStageId("default");
             stage.setStageName("本地测试");
             stage.setDescription("本地测试");
-            stage.setActorId(actor.getActorId());
+            stage.setActorId(agent.getAgentId());
             stage.setScriptId(script.getScriptId());
             stage.setTtsMode(Flag.FALSE);
             stage.setStatus(Flag.FALSE);

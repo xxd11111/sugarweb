@@ -2,7 +2,9 @@ package com.sugarweb.digitalHuman;
 
 import dev.langchain4j.agent.tool.*;
 import dev.langchain4j.data.message.*;
+import dev.langchain4j.model.chat.request.ChatRequest;
 import dev.langchain4j.model.chat.request.json.JsonObjectSchema;
+import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.output.Response;
 import dev.langchain4j.service.tool.DefaultToolExecutor;
@@ -75,14 +77,18 @@ public class ServiceWithToolsExample {
                 哇，你真好，礼物里有什么。
                 ---
                 动画类型:2
-
+                
                 """);
         messages.add(from);
         UserMessage userMessage = UserMessage.from("天上有很多云");
         messages.add(userMessage);
         // 调用模型
-        Response<AiMessage> response = model.generate(messages, toolSpecifications);
-        AiMessage aiMessage = response.content();
+
+        ChatResponse response = model.chat(ChatRequest.builder()
+                .messages(messages)
+                .toolSpecifications(toolSpecifications)
+                .build());
+        AiMessage aiMessage = response.aiMessage();
         System.out.println(aiMessage);
         messages.add(aiMessage);
         AiMessage functionCallMessage = functionExecute(aiMessage, model, messages, toolSpecifications);
@@ -101,8 +107,11 @@ public class ServiceWithToolsExample {
             historyMessage.add(toolExecutionResultMessage);
         }
         // 再次调用模型
-        Response<AiMessage> newResponse = model.generate(historyMessage, toolSpecifications);
-        AiMessage newAiMessage = newResponse.content();
+        ChatResponse newResponse = model.chat(ChatRequest.builder()
+                .messages(historyMessage)
+                .toolSpecifications(toolSpecifications)
+                .build());
+        AiMessage newAiMessage = newResponse.aiMessage();
         System.out.println(newAiMessage);
         return functionExecute(newAiMessage, model, historyMessage, toolSpecifications);
     }

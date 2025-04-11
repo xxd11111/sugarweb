@@ -15,7 +15,7 @@ public class FileConvert {
                 .groupCode(fileInfo.getGroupCode())
                 .fileKey(fileInfo.getFileKey())
                 .filename(fileInfo.getFilename())
-                .fileType(fileInfo.getFileType())
+                .fileType(fileInfo.getFileSuffix())
                 .contentType(fileInfo.getContentType())
                 .fileSize(fileInfo.getFileSize())
                 .uploadTime(fileInfo.getCreateTime())

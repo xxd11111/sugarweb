@@ -18,6 +18,26 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-bom</artifactId>
+                <version>1.0.0-beta3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>dev.langchain4j</groupId>
+                <artifactId>langchain4j-community-bom</artifactId>
+                <version>1.0.0-beta3-SNAPSHOT</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>uk.co.caprica</groupId>
@@ -45,55 +65,43 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-document-parser-apache-poi</artifactId>
-            <version>0.36.2</version>
         </dependency>
 
         <!-- <dependency> -->
         <!--     <groupId>dev.langchain4j</groupId> -->
         <!--     <artifactId>langchain4j-document-parser-apache-tika</artifactId> -->
-        <!--     <version>0.35.0</version> -->
         <!-- </dependency> -->
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-document-parser-apache-pdfbox</artifactId>
-            <version>0.36.2</version>
         </dependency>
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-milvus</artifactId>
-            <version>0.36.2</version>
         </dependency>
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-spring-boot-starter</artifactId>
-            <version>0.36.2</version>
         </dependency>
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-ollama</artifactId>
-            <version>0.36.2</version>
         </dependency>
+
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-zhipu-ai</artifactId>
-            <version>0.36.2</version>
+            <artifactId>langchain4j-community-zhipu-ai</artifactId>
         </dependency>
+
 
         <dependency>
             <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-dashscope</artifactId>
-            <version>0.36.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-simple</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>langchain4j-community-dashscope</artifactId>
         </dependency>
 
         <dependency>

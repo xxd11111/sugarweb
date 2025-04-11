@@ -1,12 +1,12 @@
 package com.sugarweb.digitalHuman.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.sugarweb.digitalHuman.application.dto.DocumentParseDto;
-import com.sugarweb.digitalHuman.application.DocumentService;
-import com.sugarweb.digitalHuman.application.dto.DocumentDetailDto;
-import com.sugarweb.digitalHuman.application.dto.DocumentPageQuery;
-import com.sugarweb.digitalHuman.application.dto.DocumentSaveDto;
-import com.sugarweb.digitalHuman.application.dto.DocumentUpdateDto;
+import com.sugarweb.digitalHuman.service.dto.DocumentParseDto;
+import com.sugarweb.digitalHuman.service.DocumentService;
+import com.sugarweb.digitalHuman.service.dto.DocumentDetailDto;
+import com.sugarweb.digitalHuman.service.dto.DocumentPageQuery;
+import com.sugarweb.digitalHuman.service.dto.DocumentSaveDto;
+import com.sugarweb.digitalHuman.service.dto.DocumentUpdateDto;
 import com.sugarweb.framework.common.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

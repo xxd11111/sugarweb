@@ -38,10 +38,10 @@ public class FileInfo {
     private String filename;
 
     /**
-     * 文件类型
+     * 文件后缀
      */
-    @Size(max = 1)
-    private String fileType;
+    @Size(max = 10)
+    private String fileSuffix;
 
     /**
      * 内容类型
@@ -53,7 +53,7 @@ public class FileInfo {
      * 文件大小
      */
     @Size(max = 32)
-    private long fileSize;
+    private Long fileSize;
 
     /**
      * 上传时间

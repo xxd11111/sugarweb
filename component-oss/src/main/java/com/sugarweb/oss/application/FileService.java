@@ -62,7 +62,7 @@ public class FileService {
         fileInfo.setFilename(filename);
         fileInfo.setFileKey(key);
         fileInfo.setFileSize(size);
-        fileInfo.setFileType(getFileType(filename));
+        fileInfo.setFileSuffix(getFileType(filename));
         Db.save(fileInfo);
 
         return FileConvert.toDto(fileInfo);

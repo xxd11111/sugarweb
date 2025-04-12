@@ -1,11 +1,11 @@
 package com.sugarweb.task;
 
-import com.sugarweb.task.application.TaskService;
-import com.sugarweb.task.infra.auto.TaskAutoRegistry;
+import com.sugarweb.task.service.TaskService;
+import com.sugarweb.task.core.auto.TaskAutoRegistry;
 import com.sugarweb.task.controller.TaskController;
-import com.sugarweb.task.infra.QuartzTaskManager;
-import com.sugarweb.task.infra.SpringbootTaskAdapter;
-import com.sugarweb.task.infra.TaskManager;
+import com.sugarweb.task.core.QuartzTaskManager;
+import com.sugarweb.task.core.SpringbootTaskAdapter;
+import com.sugarweb.task.core.TaskManager;
 import jakarta.annotation.Resource;
 import org.mybatis.spring.annotation.MapperScan;
 import org.quartz.Scheduler;

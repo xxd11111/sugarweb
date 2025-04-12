@@ -1,6 +1,6 @@
 package com.sugarweb.digitalHuman.service.dto;
 
-import com.sugarweb.oss.application.dto.FileDetailDto;
+import com.sugarweb.oss.service.dto.FileDetailDto;
 import lombok.Data;
 
 /**

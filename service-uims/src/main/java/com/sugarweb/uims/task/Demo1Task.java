@@ -1,8 +1,8 @@
 package com.sugarweb.uims.task;
 
-import com.sugarweb.task.infra.auto.InnerTask;
-import com.sugarweb.task.infra.auto.InnerTaskTrigger;
-import com.sugarweb.task.infra.TaskBean;
+import com.sugarweb.task.core.auto.InnerTask;
+import com.sugarweb.task.core.auto.InnerTaskTrigger;
+import com.sugarweb.task.core.TaskBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

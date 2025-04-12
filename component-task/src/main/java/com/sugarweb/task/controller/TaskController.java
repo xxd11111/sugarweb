@@ -2,10 +2,10 @@ package com.sugarweb.task.controller;
 
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
-import com.sugarweb.task.application.TaskDto;
-import com.sugarweb.task.application.TaskQuery;
-import com.sugarweb.task.application.TaskService;
-import com.sugarweb.task.application.TaskTriggerDto;
+import com.sugarweb.task.service.TaskDto;
+import com.sugarweb.task.service.TaskQuery;
+import com.sugarweb.task.service.TaskService;
+import com.sugarweb.task.service.TaskTriggerDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;

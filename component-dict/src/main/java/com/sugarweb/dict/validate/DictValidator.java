@@ -1,7 +1,7 @@
 package com.sugarweb.dict.validate;
 
 import com.sugarweb.framework.utils.BeanUtil;
-import com.sugarweb.dict.application.DictService;
+import com.sugarweb.dict.service.DictService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

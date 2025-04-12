@@ -21,7 +21,7 @@ public class generate_start {
      * code first 模式生成建表脚本
      */
     public static void main(String[] args) {
-        //生成sql
+        // 生成sql
         // Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb.digitalHuman.domain");
         // StringBuilder sqlStr = new StringBuilder();
         // // 获取项目的实体类
@@ -32,21 +32,20 @@ public class generate_start {
         // System.out.println(sqlStr);
 
         // 获取各个组件的实体类
-        // Set<Class<?>> componentClazzSet = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain.po."));
-        // StringBuilder componentSql = new StringBuilder();
-        // // 获取包下的所有类名称
-        // for (Class<?> clazz : componentClazzSet) {
-        //     String sql = GeneratorUtil.generateSql(clazz);
-        //     componentSql.append("\n").append(sql);
-        // }
-        // System.out.println(componentSql);
-
+        Set<Class<?>> componentClazzSet = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain."));
+        StringBuilder componentSql = new StringBuilder();
+        // 获取包下的所有类名称
+        for (Class<?> clazz : componentClazzSet) {
+            String sql = GeneratorUtil.generateSql(clazz);
+            componentSql.append("\n").append(sql);
+        }
+        System.out.println(componentSql);
 
         // 生成mapper.java
-        String poPackageName = "com.sugarweb.digitalHuman.domain";
-        String mapperPackageName = "com.sugarweb.digitalHuman.mapper";
-        String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-DigitalHuman\\src\\main\\java\\com\\sugarweb\\digitalHuman\\mapper";
-        GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
+        // String poPackageName = "com.sugarweb.digitalHuman.domain";
+        // String mapperPackageName = "com.sugarweb.digitalHuman.mapper";
+        // String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-DigitalHuman\\src\\main\\java\\com\\sugarweb\\digitalHuman\\mapper";
+        // GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
     }
 
 

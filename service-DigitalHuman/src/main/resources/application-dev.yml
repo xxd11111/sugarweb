@@ -1,5 +1,5 @@
 server:
-  port: 18080
+  port: 8080
 
 #localhost:8080/v3/api-docs
 
@@ -191,7 +191,7 @@ sugarweb:
     title: sugarweb
     description: sugarweb
     version: V1.0
-    url: http://localhost:${server.port}${server.servlet.context-path}
+    url: http://localhost:${server.port}
     email: sugarcoatx@qq.com
     license: MIT
     license-url: https://mit-license.org/

@@ -20,9 +20,9 @@ import com.sugarweb.digitalHuman.component.MilvusEmbeddingStoreFactory;
 import com.sugarweb.digitalHuman.component.model.ModelFactory;
 import com.sugarweb.framework.exception.ValidateException;
 import com.sugarweb.framework.orm.PageHelper;
-import com.sugarweb.oss.application.FileLinkService;
-import com.sugarweb.oss.application.FileService;
-import com.sugarweb.oss.domain.po.FileInfo;
+import com.sugarweb.oss.service.FileLinkService;
+import com.sugarweb.oss.service.FileService;
+import com.sugarweb.oss.domain.FileInfo;
 import dev.langchain4j.data.document.Document;
 import dev.langchain4j.data.document.DocumentSplitter;
 import dev.langchain4j.data.document.Metadata;
@@ -56,7 +56,6 @@ public class KbDocService {
     private FileService fileService;
     @Autowired
     private FileLinkService fileLinkService;
-
 
     public KbDoc getDocInfo(String docId) {
         KbDoc kbDoc = Db.getById(docId, KbDoc.class);

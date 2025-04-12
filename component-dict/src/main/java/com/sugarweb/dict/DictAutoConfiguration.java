@@ -1,6 +1,6 @@
 package com.sugarweb.dict;
 
-import com.sugarweb.dict.application.DictService;
+import com.sugarweb.dict.service.DictService;
 import com.sugarweb.dict.controller.DictController;
 import jakarta.annotation.Resource;
 import org.mybatis.spring.annotation.MapperScan;

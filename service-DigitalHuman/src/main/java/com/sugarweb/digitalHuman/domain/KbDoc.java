@@ -3,7 +3,7 @@ package com.sugarweb.digitalHuman.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.sugarweb.digitalHuman.common.BaseEntity;
-import com.sugarweb.oss.domain.po.FileInfo;
+import com.sugarweb.oss.domain.FileInfo;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

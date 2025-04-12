@@ -7,7 +7,7 @@ import com.sugarweb.digitalHuman.domain.BlblUserLog;
  * BlblUserLog
  *
  * @author xxd
- * @since 2025/04/12
+ * @since 2025/04/13
  */
 public interface BlblUserLogMapper extends BaseMapper<BlblUserLog> {
 

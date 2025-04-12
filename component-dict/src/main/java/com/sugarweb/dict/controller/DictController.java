@@ -1,10 +1,10 @@
 package com.sugarweb.dict.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.sugarweb.dict.application.DictService;
-import com.sugarweb.dict.application.dto.DictGroupDto;
-import com.sugarweb.dict.application.dto.DictItemDto;
-import com.sugarweb.dict.application.dto.DictQuery;
+import com.sugarweb.dict.service.DictService;
+import com.sugarweb.dict.service.dto.DictGroupDto;
+import com.sugarweb.dict.service.dto.DictItemDto;
+import com.sugarweb.dict.service.dto.DictQuery;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.common.R;
 import io.swagger.v3.oas.annotations.Operation;

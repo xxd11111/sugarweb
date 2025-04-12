@@ -1,6 +1,6 @@
 package com.sugarweb.task;
 
-import com.sugarweb.task.infra.auto.AutoRegisterStrategy;
+import com.sugarweb.task.core.auto.AutoRegisterStrategy;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

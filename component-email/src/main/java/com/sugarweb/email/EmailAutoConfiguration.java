@@ -1,7 +1,7 @@
 package com.sugarweb.email;
 
-import com.sugarweb.email.application.EmailFileService;
-import com.sugarweb.email.application.EmailService;
+import com.sugarweb.email.service.EmailFileService;
+import com.sugarweb.email.service.EmailService;
 import com.sugarweb.framework.exception.FrameworkException;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.AutoConfiguration;

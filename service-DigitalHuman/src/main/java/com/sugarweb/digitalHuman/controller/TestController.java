@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import com.sugarweb.framework.common.R;
 import dev.langchain4j.data.message.AiMessage;
 import dev.langchain4j.model.StreamingResponseHandler;
+import dev.langchain4j.model.chat.response.ChatResponse;
+import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
 import dev.langchain4j.model.output.Response;
@@ -28,7 +30,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
- * TODO
+ * TestController
  *
  * @author xxd
  * @version 1.0
@@ -44,12 +46,12 @@ public class TestController {
                 .baseUrl("http://192.168.193.151:11434")
                 .modelName("qwen2.5:3b")
                 .build();
-        chatModel.generate(question, new StreamingResponseHandler<>() {
+        chatModel.chat(question, new StreamingChatResponseHandler() {
             String answer = "";
 
             @Override
-            public void onNext(String token) {
-                answer = answer + token;
+            public void onPartialResponse(String partialResponse) {
+                answer = answer + partialResponse;
                 AiResponse aiResponse = new AiResponse();
                 aiResponse.setEnd(false);
                 aiResponse.setText(answer);
@@ -61,6 +63,18 @@ public class TestController {
             }
 
             @Override
+            public void onCompleteResponse(ChatResponse completeResponse) {
+                AiResponse aiResponse = new AiResponse();
+                aiResponse.setEnd(true);
+                try {
+                    emitter.send(SseEmitter.event().data(R.data(aiResponse)));
+                } catch (IOException e) {
+                    emitter.completeWithError(e);
+                }
+                emitter.complete();
+            }
+
+            @Override
             public void onError(Throwable error) {
                 try {
                     emitter.send(SseEmitter.event().data(R.error(error.getMessage())));
@@ -69,18 +83,6 @@ public class TestController {
                 }
             }
 
-            @Override
-            public void onComplete(Response<AiMessage> response) {
-                AiResponse aiResponse = new AiResponse();
-                aiResponse.setEnd(true);
-                aiResponse.setText(response.content().text());
-                try {
-                    emitter.send(SseEmitter.event().data(R.data(aiResponse)));
-                } catch (IOException e) {
-                    emitter.completeWithError(e);
-                }
-                emitter.complete();
-            }
         });
         return emitter;
     }
@@ -98,7 +100,7 @@ public class TestController {
                 .modelName("qwen2.5:3b")
                 .build();
         AiResponse aiResponse = new AiResponse();
-        String generate = chatModel.generate(question);
+        String generate = chatModel.chat(question);
         aiResponse.setText(generate);
         return R.data(aiResponse);
     }

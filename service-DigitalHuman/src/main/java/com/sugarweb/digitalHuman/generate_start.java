@@ -22,14 +22,14 @@ public class generate_start {
      */
     public static void main(String[] args) {
         //生成sql
-        Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb.digitalHuman.domain");
-        StringBuilder sqlStr = new StringBuilder();
-        // 获取项目的实体类
-        for (Class<?> clazz : classes) {
-            String sql = GeneratorUtil.generateSql(clazz);
-            sqlStr.append("\n").append(sql);
-        }
-        System.out.println(sqlStr);
+        // Set<Class<?>> classes = ClassUtil.scanPackage("com.sugarweb.digitalHuman.domain");
+        // StringBuilder sqlStr = new StringBuilder();
+        // // 获取项目的实体类
+        // for (Class<?> clazz : classes) {
+        //     String sql = GeneratorUtil.generateSql(clazz);
+        //     sqlStr.append("\n").append(sql);
+        // }
+        // System.out.println(sqlStr);
 
         // 获取各个组件的实体类
         // Set<Class<?>> componentClazzSet = ClassUtil.scanPackage("com.sugarweb", a -> StrUtil.contains(a.getName(), "domain.po."));
@@ -42,11 +42,11 @@ public class generate_start {
         // System.out.println(componentSql);
 
 
-        //生成mapper.java
-        // String poPackageName = "com.sugarweb.digitalHuman.domain";
-        // String mapperPackageName = "com.sugarweb.digitalHuman.infra.mapper";
-        // String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-DigitalHuman\\src\\main\\java\\com\\sugarweb\\digitalHuman\\infra\\mapper";
-        // GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
+        // 生成mapper.java
+        String poPackageName = "com.sugarweb.digitalHuman.domain";
+        String mapperPackageName = "com.sugarweb.digitalHuman.mapper";
+        String writePath = "C:\\xxd-work\\java-project\\sugarcoat\\service-DigitalHuman\\src\\main\\java\\com\\sugarweb\\digitalHuman\\mapper";
+        GeneratorUtil.generateMapper(poPackageName, mapperPackageName, writePath);
     }
 
 

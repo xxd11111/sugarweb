@@ -1,14 +1,14 @@
 package com.sugarweb.digitalHuman.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.digitalHuman.domain.BlblUser;
+import com.sugarweb.digitalHuman.domain.AgentChat;
 
 /**
- * BlblUser
+ * AgentChat
  *
  * @author xxd
  * @since 2025/04/12
  */
-public interface BlblUserMapper extends BaseMapper<BlblUser> {
+public interface AgentChatMapper extends BaseMapper<AgentChat> {
 
 }

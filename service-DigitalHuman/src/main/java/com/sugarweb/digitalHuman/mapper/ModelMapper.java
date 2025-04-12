@@ -1,13 +1,13 @@
 package com.sugarweb.digitalHuman.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.digitalHuman.entity.Model;
+import com.sugarweb.digitalHuman.domain.Model;
 
 /**
  * Model
  *
  * @author xxd
- * @since 2024/11/17
+ * @since 2025/04/12
  */
 public interface ModelMapper extends BaseMapper<Model> {
 

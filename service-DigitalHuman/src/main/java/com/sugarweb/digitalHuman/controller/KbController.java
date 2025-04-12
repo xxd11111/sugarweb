@@ -3,7 +3,7 @@ package com.sugarweb.digitalHuman.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.digitalHuman.service.KbService;
 import com.sugarweb.digitalHuman.service.dto.KbDetailDto;
-import com.sugarweb.digitalHuman.service.dto.DatasetPageQuery;
+import com.sugarweb.digitalHuman.service.dto.KbPageQuery;
 import com.sugarweb.digitalHuman.service.dto.KbSaveDto;
 import com.sugarweb.digitalHuman.service.dto.KbUpdateDto;
 import com.sugarweb.framework.common.R;
@@ -31,7 +31,7 @@ public class KbController {
 
     @GetMapping("/page")
     @Operation(operationId = "kb:page", summary = "查询知识库分页列表")
-    public R<IPage<KbDetailDto>> page(DatasetPageQuery query) {
+    public R<IPage<KbDetailDto>> page(KbPageQuery query) {
         return R.data(kbService.page(query));
     }
 

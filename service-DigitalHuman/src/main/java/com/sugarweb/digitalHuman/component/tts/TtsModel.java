@@ -10,5 +10,4 @@ public interface TtsModel {
 
     String tts(String text);
 
-
 }

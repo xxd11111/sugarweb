@@ -2,7 +2,7 @@ package com.sugarweb.digitalHuman.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.entity.Model;
+import com.sugarweb.digitalHuman.domain.Model;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.orm.PageHelper;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * TODO
+ * ModelService
  *
  * @author xxd
  * @version 1.0
@@ -32,7 +32,7 @@ public class ModelService {
         Db.removeById(modelId, Model.class);
     }
 
-    public Model getOne(String modelId) {
+    public Model getById(String modelId) {
         return Db.getById(modelId, Model.class);
     }
 

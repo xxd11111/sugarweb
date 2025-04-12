@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.sugarweb.digitalHuman.service.ActorService;
+import com.sugarweb.digitalHuman.service.AgentService;
 import com.sugarweb.digitalHuman.service.dto.ActorDetailDto;
 import com.sugarweb.digitalHuman.service.dto.ActorPageQuery;
 import com.sugarweb.digitalHuman.service.dto.ActorSaveDto;
@@ -27,36 +27,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AgentController {
 
     @Resource
-    private ActorService actorService;
+    private AgentService agentService;
 
     @GetMapping("/page")
     @Operation(operationId = "agent:page", summary = "分页查询智能体列表")
     public R<IPage<ActorDetailDto>> page(ActorPageQuery query) {
-        return R.data(actorService.page(query));
+        return R.data(agentService.page(query));
     }
 
     @GetMapping("/detail")
     @Operation(operationId = "agent:detail", summary = "查询智能体详情")
     public R<ActorDetailDto> detail(String actorId) {
-        return R.data(actorService.detail(actorId));
+        return R.data(agentService.detail(actorId));
     }
 
     @PostMapping("/save")
     @Operation(operationId = "agent:save", summary = "新增智能体")
     public R<ActorDetailDto> save(ActorSaveDto saveDto) {
-        return R.data(actorService.save(saveDto));
+        return R.data(agentService.save(saveDto));
     }
 
     @PostMapping("/update")
     @Operation(operationId = "agent:update", summary = "更新智能体")
     public R<ActorDetailDto> update(ActorUpdateDto updateDto) {
-        return R.data(actorService.update(updateDto));
+        return R.data(agentService.update(updateDto));
     }
 
     @PostMapping("/remove")
     @Operation(operationId = "agent:remove", summary = "删除智能体")
     public R<Void> remove(String actorId) {
-        actorService.remove(actorId);
+        agentService.remove(actorId);
         return R.ok();
     }
 

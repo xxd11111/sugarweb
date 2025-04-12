@@ -1,14 +1,14 @@
 package com.sugarweb.digitalHuman.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.digitalHuman.domain.BlblUser;
+import com.sugarweb.digitalHuman.domain.KbDoc;
 
 /**
- * BlblUser
+ * KbDoc
  *
  * @author xxd
  * @since 2025/04/12
  */
-public interface BlblUserMapper extends BaseMapper<BlblUser> {
+public interface KbDocMapper extends BaseMapper<KbDoc> {
 
 }

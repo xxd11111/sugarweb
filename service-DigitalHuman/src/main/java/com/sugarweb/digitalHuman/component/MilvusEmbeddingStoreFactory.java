@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.component;
 
 import com.sugarweb.digitalHuman.config.ApplicationProperties;
-import com.sugarweb.digitalHuman.entity.Kb;
+import com.sugarweb.digitalHuman.domain.Kb;
 import com.sugarweb.framework.utils.BeanUtil;
 import dev.langchain4j.store.embedding.milvus.MilvusEmbeddingStore;
 import io.milvus.param.IndexType;

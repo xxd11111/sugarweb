@@ -1,5 +1,6 @@
 package com.sugarweb.framework.common;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.Data;
 
@@ -16,15 +17,7 @@ public class PageQuery {
     private Integer pageNumber = 1;
 
     @Min(value = 1, message = "每页条数最小值为 1")
-    private Integer pageSize = 10;
-
-
-    public int startIndex() {
-        return (pageNumber - 1) * pageSize + 1;
-    }
-
-    public int endIndex() {
-        return pageNumber * pageSize;
-    }
+    @Max(value = 100, message = "每页条数最大值为 100")
+    private Integer pageSize = 20;
 
 }

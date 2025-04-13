@@ -4,15 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.service.dto.ActorDetailDto;
-import com.sugarweb.digitalHuman.service.dto.ActorPageQuery;
+import com.sugarweb.digitalHuman.service.dto.AgentDetailDto;
+import com.sugarweb.digitalHuman.service.dto.AgentPageQuery;
 import com.sugarweb.digitalHuman.service.dto.ActorSaveDto;
-import com.sugarweb.digitalHuman.service.dto.ActorUpdateDto;
+import com.sugarweb.digitalHuman.service.dto.AgentUpdateDto;
 import com.sugarweb.digitalHuman.domain.Agent;
-import com.sugarweb.digitalHuman.domain.Kb;
-import com.sugarweb.digitalHuman.domain.Model;
 import com.sugarweb.framework.orm.PageHelper;
-import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -39,41 +36,41 @@ public class AgentService {
         return agent;
     }
 
-    public IPage<ActorDetailDto> page(ActorPageQuery query) {
+    public IPage<AgentDetailDto> page(AgentPageQuery query) {
         return Db.page(PageHelper.getPage(query), new LambdaQueryWrapper<Agent>()
                 .like(StrUtil.isNotEmpty(query.getActorName()), Agent::getAgentName, query.getActorName())
                 .orderByDesc(Agent::getCreateTime)
         ).convert(this::buildActorDetailDto);
     }
 
-    public ActorDetailDto detail(String actorId) {
+    public AgentDetailDto detail(String actorId) {
         return buildActorDetailDto(getById(actorId));
     }
 
-    public ActorDetailDto save(ActorSaveDto saveDto) {
+    public AgentDetailDto save(ActorSaveDto saveDto) {
         Agent agent = new Agent();
-        agent.setAgentName(saveDto.getActorName());
+        agent.setAgentName(saveDto.getAgentName());
         save(agent);
         return buildActorDetailDto(agent);
     }
 
-    public ActorDetailDto update(ActorUpdateDto updateDto) {
-        Agent agent = Db.getById(updateDto.getActorId(), Agent.class);
+    public AgentDetailDto update(AgentUpdateDto updateDto) {
+        Agent agent = Db.getById(updateDto.getAgentId(), Agent.class);
         if (agent != null) {
-            agent.setAgentName(updateDto.getActorName());
+            agent.setAgentName(updateDto.getAgentName());
             Db.updateById(agent);
         }
         return buildActorDetailDto(agent);
     }
 
-    private ActorDetailDto buildActorDetailDto(Agent agent) {
+    private AgentDetailDto buildActorDetailDto(Agent agent) {
         if (agent == null) {
             return null;
         }
-        ActorDetailDto actorDetailDto = new ActorDetailDto();
-        actorDetailDto.setActorId(agent.getAgentId());
-        actorDetailDto.setActorName(agent.getAgentName());
-        return actorDetailDto;
+        AgentDetailDto agentDetailDto = new AgentDetailDto();
+        agentDetailDto.setActorId(agent.getAgentId());
+        agentDetailDto.setActorName(agent.getAgentName());
+        return agentDetailDto;
     }
 
     public void remove(String actorId) {

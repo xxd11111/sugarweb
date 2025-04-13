@@ -9,10 +9,10 @@ import lombok.Data;
  * @version 1.0
  */
 @Data
-public class ActorUpdateDto {
+public class AgentUpdateDto {
 
-    private String actorId;
+    private String agentId;
 
-    private String actorName;
+    private String agentName;
 
 }

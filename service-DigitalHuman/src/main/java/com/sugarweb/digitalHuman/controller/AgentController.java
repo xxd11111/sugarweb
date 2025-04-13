@@ -2,10 +2,10 @@ package com.sugarweb.digitalHuman.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.sugarweb.digitalHuman.service.AgentService;
-import com.sugarweb.digitalHuman.service.dto.ActorDetailDto;
-import com.sugarweb.digitalHuman.service.dto.ActorPageQuery;
+import com.sugarweb.digitalHuman.service.dto.AgentDetailDto;
+import com.sugarweb.digitalHuman.service.dto.AgentPageQuery;
 import com.sugarweb.digitalHuman.service.dto.ActorSaveDto;
-import com.sugarweb.digitalHuman.service.dto.ActorUpdateDto;
+import com.sugarweb.digitalHuman.service.dto.AgentUpdateDto;
 import com.sugarweb.framework.common.R;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 演员管理
+ * 智能体管理
  *
  * @author xxd
  * @version 1.0
@@ -31,25 +31,25 @@ public class AgentController {
 
     @GetMapping("/page")
     @Operation(operationId = "agent:page", summary = "分页查询智能体列表")
-    public R<IPage<ActorDetailDto>> page(ActorPageQuery query) {
+    public R<IPage<AgentDetailDto>> page(AgentPageQuery query) {
         return R.data(agentService.page(query));
     }
 
     @GetMapping("/detail")
     @Operation(operationId = "agent:detail", summary = "查询智能体详情")
-    public R<ActorDetailDto> detail(String actorId) {
+    public R<AgentDetailDto> detail(String actorId) {
         return R.data(agentService.detail(actorId));
     }
 
     @PostMapping("/save")
     @Operation(operationId = "agent:save", summary = "新增智能体")
-    public R<ActorDetailDto> save(ActorSaveDto saveDto) {
+    public R<AgentDetailDto> save(ActorSaveDto saveDto) {
         return R.data(agentService.save(saveDto));
     }
 
     @PostMapping("/update")
     @Operation(operationId = "agent:update", summary = "更新智能体")
-    public R<ActorDetailDto> update(ActorUpdateDto updateDto) {
+    public R<AgentDetailDto> update(AgentUpdateDto updateDto) {
         return R.data(agentService.update(updateDto));
     }
 

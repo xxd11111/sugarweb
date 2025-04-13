@@ -11,8 +11,6 @@ import lombok.Data;
 @Data
 public class ActorSaveDto {
 
-    private String actorName;
-
-    private String chatModelId;
+    private String agentName;
 
 }

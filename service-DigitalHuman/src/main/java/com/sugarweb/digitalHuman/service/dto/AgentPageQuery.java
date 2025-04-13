@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class ActorPageQuery extends PageQuery {
+public class AgentPageQuery extends PageQuery {
 
     private String actorName;
 

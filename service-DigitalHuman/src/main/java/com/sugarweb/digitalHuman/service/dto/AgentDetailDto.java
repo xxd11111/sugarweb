@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @version 1.0
  */
 @Data
-public class ActorDetailDto {
+public class AgentDetailDto {
 
     private String actorId;
 

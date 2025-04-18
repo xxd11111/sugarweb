@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AgentChatService {
 
-    public void chat(){
+    public void chat() {
         StreamingChatLanguageModel chatModel = OllamaStreamingChatModel.builder()
                 .baseUrl("http://192.168.193.151:11434")
                 .modelName("qwen2.5:3b")

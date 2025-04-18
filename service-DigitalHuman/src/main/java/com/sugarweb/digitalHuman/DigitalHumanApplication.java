@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
  * @version 1.0
  */
 @SpringBootApplication
-@MapperScan({"com.sugarweb.**.mapper", "com.sugarweb.digitalHuman.mapper"})
+@MapperScan({"com.sugarweb.**.mapper"})
 @EnableWebSocket
 public class DigitalHumanApplication {
 

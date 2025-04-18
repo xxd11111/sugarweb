@@ -1,4 +1,4 @@
-package com.sugarweb.digitalHuman;
+package com.sugarweb.digitalHuman.generate;
 
 import lombok.Data;
 

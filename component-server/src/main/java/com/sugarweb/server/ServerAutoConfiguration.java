@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * 服务自动配置
@@ -20,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(ServerProperties.class)
-@MapperScan({"com.sugarweb.server.domain.mapper"})
+@MapperScan({"com.sugarweb.server.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.server", name = "enable", havingValue = "true", matchIfMissing = true)
 public class ServerAutoConfiguration {
 

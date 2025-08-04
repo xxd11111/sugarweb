@@ -1,7 +1,7 @@
 package com.sugarweb.server.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.server.domain.ApiCallLog;
+import com.sugarweb.server.entity.ApiCallLog;
 
 /**
  * ApiCallLogMapper

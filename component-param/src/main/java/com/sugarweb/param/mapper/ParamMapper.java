@@ -1,7 +1,7 @@
 package com.sugarweb.param.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.param.domain.Param;
+import com.sugarweb.param.entity.Param;
 
 /**
  * ParamMapper

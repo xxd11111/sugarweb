@@ -8,7 +8,7 @@ import com.sugarweb.framework.exception.ServiceException;
 import com.sugarweb.oss.service.dto.FileDetailDto;
 import com.sugarweb.oss.service.FileService;
 import com.sugarweb.oss.service.dto.FileQuery;
-import com.sugarweb.oss.domain.FileInfo;
+import com.sugarweb.oss.entity.FileInfo;
 import com.sugarweb.oss.utils.WebDownloadUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

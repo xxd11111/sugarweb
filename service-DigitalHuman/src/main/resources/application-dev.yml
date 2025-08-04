@@ -1,7 +1,7 @@
 server:
   port: 8080
 
-#localhost:8080/v3/api-docs
+#http://localhost:8080/v3/api-docs
 
 spring:
   threads:

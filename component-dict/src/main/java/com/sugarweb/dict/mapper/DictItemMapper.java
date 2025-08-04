@@ -1,7 +1,7 @@
 package com.sugarweb.dict.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.dict.domain.DictItem;
+import com.sugarweb.dict.entity.DictItem;
 
 /**
  * DictItemMapper

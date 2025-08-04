@@ -2,7 +2,7 @@ package com.sugarweb.digitalHuman.component.model;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.domain.Model;
+import com.sugarweb.digitalHuman.entity.Model;
 import com.sugarweb.digitalHuman.component.tts.ChatTtsModel;
 import com.sugarweb.digitalHuman.component.tts.TtsModel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;

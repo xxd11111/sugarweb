@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(ParamProperties.class)
-@MapperScan({"com.sugarweb.param.domain.mapper"})
+@MapperScan({"com.sugarweb.param.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.param", name = "enable", havingValue = "true", matchIfMissing = true)
 public class ParamAutoConfiguration {
 

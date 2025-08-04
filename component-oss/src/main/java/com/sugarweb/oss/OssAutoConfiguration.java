@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(OssProperties.class)
-@MapperScan({"com.sugarweb.oss.domain.mapper"})
+@MapperScan({"com.sugarweb.oss.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.oss", name = "enable", havingValue = "true", matchIfMissing = true)
 public class OssAutoConfiguration {
 

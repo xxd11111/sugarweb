@@ -14,8 +14,8 @@ import com.sugarweb.framework.orm.PageHelper;
 import com.sugarweb.oss.service.dto.FileConvert;
 import com.sugarweb.oss.service.dto.FileDetailDto;
 import com.sugarweb.oss.service.dto.FileQuery;
-import com.sugarweb.oss.domain.FileInfo;
-import com.sugarweb.oss.domain.FileLink;
+import com.sugarweb.oss.entity.FileInfo;
+import com.sugarweb.oss.entity.FileLink;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;

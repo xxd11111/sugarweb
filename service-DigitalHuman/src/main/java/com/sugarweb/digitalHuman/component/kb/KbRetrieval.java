@@ -1,8 +1,8 @@
 package com.sugarweb.digitalHuman.component.kb;
 
 import com.sugarweb.digitalHuman.component.model.ModelFactory;
-import com.sugarweb.digitalHuman.domain.Kb;
-import com.sugarweb.digitalHuman.domain.Model;
+import com.sugarweb.digitalHuman.entity.Kb;
+import com.sugarweb.digitalHuman.entity.Model;
 import com.sugarweb.digitalHuman.component.MilvusEmbeddingStoreFactory;
 import dev.langchain4j.data.embedding.Embedding;
 import dev.langchain4j.data.segment.TextSegment;

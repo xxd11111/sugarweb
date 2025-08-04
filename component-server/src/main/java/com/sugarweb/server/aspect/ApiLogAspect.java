@@ -1,14 +1,14 @@
 package com.sugarweb.server.aspect;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.R;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.security.LoginUser;
 import com.sugarweb.framework.security.SecurityHelper;
-import com.sugarweb.framework.utils.JsonUtil;
 import com.sugarweb.framework.utils.ServletUtil;
-import com.sugarweb.server.domain.ApiCallLog;
+import com.sugarweb.server.entity.ApiCallLog;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -87,7 +87,7 @@ public class ApiLogAspect {
             }
         }
         //设置的是java方法的参数
-        apiCallLog.setMethodParams(JsonUtil.toJsonStr(args));
+        apiCallLog.setMethodParams(JSON.toJSONString(args));
     }
 
     private static boolean isIgnoreArgs(Object object) {
@@ -116,7 +116,7 @@ public class ApiLogAspect {
     public void loadResultInfo(ApiCallLog apiCallLog, Object result, LocalDateTime start) {
         if (result instanceof R<?> r) {
             apiCallLog.setResultCode(r.getCode());
-            apiCallLog.setResultData(JsonUtil.toJsonStr(r.getData()));
+            apiCallLog.setResultData(JSON.toJSONString(r.getData()));
             apiCallLog.setResultMessage(r.getMessage());
         }
         LocalDateTime end = LocalDateTime.now();

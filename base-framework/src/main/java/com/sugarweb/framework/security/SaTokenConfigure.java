@@ -11,11 +11,11 @@ import java.util.List;
 
 @Configuration
 public class SaTokenConfigure implements WebMvcConfigurer {
-    // 注册 Sa-Token 拦截器，打开注解式鉴权功能 
+    // 注册 Sa-Token 拦截器，打开注解式鉴权功能
 
     public void addInterceptors(InterceptorRegistry registry) {
 
-        List<String> excludePathPatterns = List.of("/authenticate/login", "/favicon.ico", "/v3/api-docs", "/msg");
+        List<String> excludePathPatterns = List.of("/auth/login");
 
 
         // 注册 Sa-Token 拦截器，定义详细认证规则

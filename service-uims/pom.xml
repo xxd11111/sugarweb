@@ -27,11 +27,6 @@
 
         <dependency>
             <groupId>com.sugar</groupId>
-            <artifactId>component-openapi</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sugar</groupId>
             <artifactId>component-task</artifactId>
         </dependency>
 

@@ -2,13 +2,10 @@ package com.sugarweb.digitalHuman.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.sugarweb.framework.common.R;
-import dev.langchain4j.data.message.AiMessage;
-import dev.langchain4j.model.StreamingResponseHandler;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.chat.response.StreamingChatResponseHandler;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.model.ollama.OllamaStreamingChatModel;
-import dev.langchain4j.model.output.Response;
 import lombok.Data;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;

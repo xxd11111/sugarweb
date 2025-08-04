@@ -1,6 +1,6 @@
 package com.sugarweb.oss.service.dto;
 
-import com.sugarweb.oss.domain.FileInfo;
+import com.sugarweb.oss.entity.FileInfo;
 
 /**
  * TODO

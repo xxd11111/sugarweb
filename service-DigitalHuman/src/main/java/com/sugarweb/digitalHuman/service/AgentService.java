@@ -8,7 +8,7 @@ import com.sugarweb.digitalHuman.service.dto.AgentDetailDto;
 import com.sugarweb.digitalHuman.service.dto.AgentPageQuery;
 import com.sugarweb.digitalHuman.service.dto.ActorSaveDto;
 import com.sugarweb.digitalHuman.service.dto.AgentUpdateDto;
-import com.sugarweb.digitalHuman.domain.Agent;
+import com.sugarweb.digitalHuman.entity.Agent;
 import com.sugarweb.framework.orm.PageHelper;
 import org.springframework.stereotype.Service;
 

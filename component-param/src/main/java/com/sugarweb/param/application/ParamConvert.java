@@ -1,6 +1,6 @@
 package com.sugarweb.param.application;
 
-import com.sugarweb.param.domain.Param;
+import com.sugarweb.param.entity.Param;
 
 /**
  * 参数转换类

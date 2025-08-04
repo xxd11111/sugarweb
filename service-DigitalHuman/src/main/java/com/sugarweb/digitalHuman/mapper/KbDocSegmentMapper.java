@@ -1,7 +1,7 @@
 package com.sugarweb.digitalHuman.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.digitalHuman.domain.KbDocSegment;
+import com.sugarweb.digitalHuman.entity.KbDocSegment;
 
 /**
  * KbDocSegment

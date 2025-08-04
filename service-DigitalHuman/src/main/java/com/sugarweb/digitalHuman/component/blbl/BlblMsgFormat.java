@@ -2,7 +2,7 @@ package com.sugarweb.digitalHuman.component.blbl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.domain.BlblUser;
+import com.sugarweb.digitalHuman.entity.BlblUser;
 
 import java.time.format.DateTimeFormatter;
 

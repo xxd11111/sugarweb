@@ -1,7 +1,7 @@
 package com.sugarweb.task.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.task.domain.TaskTrigger;
+import com.sugarweb.task.entity.TaskTrigger;
 
 /**
  * TaskTriggerMapper

@@ -2,7 +2,7 @@ package com.sugarweb.digitalHuman.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
-import com.sugarweb.digitalHuman.domain.Model;
+import com.sugarweb.digitalHuman.entity.Model;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.orm.PageHelper;
 import org.springframework.stereotype.Service;

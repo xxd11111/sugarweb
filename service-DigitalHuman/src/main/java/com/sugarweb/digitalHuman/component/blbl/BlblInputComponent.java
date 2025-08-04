@@ -3,7 +3,7 @@ package com.sugarweb.digitalHuman.component.blbl;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.digitalHuman.config.BlblClientProperties;
-import com.sugarweb.digitalHuman.domain.BlblUser;
+import com.sugarweb.digitalHuman.entity.BlblUser;
 import com.sugarweb.framework.exception.FrameworkException;
 import com.sugarweb.framework.utils.BeanUtil;
 import lombok.extern.slf4j.Slf4j;

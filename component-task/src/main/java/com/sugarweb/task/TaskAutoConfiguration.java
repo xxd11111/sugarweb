@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(TaskProperties.class)
-@MapperScan({"com.sugarweb.task.domain.mapper"})
+@MapperScan({"com.sugarweb.task.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.task", name = "enable", havingValue = "true", matchIfMissing = true)
 public class TaskAutoConfiguration {
 

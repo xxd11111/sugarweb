@@ -20,37 +20,37 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(FrameworkException.class)
     public R<?> frameworkException(Throwable ex) {
         log.error("[FrameworkException]", ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return R.error(ex.getMessage());
     }
 
     @ExceptionHandler(SecurityException.class)
     public R<?> securityException(Throwable ex) {
         log.error("[SecurityException]", ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return R.error(ex.getMessage());
     }
 
     @ExceptionHandler(ServerException.class)
     public R<?> serverException(Throwable ex) {
         log.error("[ServerException]", ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return R.error(ex.getMessage());
     }
 
     @ExceptionHandler(ServiceException.class)
     public R<?> serviceException(Throwable ex) {
         log.error("[ServiceException]", ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return R.error(ex.getMessage());
     }
 
     @ExceptionHandler(ValidateException.class)
     public R<?> validateException(Throwable ex) {
         log.error("[ValidateException]", ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return R.error(ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public R<?> exceptionHandler(Throwable ex) {
         log.error("[Exception]", ex);
-        return R.error(HttpCode.INTERNAL_SERVER_ERROR);
+        return R.error(ex.getMessage());
     }
 
 }

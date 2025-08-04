@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.toolkit.Db;
 import com.sugarweb.framework.common.PageQuery;
 import com.sugarweb.framework.orm.PageHelper;
-import com.sugarweb.task.domain.TaskInfo;
-import com.sugarweb.task.domain.TaskTrigger;
+import com.sugarweb.task.entity.TaskInfo;
+import com.sugarweb.task.entity.TaskTrigger;
 import com.sugarweb.task.core.TaskManager;
 import lombok.RequiredArgsConstructor;
 

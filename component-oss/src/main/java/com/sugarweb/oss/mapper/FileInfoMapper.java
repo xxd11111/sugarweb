@@ -1,7 +1,7 @@
 package com.sugarweb.oss.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.sugarweb.oss.domain.FileInfo;
+import com.sugarweb.oss.entity.FileInfo;
 
 /**
  * FileInfoMapper

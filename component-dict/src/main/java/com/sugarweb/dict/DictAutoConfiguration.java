@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Bean;
  */
 @AutoConfiguration
 @EnableConfigurationProperties(DictProperties.class)
-@MapperScan({"com.sugarweb.dict.domain.mapper"})
+@MapperScan({"com.sugarweb.dict.mapper"})
 @ConditionalOnProperty(prefix = "sugarweb.dictionary", name = "enable", havingValue = "true", matchIfMissing = true)
 public class DictAutoConfiguration {
 

@@ -85,15 +85,13 @@ nav a:first-of-type {
 </style> -->
 
 <template>
-  <n-button>
-    <Icon>
-      <Alarm />
-    </Icon>
-  </n-button>
+  <login-view></login-view>
+  <h1>你好</h1>
 </template>
 
 <script lang="ts" setup>
 import { NButton } from 'naive-ui'
 import { Icon } from '@vicons/utils'
 import { Alarm } from '@vicons/ionicons5'
+import LoginView from '@/views/LoginView.vue'
 </script>

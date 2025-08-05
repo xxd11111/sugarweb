@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
+
+const router = useRouter()
 
 // 菜单选项
 const menuOptions: MenuOption[] = [
   {
     label: '首页',
-    key: 'home',
+    key: '/home',
     icon: () => null
   },
   {
@@ -17,15 +20,15 @@ const menuOptions: MenuOption[] = [
     children: [
       {
         label: '用户管理',
-        key: 'user'
+        key: '/user'
       },
       {
         label: '角色管理',
-        key: 'role'
+        key: '/role'
       },
       {
         label: '菜单管理',
-        key: 'menu'
+        key: '/menu'
       }
     ]
   },
@@ -36,11 +39,11 @@ const menuOptions: MenuOption[] = [
     children: [
       {
         label: '订单管理',
-        key: 'order'
+        key: '/order'
       },
       {
         label: '产品管理',
-        key: 'product'
+        key: '/product'
       }
     ]
   }
@@ -48,7 +51,10 @@ const menuOptions: MenuOption[] = [
 
 // 处理菜单选择
 const handleMenuSelect = (key: string, item: MenuOption) => {
-  console.log('选中菜单:', key, item)
+  // 只有叶子节点才跳转路由
+  if (key.startsWith('/')) {
+    router.push(key)
+  }
 }
 </script>
 

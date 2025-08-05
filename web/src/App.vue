@@ -19,7 +19,7 @@
         <n-layout class="layout-content-wrapper">
           <!-- Tab页管理 -->
           <n-layout-header class="layout-tabs">
-            <!-- 这里将放置tab页管理组件 -->
+            <TabManager />
           </n-layout-header>
           
           <!-- 内容区域 -->
@@ -38,11 +38,13 @@ import { darkTheme } from 'naive-ui'
 import { defineComponent, ref } from 'vue'
 import HeaderBar from '@/components/HeaderBar.vue'
 import MenuSide from '@/components/MenuSide.vue'
+import TabManager from '@/components/TabManager.vue'
 
 export default defineComponent({
   components: { 
     HeaderBar,
-    MenuSide
+    MenuSide,
+    TabManager
   },
   setup() {
     return {

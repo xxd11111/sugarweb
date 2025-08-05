@@ -13,3 +13,6 @@ app.use(router)
 setupNaive(app)
 
 app.mount('#app')
+
+// 添加默认路由
+router.push('/home')

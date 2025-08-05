@@ -102,7 +102,8 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
           to: {
-            name: 'home'
+            name: 'home',
+            params: {}
           }
         },
         { default: () => '首页' }
@@ -120,9 +121,7 @@ const menuOptions: MenuOption[] = [
           h(
             RouterLink,
             {
-              to: {
-                name: 'users'
-              }
+              to: '/users'
             },
             { default: () => '用户管理' }
           ),
@@ -134,9 +133,7 @@ const menuOptions: MenuOption[] = [
           h(
             RouterLink,
             {
-              to: {
-                name: 'roles'
-              }
+              to: '/roles'
             },
             { default: () => '角色管理' }
           ),
@@ -150,27 +147,14 @@ const menuOptions: MenuOption[] = [
         RouterLink,
         {
           to: {
-            name: 'about'
+            name: 'about',
+            params: {}
           }
         },
         { default: () => '关于' }
       ),
     key: 'about',
     icon: renderIcon(InformationCircleOutline)
-  },
-  {
-    label: () =>
-      h(
-        RouterLink,
-        {
-          to: {
-            name: 'login'
-          }
-        },
-        { default: () => '登录' }
-      ),
-    key: 'login',
-    icon: renderIcon(LogInOutline)
   }
 ]
 

@@ -1,142 +1,259 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
-import { NButton, NCheckbox, NForm, NFormItem, NInput } from 'naive-ui'
-import router from '@/router/index.js'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { NForm, NFormItem, NInput, NButton, NCard, NCheckbox, NIcon, NSpace, NLayout, NLayoutContent } from 'naive-ui'
+import { PersonCircleOutline, LockClosedOutline, LogoGithub, LogoTwitter } from '@vicons/ionicons5'
 
-import { Icon } from '@vicons/utils'
-import { Alarm } from '@vicons/ionicons5'
+const router = useRouter()
 
-// 登录
-let formRef = ref(null)
-let form = reactive({
-  username: 'admin',
-  password: 'admin123',
-  code: '',
-  uuid: ''
+const formValue = ref({
+  username: '',
+  password: '',
+  rememberMe: false
 })
-let rules = {
+
+const rules = {
   username: {
     required: true,
-    trigger: ['input', 'blur'],
-    message: '请输入用户名'
+    message: '请输入用户名',
+    trigger: 'blur'
   },
   password: {
     required: true,
-    trigger: ['input', 'blur'],
-    message: '请输入密码'
-  },
-  code: {
-    required: true,
-    trigger: ['input', 'blur'],
-    message: '请输入验证码'
+    message: '请输入密码',
+    trigger: 'blur'
   }
 }
-let rememberMe = ref(false)
-let loginBtnState = ref(false)
-let handleLogin = () => {
-  loginBtnState.value = true
-  formRef.value?.validate((errors) => {
-    if (!errors) {
-      if (rememberMe.value) {
-        cookie.set('username', form.username, { expires: 30 })
-        cookie.set('password', encrypt(form.password), { expires: 30 })
-        cookie.set('rememberMe', rememberMe.value, { expires: 30 })
-      } else {
-        cookie.remove('username')
-        cookie.remove('password')
-        cookie.remove('rememberMe')
-      }
 
-      userStore
-        .login(form)
-        .then(() => {
-          window.$msg.success('登录成功')
-          router.push('/home')
-        })
-        .catch(() => {
-          loginBtnState.value = false
-          getCode()
-        })
-    } else {
-      loginBtnState.value = false
-    }
-  })
+const handleLogin = (e: MouseEvent) => {
+  e.preventDefault()
+  // 这里应该调用实际的登录API
+  console.log('登录信息:', formValue.value)
+  // 登录成功后跳转到首页
+  router.push('/')
 }
 
-// getCookie(); // 需要记住密码，自己取消注释
+const handleReset = () => {
+  formValue.value.username = ''
+  formValue.value.password = ''
+  formValue.value.rememberMe = false
+}
 </script>
 
 <template>
-  <div class="login-bg c-center">
-    <div class="login__box">
-      <div class="login-logo__box">
-        <div class="login__title login-logo">
-          登 录
+  <n-layout style="height: 100vh;">
+    <n-layout-content style="display: flex; align-items: center; justify-content: center; background: linear-gradient(120deg, #f6f9fc 0%, #eef2f7 100%);">
+      <div class="login-wrapper">
+        <div class="login-left">
+          <div class="welcome-content">
+            <h1>欢迎使用 SugarWeb</h1>
+            <p>现代化的组件化Web应用整合方案</p>
+            <ul>
+              <li>基于Vue 3和TypeScript构建</li>
+              <li>集成多种常用业务组件</li>
+              <li>模块化设计，易于扩展</li>
+              <li>响应式设计，支持多端适配</li>
+            </ul>
+            <div class="social-links">
+              <n-button circle>
+                <template #icon>
+                  <n-icon :component="LogoGithub" />
+                </template>
+              </n-button>
+              <n-button circle>
+                <template #icon>
+                  <n-icon :component="LogoTwitter" />
+                </template>
+              </n-button>
+            </div>
+          </div>
+        </div>
+        <div class="login-right">
+          <NCard :bordered="false" shadow="hover" style="width: 380px;">
+            <div class="login-header">
+              <h2>系统登录</h2>
+              <p>请输入您的登录信息</p>
+            </div>
+            
+            <NForm :model="formValue" :rules="rules" ref="formRef">
+              <NFormItem path="username" label="用户名">
+                <NInput 
+                  v-model:value="formValue.username" 
+                  placeholder="请输入用户名"
+                  clearable
+                  autofocus
+                >
+                  <template #prefix>
+                    <NIcon :component="PersonCircleOutline" />
+                  </template>
+                </NInput>
+              </NFormItem>
+              
+              <NFormItem path="password" label="密码">
+                <NInput 
+                  v-model:value="formValue.password" 
+                  type="password" 
+                  placeholder="请输入密码"
+                  show-password-on="click"
+                >
+                  <template #prefix>
+                    <NIcon :component="LockClosedOutline" />
+                  </template>
+                </NInput>
+              </NFormItem>
+              
+              <NFormItem>
+                <div class="login-options">
+                  <NCheckbox v-model:checked="formValue.rememberMe">记住我</NCheckbox>
+                  <a href="#" class="forgot-password">忘记密码？</a>
+                </div>
+              </NFormItem>
+              
+              <NSpace vertical :size="12">
+                <NButton 
+                  type="primary" 
+                  size="large" 
+                  block 
+                  @click="handleLogin"
+                >
+                  登录
+                </NButton>
+                
+                <NButton 
+                  size="large" 
+                  block
+                  @click="handleReset"
+                >
+                  重置
+                </NButton>
+              </NSpace>
+            </NForm>
+            
+            <div class="login-footer">
+              <p>© 2025 SugarWeb - 组件化Web应用整合方案</p>
+            </div>
+          </NCard>
         </div>
       </div>
-      <n-form
-        ref="formRef"
-        class="login-form__box"
-        :model="form"
-        :rules="rules"
-        label-placement="left"
-      >
-        <n-form-item path="username">
-          <n-input
-            class="login-input"
-            v-model:value="form.username"
-            placeholder="请输入用户名/手机号"
-          >
-            <template #prefix>
-              <Icon>
-                <Alarm />
-              </Icon>
-            </template>
-          </n-input>
-        </n-form-item>
-        <n-form-item path="password">
-          <n-input
-            class="login-input"
-            v-model:value="form.password"
-            placeholder="请输入密码"
-            type="password"
-            show-password-on="mousedown"
-            @keyup.enter="handleLogin"
-          >
-            <template #prefix>
-              <Icon>
-                <Alarm />
-              </Icon>
-            </template>
-          </n-input>
-        </n-form-item>
-        <n-form-item v-if="needCode" class="login-code" path="code">
-          <n-input
-            v-model:value="form.code"
-            class="login-input login-input_code"
-            placeholder="验证码"
-            @keyup.enter="handleLogin"
-          >
-          </n-input>
-        </n-form-item>
-        <div class="login-checkbox_box">
-          <n-checkbox
-            class="login-checkbox"
-            v-model:checked="rememberMe"
-          ></n-checkbox>
-          <span>记住密码</span>
-        </div>
-        <n-button
-          class="login-btn_login"
-          type="info"
-          @click="handleLogin"
-          :loading="loginBtnState"
-          :disabled="loginBtnState"
-        >登录
-        </n-button
-        >
-      </n-form>
-      <!-- <div class="login-btn_forget" @click="handleForget">忘记密码 ？</div> -->
-    </div>
-  </div>
+    </n-layout-content>
+  </n-layout>
 </template>
+
+<style scoped>
+.login-wrapper {
+  display: flex;
+  width: 900px;
+  height: 550px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.login-left {
+  flex: 1;
+  background: linear-gradient(135deg, #4098fc 0%, #52c41a 100%);
+  color: white;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.welcome-content h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.welcome-content p {
+  font-size: 18px;
+  margin-bottom: 32px;
+  opacity: 0.9;
+}
+
+.welcome-content ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+.welcome-content li {
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+}
+
+.welcome-content li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 16px;
+}
+
+.login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-header h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.login-header p {
+  color: #666;
+  margin: 0;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.forgot-password {
+  color: #4098fc;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.login-footer p {
+  color: #999;
+  font-size: 12px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .login-left {
+    padding: 20px;
+  }
+}
+</style>

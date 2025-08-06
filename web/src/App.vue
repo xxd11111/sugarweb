@@ -1,34 +1,6 @@
 <template>
   <n-config-provider :theme="theme">
-    <n-layout class="layout-wrapper">
-      <!-- 头部栏 -->
-      <n-layout-header class="layout-header">
-        <HeaderBar/>
-      </n-layout-header>
-      
-      <n-layout class="layout-main" has-sider>
-        <!-- 左侧菜单栏 -->
-        <n-layout-sider 
-          class="layout-sider"
-          :native-scrollbar="false"
-          bordered
-        >
-          <MenuSide />
-        </n-layout-sider>
-        
-        <n-layout class="layout-content-wrapper">
-          <!-- Tab页管理 -->
-          <n-layout-header class="layout-tabs">
-            <TabManager />
-          </n-layout-header>
-          
-          <!-- 内容区域 -->
-          <n-layout-content class="layout-content">
-            <RouterView />
-          </n-layout-content>
-        </n-layout>
-      </n-layout>
-    </n-layout>
+    <RouterView />
   </n-config-provider>
 </template>
 
@@ -36,16 +8,8 @@
 import type { GlobalTheme } from 'naive-ui'
 import { darkTheme } from 'naive-ui'
 import { defineComponent, ref } from 'vue'
-import HeaderBar from '@/components/HeaderBar.vue'
-import MenuSide from '@/components/MenuSide.vue'
-import TabManager from '@/components/TabManager.vue'
 
 export default defineComponent({
-  components: { 
-    HeaderBar,
-    MenuSide,
-    TabManager
-  },
   setup() {
     return {
       darkTheme,

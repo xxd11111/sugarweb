@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { NIcon, NDropdown } from 'naive-ui'
 import { SettingsOutline, PersonCircleOutline } from '@vicons/ionicons5'
+import { useRouter } from 'vue-router'
+
+// 获取路由实例
+const router = useRouter()
 
 // 模拟用户数据
 const username = '管理员'
@@ -41,9 +45,26 @@ const handleUserCommand = (key: string) => {
       console.log('打开系统设置')
       break
     case 'logout':
-      console.log('退出登录')
+      // 退出登录逻辑
+      logout()
       break
   }
+}
+
+// 退出登录函数
+const logout = () => {
+  // 清除用户认证信息
+  clearAuthData()
+  
+  // 跳转到登录页
+  router.push('/login')
+}
+
+// 清除用户认证数据
+const clearAuthData = () => {
+  localStorage.removeItem('token')
+  sessionStorage.removeItem('token')
+  // 这里可以添加更多需要清除的用户数据
 }
 </script>
 

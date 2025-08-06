@@ -30,7 +30,7 @@ const handleLogin = (e: MouseEvent) => {
   // 这里应该调用实际的登录API
   console.log('登录信息:', formValue.value)
   // 登录成功后跳转到首页
-  router.push('/')
+  router.push('/home')
 }
 
 const handleReset = () => {
@@ -41,8 +41,8 @@ const handleReset = () => {
 </script>
 
 <template>
-  <n-layout style="height: 100vh;">
-    <n-layout-content style="display: flex; align-items: center; justify-content: center; background: linear-gradient(120deg, #f6f9fc 0%, #eef2f7 100%);">
+  <n-layout style="height: 100vh; background: linear-gradient(120deg, #f6f9fc 0%, #eef2f7 100%);">
+    <n-layout-content style="display: flex; align-items: center; justify-content: center;">
       <div class="login-wrapper">
         <div class="login-left">
           <div class="welcome-content">
@@ -74,11 +74,11 @@ const handleReset = () => {
               <h2>系统登录</h2>
               <p>请输入您的登录信息</p>
             </div>
-            
+
             <NForm :model="formValue" :rules="rules" ref="formRef">
               <NFormItem path="username" label="用户名">
-                <NInput 
-                  v-model:value="formValue.username" 
+                <NInput
+                  v-model:value="formValue.username"
                   placeholder="请输入用户名"
                   clearable
                   autofocus
@@ -88,11 +88,11 @@ const handleReset = () => {
                   </template>
                 </NInput>
               </NFormItem>
-              
+
               <NFormItem path="password" label="密码">
-                <NInput 
-                  v-model:value="formValue.password" 
-                  type="password" 
+                <NInput
+                  v-model:value="formValue.password"
+                  type="password"
                   placeholder="请输入密码"
                   show-password-on="click"
                 >
@@ -101,26 +101,26 @@ const handleReset = () => {
                   </template>
                 </NInput>
               </NFormItem>
-              
+
               <NFormItem>
                 <div class="login-options">
                   <NCheckbox v-model:checked="formValue.rememberMe">记住我</NCheckbox>
                   <a href="#" class="forgot-password">忘记密码？</a>
                 </div>
               </NFormItem>
-              
+
               <NSpace vertical :size="12">
-                <NButton 
-                  type="primary" 
-                  size="large" 
-                  block 
+                <NButton
+                  type="primary"
+                  size="large"
+                  block
                   @click="handleLogin"
                 >
                   登录
                 </NButton>
-                
-                <NButton 
-                  size="large" 
+
+                <NButton
+                  size="large"
                   block
                   @click="handleReset"
                 >
@@ -128,18 +128,19 @@ const handleReset = () => {
                 </NButton>
               </NSpace>
             </NForm>
-            
+
             <div class="login-footer">
               <p>© 2025 SugarWeb - 组件化Web应用整合方案</p>
             </div>
           </NCard>
         </div>
       </div>
-    </n-layout-content>
-  </n-layout>
+  </n-layout-content>
+</n-layout>
 </template>
 
 <style scoped>
+
 .login-wrapper {
   display: flex;
   width: 900px;
@@ -148,6 +149,7 @@ const handleReset = () => {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
 .login-left {
@@ -251,7 +253,7 @@ const handleReset = () => {
     flex-direction: column;
     height: auto;
   }
-  
+
   .login-left {
     padding: 20px;
   }

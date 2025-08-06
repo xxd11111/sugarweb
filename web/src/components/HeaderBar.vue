@@ -3,6 +3,12 @@ import { NIcon, NDropdown } from 'naive-ui'
 import { SettingsOutline, PersonCircleOutline } from '@vicons/ionicons5'
 import { useRouter } from 'vue-router'
 
+// 定义组件发出的事件
+const emit = defineEmits<{
+  (e: 'toggleCollapse'): void
+  (e: 'logout'): void
+}>()
+
 // 获取路由实例
 const router = useRouter()
 
@@ -23,10 +29,6 @@ const settingOptions = [
   {
     type: 'divider',
     key: 'd1'
-  },
-  {
-    label: '退出登录',
-    key: 'logout'
   }
 ]
 
@@ -44,27 +46,7 @@ const handleUserCommand = (key: string) => {
     case 'settings':
       console.log('打开系统设置')
       break
-    case 'logout':
-      // 退出登录逻辑
-      logout()
-      break
   }
-}
-
-// 退出登录函数
-const logout = () => {
-  // 清除用户认证信息
-  clearAuthData()
-  
-  // 跳转到登录页
-  router.push('/login')
-}
-
-// 清除用户认证数据
-const clearAuthData = () => {
-  localStorage.removeItem('token')
-  sessionStorage.removeItem('token')
-  // 这里可以添加更多需要清除的用户数据
 }
 </script>
 

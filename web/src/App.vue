@@ -1,6 +1,12 @@
 <template>
   <n-config-provider :theme="theme">
-    <RouterView />
+    <n-dialog-provider>
+      <n-notification-provider>
+        <n-message-provider>
+          <RouterView />
+        </n-message-provider>
+      </n-notification-provider>
+    </n-dialog-provider>
   </n-config-provider>
 </template>
 
@@ -8,8 +14,20 @@
 import type { GlobalTheme } from 'naive-ui'
 import { darkTheme } from 'naive-ui'
 import { defineComponent, ref } from 'vue'
+import { 
+  NConfigProvider, 
+  NDialogProvider, 
+  NNotificationProvider, 
+  NMessageProvider 
+} from 'naive-ui'
 
 export default defineComponent({
+  components: {
+    NConfigProvider,
+    NDialogProvider,
+    NNotificationProvider,
+    NMessageProvider
+  },
   setup() {
     return {
       darkTheme,

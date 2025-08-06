@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { NButton, NCard, NCheckbox, NForm, NFormItem, NIcon, NInput, NSpace } from 'naive-ui'
+import { NButton, NCard, NCheckbox, NForm, NFormItem, NIcon, NInput, NSpace, useMessage } from 'naive-ui'
 import { LockClosedOutline, LogoGithub, LogoTwitter, PersonCircleOutline } from '@vicons/ionicons5'
+import { login, LoginRequest } from '@/services/auth'
 
 const router = useRouter()
+const message = useMessage()
 
-const formValue = ref({
+const formValue = ref<LoginRequest>({
   username: '',
   password: '',
   rememberMe: false
@@ -25,12 +27,34 @@ const rules = {
   }
 }
 
-const handleLogin = (e: MouseEvent) => {
+const loading = ref(false)
+
+const handleLogin = async (e: MouseEvent) => {
   e.preventDefault()
-  // 这里应该调用实际的登录API
-  console.log('登录信息:', formValue.value)
-  // 登录成功后跳转到首页
-  router.push('/home')
+  
+  if (!formValue.value.username || !formValue.value.password) {
+    message.error('请输入用户名和密码')
+    return
+  }
+  
+  loading.value = true
+  try {
+    // 调用登录API
+    const response = await login(formValue.value)
+    
+    // 保存token到本地存储
+    localStorage.setItem('token', response.token)
+    localStorage.setItem('isAuthenticated', 'true')
+    
+    // 登录成功后跳转到首页
+    message.success('登录成功')
+    router.push('/home')
+  } catch (error: any) {
+    console.error('登录失败:', error)
+    message.error(error.message || '登录失败，请检查用户名和密码')
+  } finally {
+    loading.value = false
+  }
 }
 
 const handleReset = () => {
@@ -74,11 +98,11 @@ const handleReset = () => {
               <h2>AI 系统登录</h2>
               <p>请输入您的登录信息</p>
             </div>
-            
+
             <NForm :model="formValue" :rules="rules" ref="formRef">
               <NFormItem path="username" label="用户名">
-                <NInput 
-                  v-model:value="formValue.username" 
+                <NInput
+                  v-model:value="formValue.username"
                   placeholder="请输入用户名"
                   clearable
                   autofocus
@@ -88,11 +112,11 @@ const handleReset = () => {
                   </template>
                 </NInput>
               </NFormItem>
-              
+
               <NFormItem path="password" label="密码">
-                <NInput 
-                  v-model:value="formValue.password" 
-                  type="password" 
+                <NInput
+                  v-model:value="formValue.password"
+                  type="password"
                   placeholder="请输入密码"
                   show-password-on="click"
                 >
@@ -101,27 +125,28 @@ const handleReset = () => {
                   </template>
                 </NInput>
               </NFormItem>
-              
+
               <NFormItem>
                 <div class="login-options">
                   <NCheckbox v-model:checked="formValue.rememberMe">记住我</NCheckbox>
                   <a href="#" class="forgot-password">忘记密码？</a>
                 </div>
               </NFormItem>
-              
+
               <NSpace vertical :size="12">
-                <NButton 
-                  type="primary" 
-                  size="large" 
-                  block 
+                <NButton
+                  type="primary"
+                  size="large"
+                  block
                   @click="handleLogin"
+                  :loading="loading"
                   class="login-btn"
                 >
                   登录
                 </NButton>
-                
-                <NButton 
-                  size="large" 
+
+                <NButton
+                  size="large"
                   block
                   @click="handleReset"
                   class="reset-btn"
@@ -130,7 +155,7 @@ const handleReset = () => {
                 </NButton>
               </NSpace>
             </NForm>
-            
+
             <div class="login-footer">
               <p>© 2025 AI SugarWeb - 智能化Web应用平台</p>
             </div>
@@ -307,25 +332,25 @@ const handleReset = () => {
     padding: 10px;
     overflow: auto;
   }
-  
+
   .login-wrapper {
     flex-direction: column;
     height: auto;
     max-height: 90vh;
   }
-  
+
   .login-left {
     padding: 20px;
   }
-  
+
   .login-right {
     padding: 20px;
   }
-  
+
   .welcome-content h1 {
     font-size: 24px;
   }
-  
+
   .welcome-content p {
     font-size: 16px;
   }

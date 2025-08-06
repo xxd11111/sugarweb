@@ -1,0 +1,30 @@
+[
+  {
+    "label": "首页",
+    "key": "/home",
+    "icon": "Home",
+    "route": "/home"
+  },
+  {
+    "label": "系统管理",
+    "key": "system",
+    "icon": "Settings",
+    "children": [
+      {
+        "label": "用户管理",
+        "key": "/user",
+        "route": "/user"
+      },
+      {
+        "label": "角色管理",
+        "key": "/role",
+        "route": "/role"
+      },
+      {
+        "label": "菜单管理",
+        "key": "/menu",
+        "route": "/menu"
+      }
+    ]
+  }
+]

@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { NButton, NCard, NCheckbox, NForm, NFormItem, NIcon, NInput, NSpace, useMessage } from 'naive-ui'
 import { LockClosedOutline, LogoGithub, LogoTwitter, PersonCircleOutline } from '@vicons/ionicons5'
-import { login, LoginRequest } from '@/services/auth'
+import { login } from '@/services/auth'
+import type { LoginRequest } from '@/services/auth'
 
 const router = useRouter()
 const message = useMessage()

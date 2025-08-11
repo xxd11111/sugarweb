@@ -1,29 +1,31 @@
 <template>
   <div class="layout-wrapper">
-    <n-layout has-sider>
-      <n-layout-sider
-        bordered
-        collapse-mode="width"
-        :collapsed-width="64"
-        :width="240"
-        :collapsed="collapsed"
-        show-trigger
-        @collapse="collapsed = true"
-        @expand="collapsed = false"
-      >
-        <MenuSide />
-      </n-layout-sider>
-      
-      <n-layout>
-        <n-layout-header bordered>
-          <HeaderBar @toggle-collapse="collapsed = !collapsed" @logout="handleLogout" />
-        </n-layout-header>
-        
+    <n-layout>
+      <!-- 顶部系统信息 -->
+      <n-layout-header bordered>
+        <HeaderBar @toggle-collapse="collapsed = !collapsed" @logout="handleLogout" />
+      </n-layout-header>
+
+      <!-- 下面分为左边菜单和右边页面 -->
+      <n-layout has-sider style="flex-direction: row;">
+        <n-layout-sider
+          bordered
+          collapse-mode="width"
+          :collapsed-width="64"
+          :width="240"
+          :collapsed="collapsed"
+          show-trigger
+          @collapse="collapsed = true"
+          @expand="collapsed = false"
+        >
+          <MenuSide />
+        </n-layout-sider>
+
         <n-layout>
           <n-layout-header bordered>
             <TabManager />
           </n-layout-header>
-          
+
           <n-layout-content class="layout-content">
             <RouterView />
           </n-layout-content>
